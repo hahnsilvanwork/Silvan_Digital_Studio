@@ -52,7 +52,14 @@ test.describe("language switching", () => {
   });
 
   test("serves a localized 404 with a way back", async ({ page }) => {
-    const response = await page.goto("/work/does-not-exist");
+    // The only route in the app that is not prerendered, so it is the one that
+    // queues when four browser projects share a single server. The assertions
+    // are about what the page offers, not about how fast it answers.
+    test.slow();
+
+    const response = await page.goto("/work/does-not-exist", {
+      waitUntil: "domcontentloaded",
+    });
 
     expect(response?.status()).toBe(404);
 

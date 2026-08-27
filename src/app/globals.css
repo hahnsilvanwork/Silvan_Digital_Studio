@@ -16,8 +16,7 @@
   --focus-ring-inner: #f9f8f6;
   --focus-ring-outer: #0047ff;
 
-  --font-sans: var(--font-geist-sans), "Helvetica Neue", sans-serif;
-  --font-mono: var(--font-geist-mono), "SFMono-Regular", monospace;
+  --font-sans: var(--font-archivo), "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* min(vw, vh): a 1280x800 laptop is wide but short, and a width-only
      scale puts the headline below the fold there. */
   --text-display: clamp(3rem, min(12.5vw, 15vh), 11.5rem);
