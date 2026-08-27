@@ -235,7 +235,7 @@ describe("ContactPage", () => {
     ).toHaveAttribute("href", "https://wa.me/41789008500");
     expect(within(main).getByRole("link", { name: /E-Mail/ })).toHaveAttribute(
       "href",
-      "mailto:hahn.silvan.work@gmail.com",
+      "mailto:kontakt@silvandigital.ch",
     );
     expect(within(main).getByRole("link", { name: /Telefon/ })).toHaveAttribute(
       "href",

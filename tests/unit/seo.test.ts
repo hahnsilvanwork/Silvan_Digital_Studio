@@ -6,7 +6,8 @@ import { projects } from "../../src/content/projects";
 import { buildPageMetadata } from "../../src/lib/page-metadata";
 import { getSiteOrigin } from "../../src/lib/site-url";
 
-const ROUTE_COUNT = 9;
+/** Home, four services, work, about, contact, hello, imprint, privacy. */
+const ROUTE_COUNT = 11;
 
 function clearOrigin() {
   vi.stubEnv("NEXT_PUBLIC_SITE_URL", "");
@@ -88,6 +89,8 @@ describe("sitemap", () => {
     expect(new Set(urls).size).toBe(urls.length);
     expect(urls).toContain("https://silvan.ch/reviews");
     expect(urls).toContain("https://silvan.ch/en/reviews");
+    expect(urls).toContain("https://silvan.ch/imprint");
+    expect(urls).toContain("https://silvan.ch/en/privacy");
     expect(urls).toContain("https://silvan.ch/work/archa");
     expect(urls).toContain("https://silvan.ch/en/work/archa");
 

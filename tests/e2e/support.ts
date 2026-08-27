@@ -43,7 +43,7 @@ export async function activeElement(page: Page) {
 }
 
 export const CONTACT = {
-  email: "hahn.silvan.work@gmail.com",
+  email: "kontakt@silvandigital.ch",
   phoneHref: "tel:+41789008500",
   phoneDisplay: "078 900 85 00",
   whatsApp: "+41789008500",

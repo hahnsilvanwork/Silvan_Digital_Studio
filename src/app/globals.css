@@ -49,12 +49,14 @@
   --space-xs: clamp(0.75rem, 0.65rem + 0.4vw, 1.125rem);
   --space-sm: clamp(1rem, 0.8rem + 0.8vw, 1.75rem);
   --space-md: clamp(1.5rem, 1.1rem + 1.8vw, 3rem);
-  --space-lg: clamp(2.5rem, 1.6rem + 3.6vw, 6rem);
-  --space-xl: clamp(4rem, 2rem + 8vw, 11rem);
-  /* At the old ceiling a section carried 440px of padding around as little
-     as 120px of content, which read as an empty band rather than as
-     confident negative space. */
-  --space-2xl: clamp(5rem, 2.25rem + 9vw, 12rem);
+  --space-lg: clamp(2.5rem, 1.6rem + 3.6vw, 5rem);
+  /* Two adjacent sections each spend this, so the ceiling is paid twice. At
+     11rem a 1440px screen put 294px of nothing between a heading and the
+     block above it -- on a page whose sections carry four rows of text, that
+     reads as an unfinished layout rather than as confident negative space.
+     7rem still separates the sections clearly at 2 x 112px. */
+  --space-xl: clamp(3.5rem, 2rem + 5vw, 7rem);
+  --space-2xl: clamp(4.5rem, 2.25rem + 6vw, 8.5rem);
 
   /* One source of truth for the sticky header: the header sets its own height
      from this token and the hero subtracts exactly the same value, so the first
@@ -258,5 +260,41 @@ body[data-menu-open="true"] {
 @media (min-width: 48rem) {
   :root {
     --page-gutter: clamp(2rem, 4vw, 4rem);
+  }
+}
+
+/* Print --------------------------------------------------------------------
+   Everything that scrolls into view starts at opacity 0 and is revealed by an
+   IntersectionObserver. A printed page never scrolls, so without these rules
+   the paper comes out blank below the first screen -- which is what happens
+   today when someone prints the imprint or saves a service page as a PDF.
+
+   Only global selectors and element rules can live here: the page-level classes
+   are CSS modules and are hashed, so their print behaviour is declared in the
+   stylesheet that owns them. The palette is deliberately left alone -- browsers
+   do not print backgrounds by default, and redefining the tokens here would
+   change what `:root` resolves to for the whole document. */
+@media print {
+  /* !important, for the same reason the reduced-motion block above uses it:
+     the hidden state is set by `:root[data-motion="on"] [data-reveal]...`,
+     which outranks any selector short enough to be readable here. */
+  [data-reveal],
+  [data-reveal] [data-mask-item] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  header,
+  footer {
+    display: none;
+  }
+
+  /* A link is useless on paper unless its destination is written out. */
+  a[href^="http"]::after,
+  a[href^="mailto"]::after,
+  a[href^="tel"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    word-break: break-all;
   }
 }

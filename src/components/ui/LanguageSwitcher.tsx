@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { SUPPORTED_LOCALES } from "../../lib/locales";
@@ -10,8 +12,10 @@ interface LanguageSwitcherProps {
 }
 
 /**
- * Two plain links, so switching language works without client JavaScript and
- * keeps the visitor on the equivalent route.
+ * Two links, so switching language keeps the visitor on the equivalent route.
+ * They render as real anchors, so the switch still works without client
+ * JavaScript -- next/link only adds prefetching and client-side navigation on
+ * top of that.
  */
 export function LanguageSwitcher({ locale, currentPath }: LanguageSwitcherProps) {
   const { navigation } = getContent(locale);
@@ -27,7 +31,7 @@ export function LanguageSwitcher({ locale, currentPath }: LanguageSwitcherProps)
       role="group"
     >
       {SUPPORTED_LOCALES.map((option) => (
-        <a
+        <Link
           aria-current={option === locale ? "true" : undefined}
           className={styles.language}
           data-touch-target
@@ -39,7 +43,7 @@ export function LanguageSwitcher({ locale, currentPath }: LanguageSwitcherProps)
           {/* The visible code is an abbreviation; assistive technology gets the
               language named in the language the visitor is currently reading. */}
           <span className="visually-hidden">{labels[option]}</span>
-        </a>
+        </Link>
       ))}
     </div>
   );

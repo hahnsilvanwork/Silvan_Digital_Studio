@@ -1,0 +1,57 @@
+/* Client quotes. Ruled like every other index on this site rather than boxed,
+   so a quote reads as part of the editorial rather than as a widget. */
+
+.list {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  padding-block-start: var(--space-sm);
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
+.figure {
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
+  margin: 0;
+}
+
+.quote {
+  margin: 0;
+  font-size: var(--text-lead);
+  letter-spacing: var(--tracking-text);
+  line-height: 1.35;
+}
+
+/* The quotation marks belong to the typography, not to the stored string --
+   a quote entered without them still sets correctly. */
+.quote::before {
+  content: "«";
+}
+
+.quote::after {
+  content: "»";
+}
+
+.attribution {
+  display: grid;
+  gap: 0.15em;
+}
+
+.author {
+  font-size: var(--text-body);
+  font-weight: 500;
+}
+
+.role {
+  color: var(--color-ink-muted);
+  font-size: var(--text-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}

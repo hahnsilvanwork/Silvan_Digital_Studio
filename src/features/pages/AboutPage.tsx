@@ -70,6 +70,24 @@ export function AboutPage({ locale }: AboutPageProps) {
           </div>
         </section>
 
+        <section className={`${layoutStyles.container} ${pageStyles.section}`}>
+          <SectionHeading title={content.about.standardsTitle} />
+          <div className={pageStyles.sectionBody}>
+            <ul className={pageStyles.benefitList}>
+              {content.about.standards.map((standard, index) => (
+                <li
+                  className={pageStyles.benefit}
+                  data-reveal="rise"
+                  key={standard}
+                  style={{ "--reveal-index": index } as CSSProperties}
+                >
+                  {standard}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         <section className={pageStyles.darkBand}>
           <div className={layoutStyles.container}>
             <SectionHeading title={content.about.valuesTitle} />

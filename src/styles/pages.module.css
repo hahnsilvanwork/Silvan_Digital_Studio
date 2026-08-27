@@ -360,6 +360,43 @@
   color: var(--color-ink-muted);
 }
 
+/* Legal pages -------------------------------------------------------------
+   Imprint and privacy statement. These are the two pages on the site that are
+   actually read end to end, so they get a reading measure rather than the wide
+   editorial grid, and the headings stay small enough to scan a long document. */
+
+.legalBody {
+  display: grid;
+  gap: var(--space-md);
+  max-inline-size: 42rem;
+}
+
+.legalSection {
+  display: grid;
+  gap: var(--space-2xs);
+  align-content: start;
+  padding-block-start: var(--space-sm);
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
+.legalHeading {
+  font-size: var(--text-subitem);
+  font-weight: 500;
+  letter-spacing: var(--tracking-item);
+  line-height: 1.15;
+}
+
+.legalParagraph {
+  color: var(--color-ink-muted);
+}
+
+.legalUpdated {
+  color: var(--color-ink-muted);
+  font-size: var(--text-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 /* Hello launchpad --------------------------------------------------------- */
 
 /* On a phone this is one column and the two blocks simply follow each other.
@@ -452,5 +489,57 @@
 
   .pageTitle {
     max-inline-size: 15ch;
+  }
+}
+
+/* The postal address on the contact page. Rendered in an <address> element so
+   it is announced as contact information, with the browser italic removed. */
+.postalAddress {
+  display: grid;
+  gap: 0.15em;
+  justify-items: start;
+  margin-block-start: var(--space-lg);
+  color: var(--color-ink-muted);
+  font-style: normal;
+}
+
+.postalAddressLabel {
+  margin-block-end: var(--space-2xs);
+  font-size: var(--text-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Print ---------------------------------------------------------------------
+   The module half of the print rules; the global half lives in globals.css.
+   These classes are hashed, so they can only be addressed from this file. */
+@media print {
+  /* The page wrapper reserves a full viewport, which on paper is a blank
+     first sheet. `.hero` is deliberately left alone: the design contract
+     guarantees it is always exactly one viewport minus the header, that
+     guarantee should not carry a print exception, and it only exists on the
+     home page -- not on the imprint, the privacy statement or a service page,
+     which are the documents anyone actually prints. */
+  .page {
+    min-block-size: 0;
+  }
+
+  .section,
+  .pageHeader,
+  .darkBand {
+    padding-block: var(--space-md);
+  }
+
+  /* Reversed out, this band costs a full page of toner and prints the text
+     white on white wherever background printing is switched off. */
+  .darkBand {
+    background: none;
+    color: var(--color-ink);
+    border-block: var(--hairline) solid var(--color-line);
+  }
+
+  .legalSection {
+    /* A clause split across two sheets is hard to cite. */
+    break-inside: avoid;
   }
 }

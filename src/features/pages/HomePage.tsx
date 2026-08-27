@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 
 import { ContactActions } from "../../components/contact/ContactActions";
+import { Testimonials } from "../../components/home/Testimonials";
 import { SiteShell } from "../../components/layout/SiteShell";
 import { revealSequence } from "../../components/motion/reveal-sequence";
 import { SplitText } from "../../components/motion/SplitText";
@@ -106,6 +107,11 @@ export function HomePage({ locale }: HomePageProps) {
             </div>
           </div>
         </section>
+
+        <Testimonials
+          items={content.home.testimonials}
+          title={content.home.testimonialsTitle}
+        />
 
         <section className={pageStyles.darkBand}>
           <div className={layoutStyles.container}>

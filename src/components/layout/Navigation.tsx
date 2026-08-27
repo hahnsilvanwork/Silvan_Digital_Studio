@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
@@ -23,12 +25,12 @@ export function Navigation({ locale, currentPath }: NavigationProps) {
       </a>
 
       <div className={styles.bar}>
-        <a className={styles.wordmark} href={localizePath("/", locale)}>
+        <Link className={styles.wordmark} href={localizePath("/", locale)}>
           <span className={styles.wordmarkName}>{content.brand.name}</span>
           <span className={styles.wordmarkDescriptor}>
             {content.brand.descriptor}
           </span>
-        </a>
+        </Link>
 
         <nav
           aria-label={content.navigation.primaryLabel}
@@ -37,14 +39,14 @@ export function Navigation({ locale, currentPath }: NavigationProps) {
           <ul className={styles.primaryList}>
             {links.map((link) => (
               <li key={link.href}>
-                <a
+                <Link
                   aria-current={link.isCurrent ? "page" : undefined}
                   className={`${styles.primaryLink} hoverUnderline`}
                   data-touch-target
                   href={link.href}
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

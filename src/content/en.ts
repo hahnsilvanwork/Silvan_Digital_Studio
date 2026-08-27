@@ -36,6 +36,7 @@ export const en = {
     getInTouch: "Get in touch",
     from: "from",
     onRequest: "On request",
+    recommended: "Most often chosen",
   },
   home: {
     hero: {
@@ -77,6 +78,12 @@ export const en = {
     studioTitle: "Work directly with the developer",
     studioCopy:
       "SILVAN is Silvan Hahn's independent digital studio in Switzerland. You get clear advice, considered design, and dependable delivery from one person.",
+    testimonialsTitle: "What clients say",
+    // Stays empty until a real, named and approved client quote exists. The
+    // section renders only once this array has entries -- an invented
+    // endorsement on the site of a studio that sells Google Reviews would be
+    // the most expensive mistake available.
+    testimonials: [],
   },
   websites: {
     eyebrow: "Websites",
@@ -96,6 +103,7 @@ export const en = {
         id: "standard",
         name: "Standard Business Website",
         price: "CHF 700–1,999",
+        recommended: true,
         description: "For businesses ready to structure services, trust signals, and contact clearly.",
         features: ["Multiple content pages", "Custom layout", "Essential search foundations"],
       },
@@ -129,6 +137,36 @@ export const en = {
     ],
     ctaLabel: "Discuss your website",
     ctaHref: "/contact",
+    faq: {
+      title: "Frequently asked questions about websites",
+      items: [
+        {
+          question: "What does a website cost?",
+          answer:
+            "A compact information page starts at CHF 300. A multi-page business website sits between CHF 700 and CHF 1,999, larger presences between CHF 2,000 and CHF 4,999. Custom projects start at CHF 5,000. The tier follows from the scope we agree on beforehand.",
+        },
+        {
+          question: "What is included in the price?",
+          answer:
+            "Concept, design, build, and launch within the scope of the chosen tier. Domain and hosting are not part of the price – we clarify which option makes sense for you in conversation.",
+        },
+        {
+          question: "How does a project run?",
+          answer:
+            "In four steps: we clarify goals and scope, I develop a visual direction and the page structure, build the design and content, and after a shared review the website goes live.",
+        },
+        {
+          question: "Does the website work on a phone?",
+          answer:
+            "Yes. Every tier is designed and tested for mobile rather than adapted afterwards. The narrow screen is the starting point, not the exception.",
+        },
+        {
+          question: "Who do I work with?",
+          answer:
+            "Directly with me. There is no handover between sales, design, and development – the person who plans your project also builds it.",
+        },
+      ],
+    },
   },
   reviews: {
     eyebrow: "Google Reviews",
@@ -193,6 +231,36 @@ export const en = {
       privacyNotice: "Your details are not stored by this website; they are only inserted into the WhatsApp message.",
       messageIntro: "Hi Silvan, I would like to make a no-obligation inquiry about NFC Review Cards.",
     },
+    faq: {
+      title: "Frequently asked questions about review cards",
+      items: [
+        {
+          question: "How does an NFC review card work?",
+          answer:
+            "Your customer holds their phone against the card or the stand. Your business's Google review page opens directly – no search, no app, and no link to type out.",
+        },
+        {
+          question: "Does it work with every phone?",
+          answer:
+            "Current iPhones and Android devices read NFC tags without an extra app. For older devices, a QR code on the card can be used as well.",
+        },
+        {
+          question: "Can I buy or influence reviews with this?",
+          answer:
+            "No, and that is deliberate. The card only shortens the path to the review page. What your customer writes there is entirely their decision – anything else breaches Google's policies and damages your profile more than it helps.",
+        },
+        {
+          question: "Do I need a Google Business Profile?",
+          answer:
+            "Yes, the card points to it. If you do not have one yet, or it is incomplete, I set it up under Online presence.",
+        },
+        {
+          question: "What does it cost and what is included?",
+          answer:
+            "A card costs CHF 49, a stand CHF 69, two cards CHF 80. Programming and setup for your Google profile are included in each. A quantity discount is available for larger orders.",
+        },
+      ],
+    },
   },
   presence: {
     eyebrow: "Online Presence",
@@ -225,6 +293,31 @@ export const en = {
     ],
     ctaLabel: "Discuss your online presence",
     ctaHref: "/contact",
+    faq: {
+      title: "Frequently asked questions about online presence",
+      items: [
+        {
+          question: "What is a Google Business Profile?",
+          answer:
+            "The entry that appears on Google and in Google Maps when someone searches for your business, or for your service nearby. It shows the address, opening hours, contact routes, and reviews.",
+        },
+        {
+          question: "I already have a profile. Is this still worth it?",
+          answer:
+            "Usually yes. I check the existing entry for missing or contradictory details, add services and service area, and make sure your business details read the same everywhere.",
+        },
+        {
+          question: "Does this guarantee a better ranking on Google?",
+          answer:
+            "No. Nobody can guarantee a position on Google, and anyone promising one should make you suspicious. A complete, consistent profile is the ground local visibility can grow on.",
+        },
+        {
+          question: "What do I get at the end?",
+          answer:
+            "A profile that is set up or reworked, consistent business details, and a clear overview of where things stand and which steps make sense next.",
+        },
+      ],
+    },
   },
   automation: {
     eyebrow: "Automation",
@@ -256,6 +349,31 @@ export const en = {
     ],
     ctaLabel: "Request a workflow review",
     ctaHref: "/contact",
+    faq: {
+      title: "Frequently asked questions about automation",
+      items: [
+        {
+          question: "Which tasks can be automated?",
+          answer:
+            "Anything that runs regularly by the same rules: recurring emails and notifications, regular reports and data preparation, handovers between systems, and repeatable internal workflows.",
+        },
+        {
+          question: "Why is there no price on this page?",
+          answer:
+            "Because the effort depends entirely on your existing process. I assess feasibility, risks, and the expected benefit first – only then can an honest price be named.",
+        },
+        {
+          question: "What if an automation is not worth it?",
+          answer:
+            "Then I say so. An automation that costs more upkeep than it saves in time is not progress. The feasibility check is allowed to conclude that today's process is the better one.",
+        },
+        {
+          question: "What happens after delivery?",
+          answer:
+            "You get a clear introduction and documentation, so the workflow stays understandable and does not depend on a single person.",
+        },
+      ],
+    },
   },
   work: {
     eyebrow: "Work",
@@ -281,6 +399,13 @@ export const en = {
       { title: "Direct", description: "There are no handoffs between sales, design, and development." },
       { title: "Practical", description: "The solution fits your business rather than a short-lived trend." },
     ],
+    standardsTitle: "What I take as given",
+    standards: [
+      "Every page is delivered as finished HTML and is there immediately – including on a slow connection.",
+      "Operable by keyboard and screen reader, with verified colour contrast.",
+      "Designed for the narrow screen rather than adapted to it afterwards.",
+      "Automatically tested, so a later change cannot quietly break what already worked.",
+    ],
     portraitAlt: "Placeholder for a future portrait of Silvan Hahn",
     portraitStatus: "Replaceable image placeholder — not a photograph of Silvan Hahn",
   },
@@ -288,12 +413,14 @@ export const en = {
     eyebrow: "Contact",
     title: "Let's talk about what you need.",
     intro: "Email or message me directly on WhatsApp. You can also reach me by phone or on LinkedIn.",
+    addressLabel: "Address",
+    address: ["Silvan Hahn", "Regensbergstrasse 23", "8113 Boppelsen", "Switzerland"],
     emailLabel: "Email",
     phoneLabel: "Phone",
     whatsappLabel: "WhatsApp",
     linkedInLabel: "LinkedIn",
     details: {
-      email: "hahn.silvan.work@gmail.com",
+      email: "kontakt@silvandigital.ch",
       phoneDisplay: "078 900 85 00",
       phoneHref: "tel:+41789008500",
       whatsappNumber: "+41789008500",
@@ -303,8 +430,13 @@ export const en = {
   },
   footer: {
     navLabel: "Footer navigation",
+    legalNavLabel: "Legal",
     contactTitle: "Direct contact",
     rights: "All rights reserved.",
+    legal: [
+      { label: "Imprint", href: "/imprint" },
+      { label: "Privacy", href: "/privacy" },
+    ],
   },
   hello: {
     eyebrow: "SILVAN Digital Studio",
@@ -319,6 +451,153 @@ export const en = {
       { label: "Contact", href: "/contact" },
     ],
     directContactTitle: "Contact me directly",
+  },
+  imprint: {
+    eyebrow: "Imprint",
+    title: "Who stands behind this website.",
+    intro:
+      "Provider identification under Art. 3 para. 1 lit. s of the Swiss Federal Act against Unfair Competition (UCA).",
+    updatedLabel: "Last updated",
+    updated: "August 2026",
+    sections: [
+      {
+        title: "Responsible for this website",
+        body: [
+          "Silvan Hahn",
+          "Regensbergstrasse 23",
+          "8113 Boppelsen",
+          "Switzerland",
+        ],
+      },
+      {
+        title: "Contact",
+        body: [
+          "Email: kontakt@silvandigital.ch",
+          "Phone: +41 78 900 85 00",
+          "Every contact route is also listed on the contact page.",
+        ],
+      },
+      {
+        title: "Legal form and VAT",
+        body: [
+          "SILVAN Digital Studio is the trading name of the sole proprietorship of Silvan Hahn. There is no entry in the commercial register.",
+          "There is no VAT liability. No VAT is therefore shown on invoices, and the prices stated on this website are final prices.",
+        ],
+      },
+      {
+        title: "About the work shown",
+        body: [
+          "The projects shown under \"Work\" are self-initiated design concepts and are labelled \"Concept project\" on every view. They are not completed client engagements, and no client, result, or metric is claimed for them.",
+        ],
+      },
+      {
+        title: "Liability for content",
+        body: [
+          "The content of this website is prepared with care. No warranty is given for its accuracy, completeness, or currency. Prices are indicative and become binding only with a written confirmation.",
+          "Inquiries made through this website are non-binding. A contract comes into effect only through an explicit confirmation.",
+        ],
+      },
+      {
+        title: "Liability for links",
+        body: [
+          "This website links to external websites over whose content there is no influence. The respective provider is solely responsible for that content.",
+        ],
+      },
+      {
+        title: "Copyright",
+        body: [
+          "The content, designs, and images published on this website are subject to Swiss copyright law. Reproduction or use beyond the legally permitted cases requires prior written consent.",
+        ],
+      },
+    ],
+  },
+  privacy: {
+    eyebrow: "Privacy",
+    title: "What data this website processes.",
+    intro:
+      "This statement describes which personal data is processed when you visit this website, under the revised Swiss Federal Act on Data Protection (revFADP).",
+    updatedLabel: "Last updated",
+    updated: "August 2026",
+    sections: [
+      {
+        title: "Responsible person",
+        body: [
+          "Silvan Hahn, Regensbergstrasse 23, 8113 Boppelsen, Switzerland",
+          "Email: kontakt@silvandigital.ch",
+        ],
+      },
+      {
+        title: "Principle",
+        body: [
+          "This website is built to process as little personal data as possible. It has no contact form that posts to a server, no user accounts, and no comment function.",
+        ],
+      },
+      {
+        title: "No cookies, no analytics, no advertising",
+        body: [
+          "This website sets no cookies and embeds no analytics, tracking, or advertising services. No profiling takes place, and your behaviour on this website is not evaluated.",
+          "Should audience measurement be introduced in future, this statement will be updated beforehand.",
+        ],
+      },
+      {
+        title: "Server log files",
+        body: [
+          "When this website is requested, the hosting provider processes technically necessary data: IP address, date and time of access, the address requested, the referring link, and details about browser and operating system.",
+          "This processing is required for the secure and stable operation of the website. The data is not merged with other sources and is not used to identify individuals.",
+        ],
+      },
+      {
+        title: "Hosting",
+        body: [
+          "This website is hosted with Vercel Inc. Data may therefore also be processed on servers outside Switzerland. The provider is contractually bound to maintain an adequate level of data protection.",
+        ],
+      },
+      {
+        title: "Fonts",
+        body: [
+          "The typeface used is downloaded when the website is built and served by this website itself. Your browser makes no connection to an external font provider, and no data is transmitted to third parties.",
+        ],
+      },
+      {
+        title: "Review card inquiry",
+        body: [
+          "On the \"Google Reviews\" page you can enter the details of an inquiry. Those entries are assembled into a WhatsApp message inside your browser only. They are not transmitted to this website and are not stored here.",
+          "Only when you send the prepared message in WhatsApp do the details reach WhatsApp and myself. WhatsApp's own privacy terms then apply in addition.",
+        ],
+      },
+      {
+        title: "Getting in touch",
+        body: [
+          "If you contact me by email, phone, WhatsApp, or LinkedIn, your details are used to handle your request and kept for as long as that and any statutory retention obligations require.",
+          "WhatsApp and LinkedIn are third-party services. If you use those routes, data is also processed by the respective provider – WhatsApp by Meta Platforms Ireland Ltd., LinkedIn by LinkedIn Ireland Unlimited Company.",
+        ],
+      },
+      {
+        title: "External links",
+        body: [
+          "This website links to external services, for example LinkedIn or Google Business Profiles. The respective provider is responsible for data processing on those websites.",
+        ],
+      },
+      {
+        title: "Your rights",
+        body: [
+          "You have the right to information about the data processed about you, and to its correction, deletion, or release. You may object to processing and withdraw consent at any time.",
+          "Please contact the address given above. You also have the right to lodge a complaint with the Federal Data Protection and Information Commissioner (FDPIC).",
+        ],
+      },
+      {
+        title: "Data security",
+        body: [
+          "This website is served exclusively over encrypted HTTPS. Data transmitted between your browser and the server is therefore protected against interception.",
+        ],
+      },
+      {
+        title: "Changes",
+        body: [
+          "This privacy statement may be adapted when the website or the legal requirements change. The version published on this page is the one that applies.",
+        ],
+      },
+    ],
   },
   notFound: {
     eyebrow: "404",
@@ -336,5 +615,7 @@ export const en = {
     about: { title: "About Silvan Hahn | SILVAN Digital Studio", description: "Meet Silvan Hahn, an independent digital developer based in Switzerland." },
     contact: { title: "Contact | SILVAN Digital Studio", description: "Contact Silvan Hahn directly by email, WhatsApp, phone, or LinkedIn." },
     hello: { title: "Hi, I'm Silvan | SILVAN Digital Studio", description: "A direct route to websites, Google Reviews, online presence, work, and contact." },
+    imprint: { title: "Imprint | SILVAN Digital Studio", description: "Responsible for this website: Silvan Hahn, Boppelsen. Legal form, contact details, and copyright." },
+    privacy: { title: "Privacy | SILVAN Digital Studio", description: "This website sets no cookies and embeds no tracking. Privacy statement under the revised Swiss FADP." },
   },
 } as const satisfies SiteContent;

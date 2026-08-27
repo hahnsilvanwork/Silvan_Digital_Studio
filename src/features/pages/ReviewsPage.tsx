@@ -6,8 +6,10 @@ import { SiteShell } from "../../components/layout/SiteShell";
 import { revealSequence } from "../../components/motion/reveal-sequence";
 import { SplitText } from "../../components/motion/SplitText";
 import { ReviewInquiryConfigurator } from "../../components/reviews/ReviewInquiryConfigurator";
+import { FaqList } from "../../components/services/FaqList";
 import { PriceTierList } from "../../components/services/PriceTierList";
 import { ProcessSteps } from "../../components/services/ProcessSteps";
+import { FaqSchema } from "../../components/seo/FaqSchema";
 import { ButtonLink } from "../../components/ui/ButtonLink";
 import { SectionHeading } from "../../components/ui/SectionHeading";
 import type { Locale } from "../../content/types";
@@ -117,6 +119,14 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
           />
           <div className={pageStyles.sectionBody}>
             <ReviewInquiryConfigurator locale={locale} />
+          </div>
+        </section>
+
+        <section className={`${layoutStyles.container} ${pageStyles.section}`}>
+          <FaqSchema items={reviews.faq.items} />
+          <SectionHeading title={reviews.faq.title} />
+          <div className={pageStyles.sectionBody}>
+            <FaqList items={reviews.faq.items} />
           </div>
         </section>
 

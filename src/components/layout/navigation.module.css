@@ -433,3 +433,30 @@
     grid-column: 1 / -1;
   }
 }
+
+/* The legal row sits with the copyright line, not in the main footer nav: it is
+   an obligation a visitor looks for deliberately, not a destination the site
+   wants to send anyone to. */
+.footerLegalNav {
+  grid-column: 1 / -1;
+}
+
+.footerLegalList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footerLegalLink {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--control-target-min);
+  color: rgb(249 248 246 / 78%);
+  font-size: var(--text-label);
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
