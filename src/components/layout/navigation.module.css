@@ -25,7 +25,6 @@
   padding: var(--space-2xs) var(--space-xs);
   background: var(--color-ink);
   color: var(--color-on-dark);
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -78,7 +77,6 @@
 .wordmarkDescriptor {
   color: var(--color-ink-muted);
   white-space: nowrap;
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: 0.16em;
   line-height: 1;
@@ -134,7 +132,6 @@
   min-block-size: var(--control-target-min);
   min-inline-size: var(--control-target-min);
   color: var(--color-ink-muted);
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: 0.08em;
   text-decoration: none;
@@ -156,7 +153,6 @@
   background: none;
   color: inherit;
   cursor: pointer;
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -264,7 +260,6 @@
   background: none;
   color: var(--color-ink-muted);
   cursor: pointer;
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -337,7 +332,6 @@
 
 .footerDescriptor {
   color: rgb(249 248 246 / 62%);
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -346,7 +340,6 @@
 .footerHeading {
   margin-block-end: var(--space-sm);
   color: rgb(249 248 246 / 62%);
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   font-weight: 400;
   letter-spacing: 0.16em;
@@ -374,7 +367,6 @@
 
 .footerContactLabel {
   color: rgb(249 248 246 / 62%);
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -398,7 +390,6 @@
 
 .footerLegal {
   color: rgb(249 248 246 / 62%);
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: 0.04em;
 }
@@ -414,7 +405,11 @@
   }
 }
 
-@media (min-width: 64rem) {
+/* Seven entries plus the wordmark and the language pair need about 985px of
+   run. At 64rem the bar offers 942px, so the row used to overflow by 21px --
+   Archivo sets wider than the grotesque this started on. The switch happens
+   where the content actually fits, with room to spare for a longer label. */
+@media (min-width: 72rem) {
   .primaryNav {
     display: block;
   }
@@ -422,7 +417,9 @@
   .menuTrigger {
     display: none;
   }
+}
 
+@media (min-width: 64rem) {
   .footerInner {
     grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr);
   }

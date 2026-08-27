@@ -37,7 +37,6 @@
 }
 
 .heroLabel {
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   font-weight: 500;
   letter-spacing: 0.08em;
@@ -219,7 +218,6 @@
 }
 
 .sectionLabel {
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   font-weight: 400;
   letter-spacing: 0.16em;
@@ -309,7 +307,6 @@
   border: var(--hairline) solid var(--color-line);
   background: var(--color-paper-raised);
   color: var(--color-ink-muted);
-  font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: 0.18em;
   text-align: start;
