@@ -1,0 +1,110 @@
+/* Shared editorial primitives: buttons, section headings and prices. */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  min-block-size: max(var(--control-target-min), 3.25rem);
+  padding-inline: var(--space-md);
+  border: var(--hairline) solid currentColor;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-action);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition-property: transform, opacity;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
+}
+
+/* Spec 2 reserves the accent for focus, active states and priority actions.
+   The first two were implemented; this is the third. There is exactly one
+   primary button per page, so the colour stays as sparing as the brief asks. */
+.buttonPrimary {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.buttonSecondary {
+  border-color: var(--color-line);
+  background: none;
+  color: inherit;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    transform: translate3d(0, -0.125rem, 0);
+  }
+}
+
+.sectionHeading {
+  display: grid;
+  gap: var(--space-sm);
+  max-inline-size: 52rem;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+/* Size, tracking and leading move together. Each step down loosens the tracking
+   and opens the leading, so the three roles read as three distinct voices rather
+   than as one voice at three sizes. */
+.display {
+  font-size: var(--text-display);
+  letter-spacing: var(--tracking-display);
+  line-height: 0.94;
+}
+
+.title {
+  font-size: var(--text-title);
+  letter-spacing: var(--tracking-title);
+  line-height: 0.96;
+}
+
+.heading {
+  font-size: var(--text-heading);
+  letter-spacing: var(--tracking-heading);
+  line-height: 1.02;
+}
+
+.intro {
+  max-inline-size: 44rem;
+  color: var(--color-ink-muted);
+  font-size: var(--text-lead);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+}
+
+.price {
+  display: grid;
+  gap: 0.15em;
+}
+
+.priceLabel {
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* A tier name and its price used to render at exactly the same size, weight and
+   colour, so neither led. The name keeps the weight, the price takes the size
+   and lining figures -- two different signals instead of one repeated. */
+.priceValue {
+  font-size: var(--text-item);
+  font-weight: 400;
+  letter-spacing: var(--tracking-item);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}

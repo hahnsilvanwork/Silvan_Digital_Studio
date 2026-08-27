@@ -1,0 +1,56 @@
+/* The row layout depends on how much room this list actually has, not on how
+   wide the window is: the same component sits full-width on /contact and in a
+   ~530px panel on /hello, where a viewport-driven two-column row broke the
+   email address across two lines and into the marker. */
+.actions {
+  container-type: inline-size;
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.action {
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
+.action:last-child {
+  border-block-end: var(--hairline) solid var(--color-line);
+}
+
+.actionLink {
+  display: grid;
+  gap: 0.2em;
+  align-content: center;
+  /* The global touch-target rule centres its content; an editorial contact row
+     has to stay flush with the column it sits in. */
+  justify-items: start;
+  text-align: start;
+  min-block-size: max(var(--control-target-min), 4.5rem);
+  padding-block: var(--space-xs);
+  text-decoration: none;
+}
+
+.actionLabel {
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.actionValue {
+  font-size: var(--text-item);
+  letter-spacing: var(--tracking-item);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+@container (min-width: 44rem) {
+  .actionLink {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    align-items: baseline;
+    column-gap: var(--space-md);
+  }
+}

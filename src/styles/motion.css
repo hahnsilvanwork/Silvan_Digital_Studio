@@ -1,0 +1,228 @@
+@keyframes silvan-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes silvan-perspective-drift {
+  0%,
+  100% {
+    opacity: 0.96;
+    transform: rotateX(1.5deg) rotateY(-2deg) translate3d(-0.25rem, 0, 0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: rotateX(-1deg) rotateY(2deg) translate3d(0.25rem, -0.35rem, 0);
+  }
+}
+
+.reveal {
+  animation: silvan-reveal var(--duration-slow) var(--ease-out) both;
+}
+
+.revealFast {
+  animation: silvan-reveal var(--duration-medium) var(--ease-out) both;
+}
+
+.hoverLift {
+  transition-property: transform, opacity;
+  transition-duration: var(--duration-medium);
+  transition-timing-function: var(--ease-out);
+}
+
+.hoverUnderline {
+  position: relative;
+  text-decoration: none;
+}
+
+.hoverUnderline::after {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -0.12em;
+  block-size: var(--hairline);
+  background: currentColor;
+  content: "";
+  opacity: 0.72;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition-property: transform, opacity;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
+}
+
+.nfcPerspectiveDrift {
+  transform-style: preserve-3d;
+  animation: silvan-perspective-drift 4.8s var(--ease-in-out) both;
+}
+
+/* Row links ----------------------------------------------------------------
+   A ruled row that navigates somewhere has to say so before anyone touches it.
+   The marker is present at rest, because a hover-only affordance tells a touch
+   visitor nothing, and it only sharpens where there is a fine pointer.
+   The marker is drawn from two borders rather than set as an arrow glyph,
+   because the font is subset to latin and U+2192 is not in it. */
+.rowLink {
+  position: relative;
+  padding-inline-end: 1.75rem;
+}
+
+.rowLink::after {
+  position: absolute;
+  inset-inline-end: 0.25rem;
+  inset-block-start: 50%;
+  inline-size: 0.4375rem;
+  block-size: 0.4375rem;
+  border-block-start: 0.09375rem solid currentColor;
+  border-inline-end: 0.09375rem solid currentColor;
+  /* Half the box plus its border, so the chevron is optically centred without
+     spending the transform -- the transform has to stay free for the slide. */
+  margin-block-start: -0.28125rem;
+  color: var(--color-ink-muted);
+  content: "";
+  opacity: 0.55;
+  pointer-events: none;
+  /* The rotation stays inside `transform` and last in the list, so the hover
+     translation is applied in the unrotated frame and slides straight out. */
+  transform: rotate(45deg);
+  transition-property: transform, opacity;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
+}
+
+/* The media itself is the hover target on a project card, so the marker would
+   land in the middle of the image. The image answers instead. */
+.mediaLink :where(img) {
+  transition-property: transform;
+  transition-duration: var(--duration-medium);
+  transition-timing-function: var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hoverLift:hover {
+    opacity: 0.88;
+    transform: translate3d(0, -0.25rem, 0);
+  }
+
+  .hoverUnderline:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  /* Colour is not transitioned anywhere in this system -- only transform and
+     opacity are -- so the accent lands immediately and the marker carries the
+     movement. */
+  .rowLink:hover {
+    color: var(--color-accent);
+  }
+
+  .rowLink:hover::after {
+    color: var(--color-accent);
+    opacity: 1;
+    transform: translate3d(0.3rem, 0, 0) rotate(45deg);
+  }
+
+  .mediaLink:hover :where(img) {
+    transform: scale3d(1.03, 1.03, 1);
+  }
+}
+
+.rowLink:focus-visible::after,
+.rowLink:focus-within::after {
+  opacity: 1;
+  transform: translate3d(0.3rem, 0, 0) rotate(45deg);
+}
+
+.hoverUnderline:focus-visible::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal,
+  .revealFast,
+  .hoverLift,
+  .nfcPerspectiveDrift {
+    opacity: 1;
+    transform: none;
+  }
+
+  .rowLink::after {
+    transform: rotate(45deg);
+  }
+
+  .mediaLink :where(img) {
+    transform: none;
+  }
+
+  .hoverUnderline::after {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Scroll reveals ----------------------------------------------------------
+   The hidden state is scoped to :root[data-motion="on"], which an inline script
+   sets before the first paint. Without JavaScript, with reduced motion, or if
+   the bundle never boots, the flag is absent or "off" and every element below
+   simply stays visible -- content is never hidden behind an effect that cannot
+   run. */
+
+:root[data-motion="on"] [data-reveal]:not([data-reveal="mask"]) {
+  opacity: 0;
+  transition-property: transform, opacity;
+  transition-duration: var(--duration-reveal);
+  transition-timing-function: var(--ease-out);
+  transition-delay: calc(var(--reveal-index, 0) * var(--reveal-step));
+}
+
+:root[data-motion="on"] [data-reveal="rise"] {
+  transform: translate3d(0, 1.75rem, 0);
+}
+
+:root[data-motion="on"] [data-reveal="scale"] {
+  transform: scale3d(1.06, 1.06, 1);
+}
+
+:root[data-motion="on"] [data-reveal]:not([data-reveal="mask"])[data-revealed="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Masked text: each word rides up out of its own clipped box. */
+:root[data-motion="on"] [data-reveal="mask"] [data-mask-item] {
+  transform: translate3d(0, 105%, 0);
+  transition-property: transform;
+  transition-duration: var(--duration-reveal-mask);
+  transition-timing-function: var(--ease-out);
+  transition-delay: calc(var(--reveal-index, 0) * var(--reveal-step-word));
+}
+
+:root[data-motion="on"] [data-reveal="mask"][data-revealed="true"] [data-mask-item] {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Belt and braces: the preference can change after the inline script has run. */
+@media (prefers-reduced-motion: reduce) {
+  :root[data-motion="on"] [data-reveal],
+  :root[data-motion="on"] [data-reveal] [data-mask-item] {
+    opacity: 1;
+    transform: none;
+  }
+}

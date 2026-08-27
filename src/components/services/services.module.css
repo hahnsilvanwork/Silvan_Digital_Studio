@@ -1,0 +1,168 @@
+/* Service directory, price tiers and process steps. */
+
+.directory,
+.tiers,
+.process {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.directoryItem {
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
+.directoryItem:last-child {
+  border-block-end: var(--hairline) solid var(--color-line);
+}
+
+.directoryLink {
+  display: grid;
+  gap: var(--space-2xs);
+  align-items: baseline;
+  padding-block: var(--space-sm);
+  text-decoration: none;
+}
+
+.directoryTitle {
+  font-size: var(--text-item);
+  letter-spacing: var(--tracking-item);
+  line-height: 1.02;
+}
+
+.directoryDescription {
+  max-inline-size: 34rem;
+  color: var(--color-ink-muted);
+  font-size: var(--text-body);
+}
+
+/* The starting price is the second fact a visitor looks for, after the name of
+   the service. It used to render at label size in the muted tone, which made it
+   the smallest and quietest thing in a row it should be anchoring. */
+.directoryPrice {
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-price);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* auto-fit keeps one, three or four tiers all looking deliberate without a
+   per-page column count. */
+.tiers {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+
+.tier {
+  display: grid;
+  gap: var(--space-xs);
+  align-content: start;
+  padding-block-start: var(--space-sm);
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
+.tierName {
+  font-size: var(--text-subitem);
+  font-weight: 500;
+  letter-spacing: var(--tracking-item);
+}
+
+.tierDescription {
+  color: var(--color-ink-muted);
+}
+
+.tierFeatures {
+  display: grid;
+  gap: var(--space-2xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tierFeature {
+  padding-inline-start: 1.1em;
+  position: relative;
+  color: var(--color-ink-muted);
+  font-size: var(--text-body);
+}
+
+.tierFeature::before {
+  position: absolute;
+  inset-inline-start: 0;
+  content: "—";
+}
+
+.process {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+
+.processStep {
+  display: grid;
+  gap: var(--space-2xs);
+  align-content: start;
+  padding-block-start: var(--space-sm);
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
+.processLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.processTitle {
+  font-size: var(--text-subitem);
+  letter-spacing: var(--tracking-item);
+}
+
+.processDescription {
+  color: var(--color-ink-muted);
+}
+
+@media (min-width: 48rem) {
+  .directoryLink {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--space-md);
+  }
+
+  .directoryTitle {
+    grid-column: 1;
+  }
+
+  .directoryDescription {
+    grid-column: 1;
+  }
+
+  .directoryPrice {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+}
+
+@media (min-width: 64rem) {
+  .directoryLink {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 5fr) minmax(0, 2fr);
+    padding-block: var(--space-md);
+  }
+
+  .directoryDescription {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .directoryPrice {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+}

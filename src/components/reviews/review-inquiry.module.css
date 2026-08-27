@@ -1,0 +1,109 @@
+.form,
+.confirm {
+  display: grid;
+  gap: var(--space-sm);
+  max-inline-size: 46rem;
+}
+
+.formIntro,
+.privacy,
+.confirmNotice {
+  color: var(--color-ink-muted);
+  font-size: var(--text-body);
+}
+
+.privacy {
+  font-size: var(--text-label);
+}
+
+.fields {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.field {
+  display: grid;
+  gap: 0.35em;
+  margin: 0;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.control {
+  min-block-size: var(--control-target-min);
+  padding: var(--space-2xs) var(--space-xs);
+  border: var(--hairline) solid var(--color-line);
+  border-radius: 0;
+  background: var(--color-paper-raised);
+  color: inherit;
+  font: inherit;
+}
+
+/* The invalid border and the error text used to be the same blue as the focus
+   ring, so the field you were in and the fields that were wrong looked
+   identical. Invalid now reads as weight, not hue, which also leaves the state
+   legible to anyone who cannot separate the two colours. */
+.control[aria-invalid="true"] {
+  border-width: 0.125rem;
+  border-color: var(--color-ink);
+}
+
+.error {
+  color: var(--color-ink);
+  font-size: var(--text-label);
+  font-weight: 500;
+}
+
+.submit,
+.confirmLink,
+.editButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: max(var(--control-target-min), 3.25rem);
+  padding-inline: var(--space-md);
+  border: var(--hairline) solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: var(--text-action);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.submit,
+.confirmLink {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.editButton {
+  border-color: var(--color-line);
+  background: none;
+  color: inherit;
+}
+
+.submit,
+.confirmLink,
+.editButton {
+  justify-self: start;
+}
+
+@media (min-width: 48rem) {
+  .fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .field:last-child {
+    grid-column: 1 / -1;
+  }
+}

@@ -1,0 +1,186 @@
+/* Portfolio previews and the reusable project detail layout. */
+
+.previewList {
+  display: grid;
+  gap: var(--space-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.preview {
+  min-inline-size: 0;
+}
+
+.previewLink {
+  display: grid;
+  gap: var(--space-xs);
+  text-decoration: none;
+}
+
+.previewMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* This label is an honesty caveat, not an action. It was the only accent on the
+   home page -- four times over -- which spent the brand's one signal colour on
+   a disclaimer. Full ink and a heavier weight keep it prominent against the
+   muted meta row around it without taking the action colour. */
+.previewConcept {
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+.previewName {
+  font-size: var(--text-item);
+  letter-spacing: var(--tracking-item);
+  line-height: 1.02;
+}
+
+.previewTagline {
+  max-inline-size: 34rem;
+  color: var(--color-ink-muted);
+}
+
+.detailHeader {
+  display: grid;
+  gap: var(--space-sm);
+  padding-block: var(--space-xl) var(--space-lg);
+}
+
+.detailConcept {
+  color: var(--color-ink);
+  font-weight: 500;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.detailTitle {
+  font-size: var(--text-title);
+  letter-spacing: var(--tracking-title);
+  line-height: 0.96;
+}
+
+.detailTagline {
+  max-inline-size: 40rem;
+  font-size: var(--text-lead);
+  line-height: 1.35;
+}
+
+.detailFacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin: 0 0 var(--space-lg);
+  padding-block-end: var(--space-sm);
+  border-block-end: var(--hairline) solid var(--color-line);
+}
+
+.detailFact {
+  display: grid;
+  gap: 0.2em;
+}
+
+.detailFactLabel {
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.detailFactValue {
+  margin: 0;
+}
+
+.detailBody {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.detailSection {
+  display: grid;
+  gap: var(--space-2xs);
+  align-content: start;
+}
+
+.detailSectionLabel {
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.detailSectionBody {
+  max-inline-size: 40rem;
+}
+
+.detailNext {
+  padding-block: var(--space-lg) var(--space-xl);
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
+.detailNextLink {
+  display: grid;
+  justify-items: start;
+  gap: 0.3em;
+  padding-block: var(--space-sm);
+  text-decoration: none;
+}
+
+.detailNextLabel {
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.detailNextName {
+  font-size: var(--text-heading);
+  letter-spacing: var(--tracking-heading);
+  line-height: 1;
+}
+
+.detailNextTagline {
+  color: var(--color-ink-muted);
+}
+
+@media (min-width: 64rem) {
+  /* The media caps at 32rem, so equal 1fr columns left each image floating in a
+     wider cell with a ragged right edge and the grid covering barely half the
+     canvas. Sizing the tracks to the media and pushing them apart lets the pair
+     span the container properly. */
+  .previewList {
+    grid-template-columns: repeat(2, minmax(0, 32rem));
+    justify-content: space-between;
+    column-gap: var(--grid-gap);
+    row-gap: var(--space-xl);
+  }
+
+  /* Offsetting every second preview keeps the index editorial rather than
+     catalogue-like, without breaking the reading order. */
+  .previewList > :nth-child(even) {
+    margin-block-start: var(--space-xl);
+  }
+
+  .detailBody {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--grid-gap);
+  }
+
+  .detailFacts {
+    gap: var(--space-xl);
+  }
+}

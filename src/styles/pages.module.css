@@ -1,0 +1,459 @@
+.page {
+  position: relative;
+  min-block-size: 100svh;
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* Exactly one screen minus the sticky header, with the whole block centred:
+   space-between opened a dead gap in the middle of the hero on tall screens.
+   If the content needs more room the section grows instead of clipping. */
+.hero {
+  display: grid;
+  align-content: center;
+  gap: var(--space-md);
+  min-block-size: calc(100svh - var(--header-block-size));
+  padding-block: var(--space-sm) var(--space-md);
+}
+
+/* No measure cap here: the headline sets its own with 16ch and the supporting
+   paragraph sets its own. Capping the whole block forced extra headline lines,
+   and lines are what the height budget cannot afford. */
+.heroBody {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-block-start: var(--space-xs);
+}
+
+/* Same zero-specificity shrink default as the layout grid; see layout.module.css. */
+:where(.hero > *) {
+  min-inline-size: 0;
+}
+
+.heroLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  max-inline-size: 16ch;
+  font-size: var(--text-display);
+  letter-spacing: var(--tracking-display);
+  line-height: 0.94;
+}
+
+.section {
+  padding-block: var(--space-xl);
+}
+
+/* A section that follows the page header directly does not need top padding of
+   its own: the header already ends in a full --space-lg. Carrying both put the
+   first price of the review products 16px below a 390x844 fold. */
+.sectionLead {
+  padding-block-start: 0;
+}
+
+.sectionLead .sectionBody {
+  margin-block-start: var(--space-md);
+}
+
+.editorial {
+  max-inline-size: 42rem;
+  font-size: var(--text-lead);
+  line-height: 1.35;
+  letter-spacing: var(--tracking-text);
+}
+
+.rule {
+  inline-size: 100%;
+  block-size: var(--hairline);
+  border: 0;
+  margin: 0;
+  background: var(--color-line);
+}
+
+.darkBand {
+  --focus-ring-inner: #1a1a1a;
+  --focus-ring-outer: #f9f8f6;
+
+  padding-block: var(--space-xl);
+  background: var(--color-dark-band);
+  color: var(--color-on-dark);
+}
+
+/* The supplied concept exports are 512x279. The frame takes exactly that ratio
+   and stops at their intrinsic width, so the asset is never upscaled and never
+   floats inside an empty box. Replace the assets with wider ones and raise the
+   32rem cap together -- see public/images/projects/README.md. */
+.projectMedia {
+  --project-media-object-position: 50% 50%;
+
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: min(100%, 32rem);
+  aspect-ratio: 512 / 279;
+  overflow: clip;
+  border: var(--hairline) solid var(--color-line);
+  border-radius: var(--radius-media);
+  background: var(--color-line);
+}
+
+/* The four concepts were shot under different light -- cool concrete, flat
+   white, warm wood twice -- so at full saturation they read as four unrelated
+   stock photos rather than as one series. A shared grade pulls them together
+   and takes the eye off the desk props and back onto the screens. Replacing
+   these with real client work is the actual fix; this makes the placeholders
+   cohere until then. */
+.projectMedia > :is(img, picture) {
+  filter: saturate(0.55) contrast(1.06);
+}
+
+/* The frame already carries the asset's own aspect ratio and stops at its
+   intrinsic width, so filling it is exact rather than an upscale. Sizing to the
+   decoded width instead left a visible border, because the optimizer re-encodes
+   at a slightly different pixel size than the source. */
+.projectMedia > :is(img, picture) {
+  inline-size: 100%;
+  max-inline-size: min(100%, 32rem);
+  block-size: 100%;
+  max-block-size: 100%;
+}
+
+.projectMedia > img,
+.projectMedia > picture > img {
+  block-size: auto;
+  object-fit: contain;
+  object-position: var(--project-media-object-position);
+}
+
+.projectMedia > picture > img {
+  inline-size: 100%;
+}
+
+.projectMedia[data-project="archa"] {
+  --project-media-object-position: 50% 50%;
+}
+
+.projectMedia[data-project="lumen"] {
+  --project-media-object-position: 50% 48%;
+}
+
+.projectMedia[data-project="architech-studio"] {
+  --project-media-object-position: 50% 52%;
+}
+
+.projectMedia[data-project="vanguard-apparel"] {
+  --project-media-object-position: 50% 50%;
+}
+
+@media (min-width: 64rem) {
+  .editorial {
+    margin-inline-start: 25%;
+  }
+}
+
+/* The dark band is deliberately left at --space-xl: it always carries a heading
+   and a short list, so the widest step turned it into a mostly empty bar. */
+@media (min-width: 80rem) {
+  .section {
+    padding-block: var(--space-2xl);
+  }
+}
+
+/* Declared after every svh rule so the dynamic-viewport value wins wherever it
+   is supported and mobile browser chrome cannot crop the first screen. */
+@supports (min-height: 100dvh) {
+  .page {
+    min-block-size: 100dvh;
+  }
+
+  .hero {
+    min-block-size: calc(100dvh - var(--header-block-size));
+  }
+}
+
+/* Page scaffolding -------------------------------------------------------- */
+
+.pageHeader {
+  display: grid;
+  gap: var(--space-sm);
+  padding-block: var(--space-xl) var(--space-lg);
+}
+
+.pageTitle {
+  max-inline-size: 18ch;
+  font-size: var(--text-title);
+  letter-spacing: var(--tracking-title);
+  line-height: 0.96;
+}
+
+.editorialTight {
+  max-inline-size: 44rem;
+  color: var(--color-ink-muted);
+  font-size: var(--text-lead);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-text);
+}
+
+.sectionBody {
+  display: grid;
+  gap: var(--space-md);
+  margin-block-start: var(--space-lg);
+}
+
+.sectionActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.sectionLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.note {
+  color: var(--color-ink-muted);
+  font-size: var(--text-body);
+}
+
+/* The dark band re-points the muted and line tokens instead of restating a
+   colour on every descendant. */
+.darkBand {
+  --color-ink-muted: rgb(249 248 246 / 66%);
+  --color-line: rgb(249 248 246 / 22%);
+}
+
+/* Services ---------------------------------------------------------------- */
+
+.benefitList {
+  display: grid;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.benefit {
+  position: relative;
+  padding-block: var(--space-2xs);
+  padding-inline-start: 1.6em;
+  border-block-start: var(--hairline) solid var(--color-line);
+  font-size: var(--text-lead);
+  letter-spacing: var(--tracking-text);
+}
+
+.benefit::before {
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--color-accent);
+  content: "—";
+}
+
+/* About ------------------------------------------------------------------- */
+
+.aboutLayout {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.aboutBody {
+  display: grid;
+  gap: var(--space-sm);
+  max-inline-size: 44rem;
+  font-size: var(--text-lead);
+  line-height: 1.45;
+  letter-spacing: var(--tracking-text);
+}
+
+.aboutParagraph {
+  margin: 0;
+}
+
+/* The initial scales with the frame, not the viewport: this column is a quarter
+   of the canvas on desktop and the full width on mobile, so a vw-based size
+   would be wrong at one end or the other. */
+.portrait {
+  container-type: inline-size;
+  margin: 0;
+}
+
+/* An empty bordered rectangle with centred 12px type reads as an image that
+   failed to load -- the worst thing to put on the page that has to establish
+   trust. The wordmark initial gives the frame a subject, and the label moves to
+   the baseline where a caption belongs, so the absent photograph is stated
+   rather than looking broken. */
+.portraitPlaceholder {
+  position: relative;
+  display: grid;
+  gap: 0.4em;
+  align-content: end;
+  justify-items: start;
+  aspect-ratio: 4 / 5;
+  padding: var(--space-sm);
+  overflow: clip;
+  border: var(--hairline) solid var(--color-line);
+  background: var(--color-paper-raised);
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.18em;
+  text-align: start;
+  text-transform: uppercase;
+}
+
+.portraitPlaceholder::before {
+  position: absolute;
+  inset-block-start: -0.16em;
+  inset-inline-start: -0.055em;
+  color: var(--color-ink);
+  content: "S";
+  font-family: var(--font-sans);
+  font-size: 82cqw;
+  font-weight: 500;
+  letter-spacing: var(--tracking-display);
+  line-height: 1;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+.portraitCaption {
+  margin-block-start: var(--space-2xs);
+  color: var(--color-ink-muted);
+  font-size: var(--text-label);
+}
+
+.valueList {
+  display: grid;
+  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.value {
+  display: grid;
+  gap: var(--space-2xs);
+  align-content: start;
+  padding-block-start: var(--space-sm);
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
+.valueTitle {
+  font-size: var(--text-subitem);
+  letter-spacing: var(--tracking-item);
+}
+
+.valueDescription {
+  color: var(--color-ink-muted);
+}
+
+/* Hello launchpad --------------------------------------------------------- */
+
+/* On a phone this is one column and the two blocks simply follow each other.
+   From the large breakpoint the launchpad and the direct-contact block share a
+   row, so the page is composed for the canvas instead of being a 30px mobile
+   list ruled across 1,324px. DOM order is unchanged. */
+.helloBody {
+  display: grid;
+  gap: var(--space-lg);
+  padding-block: var(--space-lg) var(--space-xl);
+}
+
+.helloPanel {
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
+}
+
+.launchpad {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.launchpadItem {
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
+.launchpadItem:last-child {
+  border-block-end: var(--hairline) solid var(--color-line);
+}
+
+.launchpadLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-block-size: max(var(--control-target-min), 4rem);
+  font-size: var(--text-item);
+  letter-spacing: var(--tracking-item);
+  text-decoration: none;
+}
+
+/* Review products --------------------------------------------------------- */
+
+/* Two square product shots stacked full-width ran to roughly 720px on a phone
+   and pushed every price below the fold. Side by side they read as one pair --
+   card and stand -- and the block costs a quarter of the height. */
+.productShowcase {
+  display: grid;
+  gap: var(--space-xs);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+}
+
+/* Both shots are photographed on near-white, so without a frame they dissolve
+   into the paper and read as unfinished assets rather than as product images. */
+.productImage {
+  display: block;
+  overflow: clip;
+  border: var(--hairline) solid var(--color-line);
+  border-radius: var(--radius-media);
+  background: var(--color-paper-raised);
+}
+
+.productImage img {
+  inline-size: 100%;
+  block-size: auto;
+}
+
+@media (min-width: 64rem) {
+  .helloBody {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--space-xl);
+    align-items: start;
+  }
+
+  /* The rows carry the page at this width, so they take a section-heading size
+     rather than the item size they hold on a phone. */
+  .launchpadLink {
+    min-block-size: max(var(--control-target-min), 5rem);
+    font-size: var(--text-heading);
+    letter-spacing: var(--tracking-heading);
+  }
+
+  .aboutLayout {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--grid-gap);
+    align-items: start;
+  }
+
+  .pageTitle {
+    max-inline-size: 15ch;
+  }
+}

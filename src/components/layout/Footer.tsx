@@ -1,0 +1,105 @@
+import type { Locale } from "../../content/types";
+import { getContent } from "../../lib/locales";
+import { localizePath } from "../../lib/routes";
+import styles from "./navigation.module.css";
+
+interface FooterProps {
+  readonly locale: Locale;
+}
+
+export function Footer({ locale }: FooterProps) {
+  const content = getContent(locale);
+  const { details } = content.contact;
+  const year = new Date().getFullYear();
+
+  const contactActions = [
+    {
+      label: content.contact.emailLabel,
+      value: details.email,
+      href: `mailto:${details.email}`,
+      external: false,
+    },
+    {
+      label: content.contact.phoneLabel,
+      value: details.phoneDisplay,
+      href: details.phoneHref,
+      external: false,
+    },
+    {
+      label: content.contact.whatsappLabel,
+      value: details.whatsappNumber,
+      href: details.whatsappHref,
+      external: true,
+    },
+    {
+      label: content.contact.linkedInLabel,
+      value: "silvan-hahn-dev",
+      href: details.linkedIn,
+      external: true,
+    },
+  ];
+
+  return (
+    <footer className={styles.footer}>
+      <div className={styles.footerInner}>
+        <div className={styles.footerBrand}>
+          <span className={styles.footerWordmark}>{content.brand.name}</span>
+          <span className={styles.footerDescriptor}>
+            {content.brand.descriptor}
+          </span>
+        </div>
+
+        <section className={styles.footerContact}>
+          <h2 className={styles.footerHeading}>{content.footer.contactTitle}</h2>
+          <ul className={styles.footerContactList}>
+            {contactActions.map((action) => (
+              <li key={action.href}>
+                <a
+                  className={styles.footerContactLink}
+                  data-touch-target
+                  href={action.href}
+                  {...(action.external
+                    ? { rel: "noopener noreferrer", target: "_blank" }
+                    : {})}
+                >
+                  <span className={styles.footerContactLabel}>
+                    {action.label}
+                  </span>
+                  <span className={styles.footerContactValue}>
+                    {action.value}
+                  </span>
+                  {action.external ? (
+                    <span className="visually-hidden">
+                      {content.a11y.externalLink}
+                    </span>
+                  ) : null}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <nav aria-label={content.footer.navLabel} className={styles.footerNav}>
+          <ul className={styles.footerNavList}>
+            {content.navigation.primary.map((item) => (
+              <li key={item.href}>
+                <a
+                  className={`${styles.footerNavLink} hoverUnderline`}
+                  data-touch-target
+                  href={localizePath(item.href, locale)}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <p className={styles.footerLegal}>
+          © {year} {content.brand.name} {content.brand.descriptor}.{" "}
+          {content.footer.rights}
+        </p>
+      </div>
+    </footer>
+  );
+}
