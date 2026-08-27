@@ -2,15 +2,17 @@ import type { Metadata, Viewport } from "next";
 
 import "./globals.css";
 import { rootFontVariables } from "./fonts";
-import {
-  DocumentShell,
-  metadata as siteMetadata,
-  viewport as siteViewport,
-} from "./layout-contract";
 
-export const metadata: Metadata = siteMetadata;
+export const metadata: Metadata = {
+  title: "SILVAN Digital Studio",
+  description:
+    "Digitale Lösungen für mehr Sichtbarkeit und weniger wiederkehrende Arbeit.",
+};
 
-export const viewport: Viewport = siteViewport;
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export default function RootLayout({
   children,
@@ -18,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <DocumentShell className={rootFontVariables}>
-      {children}
-    </DocumentShell>
+    <html lang="de">
+      <body className={rootFontVariables}>{children}</body>
+    </html>
   );
 }
