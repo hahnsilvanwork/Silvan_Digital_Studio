@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { ReactNode } from "react";
 
 import type { Locale } from "../../content/types";
@@ -36,6 +37,11 @@ export function RootDocument({ locale, children }: RootDocumentProps) {
         />
         <PersonSchema locale={locale} />
         {children}
+        {/* Vercel Analytics: page views only, no cookies and no persistent
+            identifier, so nothing here needs a consent banner and the privacy
+            statement can keep describing the site accurately. Last in the body
+            so it can never delay the content. */}
+        <Analytics />
       </body>
     </html>
   );

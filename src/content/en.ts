@@ -533,10 +533,11 @@ export const en = {
         ],
       },
       {
-        title: "No cookies, no analytics, no advertising",
+        title: "Audience measurement without cookies",
         body: [
-          "This website sets no cookies and embeds no analytics, tracking, or advertising services. No profiling takes place, and your behaviour on this website is not evaluated.",
-          "Should audience measurement be introduced in future, this statement will be updated beforehand.",
+          "This website uses Vercel Analytics to count which pages are opened. No cookies are set and no persistent identifiers are stored. No profiling takes place, you are not recognised across visits, and nothing is followed across other websites.",
+          "What is collected: the page opened, the referring address, approximate origin at country level, and device type and browser. From this a daily-rotating, non-reversible value is derived whose only purpose is to stop repeat views within one session being counted twice. That value is not stored and allows no conclusion about you personally.",
+          "No advertising services are embedded, and no data is passed to third parties for advertising. Because no cookies are set and no personal data is processed to recognise you, this measurement requires no consent.",
         ],
       },
       {

@@ -537,10 +537,11 @@ export const de = {
         ],
       },
       {
-        title: "Keine Cookies, keine Analyse, keine Werbung",
+        title: "Reichweitenmessung ohne Cookies",
         body: [
-          "Diese Website setzt keine Cookies und bindet keine Analyse-, Tracking- oder Werbedienste ein. Es findet keine Profilbildung statt, und Ihr Verhalten auf dieser Website wird nicht ausgewertet.",
-          "Sollte künftig eine Reichweitenmessung eingesetzt werden, wird diese Erklärung vorher entsprechend angepasst.",
+          "Diese Website nutzt Vercel Analytics, um zu zählen, welche Seiten aufgerufen werden. Dabei werden keine Cookies gesetzt und keine dauerhaften Kennungen gespeichert. Es findet keine Profilbildung statt, Sie werden über mehrere Besuche hinweg nicht wiedererkannt, und über andere Websites hinweg wird nichts verfolgt.",
+          "Erhoben werden die aufgerufene Seite, die verweisende Adresse, die ungefähre Herkunft auf Länderebene sowie Gerätetyp und Browser. Daraus wird ein täglich wechselnder, nicht umkehrbarer Wert gebildet, der ausschliesslich verhindert, dass Aufrufe derselben Sitzung doppelt gezählt werden. Dieser Wert wird nicht gespeichert und lässt keinen Rückschluss auf Ihre Person zu.",
+          "Es werden keine Werbedienste eingebunden, und es werden keine Daten zu Werbezwecken an Dritte weitergegeben. Weil dabei keine Cookies gesetzt und keine Personendaten zur Wiedererkennung bearbeitet werden, ist für diese Messung keine Einwilligung erforderlich.",
         ],
       },
       {
