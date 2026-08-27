@@ -1,0 +1,412 @@
+/* Global header, full-screen mobile drawer and site footer.
+   Mobile-first: the base rules describe the 320px composition, every wider
+   layout is added through a min-width query. */
+
+.header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-navigation);
+  background: var(--color-paper);
+  border-block-end: var(--hairline) solid var(--color-line);
+}
+
+.skipLink {
+  position: absolute;
+  inset-inline-start: var(--page-gutter);
+  inset-block-start: 0;
+  z-index: var(--z-overlay);
+  padding: var(--space-2xs) var(--space-xs);
+  background: var(--color-ink);
+  color: var(--color-on-dark);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  /* Off-canvas rather than display:none, so it stays reachable by Tab. */
+  transform: translate3d(0, -150%, 0);
+  transition-property: transform;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
+}
+
+.skipLink:focus-visible {
+  transform: translate3d(0, 0, 0);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--container-max));
+  margin-inline: auto;
+  padding-block: var(--space-xs);
+  padding-inline-start: max(0px, var(--safe-left));
+  padding-inline-end: max(0px, var(--safe-right));
+}
+
+.wordmark {
+  display: grid;
+  gap: 0.1em;
+  text-decoration: none;
+}
+
+.wordmarkName {
+  font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.375rem);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.wordmarkDescriptor {
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* The horizontal navigation only appears once there is room for all seven
+   entries; below that the drawer carries them. */
+.primaryNav {
+  display: none;
+}
+
+.primaryList {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 1.6vw, 2.25rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.primaryLink {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--control-target-min);
+  font-size: var(--text-label);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.primaryLink[aria-current="page"] {
+  color: var(--color-accent);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.languages {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+}
+
+.language {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--control-target-min);
+  min-inline-size: var(--control-target-min);
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.language[aria-current="true"] {
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+.menuTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding-inline: var(--space-2xs);
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  touch-action: manipulation;
+}
+
+.menuTriggerIcon {
+  position: relative;
+  display: block;
+  inline-size: 1.375rem;
+  block-size: var(--hairline);
+  background: currentColor;
+}
+
+.menuTriggerIcon::before,
+.menuTriggerIcon::after {
+  position: absolute;
+  inset-inline: 0;
+  block-size: var(--hairline);
+  background: currentColor;
+  content: "";
+}
+
+.menuTriggerIcon::before {
+  inset-block-start: -0.3125rem;
+}
+
+.menuTriggerIcon::after {
+  inset-block-start: 0.3125rem;
+}
+
+/* Drawer ------------------------------------------------------------------ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(26 26 26 / 40%);
+}
+
+.panel {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  display: flex;
+  flex-direction: column;
+  inline-size: min(100%, 30rem);
+  background: var(--color-paper);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-block-start: max(var(--space-xs), var(--safe-top));
+  padding-block-end: max(var(--space-lg), var(--safe-bottom));
+  padding-inline: max(var(--page-gutter), var(--safe-left))
+    max(var(--page-gutter), var(--safe-right));
+  /* Defined locally: CSS modules only rewrite animation names declared in the
+     same file, so a global keyframe reference here would be fragile. */
+  animation: panel-in var(--duration-medium) var(--ease-out) both;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translate3d(1.5rem, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding-block-end: var(--space-sm);
+}
+
+.panelBrand {
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.menuClose {
+  padding-inline: var(--space-2xs);
+  border: 0;
+  background: none;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  touch-action: manipulation;
+}
+
+.panelList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.panelItem {
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
+.panelLink {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-block-size: max(var(--control-target-min), 3.75rem);
+  font-size: clamp(1.5rem, 1.1rem + 2.4vw, 2.5rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-align: start;
+  text-decoration: none;
+}
+
+.panelLink[aria-current="page"] {
+  color: var(--color-accent);
+}
+
+/* Footer ------------------------------------------------------------------ */
+
+.footer {
+  background: var(--color-ink);
+  color: var(--color-on-dark);
+  /* The footer is a dark surface, so the focus ring swaps to the paper tone to
+     keep at least 3:1 against its own background. */
+  --focus-ring-inner: #1a1a1a;
+  --focus-ring-outer: #f9f8f6;
+}
+
+.footerInner {
+  display: grid;
+  gap: var(--space-lg);
+  inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--container-max));
+  margin-inline: auto;
+  padding-block: var(--space-xl);
+  padding-block-end: max(var(--space-xl), var(--safe-bottom));
+  padding-inline-start: max(0px, var(--safe-left));
+  padding-inline-end: max(0px, var(--safe-right));
+}
+
+.footerBrand {
+  display: grid;
+  gap: 0.35em;
+}
+
+.footerWordmark {
+  font-size: clamp(2rem, 1.4rem + 3vw, 3.5rem);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.footerDescriptor {
+  color: rgb(249 248 246 / 62%);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.footerHeading {
+  margin-block-end: var(--space-sm);
+  color: rgb(249 248 246 / 62%);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.footerContactList,
+.footerNavList {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footerContactLink {
+  display: grid;
+  gap: 0.15em;
+  align-content: center;
+  justify-items: start;
+  min-block-size: max(var(--control-target-min), 3.25rem);
+  border-block-start: var(--hairline) solid rgb(249 248 246 / 18%);
+  text-align: start;
+  text-decoration: none;
+}
+
+.footerContactLabel {
+  color: rgb(249 248 246 / 62%);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.footerContactValue {
+  font-size: var(--text-body);
+}
+
+.footerNavList {
+  gap: 0.25rem;
+}
+
+.footerNavLink {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--control-target-min);
+  font-size: var(--text-body);
+  text-decoration: none;
+}
+
+.footerLegal {
+  color: rgb(249 248 246 / 62%);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.04em;
+}
+
+@media (min-width: 48rem) {
+  .footerInner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footerBrand,
+  .footerLegal {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 64rem) {
+  .primaryNav {
+    display: block;
+  }
+
+  .menuTrigger {
+    display: none;
+  }
+
+  .bar {
+    padding-block: var(--space-sm);
+  }
+
+  .footerInner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr);
+  }
+
+  .footerBrand {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .footerLegal {
+    grid-column: 1 / -1;
+  }
+}

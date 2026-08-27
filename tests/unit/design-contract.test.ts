@@ -1,16 +1,35 @@
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 
 import postcss, { type Declaration, type Root } from "postcss";
 import { describe, expect, it } from "vitest";
 
-const stylesheetPaths = [
+const REQUIRED_STYLESHEETS = [
   "src/app/globals.css",
   "src/styles/layout.module.css",
   "src/styles/pages.module.css",
   "src/styles/motion.css",
 ] as const;
+
+/**
+ * Every stylesheet under src/ is held to this contract, not just the four core
+ * files: a component stylesheet added later must obey the same mobile-first,
+ * motion and focus rules without anyone remembering to register it here.
+ */
+function discoverStylesheets(directory: string): string[] {
+  return readdirSync(resolve(process.cwd(), directory), { withFileTypes: true })
+    .flatMap((entry) => {
+      const path = join(directory, entry.name).replaceAll("\\", "/");
+
+      if (entry.isDirectory()) return discoverStylesheets(path);
+
+      return entry.name.endsWith(".css") ? [path] : [];
+    })
+    .sort();
+}
+
+const stylesheetPaths = discoverStylesheets("src");
 
 const stylesheets = stylesheetPaths.map((path) => {
   const absolutePath = resolve(process.cwd(), path);
@@ -123,6 +142,20 @@ function declarationValues(
   return values;
 }
 
+function exactDeclarationValues(root: Root, selector: string, property: string) {
+  const values: string[] = [];
+
+  root.walkRules((rule) => {
+    if (rule.selector !== selector) return;
+
+    rule.walkDecls(property, (declaration) => {
+      values.push(declaration.value);
+    });
+  });
+
+  return values;
+}
+
 function customProperty(root: Root, selector: string, property: string) {
   let value: string | undefined;
 
@@ -211,8 +244,11 @@ function transitionedProperty(declaration: Declaration) {
 }
 
 describe("SILVAN responsive design contract", () => {
-  it("loads every required stylesheet and parses it with PostCSS", () => {
-    expect(stylesheets.map(({ path }) => path)).toEqual(stylesheetPaths);
+  it("loads every stylesheet under src and parses it with PostCSS", () => {
+    expect(stylesheetPaths).toEqual(
+      expect.arrayContaining([...REQUIRED_STYLESHEETS]),
+    );
+    expect(stylesheetPaths.length).toBeGreaterThan(REQUIRED_STYLESHEETS.length);
     expect(stylesheets.every(({ root }) => root.type === "root")).toBe(true);
     expect(packageJson.devDependencies?.postcss).toEqual(expect.any(String));
   });
@@ -305,20 +341,31 @@ describe("SILVAN responsive design contract", () => {
   });
 
   it("prevents intrinsic overflow without masking layout defects", () => {
+    // Exact selectors: an unconditional clip on these containers would hide a
+    // real horizontal overflow instead of exposing it.
     for (const [root, selector] of [
       [globals.root, "body"],
       [layout.root, ".shell"],
       [layout.root, ".container"],
     ] as const) {
       const overflow = [
-        ...declarationValues(root, selector, "overflow"),
-        ...declarationValues(root, selector, "overflow-x"),
-        ...declarationValues(root, selector, "overflow-inline"),
+        ...exactDeclarationValues(root, selector, "overflow"),
+        ...exactDeclarationValues(root, selector, "overflow-x"),
+        ...exactDeclarationValues(root, selector, "overflow-inline"),
       ];
 
       expect(overflow).not.toContain("clip");
       expect(overflow).not.toContain("hidden");
     }
+
+    // The modal scroll lock is allowed, but only while the drawer is open.
+    expect(
+      exactDeclarationValues(
+        globals.root,
+        'body[data-menu-open="true"]',
+        "overflow",
+      ),
+    ).toContain("hidden");
 
     for (const selector of [".grid12 > *", ".asymmetric > *"]) {
       expect(declarationValues(layout.root, selector, "min-inline-size")).toContain(

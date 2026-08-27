@@ -15,6 +15,8 @@ export const en = {
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
     ],
+    primaryLabel: "Main navigation",
+    menuLabel: "Menu",
     languageLabel: "Choose language",
     germanLabel: "German",
     englishLabel: "English",
@@ -298,6 +300,11 @@ export const en = {
       whatsappHref: "https://wa.me/41789008500",
       linkedIn: "https://www.linkedin.com/in/silvan-hahn-dev",
     },
+  },
+  footer: {
+    navLabel: "Footer navigation",
+    contactTitle: "Direct contact",
+    rights: "All rights reserved.",
   },
   hello: {
     eyebrow: "SILVAN Digital Studio",

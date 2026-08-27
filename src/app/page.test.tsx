@@ -1,23 +1,34 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
+import { getContent } from "../lib/locales";
 import Home from "./page";
 
+const { hero } = getContent("de").home;
+
 describe("Home", () => {
-  it("presents the SILVAN positioning message", () => {
+  it("presents the approved SILVAN positioning message inside the main region", () => {
     render(<Home />);
 
-    expect(screen.getByText("SILVAN")).toBeInTheDocument();
+    const main = screen.getByRole("main");
+
+    expect(within(main).getByText(hero.serviceLine)).toBeInTheDocument();
     expect(
-      screen.getByText("Websites · Google Reviews · Online-Präsenz · Automation"),
+      within(main).getByRole("heading", { level: 1, name: hero.headline }),
     ).toBeInTheDocument();
+    expect(within(main).getByText(hero.supporting)).toBeInTheDocument();
+  });
+
+  it("wraps the page in the global chrome", () => {
+    render(<Home />);
+
+    expect(screen.getByRole("banner")).toBeInTheDocument();
+    expect(screen.getByRole("contentinfo")).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "Mehr Kunden. Weniger Aufwand." }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "Ich entwickle digitale Lösungen, die Ihr Unternehmen sichtbar machen und wiederkehrende Arbeit reduzieren.",
-      ),
-    ).toBeInTheDocument();
+      screen.getByRole("link", { name: getContent("de").a11y.skipToContent }),
+    ).toHaveAttribute("href", "#main-content");
+    expect(document.getElementById("main-content")).toBe(
+      screen.getByRole("main"),
+    );
   });
 });

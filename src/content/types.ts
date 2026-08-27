@@ -49,6 +49,8 @@ export interface NavigationItem {
 
 export interface Navigation {
   readonly primary: readonly NavigationItem[];
+  readonly primaryLabel: string;
+  readonly menuLabel: string;
   readonly languageLabel: string;
   readonly germanLabel: string;
   readonly englishLabel: string;
@@ -225,6 +227,11 @@ interface SiteContentShape {
     portraitStatus: string;
   };
   contact: ContactContent;
+  footer: {
+    navLabel: string;
+    contactTitle: string;
+    rights: string;
+  };
   hello: {
     eyebrow: string;
     title: string;
