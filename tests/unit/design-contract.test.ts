@@ -445,12 +445,35 @@ describe("SILVAN responsive design contract", () => {
     expect(projectReadme).toContain("object-position");
   });
 
-  it("keeps the dvh hero enhancement after wider svh overrides", () => {
+  it("declares the dvh viewport enhancement after every svh fallback", () => {
+    // svh is the safe baseline; dvh has to come last so it wins where it is
+    // supported and mobile browser chrome cannot crop the first screen.
     const source = pages.source.toLowerCase();
 
-    expect(source).toContain("92svh");
-    expect(source).toContain("92dvh");
-    expect(source.lastIndexOf("92dvh")).toBeGreaterThan(source.lastIndexOf("92svh"));
+    expect(source).toContain("svh");
+    expect(source).toContain("dvh");
+    expect(source.lastIndexOf("dvh")).toBeGreaterThan(source.lastIndexOf("svh"));
+  });
+
+  it("sizes the first screen against the viewport minus the header", () => {
+    const heroHeights = [
+      ...declarationValues(pages.root, ".hero", "min-block-size"),
+    ];
+
+    expect(heroHeights.length).toBeGreaterThan(0);
+    for (const height of heroHeights) {
+      expect(height).toMatch(
+        /calc\(100(?:svh|dvh) - var\(--header-block-size\)\)/,
+      );
+    }
+    // The header must derive its height from the same token, or the hero would
+    // subtract a value the header does not actually occupy.
+    expect(
+      readFileSync(
+        resolve(process.cwd(), "src/components/layout/navigation.module.css"),
+        "utf8",
+      ),
+    ).toContain("min-block-size: var(--header-block-size)");
   });
 
   it("uses only transform and opacity for reusable motion", () => {

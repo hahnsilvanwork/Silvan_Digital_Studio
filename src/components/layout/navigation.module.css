@@ -39,8 +39,9 @@
   justify-content: space-between;
   gap: var(--space-sm);
   inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--container-max));
+  min-block-size: var(--header-block-size);
   margin-inline: auto;
-  padding-block: var(--space-xs);
+  padding-block: var(--space-2xs);
   padding-inline-start: max(0px, var(--safe-left));
   padding-inline-end: max(0px, var(--safe-right));
 }
@@ -391,10 +392,6 @@
 
   .menuTrigger {
     display: none;
-  }
-
-  .bar {
-    padding-block: var(--space-sm);
   }
 
   .footerInner {

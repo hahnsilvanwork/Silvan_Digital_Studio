@@ -33,6 +33,10 @@
   --space-xl: clamp(4rem, 2rem + 8vw, 11rem);
   --space-2xl: clamp(6rem, 3rem + 12vw, 16rem);
 
+  /* One source of truth for the sticky header: the header sets its own height
+     from this token and the hero subtracts exactly the same value, so the first
+     screen can never end up taller than the viewport. */
+  --header-block-size: clamp(4rem, 3.5rem + 1.4vw, 5.25rem);
   --page-gutter: clamp(1rem, 4vw, 2rem);
   --container-max: 112rem;
   --grid-columns: 12;

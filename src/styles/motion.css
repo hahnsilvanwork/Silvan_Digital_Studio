@@ -103,3 +103,53 @@
     transform: none;
   }
 }
+
+/* Scroll reveals ----------------------------------------------------------
+   The hidden state is scoped to :root[data-motion="on"], which an inline script
+   sets before the first paint. Without JavaScript, with reduced motion, or if
+   the bundle never boots, the flag is absent or "off" and every element below
+   simply stays visible -- content is never hidden behind an effect that cannot
+   run. */
+
+:root[data-motion="on"] [data-reveal]:not([data-reveal="mask"]) {
+  opacity: 0;
+  transition-property: transform, opacity;
+  transition-duration: var(--duration-slow);
+  transition-timing-function: var(--ease-out);
+  transition-delay: calc(var(--reveal-index, 0) * 90ms);
+}
+
+:root[data-motion="on"] [data-reveal="rise"] {
+  transform: translate3d(0, 2.25rem, 0);
+}
+
+:root[data-motion="on"] [data-reveal="scale"] {
+  transform: scale3d(1.06, 1.06, 1);
+}
+
+:root[data-motion="on"] [data-reveal]:not([data-reveal="mask"])[data-revealed="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Masked text: each word rides up out of its own clipped box. */
+:root[data-motion="on"] [data-reveal="mask"] [data-mask-item] {
+  transform: translate3d(0, 105%, 0);
+  transition-property: transform;
+  transition-duration: var(--duration-slow);
+  transition-timing-function: var(--ease-out);
+  transition-delay: calc(var(--reveal-index, 0) * 55ms);
+}
+
+:root[data-motion="on"] [data-reveal="mask"][data-revealed="true"] [data-mask-item] {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Belt and braces: the preference can change after the inline script has run. */
+@media (prefers-reduced-motion: reduce) {
+  :root[data-motion="on"] [data-reveal],
+  :root[data-motion="on"] [data-reveal] [data-mask-item] {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import type { Locale } from "../../content/types";
+import { ScrollReveal } from "../motion/ScrollReveal";
 import { Footer } from "./Footer";
 import { Navigation } from "./Navigation";
 import { MAIN_CONTENT_ID, SITE_CONTENT_ID } from "./site-regions";
@@ -19,6 +20,7 @@ interface SiteShellProps {
 export function SiteShell({ locale, currentPath, children }: SiteShellProps) {
   return (
     <>
+      <ScrollReveal />
       <Navigation currentPath={currentPath} locale={locale} />
       <div id={SITE_CONTENT_ID}>
         <main id={MAIN_CONTENT_ID}>{children}</main>
