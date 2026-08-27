@@ -120,7 +120,11 @@ export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
         type="button"
       >
         <span aria-hidden="true" className={styles.menuTriggerIcon} />
-        {content.navigation.openMenuLabel}
+        {/* The icon carries the meaning in the bar; the words stay in the
+            accessible name so the control is still announced properly. */}
+        <span className={styles.menuTriggerLabel}>
+          {content.navigation.openMenuLabel}
+        </span>
       </button>
 
       {open ? (

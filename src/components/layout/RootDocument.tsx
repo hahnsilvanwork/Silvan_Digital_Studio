@@ -15,8 +15,19 @@ interface RootDocumentProps {
  */
 export function RootDocument({ locale, children }: RootDocumentProps) {
   return (
-    <html lang={locale}>
-      <body className={rootFontVariables}>
+    // The font variables must be declared on :root itself. globals.css builds
+    // --font-sans from --font-geist-sans on :root, and a custom property
+    // declared further down on <body> is invisible to that -- which made the
+    // whole font-family invalid and dropped the page to the browser serif.
+    // The inline script below stamps data-motion onto this element before
+    // React hydrates, so the server markup and the live DOM differ here by
+    // design. The suppression covers this element's own attributes only.
+    <html
+      className={rootFontVariables}
+      lang={locale}
+      suppressHydrationWarning
+    >
+      <body>
         <script
           dangerouslySetInnerHTML={{ __html: MOTION_FLAG_SCRIPT }}
           // Must run before the first paint, so it cannot be deferred.

@@ -18,8 +18,10 @@
 
   --font-sans: var(--font-geist-sans), "Helvetica Neue", sans-serif;
   --font-mono: var(--font-geist-mono), "SFMono-Regular", monospace;
-  --text-display: clamp(3.25rem, 14vw, 11.5rem);
-  --text-title: clamp(2.5rem, 8.5vw, 7.5rem);
+  /* min(vw, vh): a 1280x800 laptop is wide but short, and a width-only
+     scale puts the headline below the fold there. */
+  --text-display: clamp(2.75rem, min(12.5vw, 15vh), 11.5rem);
+  --text-title: clamp(2.125rem, min(7.5vw, 10vh), 7rem);
   --text-heading: clamp(1.75rem, 4vw, 3.75rem);
   --text-lead: clamp(1.125rem, 1rem + 1vw, 1.75rem);
   --text-body: clamp(1rem, 0.97rem + 0.15vw, 1.125rem);
@@ -151,12 +153,17 @@ button,
   touch-action: manipulation;
 }
 
-[role="button"],
+/* Size and wrapping only. A component that wants its content centred says so
+   itself -- this rule used to centre every editorial row that was also a
+   touch target. */
 [data-touch-target] {
+  overflow-wrap: anywhere;
+}
+
+[role="button"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  overflow-wrap: anywhere;
   text-align: center;
 }
 

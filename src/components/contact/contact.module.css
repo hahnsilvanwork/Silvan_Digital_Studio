@@ -18,6 +18,10 @@
   display: grid;
   gap: 0.2em;
   align-content: center;
+  /* The global touch-target rule centres its content; an editorial contact row
+     has to stay flush with the column it sits in. */
+  justify-items: start;
+  text-align: start;
   min-block-size: max(var(--control-target-min), 4.5rem);
   padding-block: var(--space-xs);
   text-decoration: none;

@@ -5,22 +5,23 @@
   color: var(--color-ink);
 }
 
-/* Exactly one screen minus the sticky header: the label sits at the top edge and
-   the headline block at the bottom, so the whole hero is readable on arrival
-   without scrolling. If the content is taller than that, the section grows
-   instead of clipping. */
+/* Exactly one screen minus the sticky header, with the whole block centred:
+   space-between opened a dead gap in the middle of the hero on tall screens.
+   If the content needs more room the section grows instead of clipping. */
 .hero {
   display: grid;
-  align-content: space-between;
-  gap: var(--space-lg);
+  align-content: center;
+  gap: var(--space-md);
   min-block-size: calc(100svh - var(--header-block-size));
-  padding-block: var(--space-md) var(--space-lg);
+  padding-block: var(--space-sm) var(--space-md);
 }
 
+/* No measure cap here: the headline sets its own with 16ch and the supporting
+   paragraph sets its own. Capping the whole block forced extra headline lines,
+   and lines are what the height budget cannot afford. */
 .heroBody {
   display: grid;
   gap: var(--space-sm);
-  max-inline-size: 60rem;
 }
 
 .heroActions {
@@ -45,7 +46,7 @@
 }
 
 .heroTitle {
-  max-inline-size: 11ch;
+  max-inline-size: 16ch;
   font-size: var(--text-display);
 }
 
@@ -77,22 +78,31 @@
   color: var(--color-on-dark);
 }
 
+/* The supplied concept exports are 512x279. The frame takes exactly that ratio
+   and stops at their intrinsic width, so the asset is never upscaled and never
+   floats inside an empty box. Replace the assets with wider ones and raise the
+   32rem cap together -- see public/images/projects/README.md. */
 .projectMedia {
   --project-media-object-position: 50% 50%;
 
   position: relative;
   display: grid;
   place-items: center;
-  aspect-ratio: 16 / 10;
+  inline-size: min(100%, 32rem);
+  aspect-ratio: 512 / 279;
   overflow: clip;
-  padding: var(--space-sm);
   border-radius: var(--radius-media);
   background: var(--color-line);
 }
 
+/* The frame already carries the asset's own aspect ratio and stops at its
+   intrinsic width, so filling it is exact rather than an upscale. Sizing to the
+   decoded width instead left a visible border, because the optimizer re-encodes
+   at a slightly different pixel size than the source. */
 .projectMedia > :is(img, picture) {
-  inline-size: auto;
+  inline-size: 100%;
   max-inline-size: min(100%, 32rem);
+  block-size: 100%;
   max-block-size: 100%;
 }
 
@@ -124,10 +134,6 @@
 }
 
 @media (min-width: 64rem) {
-  .heroTitle {
-    max-inline-size: 9.5ch;
-  }
-
   .editorial {
     margin-inline-start: 25%;
   }
@@ -137,12 +143,6 @@
   .section,
   .darkBand {
     padding-block: var(--space-2xl);
-  }
-}
-
-@media (min-width: 96rem) {
-  .heroTitle {
-    max-inline-size: 9ch;
   }
 }
 

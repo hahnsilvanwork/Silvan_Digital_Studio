@@ -71,10 +71,10 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
           {/* Every price is rendered before any long-form content, so a visitor
               never has to read the process to find out what it costs. */}
           <div className={pageStyles.sectionBody}>
-            <PriceTierList
-              priceLabel={reviews.priceLabel}
-              tiers={reviews.products}
-            />
+            <p className={pageStyles.sectionLabel} data-reveal="rise">
+              {reviews.priceLabel}
+            </p>
+            <PriceTierList tiers={reviews.products} />
             <p className={pageStyles.note} data-reveal="rise">
               {reviews.quantityDiscount}
             </p>

@@ -33,8 +33,9 @@ describe("RootDocument", () => {
       </RootDocument>,
     );
 
-    expect(markup).toContain(`<html lang="${lang}">`);
-    expect(markup).toContain('<body class="font-variables">');
+    // The font custom properties have to land on :root, or globals.css cannot
+    // build --font-sans from them and the page drops to the browser serif.
+    expect(markup).toContain(`<html class="font-variables" lang="${lang}">`);
   });
 
   it("arms the motion flag before the page content", () => {

@@ -473,7 +473,7 @@ describe("SILVAN responsive design contract", () => {
         resolve(process.cwd(), "src/components/layout/navigation.module.css"),
         "utf8",
       ),
-    ).toContain("min-block-size: var(--header-block-size)");
+    ).toMatch(/\n\s*block-size: var\(--header-block-size\);/);
   });
 
   it("uses only transform and opacity for reusable motion", () => {
