@@ -20,85 +20,94 @@ export type RouteKey =
   | "/work"
   | "/about"
   | "/contact"
-  | "/hello"
-  | `/work/${string}`;
+  | "/hello";
 
-export type InternalPath = RouteKey;
+declare const projectPathBrand: unique symbol;
 
-export type DeepReadonly<T> = T extends (...args: never[]) => unknown
+export type ProjectPath = `/work/${string}` & {
+  readonly [projectPathBrand]: "ProjectPath";
+};
+
+export type InternalPath = RouteKey | ProjectPath;
+
+type Primitive = string | number | boolean | bigint | symbol | null | undefined;
+
+export type DeepReadonly<T> = T extends Primitive
   ? T
-  : T extends readonly unknown[]
-    ? { readonly [Key in keyof T]: DeepReadonly<T[Key]> }
-    : T extends object
+  : T extends (...args: never[]) => unknown
+    ? T
+    : T extends readonly unknown[]
       ? { readonly [Key in keyof T]: DeepReadonly<T[Key]> }
-      : T;
+      : T extends object
+        ? { readonly [Key in keyof T]: DeepReadonly<T[Key]> }
+        : T;
 
 export interface NavigationItem {
-  label: string;
-  href: InternalPath;
+  readonly label: string;
+  readonly href: RouteKey;
 }
 
 export interface Navigation {
-  primary: NavigationItem[];
-  languageLabel: string;
-  germanLabel: string;
-  englishLabel: string;
-  openMenuLabel: string;
-  closeMenuLabel: string;
+  readonly primary: readonly NavigationItem[];
+  readonly languageLabel: string;
+  readonly germanLabel: string;
+  readonly englishLabel: string;
+  readonly openMenuLabel: string;
+  readonly closeMenuLabel: string;
 }
 
 export interface PriceTier {
-  id: string;
-  name: string;
-  price: string;
-  description: string;
-  features: string[];
+  readonly id: string;
+  readonly name: string;
+  readonly price: string;
+  readonly description: string;
+  readonly features: readonly string[];
 }
 
 export interface ProcessStep {
-  id: string;
-  label: string;
-  title: string;
-  description: string;
+  readonly id: string;
+  readonly label: string;
+  readonly title: string;
+  readonly description: string;
 }
 
 export interface ServiceContent {
-  eyebrow: string;
-  title: string;
-  intro: string;
-  priceLabel: string;
-  priceTiers: PriceTier[];
-  benefitsTitle: string;
-  benefits: string[];
-  processTitle: string;
-  process: ProcessStep[];
-  ctaLabel: string;
-  ctaHref: InternalPath;
+  readonly eyebrow: string;
+  readonly title: string;
+  readonly intro: string;
+  readonly priceLabel: string;
+  readonly priceTiers: readonly PriceTier[];
+  readonly benefitsTitle: string;
+  readonly benefits: readonly string[];
+  readonly processTitle: string;
+  readonly process: readonly ProcessStep[];
+  readonly ctaLabel: string;
+  readonly ctaHref: RouteKey;
 }
 
 export interface ContactDetails {
-  email: string;
-  phoneDisplay: string;
-  phoneHref: string;
-  whatsappNumber: string;
-  whatsappHref: string;
-  linkedIn: string;
+  readonly email: string;
+  readonly phoneDisplay: string;
+  readonly phoneHref: string;
+  readonly whatsappNumber: string;
+  readonly whatsappHref: string;
+  readonly linkedIn: string;
 }
 
 export interface ContactContent {
-  eyebrow: string;
-  title: string;
-  intro: string;
-  emailLabel: string;
-  phoneLabel: string;
-  whatsappLabel: string;
-  linkedInLabel: string;
-  details: ContactDetails;
+  readonly eyebrow: string;
+  readonly title: string;
+  readonly intro: string;
+  readonly emailLabel: string;
+  readonly phoneLabel: string;
+  readonly whatsappLabel: string;
+  readonly linkedInLabel: string;
+  readonly details: ContactDetails;
 }
 
 export interface PageSeo {
-  title: string;
-  description: string;
+  readonly title: string;
+  readonly description: string;
 }
 
 export type ReviewInquiryFieldName =
@@ -114,25 +123,28 @@ export type ReviewInquiryFieldName =
   | "note";
 
 export interface ReviewInquiryField {
-  name: ReviewInquiryFieldName;
-  label: string;
-  placeholder: string;
-  required: boolean;
+  readonly name: ReviewInquiryFieldName;
+  readonly label: string;
+  readonly placeholder: string;
+  readonly required: boolean;
 }
 
 export interface ReviewInquiryContent {
-  title: string;
-  intro: string;
-  fields: ReviewInquiryField[];
-  productOptions: { card: string; stand: string };
-  submitLabel: string;
-  editLabel: string;
-  requiredError: string;
-  quantityError: string;
-  urlError: string;
-  nonBindingNotice: string;
-  privacyNotice: string;
-  messageIntro: string;
+  readonly title: string;
+  readonly intro: string;
+  readonly fields: readonly ReviewInquiryField[];
+  readonly productOptions: {
+    readonly card: string;
+    readonly stand: string;
+  };
+  readonly submitLabel: string;
+  readonly editLabel: string;
+  readonly requiredError: string;
+  readonly quantityError: string;
+  readonly urlError: string;
+  readonly nonBindingNotice: string;
+  readonly privacyNotice: string;
+  readonly messageIntro: string;
 }
 
 interface SiteContentShape {
@@ -168,7 +180,7 @@ interface SiteContentShape {
       title: string;
       description: string;
       price: string;
-      href: InternalPath;
+      href: RouteKey;
     }[];
     workTitle: string;
     studioTitle: string;

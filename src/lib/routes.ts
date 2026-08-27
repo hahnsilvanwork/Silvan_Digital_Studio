@@ -1,5 +1,19 @@
-import type { Locale } from "../content/types";
+import type { Locale, ProjectPath } from "../content/types";
 import { DEFAULT_LOCALE } from "./locales";
+
+const PROJECT_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+export function createProjectPath(slug: string): ProjectPath {
+  const match = PROJECT_SLUG_PATTERN.exec(slug);
+
+  if (match?.[0] !== slug) {
+    throw new TypeError(
+      "Expected a lowercase alphanumeric project slug with single hyphens.",
+    );
+  }
+
+  return `/work/${slug}` as ProjectPath;
+}
 
 function splitInternalPath(input: string): { pathname: string; suffix: string } {
   if (

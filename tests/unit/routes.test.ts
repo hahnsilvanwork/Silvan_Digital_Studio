@@ -1,26 +1,66 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  createProjectPath,
   getLocaleFromPath,
   localizePath,
   switchLocale,
 } from "../../src/lib/routes";
-import type { InternalPath } from "../../src/content/types";
+import type {
+  InternalPath,
+  ProjectPath,
+  RouteKey,
+} from "../../src/content/types";
 
-const contactPath = "/contact" satisfies InternalPath;
-const projectPath = "/work/archa" satisfies InternalPath;
+const contactPath = "/contact" satisfies RouteKey;
+const createdProjectPath: ProjectPath = createProjectPath("archa");
+const dynamicInternalPath: InternalPath = createdProjectPath;
 
 // @ts-expect-error External URLs are not valid content destinations.
 const externalPath: InternalPath = "https://evil.example";
 // @ts-expect-error Misspelled static routes are rejected by the content model.
 const misspelledPath: InternalPath = "/contcat";
+// @ts-expect-error Dynamic project paths must be created by createProjectPath.
+const unvalidatedProjectPath: ProjectPath = "/work/archa";
+// @ts-expect-error Dynamic project literals are not valid static/internal paths.
+const unvalidatedInternalPath: InternalPath = "/work/archa";
 
 void contactPath;
-void projectPath;
+void createdProjectPath;
+void dynamicInternalPath;
 void externalPath;
 void misspelledPath;
+void unvalidatedProjectPath;
+void unvalidatedInternalPath;
 
 describe("localized routes", () => {
+  it.each([
+    ["archa", "/work/archa"],
+    ["architech-studio", "/work/architech-studio"],
+    ["project-2026", "/work/project-2026"],
+  ])("creates a validated project path for %s", (slug, expected) => {
+    expect(createProjectPath(slug)).toBe(expected);
+  });
+
+  it.each([
+    "",
+    ".",
+    "..",
+    "../contact",
+    "archa/studio",
+    "archa?preview=1",
+    "archa#details",
+    "Archa",
+    "archa--studio",
+    "-archa",
+    "archa-",
+    "archa_studio",
+    "archä",
+    "archa\n",
+  ])("rejects an unsafe project slug: %s", (slug) => {
+    expect(() => createProjectPath(slug)).toThrow(TypeError);
+  });
+
   it("detects the locale from a localized internal path", () => {
     expect(getLocaleFromPath("/en/about")).toBe("en");
     expect(getLocaleFromPath("/reviews")).toBe("de");

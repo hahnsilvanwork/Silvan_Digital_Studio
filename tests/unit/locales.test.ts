@@ -6,6 +6,23 @@ import {
   getContent,
   isLocale,
 } from "../../src/lib/locales";
+import type {
+  PriceTier,
+  ProcessStep,
+  RouteKey,
+  ServiceContent,
+} from "../../src/content/types";
+
+const returnedWebsites: ServiceContent = getContent("de").websites;
+const returnedTier: PriceTier = returnedWebsites.priceTiers[0];
+const returnedStep: ProcessStep = returnedWebsites.process[0];
+const returnedCtaPath: RouteKey = returnedWebsites.ctaHref;
+const returnedNavigationPath: RouteKey = getContent("de").navigation.primary[0].href;
+
+void returnedTier;
+void returnedStep;
+void returnedCtaPath;
+void returnedNavigationPath;
 
 function structuralShape(value: unknown): unknown {
   if (Array.isArray(value)) {
@@ -62,6 +79,40 @@ describe("locale content", () => {
 
     expect(select(german)).toEqual(select(english));
   });
+
+  it.each([
+    {
+      locale: "de" as const,
+      hero: {
+        serviceLine: "Websites · Google Reviews · Online-Präsenz · Automation",
+        headline: "Mehr Kunden. Weniger Aufwand.",
+        supporting:
+          "Ich entwickle digitale Lösungen, die Ihr Unternehmen sichtbar machen und wiederkehrende Arbeit reduzieren.",
+      },
+    },
+    {
+      locale: "en" as const,
+      hero: {
+        serviceLine: "Websites · Google Reviews · Online Presence · Automation",
+        headline: "More customers. Less busywork.",
+        supporting:
+          "I build digital solutions that help people find your business and take recurring work off your plate.",
+      },
+    },
+  ])("preserves the approved $locale hero copy", ({ locale, hero }) => {
+    expect(getContent(locale).home.hero).toMatchObject(hero);
+  });
+
+  it.each(["de", "en"] as const)(
+    "uses the exact TAP / OPEN / REVIEW labels in %s",
+    (locale) => {
+      expect(getContent(locale).reviews.process.map(({ label }) => label)).toEqual([
+        "TAP",
+        "OPEN",
+        "REVIEW",
+      ]);
+    },
+  );
 
   it.each([
     {
