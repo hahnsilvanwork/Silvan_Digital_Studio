@@ -1,3 +1,6 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -69,18 +72,42 @@ describe("legal pages", () => {
     }
   });
 
-  it.each(LOCALES)("states in %s that nothing is tracked", (locale) => {
+  it.each(LOCALES)("states in %s that no cookies are set", (locale) => {
     const { privacy } = getContent(locale);
     const text = privacy.sections
       .flatMap((section) => [section.title, ...section.body])
       .join(" ")
       .toLowerCase();
 
-    // The claim the site actually makes, and the one that has to be revisited
-    // the day any analytics is added.
     expect(text).toContain("cookie");
-    expect(text).toMatch(locale === "de" ? /kein/ : /no /);
+    expect(text).toMatch(locale === "de" ? /keine cookies/ : /no cookies/);
   });
+
+  it.each(LOCALES)(
+    "names every measurement service the %s build actually loads",
+    (locale) => {
+      const packageJson = JSON.parse(
+        readFileSync(resolve(process.cwd(), "package.json"), "utf8"),
+      ) as { dependencies?: Record<string, string> };
+      const document = readFileSync(
+        resolve(process.cwd(), "src/components/layout/RootDocument.tsx"),
+        "utf8",
+      );
+      const text = getContent(locale)
+        .privacy.sections.flatMap((section) => [section.title, ...section.body])
+        .join(" ");
+
+      // The privacy statement is a claim about what the code does, so the two
+      // have to be checked against each other. Shipping analytics while the
+      // page still promises none is the failure this guards against -- in
+      // either direction, since removing it should update the text too.
+      const shipsVercelAnalytics =
+        packageJson.dependencies?.["@vercel/analytics"] !== undefined &&
+        document.includes("<Analytics />");
+
+      expect(text.includes("Vercel Analytics")).toBe(shipsVercelAnalytics);
+    },
+  );
 });
 
 describe("service page FAQs", () => {

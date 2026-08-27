@@ -1,8 +1,8 @@
 # SILVAN Digital Studio
 
 The website of SILVAN Digital Studio — Silvan Hahn, independent digital
-developer in Switzerland. German and English, statically rendered, no runtime
-dependencies beyond Next.js and React.
+developer in Switzerland. German and English, statically rendered. The only runtime
+dependencies are Next.js, React and Vercel's cookieless analytics.
 
 Live domain: **https://silvandigital.ch**
 
