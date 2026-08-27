@@ -1,28 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
+import { rootFontVariables } from "./fonts";
+import {
+  DocumentShell,
+  metadata as siteMetadata,
+  viewport as siteViewport,
+} from "./layout-contract";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+export const metadata: Metadata = siteMetadata;
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "SILVAN Digital Studio",
-  description:
-    "Digitale Lösungen für mehr Sichtbarkeit und weniger wiederkehrende Arbeit.",
-};
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-};
+export const viewport: Viewport = siteViewport;
 
 export default function RootLayout({
   children,
@@ -30,10 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {children}
-      </body>
-    </html>
+    <DocumentShell className={rootFontVariables}>
+      {children}
+    </DocumentShell>
   );
 }
