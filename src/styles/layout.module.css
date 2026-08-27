@@ -1,0 +1,74 @@
+.shell {
+  position: relative;
+  isolation: isolate;
+  min-block-size: 100svh;
+  overflow: clip;
+}
+
+.container {
+  inline-size: min(
+    calc(100% - (2 * var(--page-gutter))),
+    var(--container-max)
+  );
+  margin-inline: auto;
+}
+
+.grid12 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--grid-gap);
+}
+
+.spanFull {
+  grid-column: 1 / -1;
+}
+
+.asymmetric {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md);
+}
+
+.asymmetricAside,
+.asymmetricMain {
+  min-inline-size: 0;
+}
+
+@supports (min-height: 100dvh) {
+  .shell {
+    min-block-size: 100dvh;
+  }
+}
+
+@media (min-width: 48rem) {
+  .grid12 {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .grid12 {
+    grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  }
+
+  .asymmetric {
+    grid-template-columns: minmax(12rem, 4fr) minmax(0, 8fr);
+    gap: var(--grid-gap);
+  }
+
+  .asymmetricMain {
+    grid-column: 2;
+  }
+}
+
+@media (min-width: 80rem) {
+  .asymmetric {
+    grid-template-columns: minmax(14rem, 3fr) minmax(0, 9fr);
+  }
+}
+
+@media (min-width: 96rem) {
+  .container {
+    inline-size: min(calc(100% - 8rem), var(--container-max));
+  }
+}

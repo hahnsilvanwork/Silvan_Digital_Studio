@@ -1,0 +1,110 @@
+.page {
+  position: relative;
+  min-block-size: 100svh;
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.hero {
+  display: grid;
+  align-content: end;
+  min-block-size: min(52rem, 88svh);
+  padding-block: var(--space-xl) var(--space-lg);
+}
+
+.heroLabel {
+  margin-block-end: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  max-inline-size: 11ch;
+  font-size: var(--text-display);
+}
+
+.section {
+  padding-block: var(--space-xl);
+}
+
+.editorial {
+  max-inline-size: 42rem;
+  font-size: var(--text-lead);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.rule {
+  inline-size: 100%;
+  block-size: var(--hairline);
+  border: 0;
+  margin: 0;
+  background: var(--color-line);
+}
+
+.darkBand {
+  padding-block: var(--space-xl);
+  background: var(--color-dark-band);
+  color: var(--color-on-dark);
+}
+
+.projectMedia {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: clip;
+  border-radius: var(--radius-media);
+  background: var(--color-line);
+}
+
+.projectMedia > :is(img, video) {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+@supports (min-height: 100dvh) {
+  .page {
+    min-block-size: 100dvh;
+  }
+
+  .hero {
+    min-block-size: min(52rem, 88dvh);
+  }
+}
+
+@media (min-width: 48rem) {
+  .hero {
+    min-block-size: min(58rem, 92svh);
+  }
+
+  .projectMedia {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (min-width: 64rem) {
+  .heroTitle {
+    max-inline-size: 9.5ch;
+  }
+
+  .editorial {
+    margin-inline-start: 25%;
+  }
+}
+
+@media (min-width: 80rem) {
+  .section,
+  .darkBand {
+    padding-block: var(--space-2xl);
+  }
+}
+
+@media (min-width: 96rem) {
+  .heroTitle {
+    max-inline-size: 9ch;
+  }
+}

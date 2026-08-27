@@ -1,0 +1,87 @@
+@keyframes silvan-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes silvan-perspective-drift {
+  0%,
+  100% {
+    opacity: 0.96;
+    transform: rotateX(1.5deg) rotateY(-2deg) translate3d(-0.25rem, 0, 0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: rotateX(-1deg) rotateY(2deg) translate3d(0.25rem, -0.35rem, 0);
+  }
+}
+
+.reveal {
+  animation: silvan-reveal var(--duration-slow) var(--ease-out) both;
+}
+
+.revealFast {
+  animation: silvan-reveal var(--duration-medium) var(--ease-out) both;
+}
+
+.hoverLift,
+.hoverUnderline {
+  transition-duration: var(--duration-medium);
+  transition-timing-function: var(--ease-out);
+}
+
+.hoverLift {
+  transition-property: transform, opacity;
+}
+
+.hoverUnderline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 100% 100%;
+  background-repeat: no-repeat;
+  background-size: 0 var(--hairline);
+  transition-property: background-size;
+}
+
+.nfcPerspectiveDrift {
+  transform-style: preserve-3d;
+  animation: silvan-perspective-drift 4.8s var(--ease-in-out) both;
+  will-change: transform, opacity;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hoverLift:hover {
+    opacity: 0.88;
+    transform: translate3d(0, -0.25rem, 0);
+  }
+
+  .hoverUnderline:hover {
+    background-position: 0 100%;
+    background-size: 100% var(--hairline);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal,
+  .revealFast,
+  .hoverLift,
+  .nfcPerspectiveDrift {
+    opacity: 1;
+    transform: none;
+  }
+}
