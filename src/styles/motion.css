@@ -61,7 +61,6 @@
 .nfcPerspectiveDrift {
   transform-style: preserve-3d;
   animation: silvan-perspective-drift 4.8s var(--ease-in-out) both;
-  will-change: transform, opacity;
 }
 
 @media (hover: hover) and (pointer: fine) {

@@ -6,5 +6,8 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
+    // Real CSS is processed and injected so layout contracts can be asserted
+    // against computed styles instead of against stylesheet text alone.
+    css: true,
   },
 });

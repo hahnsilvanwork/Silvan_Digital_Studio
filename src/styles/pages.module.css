@@ -12,6 +12,11 @@
   padding-block: var(--space-xl) var(--space-lg);
 }
 
+/* Same zero-specificity shrink default as the layout grid; see layout.module.css. */
+:where(.hero > *) {
+  min-inline-size: 0;
+}
+
 .heroLabel {
   margin-block-end: var(--space-sm);
   font-family: var(--font-mono);
@@ -47,33 +52,58 @@
 }
 
 .darkBand {
+  --focus-ring-inner: #1a1a1a;
+  --focus-ring-outer: #f9f8f6;
+
   padding-block: var(--space-xl);
   background: var(--color-dark-band);
   color: var(--color-on-dark);
 }
 
 .projectMedia {
+  --project-media-object-position: 50% 50%;
+
   position: relative;
-  aspect-ratio: 4 / 5;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
   overflow: clip;
+  padding: var(--space-sm);
   border-radius: var(--radius-media);
   background: var(--color-line);
 }
 
-.projectMedia > :is(img, video) {
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: cover;
+.projectMedia > :is(img, picture) {
+  inline-size: auto;
+  max-inline-size: min(100%, 32rem);
+  max-block-size: 100%;
 }
 
-@supports (min-height: 100dvh) {
-  .page {
-    min-block-size: 100dvh;
-  }
+.projectMedia > img,
+.projectMedia > picture > img {
+  block-size: auto;
+  object-fit: contain;
+  object-position: var(--project-media-object-position);
+}
 
-  .hero {
-    min-block-size: min(52rem, 88dvh);
-  }
+.projectMedia > picture > img {
+  inline-size: 100%;
+}
+
+.projectMedia[data-project="archa"] {
+  --project-media-object-position: 50% 50%;
+}
+
+.projectMedia[data-project="lumen"] {
+  --project-media-object-position: 50% 48%;
+}
+
+.projectMedia[data-project="architech-studio"] {
+  --project-media-object-position: 50% 52%;
+}
+
+.projectMedia[data-project="vanguard-apparel"] {
+  --project-media-object-position: 50% 50%;
 }
 
 @media (min-width: 48rem) {
@@ -81,9 +111,6 @@
     min-block-size: min(58rem, 92svh);
   }
 
-  .projectMedia {
-    aspect-ratio: 16 / 10;
-  }
 }
 
 @media (min-width: 64rem) {
@@ -106,5 +133,23 @@
 @media (min-width: 96rem) {
   .heroTitle {
     max-inline-size: 9ch;
+  }
+}
+
+@supports (min-height: 100dvh) {
+  .page {
+    min-block-size: 100dvh;
+  }
+
+  .hero {
+    min-block-size: min(52rem, 88dvh);
+  }
+}
+
+@media (min-width: 48rem) {
+  @supports (min-height: 100dvh) {
+    .hero {
+      min-block-size: min(58rem, 92dvh);
+    }
   }
 }

@@ -23,5 +23,6 @@ describe("layout contract", () => {
     );
     expect(viewport.width).toBe("device-width");
     expect(viewport.initialScale).toBe(1);
+    expect(viewport.viewportFit).toBe("cover");
   });
 });

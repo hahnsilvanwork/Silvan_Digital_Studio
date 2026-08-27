@@ -2,7 +2,6 @@
   position: relative;
   isolation: isolate;
   min-block-size: 100svh;
-  overflow: clip;
 }
 
 .container {
@@ -29,8 +28,11 @@
   gap: var(--space-md);
 }
 
-.asymmetricAside,
-.asymmetricMain {
+/* Grid children may shrink below their intrinsic content width so one long word
+   cannot widen a track. Declared through :where() so this stays a zero-specificity
+   default that never outranks an element's own minimum -- notably the 44px control
+   targets in globals.css, which would otherwise be collapsed to 0 here. */
+:where(.grid12 > *, .asymmetric > *) {
   min-inline-size: 0;
 }
 

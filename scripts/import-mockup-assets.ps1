@@ -1,8 +1,209 @@
+<#
+.SYNOPSIS
+  Imports the four approved concept visuals from the supplied Stitch mockups into
+  public/images/projects so the site has no runtime dependency on Google hosting.
+
+.DESCRIPTION
+  Every asset is pinned by byte length and SHA-256. A download only replaces an
+  approved file after the serving origin, the media type and the full body have
+  been verified, so a redirected, oversized or altered response can never land in
+  the repository.
+
+.PARAMETER LibraryOnly
+  Defines the helper functions and returns without contacting the network. Used by
+  tests/unit/importer-contract.test.ts to exercise the safety helpers directly.
+#>
 [CmdletBinding()]
-param()
+param(
+  [switch]$LibraryOnly
+)
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+
+Add-Type -AssemblyName System.Net.Http
+
+$script:ApprovedAssetScheme = "https"
+$script:ApprovedAssetHost = "lh3.googleusercontent.com"
+$script:ApprovedAssetPathPrefix = "/aida-public/"
+
+function Assert-ApprovedAssetUri {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory = $true)]
+    [Uri]$Uri
+  )
+
+  if ($null -eq $Uri) {
+    throw "No asset URI was supplied"
+  }
+
+  if (-not $Uri.IsAbsoluteUri) {
+    throw "Refusing relative asset URI: $Uri"
+  }
+
+  if ($Uri.Scheme -ne $script:ApprovedAssetScheme) {
+    throw "Refusing non-$($script:ApprovedAssetScheme) asset URI: $Uri"
+  }
+
+  # A populated userinfo section is the classic way to make a hostile host look
+  # approved in a glance-read log line.
+  if (-not [string]::IsNullOrEmpty($Uri.UserInfo)) {
+    throw "Refusing asset URI carrying userinfo: $Uri"
+  }
+
+  if ($Uri.Host -ne $script:ApprovedAssetHost) {
+    throw "Refusing asset host $($Uri.Host); expected $($script:ApprovedAssetHost)"
+  }
+
+  if (-not $Uri.AbsolutePath.StartsWith(
+    $script:ApprovedAssetPathPrefix,
+    [System.StringComparison]::Ordinal
+  )) {
+    throw "Refusing asset path $($Uri.AbsolutePath) outside $($script:ApprovedAssetPathPrefix)"
+  }
+}
+
+function Get-ApprovedAssetResponse {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory = $true)]
+    [System.Net.Http.HttpClient]$Client,
+
+    [Parameter(Mandatory = $true)]
+    [Uri]$Uri,
+
+    [Parameter(Mandatory = $true)]
+    [string]$ContentType,
+
+    [Parameter(Mandatory = $true)]
+    [int]$MaximumBytes,
+
+    [Parameter(Mandatory = $true)]
+    [System.Threading.CancellationTokenSource]$CancellationTokenSource
+  )
+
+  Assert-ApprovedAssetUri -Uri $Uri
+
+  $response = $Client.GetAsync(
+    $Uri,
+    [System.Net.Http.HttpCompletionOption]::ResponseHeadersRead,
+    $CancellationTokenSource.Token
+  ).GetAwaiter().GetResult()
+
+  try {
+    if (-not $response.IsSuccessStatusCode) {
+      throw "HTTP $([int]$response.StatusCode) $($response.ReasonPhrase)"
+    }
+
+    # Redirects are followed automatically, so the URI that actually served this
+    # body is the one that has to be approved, not just the one we asked for.
+    Assert-ApprovedAssetUri -Uri $response.RequestMessage.RequestUri
+
+    $mediaType = $response.Content.Headers.ContentType.MediaType
+    if ($mediaType -ne $ContentType) {
+      throw "Expected $ContentType, received $mediaType"
+    }
+
+    $declaredLength = $response.Content.Headers.ContentLength
+    if ($null -ne $declaredLength -and $declaredLength -gt $MaximumBytes) {
+      throw "Declared length $declaredLength exceeds the approved body size"
+    }
+  }
+  catch {
+    $response.Dispose()
+    throw
+  }
+
+  return $response
+}
+
+function Install-ApprovedAssetStream {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory = $true)]
+    [System.IO.Stream]$SourceStream,
+
+    [Parameter(Mandatory = $true)]
+    [string]$TargetPath,
+
+    [Parameter(Mandatory = $true)]
+    [string]$TemporaryPath,
+
+    [Parameter(Mandatory = $true)]
+    [int]$ExpectedBytes,
+
+    [Parameter(Mandatory = $true)]
+    [string]$ExpectedSha256,
+
+    [Parameter(Mandatory = $true)]
+    [System.Threading.CancellationTokenSource]$CancellationTokenSource
+  )
+
+  # One byte past the approved length already proves the body is wrong, so an
+  # oversized or endless response is never written to disk in full.
+  $maximumBytes = $ExpectedBytes + 1
+  $buffer = [byte[]]::new(65536)
+  $written = 0
+
+  try {
+    $targetStream = [System.IO.File]::Open(
+      $TemporaryPath,
+      [System.IO.FileMode]::CreateNew,
+      [System.IO.FileAccess]::Write,
+      [System.IO.FileShare]::None
+    )
+
+    try {
+      while ($true) {
+        $read = $SourceStream.Read($buffer, 0, $buffer.Length)
+        if ($read -le 0) {
+          break
+        }
+
+        $written += $read
+        if ($written -gt $maximumBytes) {
+          throw "Response body exceeded the approved $ExpectedBytes byte length"
+        }
+
+        $targetStream.Write($buffer, 0, $read)
+      }
+    }
+    finally {
+      $targetStream.Dispose()
+    }
+
+    if ($written -ne $ExpectedBytes) {
+      throw "Expected $ExpectedBytes bytes, received $written"
+    }
+
+    $downloadHash = (Get-FileHash -LiteralPath $TemporaryPath -Algorithm SHA256).Hash
+    if ($downloadHash -ne $ExpectedSha256) {
+      throw "SHA-256 $downloadHash does not match the approved asset"
+    }
+
+    Move-Item -LiteralPath $TemporaryPath -Destination $TargetPath -Force
+
+    return (Get-Item -LiteralPath $TargetPath).Length
+  }
+  catch {
+    # Cancel the in-flight request so a slow or endless body stops immediately,
+    # then drop the partial file. The already approved target stays untouched.
+    if (-not $CancellationTokenSource.IsCancellationRequested) {
+      $CancellationTokenSource.Cancel()
+    }
+
+    if (Test-Path -LiteralPath $TemporaryPath) {
+      Remove-Item -LiteralPath $TemporaryPath -Force
+    }
+
+    throw
+  }
+}
+
+if ($LibraryOnly) {
+  return
+}
 
 $assets = @(
   [PSCustomObject]@{
@@ -49,7 +250,6 @@ $assetDirectoryWithSeparator = $assetDirectory.TrimEnd(
 ) + [System.IO.Path]::DirectorySeparatorChar
 [System.IO.Directory]::CreateDirectory($assetDirectory) | Out-Null
 
-Add-Type -AssemblyName System.Net.Http
 $handler = [System.Net.Http.HttpClientHandler]::new()
 $handler.AllowAutoRedirect = $true
 $handler.MaxAutomaticRedirections = 5
@@ -70,42 +270,34 @@ try {
       throw "Refusing asset target outside the project image directory: $targetPath"
     }
 
+    $maximumBytes = $asset.ExpectedBytes + 1
     $imported = $false
+
     for ($attempt = 1; $attempt -le 3 -and -not $imported; $attempt++) {
       $temporaryPath = Join-Path $assetDirectory (
         ".{0}.{1}.tmp" -f $asset.Name, [System.IO.Path]::GetRandomFileName()
       )
+      $cancellation = [System.Threading.CancellationTokenSource]::new()
 
       try {
-        $response = $client.GetAsync(
-          $asset.Uri,
-          [System.Net.Http.HttpCompletionOption]::ResponseHeadersRead
-        ).GetAwaiter().GetResult()
+        $response = Get-ApprovedAssetResponse `
+          -Client $client `
+          -Uri ([Uri]$asset.Uri) `
+          -ContentType $asset.ContentType `
+          -MaximumBytes $maximumBytes `
+          -CancellationTokenSource $cancellation
 
         try {
-          if (-not $response.IsSuccessStatusCode) {
-            throw "HTTP $([int]$response.StatusCode) $($response.ReasonPhrase)"
-          }
-
-          $contentType = $response.Content.Headers.ContentType.MediaType
-          if ($contentType -ne $asset.ContentType) {
-            throw "Expected $($asset.ContentType), received $contentType"
-          }
-
           $sourceStream = $response.Content.ReadAsStreamAsync().GetAwaiter().GetResult()
+
           try {
-            $targetStream = [System.IO.File]::Open(
-              $temporaryPath,
-              [System.IO.FileMode]::CreateNew,
-              [System.IO.FileAccess]::Write,
-              [System.IO.FileShare]::None
-            )
-            try {
-              $sourceStream.CopyTo($targetStream)
-            }
-            finally {
-              $targetStream.Dispose()
-            }
+            $importedBytes = Install-ApprovedAssetStream `
+              -SourceStream $sourceStream `
+              -TargetPath $targetPath `
+              -TemporaryPath $temporaryPath `
+              -ExpectedBytes $asset.ExpectedBytes `
+              -ExpectedSha256 $asset.ExpectedSha256 `
+              -CancellationTokenSource $cancellation
           }
           finally {
             $sourceStream.Dispose()
@@ -115,26 +307,11 @@ try {
           $response.Dispose()
         }
 
-        $download = Get-Item -LiteralPath $temporaryPath
-        if ($download.Length -le 0) {
-          throw "Downloaded file is empty"
-        }
-
-        if ($download.Length -ne $asset.ExpectedBytes) {
-          throw "Expected $($asset.ExpectedBytes) bytes, received $($download.Length)"
-        }
-
-        $downloadHash = (Get-FileHash -LiteralPath $temporaryPath -Algorithm SHA256).Hash
-        if ($downloadHash -ne $asset.ExpectedSha256) {
-          throw "Downloaded SHA-256 does not match the approved $($asset.Name) asset"
-        }
-
-        Move-Item -LiteralPath $temporaryPath -Destination $targetPath -Force
         Write-Host (
           "Imported {0} ({1}, {2} bytes)" -f
           $asset.Name,
           $asset.ContentType,
-          (Get-Item -LiteralPath $targetPath).Length
+          $importedBytes
         )
         $imported = $true
       }
@@ -148,6 +325,9 @@ try {
         }
 
         Start-Sleep -Seconds $attempt
+      }
+      finally {
+        $cancellation.Dispose()
       }
     }
   }
