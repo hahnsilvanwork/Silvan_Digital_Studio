@@ -30,7 +30,7 @@ export function ProjectPreview({
       style={{ "--reveal-index": index % 2 } as CSSProperties}
     >
       <Link
-        className={styles.previewLink}
+        className={`${styles.previewLink} mediaLink`}
         href={localizePath(`/work/${project.slug}`, locale)}
       >
         <span

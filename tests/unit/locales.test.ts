@@ -100,8 +100,26 @@ describe("locale content", () => {
       },
     },
   ])("preserves the approved $locale hero copy", ({ locale, hero }) => {
-    expect(getContent(locale).home.hero).toMatchObject(hero);
+    const actual = getContent(locale).home.hero;
+
+    // The service line binds each separator to the word before it with U+00A0,
+    // so a wrapped line can never begin with a stray middle dot. The approved
+    // wording is what this guard protects, not the class of the space.
+    expect({
+      ...actual,
+      serviceLine: actual.serviceLine.replaceAll(" ", " "),
+    }).toMatchObject(hero);
   });
+
+  it.each(["de" as const, "en" as const])(
+    "keeps the %s service line from wrapping onto a separator",
+    (locale) => {
+      const { serviceLine } = getContent(locale).home.hero;
+
+      expect(serviceLine).not.toMatch(/ ·/);
+      expect(serviceLine.match(/ ·/g)).toHaveLength(3);
+    },
+  );
 
   it.each(["de", "en"] as const)(
     "uses the exact TAP / OPEN / REVIEW labels in %s",

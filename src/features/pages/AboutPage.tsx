@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 
 import { ContactActions } from "../../components/contact/ContactActions";
 import { SiteShell } from "../../components/layout/SiteShell";
+import { revealSequence } from "../../components/motion/reveal-sequence";
 import { SplitText } from "../../components/motion/SplitText";
 import { SectionHeading } from "../../components/ui/SectionHeading";
 import type { Locale } from "../../content/types";
@@ -16,6 +17,7 @@ interface AboutPageProps {
 
 export function AboutPage({ locale }: AboutPageProps) {
   const content = getContent(locale);
+  const sequence = revealSequence(content.about.title);
 
   return (
     <SiteShell currentPath={localizePath("/about", locale)} locale={locale}>
@@ -27,9 +29,14 @@ export function AboutPage({ locale }: AboutPageProps) {
           <SplitText
             as="h1"
             className={pageStyles.pageTitle}
+            startIndex={sequence.titleStartIndex}
             text={content.about.title}
           />
-          <p className={pageStyles.editorialTight} data-reveal="rise">
+          <p
+            className={pageStyles.editorialTight}
+            data-reveal="rise"
+            style={{ "--reveal-index": sequence.introIndex } as CSSProperties}
+          >
             {content.about.intro}
           </p>
         </section>

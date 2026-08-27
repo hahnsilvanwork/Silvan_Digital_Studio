@@ -1,5 +1,6 @@
 import { Fragment, type CSSProperties, type ElementType } from "react";
 
+import { countWords, wordStepMs } from "./reveal-sequence";
 import styles from "./split-text.module.css";
 
 interface SplitTextProps {
@@ -22,11 +23,15 @@ export function SplitText({
   startIndex = 0,
 }: SplitTextProps) {
   const words = text.split(/\s+/).filter(Boolean);
+  // A longer headline takes smaller steps, so the sweep costs the same time
+  // whatever the line length. The custom property inherits down to the words.
+  const step = `${wordStepMs(countWords(text))}ms`;
 
   return (
     <Tag
       className={className ? `${styles.split} ${className}` : styles.split}
       data-reveal="mask"
+      style={{ "--reveal-step-word": step } as CSSProperties}
     >
       {words.map((word, index) => (
         <Fragment key={`${index}-${word}`}>

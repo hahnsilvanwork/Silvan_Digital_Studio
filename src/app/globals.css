@@ -20,12 +20,31 @@
   --font-mono: var(--font-geist-mono), "SFMono-Regular", monospace;
   /* min(vw, vh): a 1280x800 laptop is wide but short, and a width-only
      scale puts the headline below the fold there. */
-  --text-display: clamp(2.75rem, min(12.5vw, 15vh), 11.5rem);
-  --text-title: clamp(2.125rem, min(7.5vw, 10vh), 7rem);
-  --text-heading: clamp(1.75rem, 4vw, 3.75rem);
+  --text-display: clamp(3rem, min(12.5vw, 15vh), 11.5rem);
+  --text-title: clamp(2.25rem, min(7.5vw, 10vh), 7rem);
+  --text-heading: clamp(1.6875rem, 4vw, 3.75rem);
+  /* Item and sub-item carry the two levels below a section heading -- the row
+     titles of a directory and the name of a tier or process step. Before these
+     existed every list invented its own clamp, and at 390px all of them bottomed
+     out within a few pixels of each other and of the section heading. */
+  --text-item: clamp(1.5rem, 1rem + 1.4vw, 2.75rem);
+  --text-subitem: clamp(1.25rem, 1.05rem + 0.6vw, 1.625rem);
   --text-lead: clamp(1.125rem, 1rem + 1vw, 1.75rem);
   --text-body: clamp(1rem, 0.97rem + 0.15vw, 1.125rem);
+  --text-price: clamp(0.9375rem, 0.85rem + 0.35vw, 1.125rem);
+  /* Buttons used to borrow --text-label, so the most important control on
+     the page was set at the same size as a metadata caption. */
+  --text-action: clamp(0.875rem, 0.83rem + 0.2vw, 1rem);
   --text-label: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+
+  /* Optical sizing: tracking tightens as type grows and opens back up as it
+     approaches reading size. One tracking value across the whole scale is what
+     makes a hierarchy read as "big and small" instead of as a hierarchy. */
+  --tracking-display: -0.045em;
+  --tracking-title: -0.04em;
+  --tracking-heading: -0.03em;
+  --tracking-item: -0.02em;
+  --tracking-text: -0.01em;
 
   --space-2xs: clamp(0.375rem, 0.3rem + 0.25vw, 0.625rem);
   --space-xs: clamp(0.75rem, 0.65rem + 0.4vw, 1.125rem);
@@ -33,7 +52,10 @@
   --space-md: clamp(1.5rem, 1.1rem + 1.8vw, 3rem);
   --space-lg: clamp(2.5rem, 1.6rem + 3.6vw, 6rem);
   --space-xl: clamp(4rem, 2rem + 8vw, 11rem);
-  --space-2xl: clamp(6rem, 3rem + 12vw, 16rem);
+  /* At the old ceiling a section carried 440px of padding around as little
+     as 120px of content, which read as an empty band rather than as
+     confident negative space. */
+  --space-2xl: clamp(5rem, 2.25rem + 9vw, 12rem);
 
   /* One source of truth for the sticky header: the header sets its own height
      from this token and the hero subtracts exactly the same value, so the first
@@ -61,6 +83,15 @@
   --duration-fast: 160ms;
   --duration-medium: 420ms;
   --duration-slow: 800ms;
+
+  /* A block that travels 28px does not need the same 800ms as a headline that
+     rises out of a clip box, and a stagger only reads as a sequence when the
+     step is a noticeable fraction of the duration -- 90ms against 800ms was 11%,
+     which the eye takes as simultaneous. */
+  --duration-reveal: 620ms;
+  --duration-reveal-mask: 760ms;
+  --reveal-step: 110ms;
+  --reveal-step-word: 70ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
@@ -106,12 +137,15 @@ figure {
   margin: 0;
 }
 
+/* The defaults sit at the middle of the scale. Display and section roles set
+   their own tracking and leading, because the correct value depends on the size
+   the role actually renders at. */
 h1,
 h2,
 h3 {
   font-weight: 500;
-  line-height: 0.94;
-  letter-spacing: -0.045em;
+  line-height: 1.02;
+  letter-spacing: var(--tracking-item);
   text-wrap: balance;
 }
 

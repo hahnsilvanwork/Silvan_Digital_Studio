@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 
 import { WebsitesPage } from "../../../../features/pages/WebsitesPage";
-import { getContent } from "../../../../lib/locales";
+import { buildPageMetadata } from "../../../../lib/page-metadata";
 
-const content = getContent("en");
-
-export const metadata: Metadata = {
-  title: content.seo.websites.title,
-  description: content.seo.websites.description,
-};
+export const metadata: Metadata = buildPageMetadata({
+  locale: "en",
+  page: "websites",
+  route: "/websites",
+});
 
 export default function Page() {
   return <WebsitesPage locale="en" />;

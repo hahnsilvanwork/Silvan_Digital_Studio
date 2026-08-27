@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 
+import { revealSequence } from "../motion/reveal-sequence";
 import { SplitText } from "../motion/SplitText";
 import styles from "./ui.module.css";
 
@@ -21,6 +22,7 @@ export function SectionHeading({
   id,
 }: SectionHeadingProps) {
   const Heading = `h${level}` as const;
+  const sequence = revealSequence(title);
 
   return (
     <div className={styles.sectionHeading}>
@@ -33,6 +35,7 @@ export function SectionHeading({
       <SplitText
         as={Heading}
         className={`${styles.headingText} ${styles[size]}`}
+        startIndex={sequence.titleStartIndex}
         text={title}
       />
 
@@ -40,7 +43,7 @@ export function SectionHeading({
         <p
           className={styles.intro}
           data-reveal="rise"
-          style={{ "--reveal-index": 2 } as CSSProperties}
+          style={{ "--reveal-index": sequence.introIndex } as CSSProperties}
         >
           {intro}
         </p>

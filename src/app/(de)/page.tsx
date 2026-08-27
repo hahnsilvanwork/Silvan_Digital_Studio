@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 
 import { HomePage } from "../../features/pages/HomePage";
-import { getContent } from "../../lib/locales";
+import { buildPageMetadata } from "../../lib/page-metadata";
 
-const content = getContent("de");
-
-export const metadata: Metadata = {
-  title: content.seo.home.title,
-  description: content.seo.home.description,
-};
+export const metadata: Metadata = buildPageMetadata({
+  locale: "de",
+  page: "home",
+  route: "/",
+});
 
 export default function Page() {
   return <HomePage locale="de" />;

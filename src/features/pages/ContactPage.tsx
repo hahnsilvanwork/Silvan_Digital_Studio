@@ -1,5 +1,8 @@
+import type { CSSProperties } from "react";
+
 import { ContactActions } from "../../components/contact/ContactActions";
 import { SiteShell } from "../../components/layout/SiteShell";
+import { revealSequence } from "../../components/motion/reveal-sequence";
 import { SplitText } from "../../components/motion/SplitText";
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
@@ -17,6 +20,7 @@ interface ContactPageProps {
  */
 export function ContactPage({ locale }: ContactPageProps) {
   const content = getContent(locale);
+  const sequence = revealSequence(content.contact.title);
 
   return (
     <SiteShell currentPath={localizePath("/contact", locale)} locale={locale}>
@@ -28,9 +32,14 @@ export function ContactPage({ locale }: ContactPageProps) {
           <SplitText
             as="h1"
             className={pageStyles.pageTitle}
+            startIndex={sequence.titleStartIndex}
             text={content.contact.title}
           />
-          <p className={pageStyles.editorialTight} data-reveal="rise">
+          <p
+            className={pageStyles.editorialTight}
+            data-reveal="rise"
+            style={{ "--reveal-index": sequence.introIndex } as CSSProperties}
+          >
             {content.contact.intro}
           </p>
         </section>

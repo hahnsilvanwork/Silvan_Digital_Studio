@@ -54,13 +54,55 @@
   transform: scaleX(0);
   transform-origin: 0 50%;
   transition-property: transform, opacity;
-  transition-duration: var(--duration-medium);
+  transition-duration: var(--duration-fast);
   transition-timing-function: var(--ease-out);
 }
 
 .nfcPerspectiveDrift {
   transform-style: preserve-3d;
   animation: silvan-perspective-drift 4.8s var(--ease-in-out) both;
+}
+
+/* Row links ----------------------------------------------------------------
+   A ruled row that navigates somewhere has to say so before anyone touches it.
+   The marker is present at rest, because a hover-only affordance tells a touch
+   visitor nothing, and it only sharpens where there is a fine pointer.
+   The marker is drawn from two borders rather than set as an arrow glyph,
+   because the font is subset to latin and U+2192 is not in it. */
+.rowLink {
+  position: relative;
+  padding-inline-end: 1.75rem;
+}
+
+.rowLink::after {
+  position: absolute;
+  inset-inline-end: 0.25rem;
+  inset-block-start: 50%;
+  inline-size: 0.4375rem;
+  block-size: 0.4375rem;
+  border-block-start: 0.09375rem solid currentColor;
+  border-inline-end: 0.09375rem solid currentColor;
+  /* Half the box plus its border, so the chevron is optically centred without
+     spending the transform -- the transform has to stay free for the slide. */
+  margin-block-start: -0.28125rem;
+  color: var(--color-ink-muted);
+  content: "";
+  opacity: 0.55;
+  pointer-events: none;
+  /* The rotation stays inside `transform` and last in the list, so the hover
+     translation is applied in the unrotated frame and slides straight out. */
+  transform: rotate(45deg);
+  transition-property: transform, opacity;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-out);
+}
+
+/* The media itself is the hover target on a project card, so the marker would
+   land in the middle of the image. The image answers instead. */
+.mediaLink :where(img) {
+  transition-property: transform;
+  transition-duration: var(--duration-medium);
+  transition-timing-function: var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -73,6 +115,29 @@
     opacity: 1;
     transform: scaleX(1);
   }
+
+  /* Colour is not transitioned anywhere in this system -- only transform and
+     opacity are -- so the accent lands immediately and the marker carries the
+     movement. */
+  .rowLink:hover {
+    color: var(--color-accent);
+  }
+
+  .rowLink:hover::after {
+    color: var(--color-accent);
+    opacity: 1;
+    transform: translate3d(0.3rem, 0, 0) rotate(45deg);
+  }
+
+  .mediaLink:hover :where(img) {
+    transform: scale3d(1.03, 1.03, 1);
+  }
+}
+
+.rowLink:focus-visible::after,
+.rowLink:focus-within::after {
+  opacity: 1;
+  transform: translate3d(0.3rem, 0, 0) rotate(45deg);
 }
 
 .hoverUnderline:focus-visible::after {
@@ -98,6 +163,14 @@
     transform: none;
   }
 
+  .rowLink::after {
+    transform: rotate(45deg);
+  }
+
+  .mediaLink :where(img) {
+    transform: none;
+  }
+
   .hoverUnderline::after {
     opacity: 1;
     transform: none;
@@ -114,13 +187,13 @@
 :root[data-motion="on"] [data-reveal]:not([data-reveal="mask"]) {
   opacity: 0;
   transition-property: transform, opacity;
-  transition-duration: var(--duration-slow);
+  transition-duration: var(--duration-reveal);
   transition-timing-function: var(--ease-out);
-  transition-delay: calc(var(--reveal-index, 0) * 90ms);
+  transition-delay: calc(var(--reveal-index, 0) * var(--reveal-step));
 }
 
 :root[data-motion="on"] [data-reveal="rise"] {
-  transform: translate3d(0, 2.25rem, 0);
+  transform: translate3d(0, 1.75rem, 0);
 }
 
 :root[data-motion="on"] [data-reveal="scale"] {
@@ -136,9 +209,9 @@
 :root[data-motion="on"] [data-reveal="mask"] [data-mask-item] {
   transform: translate3d(0, 105%, 0);
   transition-property: transform;
-  transition-duration: var(--duration-slow);
+  transition-duration: var(--duration-reveal-mask);
   transition-timing-function: var(--ease-out);
-  transition-delay: calc(var(--reveal-index, 0) * 55ms);
+  transition-delay: calc(var(--reveal-index, 0) * var(--reveal-step-word));
 }
 
 :root[data-motion="on"] [data-reveal="mask"][data-revealed="true"] [data-mask-item] {

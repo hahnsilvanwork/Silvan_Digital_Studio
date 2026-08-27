@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 
 import { ContactActions } from "../../components/contact/ContactActions";
 import { SiteShell } from "../../components/layout/SiteShell";
+import { revealSequence } from "../../components/motion/reveal-sequence";
 import { SplitText } from "../../components/motion/SplitText";
 import { ServiceDirectory } from "../../components/services/ServiceDirectory";
 import { ButtonLink } from "../../components/ui/ButtonLink";
@@ -23,6 +24,7 @@ export function HomePage({ locale }: HomePageProps) {
   const content = getContent(locale);
   const { hero } = content.home;
   const currentPath = localizePath("/", locale);
+  const sequence = revealSequence(hero.headline);
 
   return (
     <SiteShell currentPath={currentPath} locale={locale}>
@@ -36,19 +38,20 @@ export function HomePage({ locale }: HomePageProps) {
             <SplitText
               as="h1"
               className={pageStyles.heroTitle}
-              text={hero.headline}
+              startIndex={sequence.titleStartIndex}
+            text={hero.headline}
             />
             <p
               className={pageStyles.editorialTight}
               data-reveal="rise"
-              style={{ "--reveal-index": 2 } as CSSProperties}
+              style={{ "--reveal-index": sequence.introIndex } as CSSProperties}
             >
               {hero.supporting}
             </p>
             <div
               className={pageStyles.heroActions}
               data-reveal="rise"
-              style={{ "--reveal-index": 3 } as CSSProperties}
+              style={{ "--reveal-index": sequence.actionsIndex } as CSSProperties}
             >
               <ButtonLink href={localizePath("/contact", locale)}>
                 {hero.primaryCta}

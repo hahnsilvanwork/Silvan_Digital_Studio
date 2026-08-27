@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SILVAN - Hello</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "surface-dim": "#dadad8",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-background": "#1a1c1b",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#e5e2e1",
+                        "surface-container-highest": "#e3e2e0",
+                        "tertiary": "#000000",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface-tint": "#5f5e5e",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f4f3f1",
+                        "on-secondary-fixed": "#001257",
+                        "on-surface": "#1a1c1b",
+                        "inverse-primary": "#c8c6c5",
+                        "accent-electric": "#0047FF",
+                        "surface-variant": "#e3e2e0",
+                        "secondary-container": "#0448ff",
+                        "on-primary-fixed-variant": "#474746",
+                        "surface-container": "#efeeec",
+                        "inverse-on-surface": "#f1f1ef",
+                        "inverse-surface": "#2f3130",
+                        "text-main": "#1A1A1A",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "surface": "#F9F8F6",
+                        "on-secondary-container": "#d6daff",
+                        "on-surface-variant": "#444748",
+                        "background": "#faf9f7",
+                        "surface-bright": "#faf9f7",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#838484",
+                        "on-primary-container": "#858383",
+                        "on-secondary": "#ffffff",
+                        "outline": "#747878",
+                        "on-secondary-fixed-variant": "#0033c0",
+                        "divider": "#E5E5E5",
+                        "tertiary-container": "#1a1c1c",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#b9c3ff",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#1c1b1b",
+                        "primary-container": "#1c1b1b",
+                        "outline-variant": "#c4c7c7",
+                        "surface-container-high": "#e9e8e6",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#dde1ff",
+                        "secondary": "#0035c6",
+                        "primary": "#000000"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "section-gap": "160px",
+                        "element-gap": "32px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px"
+                    },
+                    "fontFamily": {
+                        "display-lg-mobile": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-xl": ["Geist"],
+                        "label-caps": ["Geist"],
+                        "mono-label": ["Geist"]
+                    },
+                    "fontSize": {
+                        "display-lg-mobile": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "display-lg": ["80px", { "lineHeight": "88px", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-lg": ["20px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-xl": ["12vw", { "lineHeight": "0.9", "letterSpacing": "-0.04em", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "mono-label": ["13px", { "lineHeight": "18px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .hairline-b { border-bottom: 1px solid #E5E5E5; }
+        .hairline-t { border-top: 1px solid #E5E5E5; }
+        .glass-nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .hover-arrow { transition: transform 0.3s ease; }
+        .tap-card:hover .hover-arrow { transform: translateX(8px) rotate(-45deg); color: #0047FF; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-primary min-h-screen flex flex-col relative selection:bg-primary selection:text-white overflow-x-hidden">
+<!-- Shared Component: TopAppBar -->
+<header class="bg-background/80 dark:bg-background/80 text-primary dark:text-primary-fixed font-mono-label text-mono-label fixed top-0 w-full border-b border-divider dark:border-outline-variant backdrop-blur-md flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 z-50 transition-colors duration-300">
+<div class="flex items-center gap-4">
+<button aria-label="Menu" class="text-primary hover:text-accent-electric transition-colors duration-300 cursor-pointer active:opacity-70 flex items-center justify-center p-2 -ml-2" onclick="document.getElementById('nav-drawer').classList.toggle('translate-x-full'); document.getElementById('nav-overlay').classList.toggle('opacity-0'); document.getElementById('nav-overlay').classList.toggle('pointer-events-none');">
+<span class="material-symbols-outlined" data-icon="menu" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+<span class="font-display-lg-mobile text-display-lg-mobile tracking-tighter text-primary dark:text-primary-fixed leading-none mt-1">SILVAN</span>
+</div>
+<div>
+<span class="font-label-caps text-label-caps tracking-widest text-on-surface-variant">HELLO</span>
+</div>
+</header>
+<!-- Navigation Drawer Overlay -->
+<div class="fixed inset-0 bg-primary/20 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300" id="nav-overlay" onclick="document.getElementById('nav-drawer').classList.add('translate-x-full'); this.classList.add('opacity-0', 'pointer-events-none');"></div>
+<!-- Shared Component: NavigationDrawer -->
+<aside class="bg-surface dark:bg-surface-container-lowest text-primary dark:text-primary-fixed font-display-lg-mobile text-display-lg-mobile fixed inset-y-0 right-0 w-full md:w-1/2 lg:w-1/3 h-screen z-50 translate-x-full duration-500 ease-in-out flex flex-col justify-center items-start px-margin-mobile md:px-margin-desktop space-y-8 shadow-2xl" id="nav-drawer">
+<button class="absolute top-6 right-margin-mobile md:right-margin-desktop text-primary hover:text-accent-electric transition-colors p-2" onclick="document.getElementById('nav-drawer').classList.add('translate-x-full'); document.getElementById('nav-overlay').classList.add('opacity-0', 'pointer-events-none');">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+<div class="font-display-lg text-display-lg text-primary mb-8 tracking-tighter">SILVAN</div>
+<a class="text-primary/40 dark:text-primary-fixed/40 hover:text-accent-electric transition-all flex items-center gap-4 group" href="#">
+<span class="material-symbols-outlined text-4xl group-hover:text-accent-electric" data-icon="work">work</span>
+<span>Projects</span>
+</a>
+<a class="text-primary/40 dark:text-primary-fixed/40 hover:text-accent-electric transition-all flex items-center gap-4 group" href="#">
+<span class="material-symbols-outlined text-4xl group-hover:text-accent-electric" data-icon="terminal">terminal</span>
+<span>Services</span>
+</a>
+<a class="text-primary/40 dark:text-primary-fixed/40 hover:text-accent-electric transition-all flex items-center gap-4 group" href="#">
+<span class="material-symbols-outlined text-4xl group-hover:text-accent-electric" data-icon="contactless">contactless</span>
+<span>Review Cards</span>
+</a>
+<a class="text-primary/40 dark:text-primary-fixed/40 hover:text-accent-electric transition-all flex items-center gap-4 group" href="#">
+<span class="material-symbols-outlined text-4xl group-hover:text-accent-electric" data-icon="mail">mail</span>
+<span>Contact</span>
+</a>
+</aside>
+<main class="flex-grow pt-[120px] pb-24 px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-x-gutter">
+<!-- Hero Section -->
+<section class="col-span-1 md:col-span-10 md:col-start-2 pt-12 pb-16 md:py-24">
+<p class="font-mono-label text-mono-label uppercase tracking-widest text-on-surface-variant mb-6">Digital Card</p>
+<h1 class="font-display-xl text-display-xl md:font-display-lg md:text-display-lg tracking-tighter leading-none mb-4">
+                SILVAN
+            </h1>
+<h2 class="font-headline-md text-headline-md text-on-surface-variant max-w-2xl">
+                What can I help you with?
+            </h2>
+</section>
+<!-- Giant Editorial List (Tap Options) -->
+<section class="col-span-1 md:col-span-10 md:col-start-2 flex flex-col w-full mb-section-gap">
+<a class="tap-card group block w-full py-8 md:py-12 hairline-b hairline-t cursor-pointer hover:bg-surface transition-colors duration-500 flex items-center justify-between" href="#">
+<span class="font-display-lg-mobile text-display-lg-mobile tracking-tighter group-hover:text-accent-electric transition-colors duration-300">WEBSITE</span>
+<span class="material-symbols-outlined text-4xl text-divider hover-arrow group-hover:text-accent-electric" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<a class="tap-card group block w-full py-8 md:py-12 hairline-b cursor-pointer hover:bg-surface transition-colors duration-500 flex items-center justify-between" href="#">
+<span class="font-display-lg-mobile text-display-lg-mobile tracking-tighter group-hover:text-accent-electric transition-colors duration-300">GOOGLE REVIEWS</span>
+<span class="material-symbols-outlined text-4xl text-divider hover-arrow group-hover:text-accent-electric" data-icon="star">star</span>
+</a>
+<a class="tap-card group block w-full py-8 md:py-12 hairline-b cursor-pointer hover:bg-surface transition-colors duration-500 flex items-center justify-between" href="#">
+<span class="font-display-lg-mobile text-display-lg-mobile tracking-tighter group-hover:text-accent-electric transition-colors duration-300">ONLINE PRESENCE</span>
+<span class="material-symbols-outlined text-4xl text-divider hover-arrow group-hover:text-accent-electric" data-icon="language">language</span>
+</a>
+<a class="tap-card group block w-full py-8 md:py-12 hairline-b cursor-pointer hover:bg-surface transition-colors duration-500 flex items-center justify-between" href="#">
+<span class="font-display-lg-mobile text-display-lg-mobile tracking-tighter group-hover:text-accent-electric transition-colors duration-300">SEE MY WORK</span>
+<span class="material-symbols-outlined text-4xl text-divider hover-arrow group-hover:text-accent-electric" data-icon="visibility">visibility</span>
+</a>
+<a class="tap-card group block w-full py-8 md:py-12 hairline-b cursor-pointer hover:bg-surface transition-colors duration-500 flex items-center justify-between" href="#">
+<span class="font-display-lg-mobile text-display-lg-mobile tracking-tighter group-hover:text-accent-electric transition-colors duration-300">ABOUT ME</span>
+<span class="material-symbols-outlined text-4xl text-divider hover-arrow group-hover:text-accent-electric" data-icon="person">person</span>
+</a>
+<a class="tap-card group block w-full py-8 md:py-12 hairline-b cursor-pointer hover:bg-surface transition-colors duration-500 flex items-center justify-between" href="#">
+<span class="font-display-lg-mobile text-display-lg-mobile tracking-tighter group-hover:text-accent-electric transition-colors duration-300">CONTACT</span>
+<span class="material-symbols-outlined text-4xl text-divider hover-arrow group-hover:text-accent-electric" data-icon="mail">mail</span>
+</a>
+</section>
+<!-- Quick Direct Links (Grid) -->
+<section class="col-span-1 md:col-span-10 md:col-start-2 mb-24">
+<h3 class="font-mono-label text-mono-label uppercase tracking-widest text-on-surface-variant mb-8">Direct Connect</h3>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<a class="flex flex-col items-center justify-center p-8 border border-divider hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 rounded group" href="#">
+<span class="material-symbols-outlined text-3xl mb-4 group-hover:scale-110 transition-transform" data-icon="chat">chat</span>
+<span class="font-label-caps text-label-caps tracking-widest">WhatsApp</span>
+</a>
+<a class="flex flex-col items-center justify-center p-8 border border-divider hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 rounded group" href="#">
+<span class="material-symbols-outlined text-3xl mb-4 group-hover:scale-110 transition-transform" data-icon="call">call</span>
+<span class="font-label-caps text-label-caps tracking-widest">Phone</span>
+</a>
+<a class="flex flex-col items-center justify-center p-8 border border-divider hover:border-primary hover:bg-primary hover:text-white transition-all duration-300 rounded group" href="#">
+<span class="material-symbols-outlined text-3xl mb-4 group-hover:scale-110 transition-transform" data-icon="alternate_email">alternate_email</span>
+<span class="font-label-caps text-label-caps tracking-widest">Email</span>
+</a>
+</div>
+</section>
+</main>
+<!-- Shared Component: Footer -->
+<footer class="bg-background dark:bg-background text-primary dark:text-primary-fixed font-mono-label text-mono-label uppercase tracking-widest w-full border-t border-divider dark:border-outline-variant mt-section-gap grid grid-cols-1 md:grid-cols-12 gap-element-gap px-margin-mobile md:px-margin-desktop py-24">
+<div class="col-span-1 md:col-span-4 flex flex-col gap-8">
+<span class="font-display-lg text-display-lg text-primary tracking-tighter leading-none">SILVAN</span>
+<span class="text-on-surface-variant">© 2024 SILVAN. ALL RIGHTS RESERVED.</span>
+</div>
+<div class="col-span-1 md:col-span-8 flex flex-col sm:flex-row gap-8 sm:gap-16 justify-end items-start md:items-end">
+<a class="text-on-surface-variant hover:text-accent-electric transition-opacity hover:opacity-80" href="#">WhatsApp</a>
+<a class="text-on-surface-variant hover:text-accent-electric transition-opacity hover:opacity-80" href="#">Email</a>
+<a class="text-on-surface-variant hover:text-accent-electric transition-opacity hover:opacity-80" href="#">Phone</a>
+<a class="text-on-surface-variant hover:text-accent-electric transition-opacity hover:opacity-80" href="#">LinkedIn</a>
+</div>
+</footer>
+</body></html>

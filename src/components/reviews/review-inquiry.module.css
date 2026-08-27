@@ -44,13 +44,19 @@
   font: inherit;
 }
 
+/* The invalid border and the error text used to be the same blue as the focus
+   ring, so the field you were in and the fields that were wrong looked
+   identical. Invalid now reads as weight, not hue, which also leaves the state
+   legible to anyone who cannot separate the two colours. */
 .control[aria-invalid="true"] {
-  border-color: var(--color-accent);
+  border-width: 0.125rem;
+  border-color: var(--color-ink);
 }
 
 .error {
-  color: var(--color-accent);
+  color: var(--color-ink);
   font-size: var(--text-label);
+  font-weight: 500;
 }
 
 .submit,
@@ -65,7 +71,8 @@
   border-radius: var(--radius-pill);
   cursor: pointer;
   font-family: inherit;
-  font-size: var(--text-label);
+  font-size: var(--text-action);
+  font-weight: 500;
   letter-spacing: 0.08em;
   text-align: center;
   text-decoration: none;
@@ -74,8 +81,9 @@
 
 .submit,
 .confirmLink {
-  background: var(--color-ink);
-  color: var(--color-on-dark);
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
 .editButton {

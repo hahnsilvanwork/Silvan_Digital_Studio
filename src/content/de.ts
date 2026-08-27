@@ -39,7 +39,7 @@ export const de = {
   },
   home: {
     hero: {
-      serviceLine: "Websites · Google Reviews · Online-Präsenz · Automation",
+      serviceLine: "Websites · Google Reviews · Online-Präsenz · Automation",
       headline: "Mehr Kunden. Weniger Aufwand.",
       supporting:
         "Ich entwickle digitale Lösungen, die Ihr Unternehmen sichtbar machen und wiederkehrende Arbeit reduzieren.",

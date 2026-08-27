@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 
 import { AboutPage } from "../../../features/pages/AboutPage";
-import { getContent } from "../../../lib/locales";
+import { buildPageMetadata } from "../../../lib/page-metadata";
 
-const content = getContent("de");
-
-export const metadata: Metadata = {
-  title: content.seo.about.title,
-  description: content.seo.about.description,
-};
+export const metadata: Metadata = buildPageMetadata({
+  locale: "de",
+  page: "about",
+  route: "/about",
+});
 
 export default function Page() {
   return <AboutPage locale="de" />;

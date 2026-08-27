@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 
 import { ContactPage } from "../../../../features/pages/ContactPage";
-import { getContent } from "../../../../lib/locales";
+import { buildPageMetadata } from "../../../../lib/page-metadata";
 
-const content = getContent("en");
-
-export const metadata: Metadata = {
-  title: content.seo.contact.title,
-  description: content.seo.contact.description,
-};
+export const metadata: Metadata = buildPageMetadata({
+  locale: "en",
+  page: "contact",
+  route: "/contact",
+});
 
 export default function Page() {
   return <ContactPage locale="en" />;

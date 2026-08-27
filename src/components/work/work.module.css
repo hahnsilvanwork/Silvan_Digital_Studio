@@ -29,13 +29,18 @@
   text-transform: uppercase;
 }
 
+/* This label is an honesty caveat, not an action. It was the only accent on the
+   home page -- four times over -- which spent the brand's one signal colour on
+   a disclaimer. Full ink and a heavier weight keep it prominent against the
+   muted meta row around it without taking the action colour. */
 .previewConcept {
-  color: var(--color-accent);
+  color: var(--color-ink);
+  font-weight: 500;
 }
 
 .previewName {
-  font-size: clamp(1.75rem, 1.4rem + 1.8vw, 2.75rem);
-  letter-spacing: -0.035em;
+  font-size: var(--text-item);
+  letter-spacing: var(--tracking-item);
   line-height: 1.02;
 }
 
@@ -51,7 +56,8 @@
 }
 
 .detailConcept {
-  color: var(--color-accent);
+  color: var(--color-ink);
+  font-weight: 500;
   font-family: var(--font-mono);
   font-size: var(--text-label);
   letter-spacing: 0.16em;
@@ -60,8 +66,8 @@
 
 .detailTitle {
   font-size: var(--text-title);
-  letter-spacing: -0.045em;
-  line-height: 0.94;
+  letter-spacing: var(--tracking-title);
+  line-height: 0.96;
 }
 
 .detailTagline {
@@ -142,8 +148,8 @@
 }
 
 .detailNextName {
-  font-size: clamp(2rem, 1.5rem + 3vw, 4rem);
-  letter-spacing: -0.04em;
+  font-size: var(--text-heading);
+  letter-spacing: var(--tracking-heading);
   line-height: 1;
 }
 
@@ -152,8 +158,13 @@
 }
 
 @media (min-width: 64rem) {
+  /* The media caps at 32rem, so equal 1fr columns left each image floating in a
+     wider cell with a ragged right edge and the grid covering barely half the
+     canvas. Sizing the tracks to the media and pushing them apart lets the pair
+     span the container properly. */
   .previewList {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 32rem));
+    justify-content: space-between;
     column-gap: var(--grid-gap);
     row-gap: var(--space-xl);
   }

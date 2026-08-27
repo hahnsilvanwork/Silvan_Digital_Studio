@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { SiteShell } from "../../../../components/layout/SiteShell";
 import { ProjectDetail } from "../../../../components/work/ProjectDetail";
 import { getAdjacentProject, getProject, projects } from "../../../../content/projects";
+import { buildMetadata } from "../../../../lib/page-metadata";
+import { createProjectPath } from "../../../../lib/routes";
 
 interface PageProps {
   readonly params: Promise<{ readonly slug: string }>;
@@ -23,10 +25,12 @@ export async function generateMetadata({
     return {};
   }
 
-  return {
+  return buildMetadata({
+    locale: "de",
+    route: createProjectPath(project.slug),
     title: `${project.name} — SILVAN Digital Studio`,
     description: project.copy.de.tagline,
-  };
+  });
 }
 
 export default async function Page({ params }: PageProps) {

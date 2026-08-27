@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 
 import { AutomationPage } from "../../../../features/pages/AutomationPage";
-import { getContent } from "../../../../lib/locales";
+import { buildPageMetadata } from "../../../../lib/page-metadata";
 
-const content = getContent("en");
-
-export const metadata: Metadata = {
-  title: content.seo.automation.title,
-  description: content.seo.automation.description,
-};
+export const metadata: Metadata = buildPageMetadata({
+  locale: "en",
+  page: "automation",
+  route: "/automation",
+});
 
 export default function Page() {
   return <AutomationPage locale="en" />;

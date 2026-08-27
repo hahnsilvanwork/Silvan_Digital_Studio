@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 
 import { ContactActions } from "../../components/contact/ContactActions";
 import { SiteShell } from "../../components/layout/SiteShell";
+import { revealSequence } from "../../components/motion/reveal-sequence";
 import { SplitText } from "../../components/motion/SplitText";
 import { PriceTierList } from "../../components/services/PriceTierList";
 import { ProcessSteps } from "../../components/services/ProcessSteps";
@@ -28,6 +29,7 @@ export function ServicePage({
   children,
 }: ServicePageProps) {
   const content = getContent(locale);
+  const sequence = revealSequence(service.title);
 
   return (
     <SiteShell currentPath={localizePath(route, locale)} locale={locale}>
@@ -39,19 +41,20 @@ export function ServicePage({
           <SplitText
             as="h1"
             className={pageStyles.pageTitle}
+            startIndex={sequence.titleStartIndex}
             text={service.title}
           />
           <p
             className={pageStyles.editorialTight}
             data-reveal="rise"
-            style={{ "--reveal-index": 2 } as CSSProperties}
+            style={{ "--reveal-index": sequence.introIndex } as CSSProperties}
           >
             {service.intro}
           </p>
           <div
             className={pageStyles.heroActions}
             data-reveal="rise"
-            style={{ "--reveal-index": 3 } as CSSProperties}
+            style={{ "--reveal-index": sequence.actionsIndex } as CSSProperties}
           >
             <ButtonLink href={localizePath(service.ctaHref, locale)}>
               {service.ctaLabel}

@@ -1,4 +1,7 @@
+import type { CSSProperties } from "react";
+
 import { SiteShell } from "../../components/layout/SiteShell";
+import { revealSequence } from "../../components/motion/reveal-sequence";
 import { SplitText } from "../../components/motion/SplitText";
 import { ProjectPreview } from "../../components/work/ProjectPreview";
 import { projects } from "../../content/projects";
@@ -15,6 +18,7 @@ interface WorkPageProps {
 
 export function WorkPage({ locale }: WorkPageProps) {
   const content = getContent(locale);
+  const sequence = revealSequence(content.work.title);
 
   return (
     <SiteShell currentPath={localizePath("/work", locale)} locale={locale}>
@@ -26,9 +30,14 @@ export function WorkPage({ locale }: WorkPageProps) {
           <SplitText
             as="h1"
             className={pageStyles.pageTitle}
+            startIndex={sequence.titleStartIndex}
             text={content.work.title}
           />
-          <p className={pageStyles.editorialTight} data-reveal="rise">
+          <p
+            className={pageStyles.editorialTight}
+            data-reveal="rise"
+            style={{ "--reveal-index": sequence.introIndex } as CSSProperties}
+          >
             {content.work.intro}
           </p>
         </section>

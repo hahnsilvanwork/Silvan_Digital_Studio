@@ -2,14 +2,13 @@ import type { Metadata, Viewport } from "next";
 
 import "../globals.css";
 import { RootDocument } from "../../components/layout/RootDocument";
-import { getContent } from "../../lib/locales";
+import { buildPageMetadata } from "../../lib/page-metadata";
 
-const content = getContent("en");
-
-export const metadata: Metadata = {
-  title: content.seo.home.title,
-  description: content.seo.home.description,
-};
+export const metadata: Metadata = buildPageMetadata({
+  locale: "en",
+  page: "home",
+  route: "/",
+});
 
 export const viewport: Viewport = {
   width: "device-width",

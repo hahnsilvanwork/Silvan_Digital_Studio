@@ -96,7 +96,7 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
         className={`${layoutStyles.container} ${styles.detailNext}`}
       >
         <Link
-          className={styles.detailNextLink}
+          className={`${styles.detailNextLink} rowLink`}
           data-touch-target
           href={localizePath(`/work/${next.slug}`, locale)}
         >

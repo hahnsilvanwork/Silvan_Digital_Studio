@@ -32,7 +32,7 @@ export function ServiceDirectory({ services, locale }: ServiceDirectoryProps) {
           style={{ "--reveal-index": index } as CSSProperties}
         >
           <Link
-            className={styles.directoryLink}
+            className={`${styles.directoryLink} rowLink`}
             data-touch-target
             href={localizePath(service.href, locale)}
           >

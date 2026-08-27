@@ -16,9 +16,12 @@
 
 .skipLink {
   position: absolute;
+  display: inline-flex;
+  align-items: center;
   inset-inline-start: var(--page-gutter);
   inset-block-start: 0;
   z-index: var(--z-overlay);
+  min-block-size: var(--control-target-min);
   padding: var(--space-2xs) var(--space-xs);
   background: var(--color-ink);
   color: var(--color-on-dark);
@@ -50,9 +53,16 @@
   padding-inline-end: max(0px, var(--safe-right));
 }
 
+/* The header's home link is a persistent navigation control, so it carries the
+   same minimum as every other one. It is not marked [data-touch-target]: that
+   rule also applies `overflow-wrap: anywhere`, which would break the wordmark
+   mid-word at 320px. */
 .wordmark {
   display: grid;
   gap: 0.1em;
+  align-content: center;
+  min-block-size: var(--control-target-min);
+  touch-action: manipulation;
   text-decoration: none;
 }
 

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import type { Locale } from "../../content/types";
+import { PersonSchema } from "../seo/PersonSchema";
 import { MOTION_FLAG_SCRIPT } from "../motion/motion-flag";
 import { rootFontVariables } from "../../app/fonts";
 
@@ -33,6 +34,7 @@ export function RootDocument({ locale, children }: RootDocumentProps) {
           // Must run before the first paint, so it cannot be deferred.
           id="silvan-motion-flag"
         />
+        <PersonSchema locale={locale} />
         {children}
       </body>
     </html>

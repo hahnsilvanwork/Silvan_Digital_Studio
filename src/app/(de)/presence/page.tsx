@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 
 import { PresencePage } from "../../../features/pages/PresencePage";
-import { getContent } from "../../../lib/locales";
+import { buildPageMetadata } from "../../../lib/page-metadata";
 
-const content = getContent("de");
-
-export const metadata: Metadata = {
-  title: content.seo.presence.title,
-  description: content.seo.presence.description,
-};
+export const metadata: Metadata = buildPageMetadata({
+  locale: "de",
+  page: "presence",
+  route: "/presence",
+});
 
 export default function Page() {
   return <PresencePage locale="de" />;

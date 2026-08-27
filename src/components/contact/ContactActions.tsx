@@ -53,7 +53,7 @@ export function ContactActions({ locale }: ContactActionsProps) {
           style={{ "--reveal-index": index } as CSSProperties}
         >
           <a
-            className={styles.actionLink}
+            className={`${styles.actionLink} rowLink`}
             data-touch-target
             href={action.href}
             {...(action.external

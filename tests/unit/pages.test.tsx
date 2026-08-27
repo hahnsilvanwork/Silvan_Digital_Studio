@@ -60,7 +60,11 @@ describe("HomePage", () => {
 
     const main = screen.getByRole("main");
 
-    expect(within(main).getByText(de.home.hero.serviceLine)).toBeInTheDocument();
+    // Testing Library normalizes the rendered text, and \s matches U+00A0, so the
+    // expected string has to be normalized the same way to line up with it.
+    expect(
+      within(main).getByText(de.home.hero.serviceLine.replaceAll(" ", " ")),
+    ).toBeInTheDocument();
     expect(
       within(main).getByRole("heading", {
         level: 1,
