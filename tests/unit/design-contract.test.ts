@@ -20,6 +20,11 @@ const stylesheetSource = stylesheets
   .join("\n")
   .toLowerCase();
 
+const motionSource = readFileSync(
+  resolve(process.cwd(), "src/styles/motion.css"),
+  "utf8",
+).toLowerCase();
+
 const importerSource = readFileSync(
   resolve(process.cwd(), "scripts/import-mockup-assets.ps1"),
   "utf8",
@@ -82,6 +87,29 @@ describe("SILVAN responsive design contract", () => {
 
   it("never autoplays a perpetual CSS animation", () => {
     expect(stylesheetSource).not.toMatch(/animation(?:-[^:]+)?:[^;]*\binfinite\b/);
+  });
+
+  it("limits reusable motion to transform and opacity", () => {
+    const allowedProperties = new Set(["opacity", "transform"]);
+    const transitionedProperties = [...motionSource.matchAll(
+      /transition-property:\s*([^;]+)/g,
+    )].flatMap((match) => match[1].split(",").map((property) => property.trim()));
+    const keyframeProperties = [...motionSource.matchAll(
+      /(?:from|to|\d+%(?:\s*,\s*\d+%)*)\s*\{([^}]*)\}/g,
+    )].flatMap((match) =>
+      [...match[1].matchAll(/^\s*([a-z-]+)\s*:/gm)].map(
+        (declaration) => declaration[1],
+      ),
+    );
+
+    expect(transitionedProperties.length).toBeGreaterThan(0);
+    expect(keyframeProperties.length).toBeGreaterThan(0);
+    expect(motionSource).not.toMatch(/(?:^|[;{])\s*transition\s*:/m);
+    expect(
+      [...transitionedProperties, ...keyframeProperties].filter(
+        (property) => !allowedProperties.has(property),
+      ),
+    ).toEqual([]);
   });
 
   it.each(projectAssets)(

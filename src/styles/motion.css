@@ -31,22 +31,31 @@
   animation: silvan-reveal var(--duration-medium) var(--ease-out) both;
 }
 
-.hoverLift,
-.hoverUnderline {
+.hoverLift {
+  transition-property: transform, opacity;
   transition-duration: var(--duration-medium);
   transition-timing-function: var(--ease-out);
 }
 
-.hoverLift {
-  transition-property: transform, opacity;
+.hoverUnderline {
+  position: relative;
+  text-decoration: none;
 }
 
-.hoverUnderline {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-position: 100% 100%;
-  background-repeat: no-repeat;
-  background-size: 0 var(--hairline);
-  transition-property: background-size;
+.hoverUnderline::after {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: -0.12em;
+  block-size: var(--hairline);
+  background: currentColor;
+  content: "";
+  opacity: 0.72;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition-property: transform, opacity;
+  transition-duration: var(--duration-medium);
+  transition-timing-function: var(--ease-out);
 }
 
 .nfcPerspectiveDrift {
@@ -61,10 +70,15 @@
     transform: translate3d(0, -0.25rem, 0);
   }
 
-  .hoverUnderline:hover {
-    background-position: 0 100%;
-    background-size: 100% var(--hairline);
+  .hoverUnderline:hover::after {
+    opacity: 1;
+    transform: scaleX(1);
   }
+}
+
+.hoverUnderline:focus-visible::after {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -81,6 +95,11 @@
   .revealFast,
   .hoverLift,
   .nfcPerspectiveDrift {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hoverUnderline::after {
     opacity: 1;
     transform: none;
   }
