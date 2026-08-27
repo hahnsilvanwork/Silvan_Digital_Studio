@@ -18,6 +18,26 @@ function splitInternalPath(input: string): { pathname: string; suffix: string } 
     throw new TypeError("Expected an internal pathname without duplicate slashes.");
   }
 
+  for (const segment of pathname.split("/").slice(1)) {
+    let decodedSegment: string;
+
+    try {
+      decodedSegment = decodeURIComponent(segment);
+    } catch {
+      throw new TypeError("Expected a pathname with valid percent encoding.");
+    }
+
+    if (
+      decodedSegment === "." ||
+      decodedSegment === ".." ||
+      decodedSegment.includes("/") ||
+      decodedSegment.includes("\\") ||
+      /[\u0000-\u001F\u007F]/.test(decodedSegment)
+    ) {
+      throw new TypeError("Expected a canonical internal pathname.");
+    }
+  }
+
   return { pathname, suffix };
 }
 

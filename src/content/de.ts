@@ -330,4 +330,4 @@ export const de = {
     contact: { title: "Kontakt | SILVAN Digital Studio", description: "Kontaktieren Sie Silvan Hahn direkt per E-Mail, WhatsApp, Telefon oder LinkedIn." },
     hello: { title: "Hallo, ich bin Silvan | SILVAN Digital Studio", description: "Der direkte Einstieg zu Websites, Google Reviews, Online-Präsenz, Arbeiten und Kontakt." },
   },
-} satisfies SiteContent;
+} as const satisfies SiteContent;

@@ -1,6 +1,6 @@
 export type Locale = "de" | "en";
 
-export type RouteKey =
+export type PageKey =
   | "home"
   | "websites"
   | "reviews"
@@ -11,9 +11,31 @@ export type RouteKey =
   | "contact"
   | "hello";
 
+export type RouteKey =
+  | "/"
+  | "/websites"
+  | "/reviews"
+  | "/presence"
+  | "/automation"
+  | "/work"
+  | "/about"
+  | "/contact"
+  | "/hello"
+  | `/work/${string}`;
+
+export type InternalPath = RouteKey;
+
+export type DeepReadonly<T> = T extends (...args: never[]) => unknown
+  ? T
+  : T extends readonly unknown[]
+    ? { readonly [Key in keyof T]: DeepReadonly<T[Key]> }
+    : T extends object
+      ? { readonly [Key in keyof T]: DeepReadonly<T[Key]> }
+      : T;
+
 export interface NavigationItem {
   label: string;
-  href: string;
+  href: InternalPath;
 }
 
 export interface Navigation {
@@ -51,7 +73,7 @@ export interface ServiceContent {
   processTitle: string;
   process: ProcessStep[];
   ctaLabel: string;
-  ctaHref: string;
+  ctaHref: InternalPath;
 }
 
 export interface ContactDetails {
@@ -113,7 +135,7 @@ export interface ReviewInquiryContent {
   messageIntro: string;
 }
 
-export interface SiteContent {
+interface SiteContentShape {
   brand: {
     name: string;
     descriptor: string;
@@ -146,7 +168,7 @@ export interface SiteContent {
       title: string;
       description: string;
       price: string;
-      href: string;
+      href: InternalPath;
     }[];
     workTitle: string;
     studioTitle: string;
@@ -204,5 +226,7 @@ export interface SiteContent {
     description: string;
     homeLabel: string;
   };
-  seo: Record<RouteKey, PageSeo>;
+  seo: Record<PageKey, PageSeo>;
 }
+
+export type SiteContent = DeepReadonly<SiteContentShape>;

@@ -330,4 +330,4 @@ export const en = {
     contact: { title: "Contact | SILVAN Digital Studio", description: "Contact Silvan Hahn directly by email, WhatsApp, phone, or LinkedIn." },
     hello: { title: "Hi, I'm Silvan | SILVAN Digital Studio", description: "A direct route to websites, Google Reviews, online presence, work, and contact." },
   },
-} satisfies SiteContent;
+} as const satisfies SiteContent;
