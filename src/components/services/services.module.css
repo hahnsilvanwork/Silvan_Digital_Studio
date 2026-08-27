@@ -71,6 +71,26 @@
   letter-spacing: var(--tracking-item);
 }
 
+/* The one tier that is called out. It takes the accent rule and a label rather
+   than a filled card, because the accent is reserved for actions and a filled
+   box here would outweigh the primary button further down the page. */
+.tierRecommended {
+  border-block-start-width: 0.1875rem;
+  border-block-start-color: var(--color-accent);
+}
+
+/* Reserved on every tier of a list that calls one out, so an empty badge still
+   holds its line and the tier names stay on one baseline. */
+.tierBadge {
+  min-block-size: 1.2em;
+  color: var(--color-accent);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
 .tierDescription {
   color: var(--color-ink-muted);
 }
@@ -126,6 +146,13 @@
 }
 
 @media (min-width: 48rem) {
+  /* Side by side, a two-line tier name pushed its own price a line lower than
+     the prices next to it, so the row a visitor compares across did not line
+     up. Reserving two lines on every name puts them back on one baseline. */
+  .tierName {
+    min-block-size: 2.1em;
+  }
+
   .directoryLink {
     grid-template-columns: minmax(0, 1fr) auto;
     column-gap: var(--space-md);
@@ -162,5 +189,49 @@
     grid-column: 3;
     grid-row: 1;
     justify-self: end;
+  }
+}
+
+/* FAQ ---------------------------------------------------------------------
+   A description list, not an accordion. Every answer is rendered, so the same
+   text serves the visitor, the crawler and the FAQPage markup on the page. */
+
+.faq {
+  display: grid;
+  margin: 0;
+  padding: 0;
+}
+
+.faqItem {
+  display: grid;
+  gap: var(--space-2xs);
+  padding-block: var(--space-sm);
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
+.faqItem:last-child {
+  border-block-end: var(--hairline) solid var(--color-line);
+}
+
+.faqQuestion {
+  font-size: var(--text-subitem);
+  font-weight: 500;
+  letter-spacing: var(--tracking-item);
+  line-height: 1.15;
+}
+
+.faqAnswer {
+  max-inline-size: 44rem;
+  margin: 0;
+  color: var(--color-ink-muted);
+}
+
+@media (min-width: 64rem) {
+  /* The question holds a column of its own so a long answer never pushes it
+     out of the reader's eye line. */
+  .faqItem {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--grid-gap);
+    padding-block: var(--space-md);
   }
 }

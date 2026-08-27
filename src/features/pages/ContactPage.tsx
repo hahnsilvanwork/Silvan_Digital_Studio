@@ -47,6 +47,18 @@ export function ContactPage({ locale }: ContactPageProps) {
         <section className={`${layoutStyles.container} ${pageStyles.section}`}>
           <h2 className="visually-hidden">{content.contact.eyebrow}</h2>
           <ContactActions locale={locale} />
+
+          {/* The postal address is a trust signal on a page selling to local
+              businesses, and it is the same address the imprint carries -- so
+              it is stated here rather than made someone hunt for it. */}
+          <address className={pageStyles.postalAddress}>
+            <span className={pageStyles.postalAddressLabel}>
+              {content.contact.addressLabel}
+            </span>
+            {content.contact.address.map((line) => (
+              <span key={line}>{line}</span>
+            ))}
+          </address>
         </section>
       </div>
     </SiteShell>

@@ -137,9 +137,9 @@ describe("locale content", () => {
       locale: "de" as const,
       websitePrices: [
         "CHF 300–699",
-        "CHF 700–1,999",
-        "CHF 2,000–4,999",
-        "ab CHF 5,000",
+        "CHF 700–1'999",
+        "CHF 2'000–4'999",
+        "ab CHF 5'000",
       ],
       presencePrice: "ab CHF 249",
       nonBinding: /unverbindlich/i,
@@ -177,7 +177,7 @@ describe("locale content", () => {
       expect(content.reviews.quantityDiscount).toMatch(quantityDiscount);
       expect(content.presence.startingPrice).toBe(presencePrice);
       expect(content.contact.details).toEqual({
-        email: "hahn.silvan.work@gmail.com",
+        email: "kontakt@silvandigital.ch",
         phoneDisplay: "078 900 85 00",
         phoneHref: "tel:+41789008500",
         whatsappNumber: "+41789008500",
@@ -226,7 +226,7 @@ describe("locale content", () => {
     }).toThrow(TypeError);
     expect(getContent("de")).toBe(content);
     expect(getContent("de").contact.details.email).toBe(
-      "hahn.silvan.work@gmail.com",
+      "kontakt@silvandigital.ch",
     );
   });
 });

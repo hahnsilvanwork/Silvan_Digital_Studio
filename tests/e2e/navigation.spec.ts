@@ -69,6 +69,8 @@ test.describe("global navigation", () => {
       "/about",
       "/contact",
       "/hello",
+      "/imprint",
+      "/privacy",
       "/work/archa",
     ];
 
@@ -78,6 +80,29 @@ test.describe("global navigation", () => {
       expect(response?.status(), `${route} should resolve`).toBe(200);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     }
+  });
+
+  test("the footer reaches the imprint and the privacy statement", async ({
+    page,
+  }) => {
+    // These two are a legal obligation, not a nice-to-have. The footer is the
+    // only place they are linked from, so the link is the whole delivery.
+    await page.goto("/");
+
+    const footer = page.getByRole("contentinfo");
+
+    await footer.getByRole("link", { name: "Impressum" }).click();
+    await expect(page).toHaveURL(/\/imprint$/);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    // The address is the point of the page existing.
+    await expect(page.getByRole("main")).toContainText("Regensbergstrasse 23");
+
+    await page
+      .getByRole("contentinfo")
+      .getByRole("link", { name: "Datenschutz" })
+      .click();
+    await expect(page).toHaveURL(/\/privacy$/);
+    await expect(page.getByRole("main")).toContainText("Cookie");
   });
 
   test("no call to action points nowhere", async ({ page }) => {

@@ -9,7 +9,9 @@ export type PageKey =
   | "work"
   | "about"
   | "contact"
-  | "hello";
+  | "hello"
+  | "imprint"
+  | "privacy";
 
 export type RouteKey =
   | "/"
@@ -20,7 +22,9 @@ export type RouteKey =
   | "/work"
   | "/about"
   | "/contact"
-  | "/hello";
+  | "/hello"
+  | "/imprint"
+  | "/privacy";
 
 declare const projectPathBrand: unique symbol;
 
@@ -64,6 +68,8 @@ export interface PriceTier {
   readonly price: string;
   readonly description: string;
   readonly features: readonly string[];
+  /** At most one tier per page carries this. */
+  readonly recommended?: boolean;
 }
 
 export interface ProcessStep {
@@ -85,6 +91,44 @@ export interface ServiceContent {
   readonly process: readonly ProcessStep[];
   readonly ctaLabel: string;
   readonly ctaHref: RouteKey;
+  readonly faq: FaqContent;
+}
+
+export interface FaqItem {
+  readonly question: string;
+  readonly answer: string;
+}
+
+export interface FaqContent {
+  readonly title: string;
+  readonly items: readonly FaqItem[];
+}
+
+/** One heading plus its paragraphs. Legal pages are nothing else. */
+export interface LegalSection {
+  readonly title: string;
+  readonly body: readonly string[];
+}
+
+export interface LegalContent {
+  readonly eyebrow: string;
+  readonly title: string;
+  readonly intro: string;
+  readonly sections: readonly LegalSection[];
+  readonly updatedLabel: string;
+  readonly updated: string;
+}
+
+/**
+ * A quote from a named, real person who actually worked with the studio.
+ * The array is empty until such a quote exists -- the section renders nothing
+ * rather than showing an invented endorsement.
+ */
+export interface Testimonial {
+  readonly id: string;
+  readonly quote: string;
+  readonly author: string;
+  readonly role: string;
 }
 
 export interface ContactDetails {
@@ -100,6 +144,8 @@ export interface ContactContent {
   readonly eyebrow: string;
   readonly title: string;
   readonly intro: string;
+  readonly addressLabel: string;
+  readonly address: readonly string[];
   readonly emailLabel: string;
   readonly phoneLabel: string;
   readonly whatsappLabel: string;
@@ -168,6 +214,7 @@ interface SiteContentShape {
     getInTouch: string;
     from: string;
     onRequest: string;
+    recommended: string;
   };
   home: {
     hero: {
@@ -187,6 +234,8 @@ interface SiteContentShape {
     workTitle: string;
     studioTitle: string;
     studioCopy: string;
+    testimonialsTitle: string;
+    testimonials: Testimonial[];
   };
   websites: ServiceContent;
   reviews: {
@@ -201,6 +250,7 @@ interface SiteContentShape {
     ctaLabel: string;
     productImageAlt: string;
     inquiry: ReviewInquiryContent;
+    faq: FaqContent;
   };
   presence: ServiceContent & {
     startingPrice: string;
@@ -223,14 +273,18 @@ interface SiteContentShape {
     body: string[];
     valuesTitle: string;
     values: { title: string; description: string }[];
+    standardsTitle: string;
+    standards: string[];
     portraitAlt: string;
     portraitStatus: string;
   };
   contact: ContactContent;
   footer: {
     navLabel: string;
+    legalNavLabel: string;
     contactTitle: string;
     rights: string;
+    legal: NavigationItem[];
   };
   hello: {
     eyebrow: string;
@@ -239,6 +293,8 @@ interface SiteContentShape {
     links: NavigationItem[];
     directContactTitle: string;
   };
+  imprint: LegalContent;
+  privacy: LegalContent;
   notFound: {
     eyebrow: string;
     title: string;

@@ -10,7 +10,6 @@ interface SectionHeadingProps {
   readonly intro?: string;
   readonly level?: 1 | 2 | 3;
   readonly size?: "display" | "title" | "heading";
-  readonly id?: string;
 }
 
 export function SectionHeading({
@@ -19,7 +18,6 @@ export function SectionHeading({
   intro,
   level = 2,
   size = "heading",
-  id,
 }: SectionHeadingProps) {
   const Heading = `h${level}` as const;
   const sequence = revealSequence(title);
@@ -48,8 +46,6 @@ export function SectionHeading({
           {intro}
         </p>
       ) : null}
-
-      {id ? <span aria-hidden="true" id={id} /> : null}
     </div>
   );
 }

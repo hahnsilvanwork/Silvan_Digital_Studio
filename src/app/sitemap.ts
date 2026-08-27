@@ -16,7 +16,15 @@ const ROUTES: readonly InternalPath[] = [
   "/about",
   "/contact",
   "/hello",
+  "/imprint",
+  "/privacy",
 ];
+
+/**
+ * Bump this when the published copy of the site actually changes. It is the
+ * date every entry reports, so it has to mean something.
+ */
+const CONTENT_REVISION = "2026-08-27";
 
 /** The service pages are what a visitor is meant to land on from a search. */
 const PRIORITY: Partial<Record<string, number>> = {
@@ -29,11 +37,17 @@ const PRIORITY: Partial<Record<string, number>> = {
   "/about": 0.6,
   "/contact": 0.6,
   "/hello": 0.4,
+  "/imprint": 0.2,
+  "/privacy": 0.2,
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const { base } = getSiteOrigin();
-  const lastModified = new Date();
+  // Pinned to the last content revision rather than to the build clock. With
+  // `new Date()` every deployment -- including one that only changed a
+  // stylesheet -- told crawlers that all 26 URLs had changed, which trains them
+  // to stop trusting the field.
+  const lastModified = new Date(CONTENT_REVISION);
   const paths: InternalPath[] = [
     ...ROUTES,
     ...projects.map((project) => createProjectPath(project.slug)),

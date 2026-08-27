@@ -4,8 +4,10 @@ import { ContactActions } from "../../components/contact/ContactActions";
 import { SiteShell } from "../../components/layout/SiteShell";
 import { revealSequence } from "../../components/motion/reveal-sequence";
 import { SplitText } from "../../components/motion/SplitText";
+import { FaqList } from "../../components/services/FaqList";
 import { PriceTierList } from "../../components/services/PriceTierList";
 import { ProcessSteps } from "../../components/services/ProcessSteps";
+import { FaqSchema } from "../../components/seo/FaqSchema";
 import { ButtonLink } from "../../components/ui/ButtonLink";
 import { SectionHeading } from "../../components/ui/SectionHeading";
 import type { Locale, RouteKey, ServiceContent } from "../../content/types";
@@ -68,7 +70,10 @@ export function ServicePage({
             title={service.benefitsTitle}
           />
           <div className={pageStyles.sectionBody}>
-            <PriceTierList tiers={service.priceTiers} />
+            <PriceTierList
+              recommendedLabel={content.common.recommended}
+              tiers={service.priceTiers}
+            />
 
             <ul className={pageStyles.benefitList}>
               {service.benefits.map((benefit, index) => (
@@ -93,6 +98,14 @@ export function ServicePage({
             <div className={pageStyles.sectionBody}>
               <ProcessSteps steps={service.process} />
             </div>
+          </div>
+        </section>
+
+        <section className={`${layoutStyles.container} ${pageStyles.section}`}>
+          <FaqSchema items={service.faq.items} />
+          <SectionHeading title={service.faq.title} />
+          <div className={pageStyles.sectionBody}>
+            <FaqList items={service.faq.items} />
           </div>
         </section>
 

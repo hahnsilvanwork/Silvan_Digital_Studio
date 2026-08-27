@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
@@ -83,13 +85,32 @@ export function Footer({ locale }: FooterProps) {
           <ul className={styles.footerNavList}>
             {content.navigation.primary.map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   className={`${styles.footerNavLink} hoverUnderline`}
                   data-touch-target
                   href={localizePath(item.href, locale)}
                 >
                   {item.label}
-                </a>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <nav
+          aria-label={content.footer.legalNavLabel}
+          className={styles.footerLegalNav}
+        >
+          <ul className={styles.footerLegalList}>
+            {content.footer.legal.map((item) => (
+              <li key={item.href}>
+                <Link
+                  className={`${styles.footerLegalLink} hoverUnderline`}
+                  data-touch-target
+                  href={localizePath(item.href, locale)}
+                >
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>
