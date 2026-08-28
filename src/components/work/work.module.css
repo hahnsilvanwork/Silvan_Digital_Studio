@@ -159,21 +159,27 @@
 }
 
 @media (min-width: 64rem) {
-  /* The media caps at 32rem, so equal 1fr columns left each image floating in a
-     wider cell with a ragged right edge and the grid covering barely half the
-     canvas. Sizing the tracks to the media and pushing them apart lets the pair
-     span the container properly. */
+  /* The media caps at 32rem because the source images are 512px wide, so the
+     two tracks cannot grow with the canvas. `space-between` then pushed them
+     to the container edges instead: the wider the screen, the further apart the
+     projects drifted -- 768px of empty paper between two cards at 1920px, which
+     reads as two unrelated columns rather than one index.
+
+     Capping the list at the width the pair actually needs keeps them a normal
+     gap apart at every size, and lets the leftover canvas fall outside the
+     block where it belongs. */
   .previewList {
     grid-template-columns: repeat(2, minmax(0, 32rem));
-    justify-content: space-between;
     column-gap: var(--grid-gap);
-    row-gap: var(--space-xl);
+    row-gap: var(--space-lg);
+    max-inline-size: calc((2 * 32rem) + var(--grid-gap));
   }
 
   /* Offsetting every second preview keeps the index editorial rather than
-     catalogue-like, without breaking the reading order. */
+     catalogue-like, without breaking the reading order. Half the row gap: a
+     full one on top of the row gap left the second column a screen adrift. */
   .previewList > :nth-child(even) {
-    margin-block-start: var(--space-xl);
+    margin-block-start: var(--space-md);
   }
 
   .detailBody {
