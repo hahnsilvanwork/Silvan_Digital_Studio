@@ -31,6 +31,15 @@ interface ServiceOffer {
  * a price format change should not silently produce wrong structured data.
  * These must stay in step with `home.services` in the content files.
  */
+/**
+ * Where the work reaches clients. Declared once because the studio node and
+ * every service it offers have to agree -- they did not.
+ */
+const AREA_SERVED = [
+  { "@type": "AdministrativeArea", name: "Kanton Zürich" },
+  { "@type": "Country", name: "Switzerland" },
+] as const;
+
 const OFFERS: readonly ServiceOffer[] = [
   { route: "/websites", price: 300 },
   { route: "/reviews", price: 49 },
@@ -104,20 +113,20 @@ export function PersonSchema({ locale }: { readonly locale: Locale }) {
         founder: { "@id": personId },
         // The wordmark, not the portrait: a headshot is the person, and the
         // business node needs a mark of its own.
+        // The 180px apple-icon, not the 64px favicon: Google's organization
+        // logo guidance asks for at least 112px, so the smaller one may simply
+        // not qualify.
         logo: {
           "@type": "ImageObject",
-          url: absolute("/icon"),
-          width: 64,
-          height: 64,
+          url: absolute("/apple-icon"),
+          width: 180,
+          height: 180,
         },
         // A service-area business, not a shop: the work reaches clients across
         // Switzerland rather than at this address. The canton is named too --
         // country alone is the wrong granularity for a studio whose customers
         // are local businesses.
-        areaServed: [
-          { "@type": "AdministrativeArea", name: "Kanton Zürich" },
-          { "@type": "Country", name: "Switzerland" },
-        ],
+        areaServed: AREA_SERVED,
         // A range, not a currency code: the published tiers run from the CHF 49
         // review card to custom projects above CHF 5'000.
         priceRange: "CHF 49-5000+",
@@ -136,7 +145,10 @@ export function PersonSchema({ locale }: { readonly locale: Locale }) {
               name: service?.title ?? route,
               description: service?.description,
               provider: { "@id": businessId },
-              areaServed: { "@type": "Country", name: "Switzerland" },
+              // Same area as the studio node above. These two disagreed:
+              // the business served the canton and every service it offers
+              // served only the country.
+              areaServed: AREA_SERVED,
             },
             ...(price === null
               ? {}

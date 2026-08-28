@@ -49,7 +49,11 @@ export function AboutPage({ locale }: AboutPageProps) {
           {/* The approved photograph, not a generated likeness. The frame keeps
               the asset's own 4:5 crop, so the image fills it without an upscale
               at any column width. */}
-          <figure className={pageStyles.portrait} data-reveal="scale">
+          <figure
+            className={pageStyles.portrait}
+            data-reveal="scale"
+            data-reveal-priority=""
+          >
             <Image
               alt={content.about.portraitAlt}
               className={pageStyles.portraitImage}

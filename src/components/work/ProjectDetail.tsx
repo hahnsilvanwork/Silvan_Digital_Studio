@@ -6,6 +6,7 @@ import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
 import { SplitText } from "../motion/SplitText";
+import { ButtonLink } from "../ui/ButtonLink";
 import layoutStyles from "../../styles/layout.module.css";
 import pageStyles from "../../styles/pages.module.css";
 import styles from "./work.module.css";
@@ -64,15 +65,23 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
       <section className={`${layoutStyles.container} ${pageStyles.section}`}>
         <h2 className="visually-hidden">{content.work.projectInfoLabel}</h2>
 
+        {/* Each term now names what its value is. This read as
+            "Projektinformationen, Projektinformationen, Markenauftritt" and
+            then offered "2026" as a term whose definition was
+            "Konzeptprojekt" -- both pairs were the wrong way round. */}
         <dl className={styles.detailFacts} data-reveal="rise">
           <div className={styles.detailFact}>
             <dt className={styles.detailFactLabel}>
-              {content.work.projectInfoLabel}
+              {content.work.categoryLabel}
             </dt>
             <dd className={styles.detailFactValue}>{copy.category}</dd>
           </div>
           <div className={styles.detailFact}>
-            <dt className={styles.detailFactLabel}>{project.year}</dt>
+            <dt className={styles.detailFactLabel}>{content.work.yearLabel}</dt>
+            <dd className={styles.detailFactValue}>{project.year}</dd>
+          </div>
+          <div className={styles.detailFact}>
+            <dt className={styles.detailFactLabel}>{content.work.typeLabel}</dt>
             <dd className={styles.detailFactValue}>{content.work.conceptLabel}</dd>
           </div>
         </dl>
@@ -91,6 +100,16 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
           ))}
         </div>
       </section>
+
+      {/* Someone who has read a whole case study is the most engaged visitor
+          here. Offering only "next project" sent them sideways. */}
+      <div className={`${layoutStyles.container} ${pageStyles.section}`}>
+        <div className={pageStyles.sectionBody} data-reveal="rise">
+          <ButtonLink href={localizePath("/contact", locale)}>
+            {content.work.ctaLabel}
+          </ButtonLink>
+        </div>
+      </div>
 
       <nav
         aria-label={content.a11y.nextProject}

@@ -108,6 +108,25 @@ describe("legal pages", () => {
       expect(text.includes("Vercel Analytics")).toBe(shipsVercelAnalytics);
     },
   );
+
+  it.each(LOCALES)(
+    "never promises in the %s search snippet what the page then contradicts",
+    (locale) => {
+      // The privacy body was updated when analytics shipped; its own meta
+      // description and llms.txt were not, so the search result promised "no
+      // tracking at all" and the page it opened said otherwise. Both are read
+      // by people and machines that never see the body.
+      const description = getContent(locale).seo.privacy.description;
+      const llms = readFileSync(
+        resolve(process.cwd(), "public/llms.txt"),
+        "utf8",
+      );
+
+      for (const claim of [description, llms]) {
+        expect(claim).not.toMatch(/kein Tracking|no tracking/i);
+      }
+    },
+  );
 });
 
 describe("service page FAQs", () => {

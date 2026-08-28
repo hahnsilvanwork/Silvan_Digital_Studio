@@ -97,6 +97,13 @@ export interface ServiceContent {
 export interface FaqItem {
   readonly question: string;
   readonly answer: string;
+  /**
+   * An optional follow-on link for an answer that points at another page. The
+   * reviews FAQ named "Online-Präsenz" in prose without linking it, so the one
+   * genuine upsell path on the site was a dead end for both a reader and a
+   * crawler. Kept out of `answer` so the FAQ markup stays plain text.
+   */
+  readonly link?: { readonly label: string; readonly href: InternalPath };
 }
 
 export interface FaqContent {
@@ -135,6 +142,7 @@ export interface ContactDetails {
   readonly email: string;
   readonly phoneDisplay: string;
   readonly phoneHref: string;
+  /** Display only. The link itself comes from `whatsappHref`. */
   readonly whatsappNumber: string;
   readonly whatsappHref: string;
   readonly linkedIn: string;
@@ -202,6 +210,8 @@ export interface ReviewInquiryContent {
   readonly errorSummary: (count: number) => string;
   readonly quantityError: string;
   readonly urlError: string;
+  /** Announced first on the confirm step, so the summary is heard before the send link. */
+  readonly confirmTitle: string;
   readonly nonBindingNotice: string;
   readonly privacyNotice: string;
   readonly messageIntro: string;
@@ -275,9 +285,19 @@ interface SiteContentShape {
     intro: string;
     conceptLabel: string;
     projectInfoLabel: string;
+    categoryLabel: string;
+    yearLabel: string;
+    typeLabel: string;
     challengeLabel: string;
     approachLabel: string;
     outcomeLabel: string;
+    /**
+     * The portfolio pages were the only ones that ended without an invitation
+     * to act. Every service page closes with one; a visitor who has just read a
+     * whole case study is the most engaged reader on the site and was offered
+     * nothing but the next project.
+     */
+    ctaLabel: string;
   };
   about: {
     eyebrow: string;

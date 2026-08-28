@@ -51,6 +51,47 @@ describe("PersonSchema portrait", () => {
     expect(image?.caption).toBe(getContent(locale).about.portraitCaption);
   });
 
+  it.each(LOCALES)(
+    "publishes the same %s starting prices the pages print",
+    (locale) => {
+      // The offer floors are hand-written in PersonSchema while the visible
+      // prices live in the content. Nothing connected the two, so a price
+      // change would have updated the page and left the markup telling Google
+      // the old number.
+      const graph = graphFor(locale);
+      const business = graph.find(
+        (node) => node["@type"] === "ProfessionalService",
+      ) as unknown as {
+        makesOffer: {
+          itemOffered: { name: string };
+          priceSpecification?: { minPrice: number };
+        }[];
+      };
+      const { services } = getContent(locale).home;
+
+      for (const offer of business.makesOffer) {
+        const service = services.find(
+          (entry) => entry.title === offer.itemOffered.name,
+        );
+
+        expect(service).toBeDefined();
+
+        const printed = /(\d[\d']*)/.exec(service!.price)?.[1];
+
+        if (printed === undefined) {
+          // "Auf Anfrage" / "On request": no number on the page, none in the
+          // markup either.
+          expect(offer.priceSpecification).toBeUndefined();
+          continue;
+        }
+
+        expect(offer.priceSpecification?.minPrice).toBe(
+          Number(printed.replaceAll("'", "")),
+        );
+      }
+    },
+  );
+
   it("keeps the headshot off the business node", () => {
     // A picture of one person is not a picture of the studio. The markup makes
     // a point of claiming only what the site can stand behind, and this is the

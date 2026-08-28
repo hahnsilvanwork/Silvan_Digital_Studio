@@ -234,6 +234,7 @@ export const en = {
           : `${count} fields still need to be completed or corrected.`,
       quantityError: "Please enter a valid quantity of at least 1.",
       urlError: "Please enter a valid Google link.",
+      confirmTitle: "Please check your details",
       nonBindingNotice: "This is a no-obligation inquiry. It only becomes binding after I personally confirm it.",
       privacyNotice: "Your details are not stored by this website; they are only inserted into the WhatsApp message.",
       messageIntro: "Hi Silvan, I would like to make a no-obligation inquiry about NFC Review Cards.",
@@ -260,6 +261,7 @@ export const en = {
           question: "Do I need a Google Business Profile?",
           answer:
             "Yes, the card points to it. If you do not have one yet, or it is incomplete, I set it up under Online presence.",
+          link: { label: "Set up a Google Business Profile", href: "/presence" },
         },
         {
           question: "What does it cost and what is included?",
@@ -388,9 +390,13 @@ export const en = {
     intro: "Selected design concepts show how strategy, content, and development can work together.",
     conceptLabel: "Concept project",
     projectInfoLabel: "Project information",
+    categoryLabel: "Category",
+    yearLabel: "Year",
+    typeLabel: "Type",
     challengeLabel: "Challenge",
     approachLabel: "Approach",
     outcomeLabel: "Intended outcome",
+    ctaLabel: "Discuss your project",
   },
   about: {
     eyebrow: "About",
@@ -432,7 +438,7 @@ export const en = {
       // Switzerland reads, and "078..." cannot be dialled from abroad.
       phoneDisplay: "+41 78 900 85 00",
       phoneHref: "tel:+41789008500",
-      whatsappNumber: "+41789008500",
+      whatsappNumber: "+41 78 900 85 00",
       whatsappHref: "https://wa.me/41789008500",
       linkedIn: "https://www.linkedin.com/in/silvan-hahn-dev",
     },
@@ -628,6 +634,6 @@ export const en = {
     contact: { title: "Contact – Web Design Enquiry, Canton Zurich | SILVAN", description: "Talk your project through directly with Silvan Hahn by email, WhatsApp, phone or LinkedIn. Based in Boppelsen ZH. Enquiries are non-binding." },
     hello: { title: "Hi, I'm Silvan | SILVAN Digital Studio", description: "A direct route to websites, Google reviews, online presence, work, and contact." },
     imprint: { title: "Imprint | SILVAN Digital Studio", description: "Responsible for this website: Silvan Hahn, Boppelsen. Legal form, contact details, and copyright." },
-    privacy: { title: "Privacy | SILVAN Digital Studio", description: "This website sets no cookies and embeds no tracking. Privacy statement under the revised Swiss FADP." },
+    privacy: { title: "Privacy | SILVAN Digital Studio", description: "No cookies, no profiling, no recognition across visits – only a cookieless page-view count. Privacy statement under the revised Swiss FADP." },
   },
 } as const satisfies SiteContent;

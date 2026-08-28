@@ -16,25 +16,16 @@ export function buildReviewInquiryUrl(
   const content = getContent(locale);
   const { inquiry } = content.reviews;
   const trimmed = trimInquiry(values);
-  const labelFor = (name: string) =>
-    inquiry.fields.find((field) => field.name === name)?.label ?? name;
 
-  const lines = [
-    inquiry.messageIntro,
-    "",
-    `${labelFor("product")}: ${trimmed.product}`,
-    `${labelFor("quantity")}: ${trimmed.quantity}`,
-    `${labelFor("variant")}: ${trimmed.variant}`,
-    `${labelFor("businessName")}: ${trimmed.businessName}`,
-    `${labelFor("contactPerson")}: ${trimmed.contactPerson}`,
-    `${labelFor("googleUrl")}: ${trimmed.googleUrl}`,
-    `${labelFor("street")}: ${trimmed.street}`,
-    `${labelFor("postalCode")}: ${trimmed.postalCode}`,
-    `${labelFor("city")}: ${trimmed.city}`,
-  ];
+  // Derived from the same field list the form renders and the confirmation
+  // screen summarises, so a new field cannot appear on screen and go missing
+  // from the message.
+  const lines = [inquiry.messageIntro, ""];
 
-  if (trimmed.note !== "") {
-    lines.push(`${labelFor("note")}: ${trimmed.note}`);
+  for (const field of inquiry.fields) {
+    const value = trimmed[field.name];
+    if (value === "") continue;
+    lines.push(`${field.label}: ${value}`);
   }
 
   lines.push("", inquiry.nonBindingNotice);

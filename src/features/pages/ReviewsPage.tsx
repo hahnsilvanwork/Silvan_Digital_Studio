@@ -123,7 +123,7 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
           <FaqSchema items={reviews.faq.items} />
           <SectionHeading title={reviews.faq.title} />
           <div className={pageStyles.sectionBody}>
-            <FaqList items={reviews.faq.items} />
+            <FaqList items={reviews.faq.items} locale={locale} />
           </div>
         </section>
 

@@ -42,8 +42,12 @@ export function ProjectPreview({
           data-reveal="scale"
           data-reveal-priority={priority ? "" : undefined}
         >
+          {/* Empty on purpose: this image is inside the link, so its alt is
+              prepended to the link's name and the project name ended up as the
+              ninth word. The link text already describes the project, and the
+              detail page carries the described image. */}
           <Image
-            alt={copy.imageAlt}
+            alt=""
             height={279}
             priority={priority}
             sizes="(min-width: 64rem) 44vw, 100vw"
