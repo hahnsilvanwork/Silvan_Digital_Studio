@@ -5,6 +5,8 @@ import { join, resolve } from "node:path";
 import postcss, { type Declaration, type Root } from "postcss";
 import { describe, expect, it } from "vitest";
 
+import { PORTRAIT } from "../../src/lib/portrait";
+
 const REQUIRED_STYLESHEETS = [
   "src/app/globals.css",
   "src/styles/layout.module.css",
@@ -122,6 +124,17 @@ const assets = [
     mime: "image/jpeg",
     sha256: "F9C235D52848F63C585FA95FDB11A0C5385F05174C80C2A0383E4C13F3AD2D87",
   },
+  {
+    // Pinned like the rest, and for one extra reason: PORTRAIT.width/height are
+    // published as fact in the Person markup, so the committed file has to
+    // really be that size.
+    fileName: "portrait/portrait.webp",
+    bytes: 277_670,
+    width: PORTRAIT.width,
+    height: PORTRAIT.height,
+    mime: "image/webp",
+    sha256: "206991294A8F80E237A198CCE7CD2045A6B2ED9F38FD10F96C20741377635F31",
+  },
 ] as const;
 
 function declarationValues(
@@ -223,6 +236,45 @@ function decodeImage(buffer: Buffer) {
       }
 
       offset += segmentLength;
+    }
+  }
+
+  // WebP. Only the three chunk layouts libwebp actually emits are decoded --
+  // an unrecognised one throws rather than guessing at a size.
+  if (
+    buffer.subarray(0, 4).toString("ascii") === "RIFF" &&
+    buffer.subarray(8, 12).toString("ascii") === "WEBP"
+  ) {
+    const chunk = buffer.subarray(12, 16).toString("ascii");
+    const webp = { mime: "image/webp" };
+
+    if (chunk === "VP8 ") {
+      // Lossy: a 14-bit width and height follow the 3-byte start code.
+      return {
+        ...webp,
+        width: buffer.readUInt16LE(26) & 0x3fff,
+        height: buffer.readUInt16LE(28) & 0x3fff,
+      };
+    }
+
+    if (chunk === "VP8L") {
+      // Lossless: 14-bit dimensions minus one, packed across four bytes.
+      const bits = buffer.readUInt32LE(21);
+
+      return {
+        ...webp,
+        width: (bits & 0x3fff) + 1,
+        height: ((bits >> 14) & 0x3fff) + 1,
+      };
+    }
+
+    if (chunk === "VP8X") {
+      // Extended: 24-bit canvas dimensions minus one.
+      return {
+        ...webp,
+        width: buffer.readUIntLE(24, 3) + 1,
+        height: buffer.readUIntLE(27, 3) + 1,
+      };
     }
   }
 
@@ -556,10 +608,16 @@ describe("SILVAN responsive design contract", () => {
 
     // The approved photograph is stored pre-cropped at 4:5 and the frame
     // declares the same ratio. If either side drifts the face gets cut.
-    expect(portraitReadme).toContain("portrait.webp");
-    expect(portraitReadme).toContain("1360 × 1700");
+    expect(PORTRAIT.width / PORTRAIT.height).toBeCloseTo(4 / 5, 5);
     expect(stylesheetSource).toMatch(
       /\.portraitimage\s*\{[^}]*aspect-ratio:\s*4\s*\/\s*5/,
+    );
+
+    // The README documents the crop for whoever replaces the file next, so it
+    // has to still describe the file that is actually committed.
+    expect(portraitReadme).toContain("portrait.webp");
+    expect(portraitReadme).toContain(
+      `${PORTRAIT.width} × ${PORTRAIT.height}`,
     );
   });
 });

@@ -1,5 +1,6 @@
 import type { Locale, RouteKey } from "../../content/types";
 import { getContent } from "../../lib/locales";
+import { PORTRAIT } from "../../lib/portrait";
 import { localizePath } from "../../lib/routes";
 import { getSiteOrigin } from "../../lib/site-url";
 
@@ -55,6 +56,7 @@ export function PersonSchema({ locale }: { readonly locale: Locale }) {
 
   const personId = absolute("/#person");
   const businessId = absolute("/#studio");
+  const portraitId = absolute("/#portrait");
 
   const schema = {
     "@context": "https://schema.org",
@@ -66,12 +68,29 @@ export function PersonSchema({ locale }: { readonly locale: Locale }) {
         url: base.toString(),
         // about.intro is a sentence, which is a description and not a job title.
         description: content.about.intro,
+        // The same photograph the about page shows. It stays on the Person and
+        // off the ProfessionalService: a headshot is not a picture of the
+        // business, and claiming it as one is the kind of small overstatement
+        // this markup avoids everywhere else.
+        image: { "@id": portraitId },
         email: `mailto:${details.email}`,
         telephone,
         address,
         sameAs: [details.linkedIn],
         knowsAbout: content.home.services.map((service) => service.title),
         worksFor: { "@id": businessId },
+      },
+      {
+        // Declared as a node rather than a bare URL so the dimensions travel
+        // with it: a crawler that wants a 1:1 or 4:3 crop can tell from the
+        // markup whether this file can supply one.
+        "@type": "ImageObject",
+        "@id": portraitId,
+        contentUrl: absolute(PORTRAIT.src),
+        url: absolute(PORTRAIT.src),
+        width: PORTRAIT.width,
+        height: PORTRAIT.height,
+        caption: content.about.portraitCaption,
       },
       {
         "@type": "ProfessionalService",
