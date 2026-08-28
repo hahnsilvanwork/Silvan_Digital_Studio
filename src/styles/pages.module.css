@@ -282,50 +282,23 @@
   margin: 0;
 }
 
-/* The initial scales with the frame, not the viewport: this column is a quarter
-   of the canvas on desktop and the full width on mobile, so a vw-based size
-   would be wrong at one end or the other. */
 .portrait {
-  container-type: inline-size;
   margin: 0;
 }
 
-/* An empty bordered rectangle with centred 12px type reads as an image that
-   failed to load -- the worst thing to put on the page that has to establish
-   trust. The wordmark initial gives the frame a subject, and the label moves to
-   the baseline where a caption belongs, so the absent photograph is stated
-   rather than looking broken. */
-.portraitPlaceholder {
-  position: relative;
-  display: grid;
-  gap: 0.4em;
-  align-content: end;
-  justify-items: start;
+/* The asset is stored pre-cropped at 4:5, so the ratio is declared here rather
+   than enforced with object-fit: the box and the file agree and nothing is cut
+   off a second time. Sized to the column instead of the intrinsic 1360px, which
+   the four-column grid never reaches. */
+.portraitImage {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
   aspect-ratio: 4 / 5;
-  padding: var(--space-sm);
-  overflow: clip;
   border: var(--hairline) solid var(--color-line);
+  border-radius: var(--radius-media);
   background: var(--color-paper-raised);
-  color: var(--color-ink-muted);
-  font-size: var(--text-label);
-  letter-spacing: 0.18em;
-  text-align: start;
-  text-transform: uppercase;
-}
-
-.portraitPlaceholder::before {
-  position: absolute;
-  inset-block-start: -0.16em;
-  inset-inline-start: -0.055em;
-  color: var(--color-ink);
-  content: "S";
-  font-family: var(--font-sans);
-  font-size: 82cqw;
-  font-weight: 500;
-  letter-spacing: var(--tracking-display);
-  line-height: 1;
-  opacity: 0.06;
-  pointer-events: none;
+  object-fit: cover;
 }
 
 .portraitCaption {

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { CSSProperties } from "react";
 
 import { ContactActions } from "../../components/contact/ContactActions";
@@ -44,15 +45,21 @@ export function AboutPage({ locale }: AboutPageProps) {
         <section
           className={`${layoutStyles.container} ${pageStyles.section} ${pageStyles.aboutLayout}`}
         >
-          {/* No generated likeness stands in for Silvan: the placeholder states
-              in both languages that a portrait is still to come. */}
+          {/* The approved photograph, not a generated likeness. The frame keeps
+              the asset's own 4:5 crop, so the image fills it without an upscale
+              at any column width. */}
           <figure className={pageStyles.portrait} data-reveal="scale">
-            <div aria-hidden="true" className={pageStyles.portraitPlaceholder}>
-              <span>PORTRÄT FOLGT</span>
-              <span>PORTRAIT TO FOLLOW</span>
-            </div>
+            <Image
+              alt={content.about.portraitAlt}
+              className={pageStyles.portraitImage}
+              height={1700}
+              priority
+              sizes="(min-width: 64rem) 30vw, 100vw"
+              src="/images/portrait/portrait.webp"
+              width={1360}
+            />
             <figcaption className={pageStyles.portraitCaption}>
-              {content.about.portraitStatus}
+              {content.about.portraitCaption}
             </figcaption>
           </figure>
 

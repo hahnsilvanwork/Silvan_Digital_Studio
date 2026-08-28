@@ -410,8 +410,8 @@ export const de = {
       "Für den schmalen Bildschirm entworfen, nicht nachträglich dafür angepasst.",
       "Automatisch getestet, damit eine spätere Änderung nichts Bestehendes still zerstört.",
     ],
-    portraitAlt: "Platzhalter für ein zukünftiges Porträt von Silvan Hahn",
-    portraitStatus: "Ersetzbarer Bildplatzhalter – kein Foto von Silvan Hahn",
+    portraitAlt: "Silvan Hahn, Porträtaufnahme in einem Innenraum",
+    portraitCaption: "Silvan Hahn, unabhängiger Digital Developer",
   },
   contact: {
     eyebrow: "Kontakt",

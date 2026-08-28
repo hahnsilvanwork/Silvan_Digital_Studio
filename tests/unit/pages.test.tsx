@@ -213,14 +213,22 @@ describe("WorkPage", () => {
 });
 
 describe("AboutPage", () => {
-  it("identifies Silvan Hahn and marks the portrait as still to come", () => {
+  it("identifies Silvan Hahn and shows the approved portrait", () => {
     render(<AboutPage locale="de" />);
 
     const main = screen.getByRole("main");
 
     expect(main.textContent).toContain("Silvan Hahn");
-    expect(within(main).getByText(de.about.portraitStatus)).toBeVisible();
-    expect(main.querySelector("img")).toBeNull();
+    expect(within(main).getByText(de.about.portraitCaption)).toBeVisible();
+
+    // The alt text names the photograph rather than restating the caption, so
+    // the image is not announced twice to a screen reader.
+    const portrait = within(main).getByAltText(de.about.portraitAlt);
+
+    expect(portrait).toBeVisible();
+    expect(portrait.getAttribute("src")).toContain(
+      encodeURIComponent("/images/portrait/portrait.webp"),
+    );
   });
 });
 

@@ -548,11 +548,18 @@ describe("SILVAN responsive design contract", () => {
     expect(importerSource).toContain("$CancellationTokenSource.Cancel()");
   });
 
-  it("keeps mobile-first queries, safe areas, and the portrait placeholder label", () => {
+  it("keeps mobile-first queries, safe areas, and the portrait asset contract", () => {
     expect(stylesheetSource).not.toMatch(/@media\s*\([^)]*max-width\s*:/);
     for (const edge of ["top", "right", "bottom", "left"]) {
       expect(stylesheetSource).toContain(`env(safe-area-inset-${edge})`);
     }
-    expect(portraitReadme).toContain("PORTRÄT FOLGT / PORTRAIT TO FOLLOW");
+
+    // The approved photograph is stored pre-cropped at 4:5 and the frame
+    // declares the same ratio. If either side drifts the face gets cut.
+    expect(portraitReadme).toContain("portrait.webp");
+    expect(portraitReadme).toContain("1360 × 1700");
+    expect(stylesheetSource).toMatch(
+      /\.portraitimage\s*\{[^}]*aspect-ratio:\s*4\s*\/\s*5/,
+    );
   });
 });
