@@ -43,7 +43,7 @@ export const de = {
       serviceLine: "Websites · Google Reviews · Online-Präsenz · Automation",
       headline: "Mehr Kunden. Weniger Aufwand.",
       supporting:
-        "Ich entwickle digitale Lösungen, die Ihr Unternehmen sichtbar machen und wiederkehrende Arbeit reduzieren.",
+        "Ich entwickle digitale Lösungen für KMU in der Schweiz, die Ihr Unternehmen sichtbar machen und wiederkehrende Arbeit reduzieren.",
       primaryCta: "Projekt besprechen",
       secondaryCta: "Leistungen ansehen",
     },
@@ -77,7 +77,7 @@ export const de = {
     workTitle: "Ausgewählte Arbeiten",
     studioTitle: "Direkt mit dem Entwickler arbeiten",
     studioCopy:
-      "SILVAN ist das unabhängige Digital Studio von Silvan Hahn in der Schweiz. Sie erhalten klare Beratung, sorgfältiges Design und eine verlässliche Umsetzung aus einer Hand.",
+      "SILVAN ist das unabhängige Digital Studio von Silvan Hahn in Boppelsen im Kanton Zürich. Ich gestalte und entwickle Websites für kleine und mittlere Unternehmen in der ganzen Schweiz – Sie erhalten Beratung, Design und Umsetzung aus einer Hand.",
     testimonialsTitle: "Was Kunden sagen",
     // Bleibt leer, bis eine echte, namentlich freigegebene Kundenstimme
     // vorliegt. Die Sektion rendert erst, wenn dieses Array Einträge hat --
@@ -212,7 +212,7 @@ export const de = {
       fields: [
         { name: "product", label: "Produkt", placeholder: "Produkt wählen", required: true },
         { name: "quantity", label: "Menge", placeholder: "Zum Beispiel 2", required: true },
-        { name: "variant", label: "Farbe oder Variante", placeholder: "Gewünschte Variante", required: true },
+        { name: "variant", label: "Farbe oder Variante (optional)", placeholder: "Falls Sie eine Wunschfarbe haben", required: false },
         { name: "businessName", label: "Unternehmen", placeholder: "Name Ihres Unternehmens", required: true },
         { name: "contactPerson", label: "Kontaktperson", placeholder: "Vor- und Nachname", required: true },
         { name: "googleUrl", label: "Google-Unternehmensprofil oder Bewertungslink", placeholder: "https://…", required: true },
@@ -221,7 +221,7 @@ export const de = {
         { name: "city", label: "Ort", placeholder: "Zürich", required: true },
         { name: "note", label: "Optionale Nachricht", placeholder: "Was sollte ich noch wissen?", required: false },
       ],
-      productOptions: { card: "NFC Review Card", stand: "NFC Stand" },
+      productOptions: ["NFC Review Card", "NFC Stand", "Zwei NFC Review Cards"],
       submitLabel: "Anfrage in WhatsApp öffnen",
       editLabel: "Angaben bearbeiten",
       requiredError: "Bitte füllen Sie dieses Feld aus.",
@@ -388,7 +388,7 @@ export const de = {
   about: {
     eyebrow: "Über mich",
     title: "Direkte Zusammenarbeit, sorgfältig umgesetzt.",
-    intro: "Ich bin Silvan Hahn, unabhängiger Digital Developer in der Schweiz.",
+    intro: "Ich bin Silvan Hahn, unabhängiger Webentwickler in Boppelsen im Kanton Zürich.",
     body: [
       "Ich verbinde klare Gestaltung mit wartbarer Entwicklung und konzentriere mich auf digitale Lösungen, die im Alltag tatsächlich helfen.",
       "Sie sprechen direkt mit der Person, die Ihr Projekt plant und umsetzt. So bleiben Entscheidungen verständlich, Wege kurz und der Umfang realistisch.",
@@ -411,7 +411,7 @@ export const de = {
       "Automatisch getestet, damit eine spätere Änderung nichts Bestehendes still zerstört.",
     ],
     portraitAlt: "Silvan Hahn, Porträtaufnahme in einem Innenraum",
-    portraitCaption: "Silvan Hahn, unabhängiger Digital Developer",
+    portraitCaption: "Silvan Hahn, unabhängiger Webentwickler",
   },
   contact: {
     eyebrow: "Kontakt",
@@ -425,7 +425,10 @@ export const de = {
     linkedInLabel: "LinkedIn",
     details: {
       email: "kontakt@silvandigital.ch",
-      phoneDisplay: "078 900 85 00",
+      // One canonical, international format everywhere: it matches the tel:
+      // href and the telephone in the structured data, and a business listing
+      // is matched against citations as a string.
+      phoneDisplay: "+41 78 900 85 00",
       phoneHref: "tel:+41789008500",
       whatsappNumber: "+41789008500",
       whatsappHref: "https://wa.me/41789008500",
@@ -477,7 +480,7 @@ export const de = {
         title: "Kontakt",
         body: [
           "E-Mail: kontakt@silvandigital.ch",
-          "Telefon: 078 900 85 00",
+          "Telefon: +41 78 900 85 00",
           "Sämtliche Kontaktwege sind auch auf der Kontaktseite aufgeführt.",
         ],
       },
@@ -610,16 +613,24 @@ export const de = {
     description: "Der Link ist möglicherweise veraltet oder die Adresse wurde falsch eingegeben.",
     homeLabel: "Zur Startseite",
   },
+  // Titles lead with the words a customer types, not with the brand. "SILVAN"
+  // has no search demand on a domain this young, and putting it first spent the
+  // most valuable characters in the result on a string nobody looks for -- and
+  // pushed the home page over the truncation width at the same time.
+  //
+  // Every claim here has to be checkable on the page it describes. Prices match
+  // the tiers, the location matches the imprint, and nothing promises delivery
+  // terms or turnaround that the site does not state.
   seo: {
-    home: { title: "SILVAN Digital Studio | Digitale Lösungen für Schweizer Unternehmen", description: "Websites, Google Reviews, Online-Präsenz und Automation – klar entwickelt für Schweizer Unternehmen." },
-    websites: { title: "Websites für Schweizer Unternehmen | SILVAN", description: "Schnelle, klare Business-Websites von CHF 300 bis zum individuellen grossen Projekt." },
-    reviews: { title: "NFC Google Review Cards | SILVAN", description: "NFC Review Cards und Aufsteller inklusive Einrichtung ab CHF 49 für einen einfachen Weg zu ehrlichem Kundenfeedback." },
-    presence: { title: "Online-Präsenz & Google Business Profile | SILVAN", description: "Google-Unternehmensprofil, konsistente Geschäftsdaten und lokale Sichtbarkeit ab CHF 249." },
-    automation: { title: "Praktische Business-Automation | SILVAN", description: "Wiederkehrende E-Mails, Berichte und interne Abläufe sinnvoll automatisieren." },
-    work: { title: "Arbeiten & digitale Konzepte | SILVAN", description: "Ausgewählte Website- und Digitalkonzepte von SILVAN Digital Studio." },
-    about: { title: "Über Silvan Hahn | SILVAN Digital Studio", description: "Lernen Sie Silvan Hahn kennen, unabhängiger Digital Developer in der Schweiz." },
-    contact: { title: "Kontakt | SILVAN Digital Studio", description: "Kontaktieren Sie Silvan Hahn direkt per E-Mail, WhatsApp, Telefon oder LinkedIn." },
-    hello: { title: "Hallo, ich bin Silvan | SILVAN Digital Studio", description: "Der direkte Einstieg zu Websites, Google Reviews, Online-Präsenz, Arbeiten und Kontakt." },
+    home: { title: "Webdesign für KMU im Kanton Zürich | SILVAN", description: "Websites, Google-Bewertungen, lokale Sichtbarkeit und Automation für Schweizer KMU. Direkt vom Entwickler aus Boppelsen ZH – Websites ab CHF 300." },
+    websites: { title: "Website erstellen lassen – Kanton Zürich | ab CHF 300", description: "Schnelle, mobil gestaltete Business-Websites für Schweizer KMU – von der kompakten Info-Seite ab CHF 300 bis zum individuellen Projekt. Feste Preisstufen." },
+    reviews: { title: "NFC-Karten für Google Bewertungen | ab CHF 49", description: "NFC-Karten und Aufsteller, mit denen Ihre Kunden die Google-Bewertung mit einer Berührung öffnen. Programmierung und Einrichtung inklusive, ab CHF 49." },
+    presence: { title: "Google Unternehmensprofil einrichten – Kanton Zürich", description: "Google-Unternehmensprofil einrichten oder optimieren, Geschäftsdaten konsistent halten, lokal leichter gefunden werden. Für Schweizer KMU ab CHF 249." },
+    automation: { title: "Abläufe automatisieren für KMU | SILVAN Digital Studio", description: "Wiederkehrende E-Mails, Berichte und interne Abläufe automatisieren – ohne grosse Software-Einführung. Für Schweizer KMU, Umfang auf Anfrage." },
+    work: { title: "Arbeiten: Website-Konzepte aus der Schweiz | SILVAN", description: "Vier eigeninitiierte Gestaltungskonzepte – Markenauftritt, Online-Shop, Studio-Website und Handel – die zeigen, wie ich Struktur, Text und Gestaltung angehe." },
+    about: { title: "Silvan Hahn – Webentwickler im Kanton Zürich", description: "Ich bin Silvan Hahn, unabhängiger Webentwickler in Boppelsen ZH. Sie arbeiten direkt mit der Person, die Ihr Projekt plant, gestaltet und umsetzt." },
+    contact: { title: "Kontakt – Webdesign-Anfrage Kanton Zürich | SILVAN", description: "Besprechen Sie Ihr Vorhaben direkt mit Silvan Hahn – per E-Mail, WhatsApp, Telefon oder LinkedIn. Standort Boppelsen ZH. Anfragen sind unverbindlich." },
+    hello: { title: "Hallo, ich bin Silvan | SILVAN Digital Studio", description: "Der direkte Einstieg zu Websites, Google-Bewertungen, Online-Präsenz, Arbeiten und Kontakt." },
     imprint: { title: "Impressum | SILVAN Digital Studio", description: "Verantwortlich für diese Website: Silvan Hahn, Boppelsen. Angaben zu Rechtsform, Kontakt und Urheberrecht." },
     privacy: { title: "Datenschutz | SILVAN Digital Studio", description: "Diese Website setzt keine Cookies und bindet kein Tracking ein. Datenschutzerklärung nach revDSG." },
   },

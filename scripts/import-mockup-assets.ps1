@@ -207,32 +207,32 @@ if ($LibraryOnly) {
 
 $assets = @(
   [PSCustomObject]@{
-    Name = "archa"
-    FileName = "archa.jpg"
+    Name = "objects-shop"
+    FileName = "objects-shop.jpg"
     ContentType = "image/jpeg"
     ExpectedBytes = 40918
     ExpectedSha256 = "7B2D8F8F7C11A00BB0B2A6BAB40A12614D9A217EDEA2922ABC7FC174ED86CE3F"
     Uri = "https://lh3.googleusercontent.com/aida-public/AB6AXuCQK0dEq8e1qnOEo0OofP4JbUeK98Nq6uzKtumFOF1oFn-3BRWPdSQLRcsJMoRACPTlKKDFuqNJtzpXI35VA7Httbak1A37yAnwTxj0ZEEQX2cbO2CeGYTU3pU4O-pn8dkHDWWQgVtVgsSfF4uWkvvTZc_QQSC8qN6_2Wm0Tj9BxQ0OoUqH_F8ZvSXhJRB5ANslBzfKIb4Unp0DEp38qxj7wNmO9IdMWIFmkVTPrku4Axsp1Kyshauf"
   }
   [PSCustomObject]@{
-    Name = "lumen"
-    FileName = "lumen.jpg"
+    Name = "studio-mobile"
+    FileName = "studio-mobile.jpg"
     ContentType = "image/jpeg"
     ExpectedBytes = 15505
     ExpectedSha256 = "C6CC75CD14762FC45BA9A9444256F43F883547321A81AD9439CC950E519B4EAE"
     Uri = "https://lh3.googleusercontent.com/aida-public/AB6AXuDbht6EEruyA622IMAdmsqGWa2Ie8cgLvK45Gf7bz2o656CGVIIDW8AttNWChQtpov6_9Y-s_UYv65CU7ApyrvSKg_7zoz4jUVcgyzzso92XJmLnmbmX-uZjthxRRjS5U_5lygLMdA_z036PV8h_17IxQlhXUXJxqqhAefh9zlw0LPbpj3yUKFz-5uhl5novC6kDjURRHEKn5Ml97RDjyuQKWJkPJiqKXA1lVAHSoALlirsETx2NVxF"
   }
   [PSCustomObject]@{
-    Name = "architech-studio"
-    FileName = "architech-studio.jpg"
+    Name = "architecture-practice"
+    FileName = "architecture-practice.jpg"
     ContentType = "image/jpeg"
     ExpectedBytes = 32765
     ExpectedSha256 = "0F8F449BC10FF69160528AF13DABCBA8BD0D41D44EAC0392E3E18BF2AE016953"
     Uri = "https://lh3.googleusercontent.com/aida-public/AB6AXuAryuZT1FFcDVQXFvTHr_YT3Cz6ZNDy-TRwxv_2mLImCIhAg8qY6YajPPieSiqW1y_qCBiHgw0vrmL1zE-Uo5L38y8lhNn4F7BUMdZ2IFi1-Uu5WaHXSBtg6owcxDxUHczHK9aokKZ6ugKZ1zpkF19H7cE-czK8VVpZ0vTKoH53jLHJPK8ekqy4i5UfIJZI7R6Z_x0sipKNXrpUh3sprjnPza6YAArnc96-bKq1Lbfg0cWV5TuVjbN0"
   }
   [PSCustomObject]@{
-    Name = "vanguard-apparel"
-    FileName = "vanguard-apparel.jpg"
+    Name = "apparel-store"
+    FileName = "apparel-store.jpg"
     ContentType = "image/jpeg"
     ExpectedBytes = 30523
     ExpectedSha256 = "F9C235D52848F63C585FA95FDB11A0C5385F05174C80C2A0383E4C13F3AD2D87"

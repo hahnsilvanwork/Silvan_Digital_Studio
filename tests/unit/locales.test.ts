@@ -87,7 +87,7 @@ describe("locale content", () => {
         serviceLine: "Websites · Google Reviews · Online-Präsenz · Automation",
         headline: "Mehr Kunden. Weniger Aufwand.",
         supporting:
-          "Ich entwickle digitale Lösungen, die Ihr Unternehmen sichtbar machen und wiederkehrende Arbeit reduzieren.",
+          "Ich entwickle digitale Lösungen für KMU in der Schweiz, die Ihr Unternehmen sichtbar machen und wiederkehrende Arbeit reduzieren.",
       },
     },
     {
@@ -96,7 +96,7 @@ describe("locale content", () => {
         serviceLine: "Websites · Google Reviews · Online Presence · Automation",
         headline: "More customers. Less busywork.",
         supporting:
-          "I build digital solutions that help people find your business and take recurring work off your plate.",
+          "I build digital solutions for small businesses in Switzerland that help people find you and take recurring work off your plate.",
       },
     },
   ])("preserves the approved $locale hero copy", ({ locale, hero }) => {
@@ -178,7 +178,7 @@ describe("locale content", () => {
       expect(content.presence.startingPrice).toBe(presencePrice);
       expect(content.contact.details).toEqual({
         email: "kontakt@silvandigital.ch",
-        phoneDisplay: "078 900 85 00",
+        phoneDisplay: "+41 78 900 85 00",
         phoneHref: "tel:+41789008500",
         whatsappNumber: "+41789008500",
         whatsappHref: "https://wa.me/41789008500",
@@ -192,7 +192,9 @@ describe("locale content", () => {
       ).toEqual([
         { name: "product", required: true },
         { name: "quantity", required: true },
-        { name: "variant", required: true },
+        // Optional on purpose: the page never publishes the available
+        // colours, so requiring one would only force a guess.
+        { name: "variant", required: false },
         { name: "businessName", required: true },
         { name: "contactPerson", required: true },
         { name: "googleUrl", required: true },

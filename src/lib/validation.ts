@@ -8,10 +8,14 @@ export type ReviewInquiryErrors = Partial<
   Record<ReviewInquiryFieldName, ReviewInquiryErrorKind>
 >;
 
+/**
+ * `variant` is deliberately absent: the page prices the products but never says
+ * which colours or variants exist, so demanding one only forces a guess. It is
+ * asked for as an optional preference instead.
+ */
 export const REQUIRED_FIELDS: readonly ReviewInquiryFieldName[] = [
   "product",
   "quantity",
-  "variant",
   "businessName",
   "contactPerson",
   "googleUrl",

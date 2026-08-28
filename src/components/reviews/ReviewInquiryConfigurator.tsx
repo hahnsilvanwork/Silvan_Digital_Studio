@@ -70,6 +70,19 @@ export function ReviewInquiryConfigurator({
   if (inquiryUrl) {
     return (
       <div className={styles.confirm}>
+        {/* What is about to be sent, restated. The message itself leaves for
+            WhatsApp and cannot be corrected afterwards, so the last screen
+            before that has to show it rather than hide it behind "edit". */}
+        <dl className={styles.summary}>
+          {inquiry.fields
+            .filter((field) => values[field.name].trim() !== "")
+            .map((field) => (
+              <div className={styles.summaryRow} key={field.name}>
+                <dt className={styles.summaryLabel}>{field.label}</dt>
+                <dd className={styles.summaryValue}>{values[field.name]}</dd>
+              </div>
+            ))}
+        </dl>
         <p className={styles.confirmNotice}>{inquiry.nonBindingNotice}</p>
         <a
           className={styles.confirmLink}
@@ -123,12 +136,11 @@ export function ReviewInquiryConfigurator({
                   value={values[field.name]}
                 >
                   <option value="">{field.placeholder}</option>
-                  <option value={inquiry.productOptions.card}>
-                    {inquiry.productOptions.card}
-                  </option>
-                  <option value={inquiry.productOptions.stand}>
-                    {inquiry.productOptions.stand}
-                  </option>
+                  {inquiry.productOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               ) : field.name === "note" ? (
                 <textarea

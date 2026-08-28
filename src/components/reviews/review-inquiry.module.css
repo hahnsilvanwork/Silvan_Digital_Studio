@@ -16,6 +16,33 @@
   font-size: var(--text-label);
 }
 
+/* The enquiry as it will be sent. Label above value rather than in two columns:
+   a Google profile URL and a business name are both long enough to wrap, and a
+   narrow label column would break them mid-word on a phone. */
+.summary {
+  display: grid;
+  gap: var(--space-2xs);
+  margin: 0;
+  padding: var(--space-sm);
+  border: var(--hairline) solid var(--color-line);
+  background: var(--color-paper-raised);
+}
+
+.summaryRow {
+  display: grid;
+  gap: 0.15em;
+}
+
+.summaryLabel {
+  color: var(--color-ink-muted);
+  font-size: var(--text-label);
+}
+
+.summaryValue {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
 .fields {
   display: grid;
   gap: var(--space-sm);

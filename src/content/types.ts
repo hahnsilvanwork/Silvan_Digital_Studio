@@ -181,10 +181,13 @@ export interface ReviewInquiryContent {
   readonly title: string;
   readonly intro: string;
   readonly fields: readonly ReviewInquiryField[];
-  readonly productOptions: {
-    readonly card: string;
-    readonly stand: string;
-  };
+  /**
+   * Every product the page advertises, in the order it is priced there. The
+   * select renders this list, so an advertised product cannot go missing from
+   * the order form -- which is exactly how the CHF 80 two-card bundle was
+   * priced on the page but impossible to actually ask for.
+   */
+  readonly productOptions: readonly string[];
   readonly submitLabel: string;
   readonly editLabel: string;
   readonly requiredError: string;

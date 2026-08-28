@@ -93,7 +93,7 @@ const assets = [
     sha256: "AA1BBCAA30D76A3D516BAEF948B745F4DF097F3FD8F47607E5A58C75F79E56DE",
   },
   {
-    fileName: "projects/archa.jpg",
+    fileName: "projects/objects-shop.jpg",
     bytes: 40_918,
     width: 512,
     height: 279,
@@ -101,7 +101,7 @@ const assets = [
     sha256: "7B2D8F8F7C11A00BB0B2A6BAB40A12614D9A217EDEA2922ABC7FC174ED86CE3F",
   },
   {
-    fileName: "projects/lumen.jpg",
+    fileName: "projects/studio-mobile.jpg",
     bytes: 15_505,
     width: 512,
     height: 279,
@@ -109,7 +109,7 @@ const assets = [
     sha256: "C6CC75CD14762FC45BA9A9444256F43F883547321A81AD9439CC950E519B4EAE",
   },
   {
-    fileName: "projects/architech-studio.jpg",
+    fileName: "projects/architecture-practice.jpg",
     bytes: 32_765,
     width: 512,
     height: 279,
@@ -117,7 +117,7 @@ const assets = [
     sha256: "0F8F449BC10FF69160528AF13DABCBA8BD0D41D44EAC0392E3E18BF2AE016953",
   },
   {
-    fileName: "projects/vanguard-apparel.jpg",
+    fileName: "projects/apparel-store.jpg",
     bytes: 30_523,
     width: 512,
     height: 279,

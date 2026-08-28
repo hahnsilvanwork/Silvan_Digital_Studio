@@ -8,7 +8,9 @@ import { getSiteOrigin } from "./site-url";
 /** Open Graph wants a territory, and this studio sells into Switzerland. */
 const OG_LOCALE: Readonly<Record<Locale, string>> = {
   de: "de_CH",
-  en: "en_US",
+  // en_GB, not en_US: the English copy is written in British spelling for a
+  // European audience, and nothing here is aimed at the United States.
+  en: "en_GB",
 };
 
 interface PageMetadataInput {

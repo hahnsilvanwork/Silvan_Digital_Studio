@@ -6,8 +6,13 @@ import { projects } from "../../src/content/projects";
 import { buildPageMetadata } from "../../src/lib/page-metadata";
 import { getSiteOrigin } from "../../src/lib/site-url";
 
-/** Home, four services, work, about, contact, hello, imprint, privacy. */
-const ROUTE_COUNT = 11;
+/**
+ * Home, four services, work, about, contact, imprint, privacy.
+ *
+ * `/hello` is not counted: it is the destination of a handed-over NFC card and
+ * carries robots noindex, so it is deliberately kept out of the sitemap.
+ */
+const ROUTE_COUNT = 10;
 
 function clearOrigin() {
   vi.stubEnv("NEXT_PUBLIC_SITE_URL", "");

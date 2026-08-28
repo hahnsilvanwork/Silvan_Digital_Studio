@@ -53,6 +53,15 @@ export function Footer({ locale }: FooterProps) {
 
         <section className={styles.footerContact}>
           <h2 className={styles.footerHeading}>{content.footer.contactTitle}</h2>
+
+          {/* The postal address belongs on every page, not only on /contact and
+              /imprint. It is the one signal that says where this studio
+              actually is, and it has to read identically everywhere it appears
+              so a business listing and a citation can be matched against it. */}
+          <address className={styles.footerAddress}>
+            {content.contact.address.join(", ")}
+          </address>
+
           <ul className={styles.footerContactList}>
             {contactActions.map((action) => (
               <li key={action.href}>

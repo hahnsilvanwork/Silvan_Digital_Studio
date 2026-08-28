@@ -63,8 +63,10 @@ test.describe("review card configurator", () => {
 
     // Every required field reports the same message when it is simply empty;
     // the quantity and link messages are specific to a filled but invalid value.
-    await expect(page.getByText("Bitte füllen Sie dieses Feld aus.")).toHaveCount(9);
-    await expect(page.locator('[aria-invalid="true"]')).toHaveCount(9);
+    // Eight, not nine: the colour/variant field is optional, because the page
+    // never publishes which variants exist.
+    await expect(page.getByText("Bitte füllen Sie dieses Feld aus.")).toHaveCount(8);
+    await expect(page.locator('[aria-invalid="true"]')).toHaveCount(8);
 
     expect(await activeElement(page)).toMatchObject({ name: "product" });
   });

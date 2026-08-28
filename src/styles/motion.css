@@ -184,7 +184,7 @@
    simply stays visible -- content is never hidden behind an effect that cannot
    run. */
 
-:root[data-motion="on"] [data-reveal]:not([data-reveal="mask"]) {
+:root[data-motion="on"] [data-reveal]:not([data-reveal="mask"]):not([data-reveal-priority]) {
   opacity: 0;
   transition-property: transform, opacity;
   transition-duration: var(--duration-reveal);
@@ -203,6 +203,17 @@
 :root[data-motion="on"] [data-reveal]:not([data-reveal="mask"])[data-revealed="true"] {
   opacity: 1;
   transform: translate3d(0, 0, 0);
+}
+
+/* Media that is already in the first viewport. Revealing it costs far more than
+   it adds: an element at opacity:0 is not a paint candidate, so the largest
+   image on the page could not count towards LCP until the bundle had booted and
+   the observer had fired -- measured at over two seconds on a throttled phone,
+   against an image that had finished downloading in well under one. Nothing
+   above the fold needs animating into view; it is already in view. */
+:root[data-motion="on"] [data-reveal-priority] {
+  opacity: 1;
+  transform: none;
 }
 
 /* Masked text: each word rides up out of its own clipped box. */
