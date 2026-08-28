@@ -276,7 +276,7 @@ interface SiteContentShape {
     standardsTitle: string;
     standards: string[];
     portraitAlt: string;
-    portraitStatus: string;
+    portraitCaption: string;
   };
   contact: ContactContent;
   footer: {

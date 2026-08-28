@@ -406,8 +406,8 @@ export const en = {
       "Designed for the narrow screen rather than adapted to it afterwards.",
       "Automatically tested, so a later change cannot quietly break what already worked.",
     ],
-    portraitAlt: "Placeholder for a future portrait of Silvan Hahn",
-    portraitStatus: "Replaceable image placeholder — not a photograph of Silvan Hahn",
+    portraitAlt: "Silvan Hahn, portrait photograph taken indoors",
+    portraitCaption: "Silvan Hahn, independent digital developer",
   },
   contact: {
     eyebrow: "Contact",

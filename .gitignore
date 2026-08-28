@@ -9,3 +9,9 @@ coverage/
 *.tsbuildinfo
 .scratch/
 .idea/
+
+# Original photography. The site serves derived, EXIF-stripped assets committed
+# under public/images/; the full-resolution sources stay local. They are far
+# larger than anything served and carry camera and location metadata.
+/*.jpg
+/*.jpeg
