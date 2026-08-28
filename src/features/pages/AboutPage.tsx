@@ -8,6 +8,7 @@ import { SplitText } from "../../components/motion/SplitText";
 import { SectionHeading } from "../../components/ui/SectionHeading";
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
+import { PORTRAIT } from "../../lib/portrait";
 import { localizePath } from "../../lib/routes";
 import layoutStyles from "../../styles/layout.module.css";
 import pageStyles from "../../styles/pages.module.css";
@@ -52,11 +53,11 @@ export function AboutPage({ locale }: AboutPageProps) {
             <Image
               alt={content.about.portraitAlt}
               className={pageStyles.portraitImage}
-              height={1700}
+              height={PORTRAIT.height}
               priority
               sizes="(min-width: 64rem) 30vw, 100vw"
-              src="/images/portrait/portrait.webp"
-              width={1360}
+              src={PORTRAIT.src}
+              width={PORTRAIT.width}
             />
             <figcaption className={pageStyles.portraitCaption}>
               {content.about.portraitCaption}
