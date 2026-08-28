@@ -48,6 +48,7 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
           className={pageStyles.projectMedia}
           data-project={project.slug}
           data-reveal="scale"
+          data-reveal-priority=""
         >
           <Image
             alt={copy.imageAlt}

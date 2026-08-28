@@ -23,7 +23,13 @@ export function SiteShell({ locale, currentPath, children }: SiteShellProps) {
       <ScrollReveal />
       <Navigation currentPath={currentPath} locale={locale} />
       <div id={SITE_CONTENT_ID}>
-        <main id={MAIN_CONTENT_ID}>{children}</main>
+        {/* tabIndex -1 so the skip link actually moves focus here. Without it
+            activeElement stays on <body> and some screen readers leave their
+            virtual cursor at the top of the page, which is the one thing the
+            skip link exists to prevent. */}
+        <main id={MAIN_CONTENT_ID} tabIndex={-1}>
+          {children}
+        </main>
         <Footer locale={locale} />
       </div>
     </>

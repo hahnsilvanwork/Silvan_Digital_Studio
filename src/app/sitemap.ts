@@ -15,7 +15,11 @@ const ROUTES: readonly InternalPath[] = [
   "/work",
   "/about",
   "/contact",
-  "/hello",
+  // "/hello" is deliberately absent. It is the destination of a handed-over NFC
+  // card, not a page anyone searches for: nothing on the site links to it and
+  // its content repeats the main navigation. It still resolves when tapped; it
+  // just does not ask to be indexed. See its metadata for the matching robots
+  // directive.
   "/imprint",
   "/privacy",
 ];
@@ -36,7 +40,6 @@ const PRIORITY: Partial<Record<string, number>> = {
   "/work": 0.7,
   "/about": 0.6,
   "/contact": 0.6,
-  "/hello": 0.4,
   "/imprint": 0.2,
   "/privacy": 0.2,
 };

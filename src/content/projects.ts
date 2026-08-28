@@ -27,7 +27,7 @@ export const projects: readonly Project[] = [
     slug: "archa",
     name: "Archa",
     year: "2026",
-    image: "/images/projects/archa.jpg",
+    image: "/images/projects/architecture-practice.jpg",
     status: "placeholder-concept",
     copy: {
       de: {
@@ -39,7 +39,7 @@ export const projects: readonly Project[] = [
           "Eine schmale Typografie-Skala, grosszügige Weissräume und ein ruhiges Raster, das dem Bild den Vortritt lässt. Navigation und Projektwechsel bleiben immer erreichbar.",
         outcome:
           "Ein Konzept, in dem Bildsprache und Text sich nicht gegenseitig überlagern und der Weg zum Kontakt kurz bleibt.",
-        imageAlt: "Gestaltungskonzept Archa: Startseite eines Architekturbüros",
+        imageAlt: "Gestaltungskonzept Archa: Startseite eines Architekturbüros auf einem Laptop",
       },
       en: {
         category: "Brand presence",
@@ -50,7 +50,7 @@ export const projects: readonly Project[] = [
           "A narrow type scale, generous white space and a calm grid that gives the image priority. Navigation and project switching stay reachable at all times.",
         outcome:
           "A concept where imagery and text stop competing and the path to contact stays short.",
-        imageAlt: "Archa design concept: home page for an architecture practice",
+        imageAlt: "Archa design concept: home page for an architecture practice on a laptop",
       },
     },
   },
@@ -58,30 +58,30 @@ export const projects: readonly Project[] = [
     slug: "lumen",
     name: "Lumen",
     year: "2026",
-    image: "/images/projects/lumen.jpg",
+    image: "/images/projects/objects-shop.jpg",
     status: "placeholder-concept",
     copy: {
       de: {
-        category: "Produktseite",
-        tagline: "Ein Produkt erklären, ohne es zu überfrachten.",
+        category: "Online-Shop",
+        tagline: "Eine Kollektion zeigen, ohne sie zu überfrachten.",
         challenge:
-          "Technische Produkte werden oft mit Merkmalen erschlagen. Gesucht war eine Seite, die zuerst den Nutzen zeigt und die Details danach anbietet.",
+          "Ein kleiner Katalog verliert seine Ordnung, sobald Bild, Bezeichnung und Preis um dieselbe Fläche konkurrieren. Gesucht war eine Übersicht, die alle Produkte zeigt, ohne den Blick zu zersplittern.",
         approach:
-          "Ein gestufter Aufbau: Aussage, Anwendung, dann Spezifikation. Preise stehen vollständig sichtbar, ohne Aufklappen oder Hover.",
+          "Ein ruhiges Raster aus gleich grossen Produktkarten. Bezeichnung und Preis stehen vollständig sichtbar, ohne Aufklappen oder Hover.",
         outcome:
-          "Ein Konzept, das eine Kaufentscheidung in wenigen Abschnitten vorbereitet.",
-        imageAlt: "Gestaltungskonzept Lumen: Produktseite mit gestuftem Aufbau",
+          "Ein Konzept, in dem sich eine Kollektion in einem Durchgang erfassen lässt.",
+        imageAlt: "Gestaltungskonzept Lumen: Produktübersicht eines Objekt-Shops auf einem Laptop",
       },
       en: {
-        category: "Product page",
-        tagline: "Explaining a product without burying it.",
+        category: "Online shop",
+        tagline: "Showing a collection without cluttering it.",
         challenge:
-          "Technical products are usually buried under feature lists. The brief was a page that leads with the benefit and offers the detail afterwards.",
+          "A small catalogue loses its order as soon as image, name and price compete for the same space. The brief was an overview that shows every product without splintering the eye.",
         approach:
-          "A staged structure: claim, use, then specification. Pricing is fully visible, with nothing hidden behind hover or expansion.",
+          "A calm grid of equally sized product cards. Name and price stay fully visible, with nothing hidden behind hover or expansion.",
         outcome:
-          "A concept that prepares a purchase decision within a few sections.",
-        imageAlt: "Lumen design concept: staged product page",
+          "A concept in which a collection can be taken in on a single pass.",
+        imageAlt: "Lumen design concept: product overview of an objects shop on a laptop",
       },
     },
   },
@@ -89,7 +89,7 @@ export const projects: readonly Project[] = [
     slug: "architech-studio",
     name: "ArchiTech Studio",
     year: "2026",
-    image: "/images/projects/architech-studio.jpg",
+    image: "/images/projects/studio-mobile.jpg",
     status: "placeholder-concept",
     copy: {
       de: {
@@ -101,7 +101,7 @@ export const projects: readonly Project[] = [
           "Eine Leistungsübersicht mit Einstiegspreisen, gefolgt von Arbeitsbeispielen und einem festen Ablauf. Jede Leistung hat einen eigenen, direkten Weg zum Gespräch.",
         outcome:
           "Ein Konzept, in dem Besucher in wenigen Schritten von der Übersicht zur konkreten Anfrage gelangen.",
-        imageAlt: "Gestaltungskonzept ArchiTech Studio: Leistungsübersicht",
+        imageAlt: "Gestaltungskonzept ArchiTech Studio: Leistungen und Referenzen auf dem Smartphone",
       },
       en: {
         category: "Studio website",
@@ -112,7 +112,7 @@ export const projects: readonly Project[] = [
           "A service directory with starting prices, followed by work examples and a fixed process. Every service carries its own direct route to a conversation.",
         outcome:
           "A concept that takes a visitor from overview to a concrete enquiry in a few steps.",
-        imageAlt: "ArchiTech Studio design concept: service directory",
+        imageAlt: "ArchiTech Studio design concept: services and references on a phone",
       },
     },
   },
@@ -120,7 +120,7 @@ export const projects: readonly Project[] = [
     slug: "vanguard-apparel",
     name: "Vanguard Apparel",
     year: "2026",
-    image: "/images/projects/vanguard-apparel.jpg",
+    image: "/images/projects/apparel-store.jpg",
     status: "placeholder-concept",
     copy: {
       de: {

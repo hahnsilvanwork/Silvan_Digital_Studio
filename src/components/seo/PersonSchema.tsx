@@ -102,10 +102,25 @@ export function PersonSchema({ locale }: { readonly locale: Locale }) {
         telephone,
         address,
         founder: { "@id": personId },
+        // The wordmark, not the portrait: a headshot is the person, and the
+        // business node needs a mark of its own.
+        logo: {
+          "@type": "ImageObject",
+          url: absolute("/icon"),
+          width: 64,
+          height: 64,
+        },
         // A service-area business, not a shop: the work reaches clients across
-        // Switzerland rather than at this address.
-        areaServed: { "@type": "Country", name: "Switzerland" },
-        priceRange: "CHF",
+        // Switzerland rather than at this address. The canton is named too --
+        // country alone is the wrong granularity for a studio whose customers
+        // are local businesses.
+        areaServed: [
+          { "@type": "AdministrativeArea", name: "Kanton Zürich" },
+          { "@type": "Country", name: "Switzerland" },
+        ],
+        // A range, not a currency code: the published tiers run from the CHF 49
+        // review card to custom projects above CHF 5'000.
+        priceRange: "CHF 49-5000+",
         currenciesAccepted: "CHF",
         sameAs: [details.linkedIn],
         makesOffer: OFFERS.map(({ route, price }) => {
@@ -128,11 +143,12 @@ export function PersonSchema({ locale }: { readonly locale: Locale }) {
               : {
                   priceSpecification: {
                     "@type": "PriceSpecification",
-                    price,
+                    // The pages read "ab CHF x", so the number is a floor and
+                    // only minPrice can carry it. `price` states a definite
+                    // amount, which contradicted the tiers running above it.
+                    minPrice: price,
                     priceCurrency: "CHF",
                     valueAddedTaxIncluded: true,
-                    // The pages read "from CHF x", so the number is a floor.
-                    minPrice: price,
                   },
                 }),
           };

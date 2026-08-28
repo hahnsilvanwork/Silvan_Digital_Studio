@@ -21,5 +21,12 @@ export async function GET(
 ) {
   const { locale } = await params;
 
-  return renderOgImage(isLocale(locale) ? locale : "de");
+  // An unknown segment is a 404, not the German card. Falling back meant every
+  // string under /og/ answered 200 with an image, so the route advertised an
+  // unbounded set of URLs that all returned the same body.
+  if (!isLocale(locale)) {
+    return new Response(null, { status: 404 });
+  }
+
+  return renderOgImage(locale);
 }

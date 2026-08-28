@@ -66,21 +66,18 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
           <h2 className="visually-hidden">{reviews.priceLabel}</h2>
 
           <div className={pageStyles.productShowcase}>
-            {[
-              "/images/products/review-cards.png",
-              "/images/products/review-stands.png",
-            ].map((source, index) => (
+            {reviews.productImages.map((image, index) => (
               <span
                 className={pageStyles.productImage}
                 data-reveal="scale"
-                key={source}
+                key={image.src}
                 style={{ "--reveal-index": index } as CSSProperties}
               >
                 <Image
-                  alt={reviews.productImageAlt}
+                  alt={image.alt}
                   height={1000}
                   sizes="46vw"
-                  src={source}
+                  src={image.src}
                   width={1000}
                 />
               </span>

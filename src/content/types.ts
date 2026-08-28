@@ -175,19 +175,31 @@ export interface ReviewInquiryField {
   readonly label: string;
   readonly placeholder: string;
   readonly required: boolean;
+  /**
+   * The HTML autocomplete token for what this field collects. Every field here
+   * asks for the visitor's own name, company or address, so declaring the
+   * purpose lets the browser fill it -- on a phone, that is the difference
+   * between one tap and ten fields typed by hand.
+   */
+  readonly autoComplete?: string;
 }
 
 export interface ReviewInquiryContent {
   readonly title: string;
   readonly intro: string;
   readonly fields: readonly ReviewInquiryField[];
-  readonly productOptions: {
-    readonly card: string;
-    readonly stand: string;
-  };
+  /**
+   * Every product the page advertises, in the order it is priced there. The
+   * select renders this list, so an advertised product cannot go missing from
+   * the order form -- which is exactly how the CHF 80 two-card bundle was
+   * priced on the page but impossible to actually ask for.
+   */
+  readonly productOptions: readonly string[];
   readonly submitLabel: string;
   readonly editLabel: string;
   readonly requiredError: string;
+  /** Announced once per submit, so errors beyond the focused field are heard. */
+  readonly errorSummary: (count: number) => string;
   readonly quantityError: string;
   readonly urlError: string;
   readonly nonBindingNotice: string;
@@ -248,7 +260,8 @@ interface SiteContentShape {
     processTitle: string;
     process: ProcessStep[];
     ctaLabel: string;
-    productImageAlt: string;
+    /** One entry per product photograph, each with its own description. */
+    productImages: readonly { readonly src: string; readonly alt: string }[];
     inquiry: ReviewInquiryContent;
     faq: FaqContent;
   };

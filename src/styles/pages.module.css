@@ -140,16 +140,21 @@
   inline-size: 100%;
 }
 
+/* One hook per project so a concept can be nudged inside its frame without a
+   new crop. All four sit at the centre: the nudges that used to be here were
+   tuned for the previous asset assignment, and the pictures have since moved to
+   the projects whose copy actually describes them. Re-tune per project only
+   after looking at the frame it now holds. */
 .projectMedia[data-project="archa"] {
   --project-media-object-position: 50% 50%;
 }
 
 .projectMedia[data-project="lumen"] {
-  --project-media-object-position: 50% 48%;
+  --project-media-object-position: 50% 50%;
 }
 
 .projectMedia[data-project="architech-studio"] {
-  --project-media-object-position: 50% 52%;
+  --project-media-object-position: 50% 50%;
 }
 
 .projectMedia[data-project="vanguard-apparel"] {

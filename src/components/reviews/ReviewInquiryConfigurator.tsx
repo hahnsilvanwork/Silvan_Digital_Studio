@@ -33,6 +33,8 @@ export function ReviewInquiryConfigurator({
   const [errors, setErrors] = useState<ReviewInquiryErrors>({});
   const [inquiryUrl, setInquiryUrl] = useState<string | null>(null);
 
+  const errorCount = Object.keys(errors).length;
+
   const messageFor = (kind: ReviewInquiryErrorKind) => {
     if (kind === "quantity") return inquiry.quantityError;
     if (kind === "url") return inquiry.urlError;
@@ -70,6 +72,19 @@ export function ReviewInquiryConfigurator({
   if (inquiryUrl) {
     return (
       <div className={styles.confirm}>
+        {/* What is about to be sent, restated. The message itself leaves for
+            WhatsApp and cannot be corrected afterwards, so the last screen
+            before that has to show it rather than hide it behind "edit". */}
+        <dl className={styles.summary}>
+          {inquiry.fields
+            .filter((field) => values[field.name].trim() !== "")
+            .map((field) => (
+              <div className={styles.summaryRow} key={field.name}>
+                <dt className={styles.summaryLabel}>{field.label}</dt>
+                <dd className={styles.summaryValue}>{values[field.name]}</dd>
+              </div>
+            ))}
+        </dl>
         <p className={styles.confirmNotice}>{inquiry.nonBindingNotice}</p>
         <a
           className={styles.confirmLink}
@@ -85,7 +100,17 @@ export function ReviewInquiryConfigurator({
         <button
           className={styles.editButton}
           data-touch-target
-          onClick={() => setInquiryUrl(null)}
+          onClick={() => {
+            setInquiryUrl(null);
+            // Returning to the form used to drop focus on <body>, which puts a
+            // keyboard visitor silently back at the top of the document. Send
+            // it to the first control instead, mirroring the submit path.
+            window.requestAnimationFrame(() =>
+              formRef.current
+                ?.querySelector<HTMLElement>("[name]")
+                ?.focus(),
+            );
+          }}
           type="button"
         >
           {inquiry.editLabel}
@@ -97,6 +122,13 @@ export function ReviewInquiryConfigurator({
   return (
     <form className={styles.form} noValidate onSubmit={handleSubmit} ref={formRef}>
       <p className={styles.formIntro}>{inquiry.intro}</p>
+
+      {/* Submitting an empty form marks up to eight fields at once. Focus goes
+          to the first, so a screen reader announces that one and nothing about
+          the others. This says how many there are. */}
+      <p aria-live="polite" className={styles.errorSummary} role="status">
+        {errorCount > 0 ? inquiry.errorSummary(errorCount) : ""}
+      </p>
 
       <div className={styles.fields}>
         {inquiry.fields.map((field) => {
@@ -116,6 +148,7 @@ export function ReviewInquiryConfigurator({
                 <select
                   aria-describedby={error ? errorId : undefined}
                   aria-invalid={error ? true : undefined}
+                  aria-required={field.required || undefined}
                   className={styles.control}
                   id={fieldId}
                   name={field.name}
@@ -123,12 +156,11 @@ export function ReviewInquiryConfigurator({
                   value={values[field.name]}
                 >
                   <option value="">{field.placeholder}</option>
-                  <option value={inquiry.productOptions.card}>
-                    {inquiry.productOptions.card}
-                  </option>
-                  <option value={inquiry.productOptions.stand}>
-                    {inquiry.productOptions.stand}
-                  </option>
+                  {inquiry.productOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
                 </select>
               ) : field.name === "note" ? (
                 <textarea
@@ -144,6 +176,8 @@ export function ReviewInquiryConfigurator({
                 <input
                   aria-describedby={error ? errorId : undefined}
                   aria-invalid={error ? true : undefined}
+                  aria-required={field.required || undefined}
+                  autoComplete={field.autoComplete}
                   className={styles.control}
                   id={fieldId}
                   inputMode={field.name === "quantity" ? "numeric" : undefined}

@@ -11,6 +11,16 @@ interface PageProps {
   readonly params: Promise<{ readonly slug: string }>;
 }
 
+/**
+ * The four concepts are the whole set and they are known at build time, so an
+ * unknown slug is not a route that needs rendering on demand -- it is simply
+ * not a route. Without this, Next rendered `/work/anything` on request, hit
+ * notFound(), and served a 404 whose body was empty until client JS hydrated
+ * it. On a site that promises finished HTML, the 404 has to be finished HTML
+ * too.
+ */
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
 }

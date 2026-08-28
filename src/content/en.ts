@@ -43,7 +43,7 @@ export const en = {
       serviceLine: "Websites · Google Reviews · Online Presence · Automation",
       headline: "More customers. Less busywork.",
       supporting:
-        "I build digital solutions that help people find your business and take recurring work off your plate.",
+        "I build digital solutions for small businesses in Switzerland that help people find you and take recurring work off your plate.",
       primaryCta: "Discuss a project",
       secondaryCta: "Explore services",
     },
@@ -77,7 +77,7 @@ export const en = {
     workTitle: "Selected work",
     studioTitle: "Work directly with the developer",
     studioCopy:
-      "SILVAN is Silvan Hahn's independent digital studio in Switzerland. You get clear advice, considered design, and dependable delivery from one person.",
+      "SILVAN is Silvan Hahn's independent digital studio in Boppelsen, canton Zurich. I design and build websites for small and medium businesses across Switzerland – advice, design and delivery from one person.",
     testimonialsTitle: "What clients say",
     // Stays empty until a real, named and approved client quote exists. The
     // section renders only once this array has entries -- an invented
@@ -97,7 +97,7 @@ export const en = {
         name: "Simple Info Website",
         price: "CHF 300–699",
         description: "A focused first presence with the essential information customers need.",
-        features: ["One concise page", "Mobile optimized", "Direct contact options"],
+        features: ["One concise page", "Mobile optimised", "Direct contact options"],
       },
       {
         id: "standard",
@@ -197,7 +197,7 @@ export const en = {
         features: ["Two cards", "One Google profile", "Setup included"],
       },
     ],
-    quantityDiscount: "Quantity discounts are available for larger orders.",
+    quantityDiscount: "A quantity discount applies to larger orders. I give you the price for your quantity when I reply to your enquiry – before anything is binding.",
     processTitle: "Three simple steps",
     process: [
       { id: "tap", label: "TAP", title: "Tap", description: "The customer taps the NFC card or stand with their phone." },
@@ -205,26 +205,33 @@ export const en = {
       { id: "review", label: "REVIEW", title: "Review", description: "The customer chooses to leave their honest feedback." },
     ],
     ctaLabel: "Make a no-obligation inquiry",
-    productImageAlt: "NFC review card and stand for Google reviews",
+    productImages: [
+      { src: "/images/products/review-cards.png", alt: "NFC review card in credit-card format, telling the customer to tap their phone here" },
+      { src: "/images/products/review-stands.png", alt: "NFC stand for a table or counter, asking the customer to review the business on Google" },
+    ],
     inquiry: {
       title: "Ask about Review Cards",
       intro: "Send the essentials through WhatsApp and I will respond personally.",
       fields: [
         { name: "product", label: "Product", placeholder: "Choose a product", required: true },
         { name: "quantity", label: "Quantity", placeholder: "For example, 2", required: true },
-        { name: "variant", label: "Colour or variant", placeholder: "Preferred variant", required: true },
-        { name: "businessName", label: "Business", placeholder: "Your business name", required: true },
-        { name: "contactPerson", label: "Contact person", placeholder: "First and last name", required: true },
-        { name: "googleUrl", label: "Google Business Profile or review link", placeholder: "https://…", required: true },
-        { name: "street", label: "Street", placeholder: "Street and number", required: true },
-        { name: "postalCode", label: "Postcode", placeholder: "8000", required: true },
-        { name: "city", label: "Town or city", placeholder: "Zurich", required: true },
+        { name: "variant", label: "Colour or variant (optional)", placeholder: "If you have a preference", required: false },
+        { name: "businessName", label: "Business", placeholder: "Your business name", required: true, autoComplete: "organization" },
+        { name: "contactPerson", label: "Contact person", placeholder: "First and last name", required: true, autoComplete: "name" },
+        { name: "googleUrl", label: "Google Business Profile or review link", placeholder: "https://…", required: true, autoComplete: "url" },
+        { name: "street", label: "Street", placeholder: "Street and number", required: true, autoComplete: "street-address" },
+        { name: "postalCode", label: "Postcode", placeholder: "8000", required: true, autoComplete: "postal-code" },
+        { name: "city", label: "Town or city", placeholder: "Zurich", required: true, autoComplete: "address-level2" },
         { name: "note", label: "Optional note", placeholder: "Anything else I should know?", required: false },
       ],
-      productOptions: { card: "NFC Review Card", stand: "NFC Stand" },
+      productOptions: ["NFC Review Card", "NFC Stand", "Two NFC Review Cards"],
       submitLabel: "Open inquiry in WhatsApp",
       editLabel: "Edit details",
       requiredError: "Please complete this field.",
+      errorSummary: (count: number) =>
+        count === 1
+          ? "One field still needs to be completed or corrected."
+          : `${count} fields still need to be completed or corrected.`,
       quantityError: "Please enter a valid quantity of at least 1.",
       urlError: "Please enter a valid Google link.",
       nonBindingNotice: "This is a no-obligation inquiry. It only becomes binding after I personally confirm it.",
@@ -388,7 +395,7 @@ export const en = {
   about: {
     eyebrow: "About",
     title: "Direct collaboration, carefully delivered.",
-    intro: "I'm Silvan Hahn, an independent digital developer based in Switzerland.",
+    intro: "I'm Silvan Hahn, an independent web developer in Boppelsen, canton Zurich.",
     body: [
       "I combine clear design with maintainable development, focusing on digital solutions that are genuinely useful in day-to-day business.",
       "You work directly with the person planning and building your project. Decisions stay understandable, communication stays short, and the scope stays realistic.",
@@ -407,7 +414,7 @@ export const en = {
       "Automatically tested, so a later change cannot quietly break what already worked.",
     ],
     portraitAlt: "Silvan Hahn, portrait photograph taken indoors",
-    portraitCaption: "Silvan Hahn, independent digital developer",
+    portraitCaption: "Silvan Hahn, independent web developer",
   },
   contact: {
     eyebrow: "Contact",
@@ -421,7 +428,9 @@ export const en = {
     linkedInLabel: "LinkedIn",
     details: {
       email: "kontakt@silvandigital.ch",
-      phoneDisplay: "078 900 85 00",
+      // International format: the English pages are the ones a caller outside
+      // Switzerland reads, and "078..." cannot be dialled from abroad.
+      phoneDisplay: "+41 78 900 85 00",
       phoneHref: "tel:+41789008500",
       whatsappNumber: "+41789008500",
       whatsappHref: "https://wa.me/41789008500",
@@ -606,16 +615,18 @@ export const en = {
     description: "The link may be outdated, or the address may have been entered incorrectly.",
     homeLabel: "Back to home",
   },
+  // Keyword first, brand last -- see the note on the German dictionary. British
+  // spelling, matching the rest of the English copy.
   seo: {
-    home: { title: "SILVAN Digital Studio | Digital Solutions for Swiss Businesses", description: "Websites, Google Reviews, online presence, and automation, clearly built for Swiss businesses." },
-    websites: { title: "Websites for Swiss Businesses | SILVAN", description: "Fast, clear business websites from CHF 300 through to large custom projects." },
-    reviews: { title: "NFC Google Review Cards | SILVAN", description: "NFC review cards and stands with setup included from CHF 49, making genuine customer feedback easier." },
-    presence: { title: "Online Presence & Google Business Profile | SILVAN", description: "Google Business Profile setup, consistent business details, and local visibility from CHF 249." },
-    automation: { title: "Practical Business Automation | SILVAN", description: "Make recurring emails, reports, and internal workflows more efficient with practical automation." },
-    work: { title: "Work & Digital Concepts | SILVAN", description: "Selected website and digital concepts from SILVAN Digital Studio." },
-    about: { title: "About Silvan Hahn | SILVAN Digital Studio", description: "Meet Silvan Hahn, an independent digital developer based in Switzerland." },
-    contact: { title: "Contact | SILVAN Digital Studio", description: "Contact Silvan Hahn directly by email, WhatsApp, phone, or LinkedIn." },
-    hello: { title: "Hi, I'm Silvan | SILVAN Digital Studio", description: "A direct route to websites, Google Reviews, online presence, work, and contact." },
+    home: { title: "Web Design for Small Businesses near Zurich | SILVAN", description: "Websites, Google reviews, local visibility and automation for Swiss SMEs. Built directly by an independent developer in Boppelsen ZH – websites from CHF 300." },
+    websites: { title: "Business Websites for Swiss SMEs – from CHF 300", description: "Fast, mobile-first business websites for Swiss SMEs, from a CHF 300 one-pager through to a custom build. Fixed price tiers, delivered by the developer." },
+    reviews: { title: "NFC Google Review Cards for Swiss Businesses | CHF 49", description: "NFC cards and stands that open your Google review page with a single tap. Programming and setup included, from CHF 49." },
+    presence: { title: "Google Business Profile Setup for Swiss Businesses", description: "Google Business Profile setup and optimisation, consistent business details, and better local visibility. For Swiss SMEs from CHF 249." },
+    automation: { title: "Automating Recurring Work for Swiss SMEs | SILVAN", description: "Automate recurring emails, reports and internal workflows without a heavy software rollout. For Swiss SMEs, scoped on request." },
+    work: { title: "Work: Website Design Concepts | SILVAN Digital Studio", description: "Four self-initiated design concepts – brand site, online shop, studio site and retail – showing how I approach structure, copy and visual design." },
+    about: { title: "Silvan Hahn – Independent Web Developer near Zurich", description: "I'm Silvan Hahn, an independent web developer in Boppelsen, canton Zurich. You work directly with the person who plans, designs and builds your project." },
+    contact: { title: "Contact – Web Design Enquiry, Canton Zurich | SILVAN", description: "Talk your project through directly with Silvan Hahn by email, WhatsApp, phone or LinkedIn. Based in Boppelsen ZH. Enquiries are non-binding." },
+    hello: { title: "Hi, I'm Silvan | SILVAN Digital Studio", description: "A direct route to websites, Google reviews, online presence, work, and contact." },
     imprint: { title: "Imprint | SILVAN Digital Studio", description: "Responsible for this website: Silvan Hahn, Boppelsen. Legal form, contact details, and copyright." },
     privacy: { title: "Privacy | SILVAN Digital Studio", description: "This website sets no cookies and embeds no tracking. Privacy statement under the revised Swiss FADP." },
   },

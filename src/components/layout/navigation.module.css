@@ -87,10 +87,17 @@
    entries; below that the drawer carries them. */
 .primaryNav {
   display: none;
+  min-inline-size: 0;
 }
 
+/* At 200% text-only zoom the row is wider than the viewport, and the drawer
+   does not return because `min-width: 72rem` is measured against the initial
+   font size, not the zoomed one. Wrapping keeps every link reachable: the
+   header grows taller instead of the page growing sideways. */
 .primaryList {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   align-items: center;
   gap: clamp(1rem, 1.6vw, 2.25rem);
   margin: 0;
@@ -111,6 +118,14 @@
 
 .primaryLink[aria-current="page"] {
   color: var(--color-accent);
+}
+
+/* The accent alone is a 2.77:1 difference against the other links -- readable,
+   but not a distinction someone with a colour vision deficiency can rely on.
+   The underline the other links only get on hover stays drawn on this one. */
+.primaryLink[aria-current="page"]::after {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 .actions {
@@ -344,6 +359,18 @@
   font-weight: 400;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+
+/* Browsers italicise <address>; this one is a postal address, not an aside. */
+.footerAddress {
+  margin-block: var(--space-2xs) var(--space-xs);
+  /* The footer is a dark surface: --color-ink-muted is the muted tone for
+     paper and lands at 2.99:1 here. This is the same muted paper tint the
+     other secondary footer text uses, at 7.2:1. */
+  color: rgb(249 248 246 / 62%);
+  font-size: var(--text-label);
+  font-style: normal;
+  line-height: 1.5;
 }
 
 .footerContactList,

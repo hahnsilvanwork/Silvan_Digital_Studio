@@ -13,12 +13,15 @@ interface ProjectPreviewProps {
   readonly project: Project;
   readonly locale: Locale;
   readonly index?: number;
+  /** True only where this card is in the first viewport. */
+  readonly priority?: boolean;
 }
 
 export function ProjectPreview({
   project,
   locale,
   index = 0,
+  priority = false,
 }: ProjectPreviewProps) {
   const content = getContent(locale);
   const copy = project.copy[locale];
@@ -37,10 +40,12 @@ export function ProjectPreview({
           className={pageStyles.projectMedia}
           data-project={project.slug}
           data-reveal="scale"
+          data-reveal-priority={priority ? "" : undefined}
         >
           <Image
             alt={copy.imageAlt}
             height={279}
+            priority={priority}
             sizes="(min-width: 64rem) 44vw, 100vw"
             src={project.image}
             width={512}

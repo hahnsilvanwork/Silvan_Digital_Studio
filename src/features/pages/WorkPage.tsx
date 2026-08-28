@@ -50,6 +50,8 @@ export function WorkPage({ locale }: WorkPageProps) {
                 <ProjectPreview
                   index={index}
                   locale={locale}
+                  // Two columns, so the first row is the first two cards.
+                  priority={index < 2}
                   project={project}
                 />
               </li>

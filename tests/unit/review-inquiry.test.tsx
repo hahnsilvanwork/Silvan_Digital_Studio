@@ -44,10 +44,23 @@ describe("review inquiry validation", () => {
         "product",
         "quantity",
         "street",
-        "variant",
       ].sort(),
     );
   });
+
+  it.each(["de", "en"] as const)(
+    "offers every advertised %s product in the order form",
+    (locale) => {
+      const { reviews } = getContent(locale);
+
+      // The page priced three products while the select offered two, so the
+      // CHF 80 bundle was advertised and then impossible to ask for. The list
+      // the select renders and the list the page prices are now the same list.
+      expect([...reviews.inquiry.productOptions]).toEqual(
+        reviews.products.map((product) => product.name),
+      );
+    },
+  );
 
   it("treats whitespace-only input as missing", () => {
     const errors = validateReviewInquiry({
@@ -157,7 +170,7 @@ describe("ReviewInquiryConfigurator", () => {
       screen.getByRole("button", { name: de.reviews.inquiry.submitLabel }),
     );
 
-    expect(screen.getAllByText(de.reviews.inquiry.requiredError).length).toBe(9);
+    expect(screen.getAllByText(de.reviews.inquiry.requiredError).length).toBe(8);
     expect(screen.getByLabelText(de.reviews.inquiry.fields[0].label)).toHaveFocus();
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
@@ -188,7 +201,7 @@ describe("ReviewInquiryConfigurator", () => {
 
     await user.selectOptions(
       screen.getByLabelText(de.reviews.inquiry.fields[0].label),
-      de.reviews.inquiry.productOptions.card,
+      de.reviews.inquiry.productOptions[0],
     );
     for (const [name, value] of Object.entries(complete)) {
       if (name === "product") continue;
@@ -223,7 +236,7 @@ describe("ReviewInquiryConfigurator", () => {
 
     await user.selectOptions(
       screen.getByLabelText(de.reviews.inquiry.fields[0].label),
-      de.reviews.inquiry.productOptions.stand,
+      de.reviews.inquiry.productOptions[1],
     );
     for (const [name, value] of Object.entries(complete)) {
       if (name === "product") continue;
@@ -248,7 +261,7 @@ describe("ReviewInquiryConfigurator", () => {
       complete.businessName,
     );
     expect(screen.getByLabelText(de.reviews.inquiry.fields[0].label)).toHaveValue(
-      de.reviews.inquiry.productOptions.stand,
+      de.reviews.inquiry.productOptions[1],
     );
   });
 });
