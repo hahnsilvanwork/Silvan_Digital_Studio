@@ -22,5 +22,5 @@
 ## Hinweise
 
 - Preise sind Richtwerte und werden erst mit einer schriftlichen Bestätigung verbindlich.
-- Die Website setzt keine Cookies und bindet kein Tracking ein.
+- Die Website setzt keine Cookies und bildet keine Profile. Die Seitenaufrufe werden cookielos gezählt (Vercel Analytics); es findet kein Wiedererkennen über Besuche hinweg statt.
 - Englische Fassung unter https://silvandigital.ch/en

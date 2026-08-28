@@ -31,6 +31,12 @@
 /* The enquiry as it will be sent. Label above value rather than in two columns:
    a Google profile URL and a business name are both long enough to wrap, and a
    narrow label column would break them mid-word on a phone. */
+.confirmTitle {
+  margin: 0;
+  font-size: var(--text-item);
+  font-weight: 500;
+}
+
 .summary {
   display: grid;
   gap: var(--space-2xs);

@@ -21,6 +21,15 @@ import { NotFoundPage } from "../features/pages/NotFoundPage";
  * the outer, attribute-less one as the real root.
  *
  * German, because that is the default locale an unprefixed path belongs to.
+ *
+ * Known limitation: a miss under `/en` also lands here and is therefore German.
+ * `global-not-found` is one static document and cannot read the path. Routing
+ * `/en` misses into the English group instead was tried and is worse: once this
+ * file exists, Next stops using the group-level `not-found.tsx`, so a
+ * `notFound()` from a catch-all renders the framework's empty error shell
+ * rather than the English page. A complete page in the wrong language beats an
+ * empty one in the right language, so this stays until the two locales share a
+ * root layout.
  */
 export const metadata: Metadata = {
   title: "Seite nicht gefunden | SILVAN Digital Studio",

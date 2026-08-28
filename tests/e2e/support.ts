@@ -46,6 +46,7 @@ export const CONTACT = {
   email: "kontakt@silvandigital.ch",
   phoneHref: "tel:+41789008500",
   phoneDisplay: "+41 78 900 85 00",
-  whatsApp: "+41789008500",
+  // The visible label, not the wa.me path segment.
+  whatsApp: "+41 78 900 85 00",
   linkedIn: "https://www.linkedin.com/in/silvan-hahn-dev",
 } as const;

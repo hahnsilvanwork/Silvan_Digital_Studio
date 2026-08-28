@@ -38,8 +38,11 @@ export async function generateMetadata({
   return buildMetadata({
     locale: "de",
     route: createProjectPath(project.slug),
-    title: `${project.name} — SILVAN Digital Studio`,
-    description: project.copy.de.tagline,
+    // From the project's own dictionary rather than a name template: the
+    // tagline made a 45-character description and the title carried no term
+    // anyone searches for.
+    title: project.copy.de.seoTitle,
+    description: project.copy.de.seoDescription,
   });
 }
 

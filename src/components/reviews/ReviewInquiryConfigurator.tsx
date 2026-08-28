@@ -1,6 +1,12 @@
 "use client";
 
-import { useId, useRef, useState, type FormEvent } from "react";
+import {
+  useId,
+  useRef,
+  useState,
+  type FormEvent,
+  type KeyboardEvent,
+} from "react";
 
 import type { Locale, ReviewInquiryFieldName } from "../../content/types";
 import { getContent } from "../../lib/locales";
@@ -25,7 +31,7 @@ export function ReviewInquiryConfigurator({
   const { inquiry } = content.reviews;
   const fieldPrefix = useId();
   const formRef = useRef<HTMLFormElement>(null);
-  const confirmRef = useRef<HTMLAnchorElement>(null);
+  const confirmRef = useRef<HTMLHeadingElement>(null);
 
   const [values, setValues] = useState<ReviewInquiryValues>(
     EMPTY_REVIEW_INQUIRY,
@@ -45,9 +51,7 @@ export function ReviewInquiryConfigurator({
     setValues((current) => ({ ...current, [name]: value }));
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const submit = () => {
     const nextErrors = validateReviewInquiry(values);
     setErrors(nextErrors);
 
@@ -69,12 +73,46 @@ export function ReviewInquiryConfigurator({
     window.requestAnimationFrame(() => confirmRef.current?.focus());
   };
 
+  /**
+   * The form has no `action`, so a native submit would GET the current URL with
+   * every field in the query string -- the visitor's name, company and full
+   * postal address into browser history, the Referer of the next request and
+   * the server log, on a form that promises none of it is stored here. This
+   * enquiry cannot work without JavaScript anyway (it builds a wa.me link in
+   * the browser), so there is no native path to preserve: the button is a plain
+   * button and Enter is handled explicitly, which keeps implicit submission for
+   * keyboard users without ever handing the browser a form to send.
+   */
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    submit();
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLFormElement>) => {
+    if (event.key !== "Enter") return;
+
+    const target = event.target as HTMLElement;
+    // A textarea takes Enter as a newline, and a button already turns Enter
+    // into a click -- handling it here too would run the submit twice.
+    if (target.tagName === "TEXTAREA" || target.tagName === "BUTTON") return;
+
+    event.preventDefault();
+    submit();
+  };
+
   if (inquiryUrl) {
     return (
       <div className={styles.confirm}>
         {/* What is about to be sent, restated. The message itself leaves for
             WhatsApp and cannot be corrected afterwards, so the last screen
-            before that has to show it rather than hide it behind "edit". */}
+            before that has to show it rather than hide it behind "edit".
+            Focus lands on this heading rather than on the send link: landing on
+            the link announced only "open in WhatsApp", leaving the visitor one
+            keypress from sending a message they were never told they could
+            check. */}
+        <h3 className={styles.confirmTitle} ref={confirmRef} tabIndex={-1}>
+          {inquiry.confirmTitle}
+        </h3>
         <dl className={styles.summary}>
           {inquiry.fields
             .filter((field) => values[field.name].trim() !== "")
@@ -90,7 +128,6 @@ export function ReviewInquiryConfigurator({
           className={styles.confirmLink}
           data-touch-target
           href={inquiryUrl}
-          ref={confirmRef}
           rel="noopener noreferrer"
           target="_blank"
         >
@@ -120,7 +157,13 @@ export function ReviewInquiryConfigurator({
   }
 
   return (
-    <form className={styles.form} noValidate onSubmit={handleSubmit} ref={formRef}>
+    <form
+      className={styles.form}
+      noValidate
+      onKeyDown={handleKeyDown}
+      onSubmit={handleFormSubmit}
+      ref={formRef}
+    >
       <p className={styles.formIntro}>{inquiry.intro}</p>
 
       {/* Submitting an empty form marks up to eight fields at once. Focus goes
@@ -201,7 +244,12 @@ export function ReviewInquiryConfigurator({
 
       <p className={styles.privacy}>{inquiry.privacyNotice}</p>
 
-      <button className={styles.submit} data-touch-target type="submit">
+      <button
+        className={styles.submit}
+        data-touch-target
+        onClick={submit}
+        type="button"
+      >
         {inquiry.submitLabel}
       </button>
     </form>

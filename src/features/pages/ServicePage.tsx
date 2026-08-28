@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 
 import { ContactActions } from "../../components/contact/ContactActions";
@@ -64,6 +65,23 @@ export function ServicePage({
           </div>
         </section>
 
+        {/* A visitor arriving from a search lands here, not on the home page,
+            and this page never said who is behind it: the name and the location
+            sat in the footer, six screens down on a phone. One line, reusing
+            the about page's own opening sentence so there is nothing new to
+            keep true. */}
+        <div className={`${layoutStyles.container} ${pageStyles.studioNote}`}>
+          <p data-reveal="rise">{content.about.intro}</p>
+          <p className={pageStyles.studioNoteLinks} data-reveal="rise">
+            <Link className="hoverUnderline" href={localizePath("/about", locale)}>
+              {content.about.eyebrow}
+            </Link>
+            <Link className="hoverUnderline" href={localizePath("/work", locale)}>
+              {content.common.viewWork}
+            </Link>
+          </p>
+        </div>
+
         <section className={`${layoutStyles.container} ${pageStyles.section}`}>
           <SectionHeading
             eyebrow={service.priceLabel}
@@ -105,7 +123,7 @@ export function ServicePage({
           <FaqSchema items={service.faq.items} />
           <SectionHeading title={service.faq.title} />
           <div className={pageStyles.sectionBody}>
-            <FaqList items={service.faq.items} />
+            <FaqList items={service.faq.items} locale={locale} />
           </div>
         </section>
 

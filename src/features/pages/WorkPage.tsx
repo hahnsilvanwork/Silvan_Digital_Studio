@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 import { SiteShell } from "../../components/layout/SiteShell";
 import { revealSequence } from "../../components/motion/reveal-sequence";
 import { SplitText } from "../../components/motion/SplitText";
+import { ButtonLink } from "../../components/ui/ButtonLink";
 import { ProjectPreview } from "../../components/work/ProjectPreview";
 import { projects } from "../../content/projects";
 import type { Locale } from "../../content/types";
@@ -58,6 +59,16 @@ export function WorkPage({ locale }: WorkPageProps) {
             ))}
           </ul>
         </section>
+
+        {/* The only pages on the site that used to end without one. A div, not
+            a section: it has no heading, so it is a container, not a region. */}
+        <div className={`${layoutStyles.container} ${pageStyles.section}`}>
+          <div className={pageStyles.sectionBody} data-reveal="rise">
+            <ButtonLink href={localizePath("/contact", locale)}>
+              {content.work.ctaLabel}
+            </ButtonLink>
+          </div>
+        </div>
       </div>
     </SiteShell>
   );

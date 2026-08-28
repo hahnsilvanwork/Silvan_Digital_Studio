@@ -1,10 +1,13 @@
+import Link from "next/link";
 import type { CSSProperties } from "react";
 
-import type { FaqItem } from "../../content/types";
+import type { FaqItem, Locale } from "../../content/types";
+import { localizePath } from "../../lib/routes";
 import styles from "./services.module.css";
 
 interface FaqListProps {
   readonly items: readonly FaqItem[];
+  readonly locale: Locale;
 }
 
 /**
@@ -16,7 +19,7 @@ interface FaqListProps {
  * assistant summarising the page, and to anyone printing it, none of which
  * click a disclosure triangle.
  */
-export function FaqList({ items }: FaqListProps) {
+export function FaqList({ items, locale }: FaqListProps) {
   return (
     <dl className={styles.faq}>
       {items.map((item, index) => (
@@ -27,7 +30,20 @@ export function FaqList({ items }: FaqListProps) {
           style={{ "--reveal-index": index } as CSSProperties}
         >
           <dt className={styles.faqQuestion}>{item.question}</dt>
-          <dd className={styles.faqAnswer}>{item.answer}</dd>
+          <dd className={styles.faqAnswer}>
+            {item.answer}
+            {item.link ? (
+              <>
+                {" "}
+                <Link
+                  className={`${styles.faqLink} hoverUnderline`}
+                  href={localizePath(item.link.href, locale)}
+                >
+                  {item.link.label}
+                </Link>
+              </>
+            ) : null}
+          </dd>
         </div>
       ))}
     </dl>

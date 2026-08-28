@@ -13,11 +13,18 @@ test.describe("contact actions", () => {
     await expect(
       actions.filter({ hasText: CONTACT.email }),
     ).toHaveAttribute("href", `mailto:${CONTACT.email}`);
+    // Phone and WhatsApp now print the same number in the same format, so the
+    // number alone no longer identifies a row -- match on the label as well.
     await expect(
-      actions.filter({ hasText: CONTACT.phoneDisplay }),
+      actions.filter({ hasText: "Telefon" }).filter({
+        hasText: CONTACT.phoneDisplay,
+      }),
     ).toHaveAttribute("href", CONTACT.phoneHref);
     await expect(
-      actions.filter({ hasText: CONTACT.whatsApp }).first(),
+      actions
+        .filter({ hasText: "WhatsApp" })
+        .filter({ hasText: CONTACT.whatsApp })
+        .first(),
     ).toHaveAttribute("href", /^https:\/\/wa\.me\/41789008500/);
     await expect(
       actions.filter({ hasText: "silvan-hahn-dev" }).first(),

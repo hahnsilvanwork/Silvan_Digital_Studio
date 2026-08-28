@@ -113,7 +113,13 @@ test.describe("review card configurator", () => {
     });
 
     await expect(confirmLink).toBeVisible();
-    await expect(confirmLink).toBeFocused();
+
+    // Focus lands on the heading, not on the link. Landing on the link
+    // announced only "open in WhatsApp", leaving the visitor one keypress from
+    // sending a message they were never told they could check first.
+    await expect(
+      page.getByRole("heading", { name: "Bitte prüfen Sie Ihre Angaben" }),
+    ).toBeFocused();
     await expect(
       page.getByText(/Dies ist eine unverbindliche Anfrage/),
     ).toBeVisible();
@@ -142,9 +148,18 @@ test.describe("review card configurator", () => {
   });
 
   test("nothing is submitted to a server", async ({ page }) => {
-    const posts: string[] = [];
+    // Watching for POSTs alone missed the way this could actually leak: the
+    // form carries no action, so a native submit would GET the current URL with
+    // the visitor's name, company and postal address in the query string --
+    // into history, the next Referer and the server log. Every request is
+    // inspected for the entered values, whatever its method.
+    const leaked: string[] = [];
     page.on("request", (request) => {
-      if (request.method() === "POST") posts.push(request.url());
+      const url = request.url();
+      if (request.method() === "POST") leaked.push(url);
+      if (/Beispiel\+?%?2?0?AG|Bahnhofstrasse|8001/i.test(decodeURIComponent(url))) {
+        leaked.push(url);
+      }
     });
 
     await fillInquiry(page);
@@ -153,6 +168,8 @@ test.describe("review card configurator", () => {
       page.getByRole("link", { name: /Anfrage in WhatsApp öffnen/ }),
     ).toBeVisible();
 
-    expect(posts).toEqual([]);
+    expect(leaked).toEqual([]);
+    // And the page never navigated: a native submit would have reloaded it.
+    expect(new URL(page.url()).search).toBe("");
   });
 });

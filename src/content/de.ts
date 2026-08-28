@@ -234,6 +234,7 @@ export const de = {
           : `${count} Felder müssen noch ausgefüllt oder korrigiert werden.`,
       quantityError: "Bitte geben Sie eine gültige Menge ab 1 ein.",
       urlError: "Bitte geben Sie einen gültigen Google-Link ein.",
+      confirmTitle: "Bitte prüfen Sie Ihre Angaben",
       nonBindingNotice: "Dies ist eine unverbindliche Anfrage. Sie wird erst nach meiner persönlichen Bestätigung verbindlich.",
       privacyNotice: "Ihre Angaben werden nicht auf dieser Website gespeichert, sondern nur in die WhatsApp-Nachricht eingefügt.",
       messageIntro: "Hallo Silvan, ich möchte unverbindlich NFC Review Cards anfragen.",
@@ -260,6 +261,7 @@ export const de = {
           question: "Brauche ich ein Google-Unternehmensprofil?",
           answer:
             "Ja, die Karte verweist darauf. Falls Sie noch keines haben oder es unvollständig ist, richte ich es unter Online-Präsenz ein.",
+          link: { label: "Google-Unternehmensprofil einrichten", href: "/presence" },
         },
         {
           question: "Was kostet es und was ist inbegriffen?",
@@ -388,9 +390,13 @@ export const de = {
     intro: "Ausgewählte Gestaltungskonzepte zeigen, wie Strategie, Inhalt und Entwicklung zusammenwirken können.",
     conceptLabel: "Konzeptprojekt",
     projectInfoLabel: "Projektinformationen",
+    categoryLabel: "Kategorie",
+    yearLabel: "Jahr",
+    typeLabel: "Art",
     challengeLabel: "Aufgabe",
     approachLabel: "Ansatz",
     outcomeLabel: "Beabsichtigtes Ergebnis",
+    ctaLabel: "Ihr Projekt besprechen",
   },
   about: {
     eyebrow: "Über mich",
@@ -437,7 +443,7 @@ export const de = {
       // is matched against citations as a string.
       phoneDisplay: "+41 78 900 85 00",
       phoneHref: "tel:+41789008500",
-      whatsappNumber: "+41789008500",
+      whatsappNumber: "+41 78 900 85 00",
       whatsappHref: "https://wa.me/41789008500",
       linkedIn: "https://www.linkedin.com/in/silvan-hahn-dev",
     },
@@ -639,6 +645,6 @@ export const de = {
     contact: { title: "Kontakt – Webdesign-Anfrage Kanton Zürich | SILVAN", description: "Besprechen Sie Ihr Vorhaben direkt mit Silvan Hahn – per E-Mail, WhatsApp, Telefon oder LinkedIn. Standort Boppelsen ZH. Anfragen sind unverbindlich." },
     hello: { title: "Hallo, ich bin Silvan | SILVAN Digital Studio", description: "Der direkte Einstieg zu Websites, Google-Bewertungen, Online-Präsenz, Arbeiten und Kontakt." },
     imprint: { title: "Impressum | SILVAN Digital Studio", description: "Verantwortlich für diese Website: Silvan Hahn, Boppelsen. Angaben zu Rechtsform, Kontakt und Urheberrecht." },
-    privacy: { title: "Datenschutz | SILVAN Digital Studio", description: "Diese Website setzt keine Cookies und bindet kein Tracking ein. Datenschutzerklärung nach revDSG." },
+    privacy: { title: "Datenschutz | SILVAN Digital Studio", description: "Keine Cookies, keine Profilbildung, kein Wiedererkennen über Besuche hinweg – nur eine cookielose Reichweitenmessung. Datenschutzerklärung nach revDSG." },
   },
 } as const satisfies SiteContent;

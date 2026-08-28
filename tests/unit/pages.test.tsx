@@ -210,6 +210,23 @@ describe("WorkPage", () => {
       ).toHaveAttribute("href", `/en/work/${project.slug}`);
     }
   });
+
+  it.each(["de", "en"] as const)(
+    "offers a way to act at the end of the %s portfolio",
+    (locale) => {
+      // The portfolio was the only part of the site that ended without an
+      // invitation, so its most engaged readers were offered nothing but the
+      // next project.
+      render(<WorkPage locale={locale} />);
+
+      const main = screen.getByRole("main");
+      const content = getContent(locale);
+
+      expect(
+        within(main).getByRole("link", { name: content.work.ctaLabel }),
+      ).toHaveAttribute("href", locale === "de" ? "/contact" : "/en/contact");
+    },
+  );
 });
 
 describe("AboutPage", () => {

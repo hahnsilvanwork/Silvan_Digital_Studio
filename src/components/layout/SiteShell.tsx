@@ -4,6 +4,7 @@ import type { Locale } from "../../content/types";
 import { ScrollReveal } from "../motion/ScrollReveal";
 import { Footer } from "./Footer";
 import { Navigation } from "./Navigation";
+import { RouteFocus } from "./RouteFocus";
 import { MAIN_CONTENT_ID, SITE_CONTENT_ID } from "./site-regions";
 
 interface SiteShellProps {
@@ -21,6 +22,7 @@ export function SiteShell({ locale, currentPath, children }: SiteShellProps) {
   return (
     <>
       <ScrollReveal />
+      <RouteFocus />
       <Navigation currentPath={currentPath} locale={locale} />
       <div id={SITE_CONTENT_ID}>
         {/* tabIndex -1 so the skip link actually moves focus here. Without it

@@ -171,9 +171,15 @@
     transform: none;
   }
 
+  /* Drop the animation, not the rest state. `transform: none` is the identity
+     matrix, so it overrode the scaleX(0) that keeps a hover underline hidden
+     until it is wanted -- every navigation link drew a full underline, and the
+     current page went back to being marked by colour alone at 2.77:1, which is
+     the exact thing the underline was added to fix. The :hover, :focus-visible
+     and [aria-current] rules set scaleX(1) and still win over this. */
   .hoverUnderline::after {
     opacity: 1;
-    transform: none;
+    transform: scaleX(0);
   }
 }
 

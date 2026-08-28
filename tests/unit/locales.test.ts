@@ -212,7 +212,7 @@ describe("locale content", () => {
         email: "kontakt@silvandigital.ch",
         phoneDisplay: "+41 78 900 85 00",
         phoneHref: "tel:+41789008500",
-        whatsappNumber: "+41789008500",
+        whatsappNumber: "+41 78 900 85 00",
         whatsappHref: "https://wa.me/41789008500",
         linkedIn: "https://www.linkedin.com/in/silvan-hahn-dev",
       });

@@ -235,3 +235,10 @@
     padding-block: var(--space-md);
   }
 }
+
+/* The follow-on link on an answer that points at another service. */
+.faqLink {
+  display: inline-block;
+  color: var(--color-accent);
+  text-decoration: none;
+}
