@@ -33,6 +33,8 @@ export function ReviewInquiryConfigurator({
   const [errors, setErrors] = useState<ReviewInquiryErrors>({});
   const [inquiryUrl, setInquiryUrl] = useState<string | null>(null);
 
+  const errorCount = Object.keys(errors).length;
+
   const messageFor = (kind: ReviewInquiryErrorKind) => {
     if (kind === "quantity") return inquiry.quantityError;
     if (kind === "url") return inquiry.urlError;
@@ -98,7 +100,17 @@ export function ReviewInquiryConfigurator({
         <button
           className={styles.editButton}
           data-touch-target
-          onClick={() => setInquiryUrl(null)}
+          onClick={() => {
+            setInquiryUrl(null);
+            // Returning to the form used to drop focus on <body>, which puts a
+            // keyboard visitor silently back at the top of the document. Send
+            // it to the first control instead, mirroring the submit path.
+            window.requestAnimationFrame(() =>
+              formRef.current
+                ?.querySelector<HTMLElement>("[name]")
+                ?.focus(),
+            );
+          }}
           type="button"
         >
           {inquiry.editLabel}
@@ -110,6 +122,13 @@ export function ReviewInquiryConfigurator({
   return (
     <form className={styles.form} noValidate onSubmit={handleSubmit} ref={formRef}>
       <p className={styles.formIntro}>{inquiry.intro}</p>
+
+      {/* Submitting an empty form marks up to eight fields at once. Focus goes
+          to the first, so a screen reader announces that one and nothing about
+          the others. This says how many there are. */}
+      <p aria-live="polite" className={styles.errorSummary} role="status">
+        {errorCount > 0 ? inquiry.errorSummary(errorCount) : ""}
+      </p>
 
       <div className={styles.fields}>
         {inquiry.fields.map((field) => {
@@ -129,6 +148,7 @@ export function ReviewInquiryConfigurator({
                 <select
                   aria-describedby={error ? errorId : undefined}
                   aria-invalid={error ? true : undefined}
+                  aria-required={field.required || undefined}
                   className={styles.control}
                   id={fieldId}
                   name={field.name}
@@ -156,6 +176,8 @@ export function ReviewInquiryConfigurator({
                 <input
                   aria-describedby={error ? errorId : undefined}
                   aria-invalid={error ? true : undefined}
+                  aria-required={field.required || undefined}
+                  autoComplete={field.autoComplete}
                   className={styles.control}
                   id={fieldId}
                   inputMode={field.name === "quantity" ? "numeric" : undefined}

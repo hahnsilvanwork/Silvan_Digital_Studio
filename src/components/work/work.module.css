@@ -1,7 +1,13 @@
 /* Portfolio previews and the reusable project detail layout. */
 
+/* An explicit single column. Without it the implicit track is max-content, and
+   a project image that fails to load falls back to its width attribute plus
+   unwrapped alt text -- which took the document to roughly 2000px wide inside a
+   320px viewport. The column now constrains the track whether the picture
+   arrives or not. */
 .previewList {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-lg);
   margin: 0;
   padding: 0;

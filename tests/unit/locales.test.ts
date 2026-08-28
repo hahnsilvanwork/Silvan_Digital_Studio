@@ -112,6 +112,38 @@ describe("locale content", () => {
   });
 
   it.each(["de" as const, "en" as const])(
+    "describes each %s product photograph separately",
+    (locale) => {
+      const { productImages } = getContent(locale).reviews;
+
+      // Two visually different products once shared one alt string, so a
+      // screen reader announced the same sentence twice.
+      expect(productImages).toHaveLength(2);
+      expect(new Set(productImages.map((image) => image.alt)).size).toBe(2);
+      for (const image of productImages) {
+        expect(image.alt.length).toBeGreaterThan(20);
+      }
+    },
+  );
+
+  it.each(["de" as const, "en" as const])(
+    "declares what each %s address field collects",
+    (locale) => {
+      const { fields } = getContent(locale).reviews.inquiry;
+      const tokenFor = (name: string) =>
+        fields.find((field) => field.name === name)?.autoComplete;
+
+      // WCAG 1.3.5: on a phone this is the difference between one tap and
+      // nine fields typed by hand.
+      expect(tokenFor("contactPerson")).toBe("name");
+      expect(tokenFor("businessName")).toBe("organization");
+      expect(tokenFor("street")).toBe("street-address");
+      expect(tokenFor("postalCode")).toBe("postal-code");
+      expect(tokenFor("city")).toBe("address-level2");
+    },
+  );
+
+  it.each(["de" as const, "en" as const])(
     "keeps the %s service line from wrapping onto a separator",
     (locale) => {
       const { serviceLine } = getContent(locale).home.hero;

@@ -497,6 +497,24 @@ describe("SILVAN responsive design contract", () => {
     expect(projectReadme).toContain("object-position");
   });
 
+  it("signals the current page with more than colour", () => {
+    // The accent against the other links is 2.77:1. That is a visible
+    // difference for most people and no difference at all for some, so the
+    // current item also keeps the underline the others only get on hover.
+    expect(stylesheetSource).toMatch(
+      /\.primarylink\[aria-current="page"\]::after\s*\{[^}]*transform:\s*scalex\(1\)/,
+    );
+  });
+
+  it("gives the project grid an explicit column", () => {
+    // An implicit grid track is max-content. When a project image fails to
+    // load, the width attribute and the unwrapped alt text sized that track to
+    // roughly 2000px inside a 320px viewport.
+    expect(stylesheetSource).toMatch(
+      /\.previewlist\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)/,
+    );
+  });
+
   it("declares the dvh viewport enhancement after every svh fallback", () => {
     // svh is the safe baseline; dvh has to come last so it wins where it is
     // supported and mobile browser chrome cannot crop the first screen.

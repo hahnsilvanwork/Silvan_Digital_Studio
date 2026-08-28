@@ -175,6 +175,13 @@ export interface ReviewInquiryField {
   readonly label: string;
   readonly placeholder: string;
   readonly required: boolean;
+  /**
+   * The HTML autocomplete token for what this field collects. Every field here
+   * asks for the visitor's own name, company or address, so declaring the
+   * purpose lets the browser fill it -- on a phone, that is the difference
+   * between one tap and ten fields typed by hand.
+   */
+  readonly autoComplete?: string;
 }
 
 export interface ReviewInquiryContent {
@@ -191,6 +198,8 @@ export interface ReviewInquiryContent {
   readonly submitLabel: string;
   readonly editLabel: string;
   readonly requiredError: string;
+  /** Announced once per submit, so errors beyond the focused field are heard. */
+  readonly errorSummary: (count: number) => string;
   readonly quantityError: string;
   readonly urlError: string;
   readonly nonBindingNotice: string;
@@ -251,7 +260,8 @@ interface SiteContentShape {
     processTitle: string;
     process: ProcessStep[];
     ctaLabel: string;
-    productImageAlt: string;
+    /** One entry per product photograph, each with its own description. */
+    productImages: readonly { readonly src: string; readonly alt: string }[];
     inquiry: ReviewInquiryContent;
     faq: FaqContent;
   };

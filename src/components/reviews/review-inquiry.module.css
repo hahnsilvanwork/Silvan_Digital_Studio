@@ -12,6 +12,18 @@
   font-size: var(--text-body);
 }
 
+/* Empty until a submit fails, so it must not reserve space or draw a box. */
+.errorSummary:empty {
+  display: none;
+}
+
+.errorSummary {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: var(--text-body);
+  font-weight: 500;
+}
+
 .privacy {
   font-size: var(--text-label);
 }
