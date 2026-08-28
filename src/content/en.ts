@@ -197,7 +197,7 @@ export const en = {
         features: ["Two cards", "One Google profile", "Setup included"],
       },
     ],
-    quantityDiscount: "Quantity discounts are available for larger orders.",
+    quantityDiscount: "A quantity discount applies to larger orders. I give you the price for your quantity when I reply to your enquiry – before anything is binding.",
     processTitle: "Three simple steps",
     process: [
       { id: "tap", label: "TAP", title: "Tap", description: "The customer taps the NFC card or stand with their phone." },

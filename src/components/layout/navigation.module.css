@@ -349,7 +349,10 @@
 /* Browsers italicise <address>; this one is a postal address, not an aside. */
 .footerAddress {
   margin-block: var(--space-2xs) var(--space-xs);
-  color: var(--color-ink-muted);
+  /* The footer is a dark surface: --color-ink-muted is the muted tone for
+     paper and lands at 2.99:1 here. This is the same muted paper tint the
+     other secondary footer text uses, at 7.2:1. */
+  color: rgb(249 248 246 / 62%);
   font-size: var(--text-label);
   font-style: normal;
   line-height: 1.5;

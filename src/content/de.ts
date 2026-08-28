@@ -197,7 +197,7 @@ export const de = {
         features: ["Zwei Karten", "Ein Google-Profil", "Inklusive Einrichtung"],
       },
     ],
-    quantityDiscount: "Für grössere Mengen ist ein Mengenrabatt verfügbar.",
+    quantityDiscount: "Für grössere Mengen gibt es einen Mengenrabatt. Den Preis für Ihre Menge nenne ich Ihnen in meiner Antwort auf Ihre Anfrage – vor jeder Verbindlichkeit.",
     processTitle: "Drei einfache Schritte",
     process: [
       { id: "tap", label: "TAP", title: "Berühren", description: "Der Kunde berührt die NFC-Karte oder den Aufsteller mit dem Smartphone." },
