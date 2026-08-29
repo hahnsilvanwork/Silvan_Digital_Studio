@@ -170,9 +170,9 @@
      block where it belongs. */
   .previewList {
     grid-template-columns: repeat(2, minmax(0, 32rem));
-    column-gap: var(--grid-gap);
+    column-gap: var(--space-lg);
     row-gap: var(--space-lg);
-    max-inline-size: calc((2 * 32rem) + var(--grid-gap));
+    max-inline-size: calc((2 * 32rem) + var(--space-lg));
   }
 
   /* Offsetting every second preview keeps the index editorial rather than
