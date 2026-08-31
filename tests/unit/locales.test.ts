@@ -112,17 +112,19 @@ describe("locale content", () => {
   });
 
   it.each(["de" as const, "en" as const])(
-    "describes each %s product photograph separately",
+    "describes each %s product visualization separately",
     (locale) => {
-      const { productImages } = getContent(locale).reviews;
+      const { productVisualizations, secondaryProductImage } =
+        getContent(locale).reviews;
 
-      // Two visually different products once shared one alt string, so a
-      // screen reader announced the same sentence twice.
-      expect(productImages).toHaveLength(2);
-      expect(new Set(productImages.map((image) => image.alt)).size).toBe(2);
-      for (const image of productImages) {
-        expect(image.alt.length).toBeGreaterThan(20);
-      }
+      // The 3D tag and the remaining stand photograph are different products,
+      // so each keeps its own useful description outside the Spline canvas.
+      expect(productVisualizations).toHaveLength(1);
+      expect(productVisualizations[0].ariaLabel.length).toBeGreaterThan(20);
+      expect(secondaryProductImage.alt.length).toBeGreaterThan(20);
+      expect(productVisualizations[0].ariaLabel).not.toBe(
+        secondaryProductImage.alt,
+      );
     },
   );
 

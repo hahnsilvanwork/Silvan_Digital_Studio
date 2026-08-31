@@ -205,10 +205,21 @@ export const en = {
       { id: "review", label: "REVIEW", title: "Review", description: "The customer chooses to leave their honest feedback." },
     ],
     ctaLabel: "Make a no-obligation inquiry",
-    productImages: [
-      { src: "/images/products/review-cards.png", alt: "NFC review card in credit-card format, telling the customer to tap their phone here" },
-      { src: "/images/products/review-stands.png", alt: "NFC stand for a table or counter, asking the customer to review the business on Google" },
+    productSelectorLabel: "Choose a Google Review product",
+    productVisualizations: [
+      {
+        id: "round-nfc-white",
+        title: "White round Google Review NFC tag",
+        sceneUrl:
+          "https://prod.spline.design/Lu503y2nQ8XllpRe/scene.splinecode",
+        ariaLabel:
+          "Interactive 3D model of a white round Google Review NFC tag",
+      },
     ],
+    secondaryProductImage: {
+      src: "/images/products/review-stands.png",
+      alt: "NFC stand for a table or counter, asking the customer to review the business on Google",
+    },
     inquiry: {
       title: "Ask about Review Cards",
       intro: "Send the essentials through WhatsApp and I will respond personally.",

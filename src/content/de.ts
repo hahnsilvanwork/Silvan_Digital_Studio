@@ -205,10 +205,21 @@ export const de = {
       { id: "review", label: "REVIEW", title: "Bewerten", description: "Der Kunde hinterlässt freiwillig sein ehrliches Feedback." },
     ],
     ctaLabel: "Unverbindlich anfragen",
-    productImages: [
-      { src: "/images/products/review-cards.png", alt: "NFC Review Card im Scheckkartenformat mit dem Hinweis, das Telefon hier aufzulegen" },
-      { src: "/images/products/review-stands.png", alt: "NFC Aufsteller für Tisch oder Kasse mit der Aufforderung, das Unternehmen auf Google zu bewerten" },
+    productSelectorLabel: "Google-Review-Produkt wählen",
+    productVisualizations: [
+      {
+        id: "round-nfc-white",
+        title: "Runder Google Review NFC-Tag in Weiss",
+        sceneUrl:
+          "https://prod.spline.design/Lu503y2nQ8XllpRe/scene.splinecode",
+        ariaLabel:
+          "Interaktives 3D-Modell eines weissen runden Google Review NFC-Tags",
+      },
     ],
+    secondaryProductImage: {
+      src: "/images/products/review-stands.png",
+      alt: "NFC Aufsteller für Tisch oder Kasse mit der Aufforderung, das Unternehmen auf Google zu bewerten",
+    },
     inquiry: {
       title: "Review Card anfragen",
       intro: "Senden Sie die Eckdaten direkt per WhatsApp. Ich melde mich persönlich bei Ihnen.",

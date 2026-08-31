@@ -217,6 +217,14 @@ export interface ReviewInquiryContent {
   readonly messageIntro: string;
 }
 
+export interface ProductVisualization {
+  readonly id: string;
+  readonly title: string;
+  readonly sceneUrl: string;
+  readonly fallbackImage?: string;
+  readonly ariaLabel: string;
+}
+
 interface SiteContentShape {
   brand: {
     name: string;
@@ -270,8 +278,9 @@ interface SiteContentShape {
     processTitle: string;
     process: ProcessStep[];
     ctaLabel: string;
-    /** One entry per product photograph, each with its own description. */
-    productImages: readonly { readonly src: string; readonly alt: string }[];
+    productSelectorLabel: string;
+    productVisualizations: readonly ProductVisualization[];
+    secondaryProductImage: { readonly src: string; readonly alt: string };
     inquiry: ReviewInquiryContent;
     faq: FaqContent;
   };
