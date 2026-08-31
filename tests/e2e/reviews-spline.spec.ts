@@ -7,11 +7,34 @@ async function stubSpline(page: Page) {
   await page.route(RUNTIME, (route) =>
     route.fulfill({
       contentType: "application/javascript",
+      // Stands in for the real runtime so the site integration is tested
+      // without depending on Spline uptime. It mimics the parts the page
+      // touches: the load event, the application handle, and in-place loading.
       body: `setTimeout(() => {
         if (!customElements.get("spline-viewer")) {
           customElements.define("spline-viewer", class extends HTMLElement {
             connectedCallback() {
-              setTimeout(() => this.dispatchEvent(new CustomEvent("load-complete")), 100);
+              window.__splineLoads = window.__splineLoads ?? [];
+              this._spline = {
+                load: (url) => {
+                  window.__splineLoads.push(url);
+                  this.setAttribute("data-loaded-scene", url);
+                  return Promise.resolve();
+                },
+                play: () => { this.setAttribute("data-running", "true"); },
+                stop: () => { this.setAttribute("data-running", "false"); },
+                setBackgroundColor: () => {},
+                _controls: { orbitControls: {
+                  autoRotate: false,
+                  autoRotateSpeed: 2,
+                  autoRotateClockwise: true,
+                  hoverRotatePanMode: 1,
+                } },
+              };
+              setTimeout(() => {
+                this.setAttribute("data-loaded-scene", this.getAttribute("url"));
+                this.dispatchEvent(new CustomEvent("load-complete"));
+              }, 100);
             }
           });
         }
@@ -146,6 +169,77 @@ test.describe("Google Review Spline products", () => {
       ),
     ).toBe(2);
     await expect(page.locator("spline-viewer")).toHaveCount(2);
+  });
+
+  test("turns the product instead of waiting for a pointer", async ({
+    page,
+  }) => {
+    await page.goto("/reviews");
+
+    const hero = page.locator('[data-spline-placement="hero"] spline-viewer');
+    await expect(hero).toHaveAttribute("data-loaded-scene", /splinecode$/);
+
+    expect(
+      await hero.evaluate((node: Element) => {
+        const { _spline } = node as Element & {
+          _spline: {
+            _controls: {
+              orbitControls: {
+                autoRotate: boolean;
+                autoRotateSpeed: number;
+                hoverRotatePanMode: number;
+              };
+            };
+          };
+        };
+        const controls = _spline._controls.orbitControls;
+        return {
+          autoRotate: controls.autoRotate,
+          hover: controls.hoverRotatePanMode,
+          secondsPerTurn: Math.round(18.5 / controls.autoRotateSpeed),
+        };
+      }),
+    ).toEqual({ autoRotate: true, hover: 0, secondsPerTurn: 30 });
+  });
+
+  test("cycles the hero products inside the same viewer", async ({ page }) => {
+    await page.goto("/reviews");
+
+    const hero = page.locator('[data-spline-placement="hero"] spline-viewer');
+    const first = await hero.getAttribute("data-loaded-scene");
+
+    // Switching must reuse the canvas: a rebuild would drop the GPU context
+    // and pull the whole runtime again.
+    await expect(hero).not.toHaveAttribute("data-loaded-scene", first ?? "", {
+      timeout: 20000,
+    });
+    await expect(
+      page.locator('[data-spline-placement="hero"] spline-viewer'),
+    ).toHaveCount(1);
+  });
+
+  test("lets the visitor choose a product in the section below", async ({
+    page,
+  }) => {
+    await page.goto("/reviews");
+
+    const section = page.locator('[data-spline-placement="products"]');
+    await section.scrollIntoViewIfNeeded();
+
+    const viewer = section.locator("spline-viewer");
+    await expect(viewer).toHaveAttribute("data-loaded-scene", /splinecode$/);
+    const before = await viewer.getAttribute("data-loaded-scene");
+
+    const buttons = section.getByRole("button");
+    expect(await buttons.count()).toBeGreaterThan(1);
+
+    const box = await buttons.nth(1).boundingBox();
+    expect(box?.height).toBeGreaterThanOrEqual(44);
+
+    await buttons.nth(1).click();
+    await expect(buttons.nth(1)).toHaveAttribute("aria-pressed", "true");
+    await expect(viewer).not.toHaveAttribute("data-loaded-scene", before ?? "");
+    await expect(section.locator("spline-viewer")).toHaveCount(1);
   });
 
   test("uses two hero columns on desktop", async ({ page }) => {

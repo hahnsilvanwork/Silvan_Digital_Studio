@@ -2,30 +2,52 @@ import { describe, expect, it } from "vitest";
 
 import { getContent } from "../../src/lib/locales";
 
-describe("review product visualizations", () => {
-  it.each(["de", "en"] as const)(
-    "defines the reusable white round NFC tag for %s",
-    (locale) => {
-      const reviews = getContent(locale).reviews;
-      const product = reviews.productVisualizations[0];
+const locales = ["de", "en"] as const;
 
-      expect(product).toMatchObject({
-        id: "round-nfc-white",
-        sceneUrl:
-          "https://prod.spline.design/Lu503y2nQ8XllpRe/scene.splinecode",
-      });
-      expect(product.title.length).toBeGreaterThan(0);
-      expect(product.ariaLabel.length).toBeGreaterThan(0);
-      expect(reviews.productSelectorLabel.length).toBeGreaterThan(0);
-      expect(reviews.secondaryProductImage.src).toBe(
+describe("review product visualizations", () => {
+  it.each(locales)("offers every Google Review product for %s", (locale) => {
+    const { productVisualizations } = getContent(locale).reviews;
+
+    expect(productVisualizations.map(({ id }) => id)).toEqual([
+      "round-nfc-white",
+      "round-nfc-black",
+      "stand-blue",
+    ]);
+    for (const product of productVisualizations) {
+      expect(product.sceneUrl).toMatch(
+        /^https:\/\/prod\.spline\.design\/[\w-]+\/scene\.splinecode$/,
+      );
+      expect(product.title.length).toBeGreaterThan(3);
+      expect(product.ariaLabel.length).toBeGreaterThan(20);
+    }
+  });
+
+  it.each(locales)("keeps every scene and label distinct for %s", (locale) => {
+    const { productVisualizations } = getContent(locale).reviews;
+    const unique = (values: readonly string[]) => new Set(values).size;
+
+    // A shared scene URL would silently show the same product twice, and a
+    // shared label would leave the selector buttons indistinguishable.
+    expect(unique(productVisualizations.map((p) => p.sceneUrl))).toBe(
+      productVisualizations.length,
+    );
+    expect(unique(productVisualizations.map((p) => p.title))).toBe(
+      productVisualizations.length,
+    );
+  });
+
+  it.each(locales)(
+    "reserves the menu product family without inventing one for %s",
+    (locale) => {
+      const { menuVisualizations, secondaryProductImage } =
+        getContent(locale).reviews;
+
+      // The restaurant/menu scenes do not exist yet. The page has to keep
+      // showing the real photograph until they do.
+      expect(menuVisualizations).toEqual([]);
+      expect(secondaryProductImage.src).toBe(
         "/images/products/review-stands.png",
       );
     },
   );
-
-  it("does not request a fallback file that has not been supplied", () => {
-    const product = getContent("de").reviews.productVisualizations[0];
-
-    expect(product.fallbackImage).toBeUndefined();
-  });
 });

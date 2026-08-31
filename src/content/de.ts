@@ -206,16 +206,34 @@ export const de = {
     ],
     ctaLabel: "Unverbindlich anfragen",
     productSelectorLabel: "Google-Review-Produkt wählen",
+    menuSelectorLabel: "Menü-Produkt wählen",
     productVisualizations: [
       {
         id: "round-nfc-white",
-        title: "Runder Google Review NFC-Tag in Weiss",
+        title: "Rund Weiss",
         sceneUrl:
           "https://prod.spline.design/Lu503y2nQ8XllpRe/scene.splinecode",
         ariaLabel:
-          "Interaktives 3D-Modell eines weissen runden Google Review NFC-Tags",
+          "Sich langsam drehendes 3D-Modell eines weissen runden Google Review NFC-Tags",
+      },
+      {
+        id: "round-nfc-black",
+        title: "Rund Schwarz",
+        sceneUrl:
+          "https://prod.spline.design/k2oyfSvDdVisnlUw/scene.splinecode",
+        ariaLabel:
+          "Sich langsam drehendes 3D-Modell eines schwarzen runden Google Review NFC-Tags",
+      },
+      {
+        id: "stand-blue",
+        title: "Aufsteller Blau",
+        sceneUrl:
+          "https://prod.spline.design/fttoKfHSbrqCbrUd/scene.splinecode",
+        ariaLabel:
+          "Sich langsam drehendes 3D-Modell eines blauen Google-Review-Aufstellers für den Tisch",
       },
     ],
+    menuVisualizations: [],
     secondaryProductImage: {
       src: "/images/products/review-stands.png",
       alt: "NFC Aufsteller für Tisch oder Kasse mit der Aufforderung, das Unternehmen auf Google zu bewerten",

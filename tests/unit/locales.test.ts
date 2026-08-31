@@ -117,14 +117,17 @@ describe("locale content", () => {
       const { productVisualizations, secondaryProductImage } =
         getContent(locale).reviews;
 
-      // The 3D tag and the remaining stand photograph are different products,
+      // The 3D tags and the remaining stand photograph are different products,
       // so each keeps its own useful description outside the Spline canvas.
-      expect(productVisualizations).toHaveLength(1);
-      expect(productVisualizations[0].ariaLabel.length).toBeGreaterThan(20);
+      expect(productVisualizations.length).toBeGreaterThan(0);
       expect(secondaryProductImage.alt.length).toBeGreaterThan(20);
-      expect(productVisualizations[0].ariaLabel).not.toBe(
-        secondaryProductImage.alt,
-      );
+      for (const { ariaLabel } of productVisualizations) {
+        expect(ariaLabel.length).toBeGreaterThan(20);
+        expect(ariaLabel).not.toBe(secondaryProductImage.alt);
+      }
+      expect(
+        new Set(productVisualizations.map(({ ariaLabel }) => ariaLabel)).size,
+      ).toBe(productVisualizations.length);
     },
   );
 

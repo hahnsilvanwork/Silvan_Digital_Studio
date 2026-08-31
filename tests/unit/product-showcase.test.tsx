@@ -1,12 +1,24 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("../../src/components/products/SplineProduct", () => ({
-  SplineProduct: ({ sceneUrl }: { readonly sceneUrl: string }) => (
-    <output data-testid="active-scene">{sceneUrl}</output>
-  ),
-}));
+const mounts = vi.hoisted(() => ({ count: 0 }));
+
+vi.mock("../../src/components/products/SplineProduct", async () => {
+  const { useEffect } = await import("react");
+
+  return {
+    SplineProduct: ({ sceneUrl }: { readonly sceneUrl: string }) => {
+      // Counts mounts, not renders: only a remount would drop the real
+      // viewer's GPU context.
+      useEffect(() => {
+        mounts.count += 1;
+      }, []);
+
+      return <output data-testid="active-scene">{sceneUrl}</output>;
+    },
+  };
+});
 
 import { ProductShowcase } from "../../src/components/products/ProductShowcase";
 
@@ -24,6 +36,11 @@ const products = [
     ariaLabel: "Black tag in 3D",
   },
 ] as const;
+
+afterEach(() => {
+  mounts.count = 0;
+  vi.useRealTimers();
+});
 
 describe("ProductShowcase", () => {
   it("omits controls when there is only one product", () => {
@@ -53,5 +70,54 @@ describe("ProductShowcase", () => {
     expect(screen.getByTestId("active-scene")).toHaveTextContent(
       "black.splinecode",
     );
+  });
+
+  it("advances through the products on its own", () => {
+    vi.useFakeTimers();
+    render(
+      <ProductShowcase
+        autoAdvanceMs={6000}
+        products={products}
+        selectorLabel="Choose"
+      />,
+    );
+
+    expect(screen.getByTestId("active-scene")).toHaveTextContent("white");
+
+    act(() => void vi.advanceTimersByTime(6000));
+    expect(screen.getByTestId("active-scene")).toHaveTextContent("black");
+
+    act(() => void vi.advanceTimersByTime(6000));
+    expect(screen.getByTestId("active-scene")).toHaveTextContent("white");
+  });
+
+  it("stops advancing once the visitor picks a product", () => {
+    vi.useFakeTimers();
+    render(
+      <ProductShowcase
+        autoAdvanceMs={6000}
+        products={products}
+        selectorLabel="Choose"
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Black tag" }));
+    act(() => void vi.advanceTimersByTime(30_000));
+
+    // Yanking the product away from someone who just chose it is hostile.
+    expect(screen.getByTestId("active-scene")).toHaveTextContent("black");
+  });
+
+  it("never rebuilds the viewer when the product changes", async () => {
+    const user = userEvent.setup();
+    render(<ProductShowcase products={products} selectorLabel="Choose" />);
+
+    expect(mounts.count).toBe(1);
+    await user.click(screen.getByRole("button", { name: "Black tag" }));
+
+    // The viewer swaps its scene in place; remounting would drop the GPU
+    // context and reload the whole runtime.
+    expect(mounts.count).toBe(1);
+    expect(screen.getByTestId("active-scene")).toHaveTextContent("black");
   });
 });

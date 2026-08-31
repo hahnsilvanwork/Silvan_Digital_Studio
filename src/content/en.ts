@@ -206,16 +206,34 @@ export const en = {
     ],
     ctaLabel: "Make a no-obligation inquiry",
     productSelectorLabel: "Choose a Google Review product",
+    menuSelectorLabel: "Choose a menu product",
     productVisualizations: [
       {
         id: "round-nfc-white",
-        title: "White round Google Review NFC tag",
+        title: "Round white",
         sceneUrl:
           "https://prod.spline.design/Lu503y2nQ8XllpRe/scene.splinecode",
         ariaLabel:
-          "Interactive 3D model of a white round Google Review NFC tag",
+          "Slowly rotating 3D model of a white round Google Review NFC tag",
+      },
+      {
+        id: "round-nfc-black",
+        title: "Round black",
+        sceneUrl:
+          "https://prod.spline.design/k2oyfSvDdVisnlUw/scene.splinecode",
+        ariaLabel:
+          "Slowly rotating 3D model of a black round Google Review NFC tag",
+      },
+      {
+        id: "stand-blue",
+        title: "Blue stand",
+        sceneUrl:
+          "https://prod.spline.design/fttoKfHSbrqCbrUd/scene.splinecode",
+        ariaLabel:
+          "Slowly rotating 3D model of a blue Google Review table stand",
       },
     ],
+    menuVisualizations: [],
     secondaryProductImage: {
       src: "/images/products/review-stands.png",
       alt: "NFC stand for a table or counter, asking the customer to review the business on Google",

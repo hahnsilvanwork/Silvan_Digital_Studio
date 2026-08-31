@@ -279,7 +279,10 @@ interface SiteContentShape {
     process: ProcessStep[];
     ctaLabel: string;
     productSelectorLabel: string;
+    menuSelectorLabel: string;
     productVisualizations: readonly ProductVisualization[];
+    /** Restaurant and digital menu products. Empty until their scenes exist. */
+    menuVisualizations: readonly ProductVisualization[];
     secondaryProductImage: { readonly src: string; readonly alt: string };
     inquiry: ReviewInquiryContent;
     faq: FaqContent;

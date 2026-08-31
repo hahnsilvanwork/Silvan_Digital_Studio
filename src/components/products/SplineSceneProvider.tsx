@@ -31,6 +31,7 @@ export function SplineSceneProvider({
   readonly children: ReactNode;
 }) {
   const waiting = useRef(new Map<string, number>());
+  const started = useRef(new Set<string>());
   const startingId = useRef<string | null>(null);
   const [startedIds, setStartedIds] = useState<ReadonlySet<string>>(
     () => new Set<string>(),
@@ -54,11 +55,16 @@ export function SplineSceneProvider({
     const granted = nearestId;
     startingId.current = granted;
     waiting.current.delete(granted);
-    setStartedIds((current) => new Set(current).add(granted));
+    started.current.add(granted);
+    setStartedIds(new Set(started.current));
   }, []);
 
   const requestStart = useCallback(
     (id: string, distance: number) => {
+      // The observer stays connected to drive pause and resume, so it keeps
+      // reporting. A scene that already started must not claim a slot again.
+      if (started.current.has(id)) return;
+
       waiting.current.set(id, distance);
       grantFreeSlot();
     },

@@ -4,6 +4,13 @@ import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
 
 import { useSplineSceneSlot } from "./SplineSceneProvider";
+import {
+  getSplineApplication,
+  presentScene,
+  setSceneRunning,
+  swapScene,
+  type SplineApplication,
+} from "./spline-scene-controls";
 import { loadSplineViewer } from "./spline-viewer-loader";
 import styles from "./products.module.css";
 
@@ -48,6 +55,7 @@ function Fallback({ fallbackImage, priority }: FallbackProps) {
 
 interface ActiveSplineProps extends FallbackProps {
   readonly sceneUrl: string;
+  readonly running: boolean;
   readonly onSettled: () => void;
 }
 
@@ -55,9 +63,12 @@ function ActiveSpline({
   sceneUrl,
   fallbackImage,
   priority,
+  running,
   onSettled,
 }: ActiveSplineProps) {
   const viewerRef = useRef<HTMLElement>(null);
+  const appRef = useRef<SplineApplication | null>(null);
+  const shownUrl = useRef(sceneUrl);
   const [runtimeReady, setRuntimeReady] = useState(false);
   const [state, setState] = useState<LoadState>("loading");
 
@@ -87,12 +98,18 @@ function ActiveSpline({
 
     const lost = () => {
       window.clearTimeout(releaseSlot);
+      appRef.current = null;
       setRuntimeReady(false);
       setState("error");
       onSettled();
     };
     const complete = () => {
       window.clearTimeout(releaseSlot);
+
+      const app = getSplineApplication(viewer);
+      appRef.current = app;
+      if (app) presentScene(app);
+
       setState("ready");
       onSettled();
     };
@@ -107,6 +124,41 @@ function ActiveSpline({
       viewer.removeEventListener("context-loss", lost);
     };
   }, [onSettled, runtimeReady]);
+
+  useEffect(() => {
+    const app = appRef.current;
+    if (!app || state !== "ready") return;
+
+    // Pausing an off-screen scene frees the GPU without disposing anything,
+    // so coming back is instant instead of another full start-up.
+    setSceneRunning(app, running);
+  }, [running, state]);
+
+  useEffect(() => {
+    if (running || state !== "loading") return;
+
+    // The viewer suspends its own loading while it is off screen, so a scene
+    // the visitor scrolled past would otherwise hold the start slot until the
+    // safety timeout and keep the scene they can actually see waiting.
+    onSettled();
+  }, [onSettled, running, state]);
+
+  useEffect(() => {
+    const app = appRef.current;
+    if (!app || state !== "ready" || sceneUrl === shownUrl.current) return;
+
+    let cancelled = false;
+    shownUrl.current = sceneUrl;
+    // The previous product stays on screen until the new one is ready, which
+    // reads far calmer than blanking the frame between products.
+    swapScene(app, sceneUrl).catch(() => {
+      if (!cancelled) setState("error");
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [sceneUrl, state]);
 
   return (
     <span className={styles.active} data-spline-state={state}>
@@ -136,6 +188,9 @@ export function SplineProduct({
   // attribute when a hydration render disagrees. Starting at false and letting
   // the effect below raise it guarantees a real re-render that reaches the DOM.
   const [reducedMotion, setReducedMotion] = useState(false);
+  // Without an observer everything counts as visible, which is also the right
+  // answer for the moment before the first intersection is delivered.
+  const [onScreen, setOnScreen] = useState(true);
   const { hasStarted, requestStart, finishStart } = useSplineSceneSlot(slotId);
 
   useEffect(() => {
@@ -152,9 +207,7 @@ export function SplineProduct({
 
   useEffect(() => {
     const frame = frameRef.current;
-    // Asking once is enough. Scrolling away must not revoke the scene, because
-    // rebuilding a WebGPU context re-downloads and re-initialises everything.
-    if (!frame || reducedMotion || hasStarted) return;
+    if (!frame || reducedMotion) return;
 
     // Read the preference again rather than trusting this render: on the first
     // commit the state above is still the hydration default, and a browser can
@@ -166,6 +219,7 @@ export function SplineProduct({
       return;
     }
 
+    // Starts early, while the product is still approaching the viewport.
     const observer = new window.IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
@@ -184,7 +238,25 @@ export function SplineProduct({
     observer.observe(frame);
 
     return () => observer.disconnect();
-  }, [hasStarted, priority, reducedMotion, requestStart]);
+  }, [priority, reducedMotion, requestStart]);
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame || reducedMotion || !window.IntersectionObserver) return;
+
+    // Deliberately without the head start above: the viewer suspends its own
+    // loading the moment it truly leaves the viewport, so anything wider than
+    // the real viewport would call a stalled scene "visible" and keep the
+    // scene the visitor is actually looking at waiting for a free start slot.
+    const observer = new window.IntersectionObserver(
+      ([entry]) => setOnScreen(entry.isIntersecting),
+      { threshold: THRESHOLDS },
+    );
+
+    observer.observe(frame);
+
+    return () => observer.disconnect();
+  }, [reducedMotion]);
 
   const inactiveState: LoadState = reducedMotion ? "reduced-motion" : "idle";
 
@@ -200,6 +272,7 @@ export function SplineProduct({
           fallbackImage={fallbackImage}
           onSettled={finishStart}
           priority={priority}
+          running={onScreen}
           sceneUrl={sceneUrl}
         />
       ) : (

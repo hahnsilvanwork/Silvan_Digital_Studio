@@ -20,6 +20,10 @@ import { localizePath } from "../../lib/routes";
 import layoutStyles from "../../styles/layout.module.css";
 import pageStyles from "../../styles/pages.module.css";
 
+// Long enough to read as a product shot rather than a slideshow, and long
+// enough for the previous scene to finish swapping before the next one.
+const HERO_PRODUCT_MS = 7000;
+
 interface ReviewsPageProps {
   readonly locale: Locale;
 }
@@ -31,6 +35,12 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
 
   return (
     <SiteShell currentPath={localizePath("/reviews", locale)} locale={locale}>
+      {/* The runtime and the scenes come from two Spline hosts. Opening those
+        connections while the page is still parsing takes the handshakes off
+        the critical path on mobile. */}
+      <link crossOrigin="anonymous" href="https://cdn.spline.design" rel="preconnect" />
+      <link crossOrigin="anonymous" href="https://prod.spline.design" rel="preconnect" />
+
       <SplineSceneProvider>
         <div className={pageStyles.page}>
           <section
@@ -71,8 +81,10 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
               data-spline-placement="hero"
             >
               <ProductShowcase
+                autoAdvanceMs={HERO_PRODUCT_MS}
                 priority
                 products={reviews.productVisualizations}
+                selectable={false}
                 selectorLabel={reviews.productSelectorLabel}
               />
             </div>
@@ -93,19 +105,31 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
                   selectorLabel={reviews.productSelectorLabel}
                 />
               </div>
-              <span
-                className={pageStyles.productImage}
-                data-reveal="scale"
-                style={{ "--reveal-index": 1 } as CSSProperties}
-              >
-                <Image
-                  alt={reviews.secondaryProductImage.alt}
-                  height={1080}
-                  sizes="(min-width: 64rem) 46vw, 50vw"
-                  src={reviews.secondaryProductImage.src}
-                  width={1080}
-                />
-              </span>
+              {reviews.menuVisualizations.length > 0 ? (
+                <div
+                  className={pageStyles.productSpline}
+                  data-spline-placement="menu"
+                >
+                  <ProductShowcase
+                    products={reviews.menuVisualizations}
+                    selectorLabel={reviews.menuSelectorLabel}
+                  />
+                </div>
+              ) : (
+                <span
+                  className={pageStyles.productImage}
+                  data-reveal="scale"
+                  style={{ "--reveal-index": 1 } as CSSProperties}
+                >
+                  <Image
+                    alt={reviews.secondaryProductImage.alt}
+                    height={1080}
+                    sizes="(min-width: 64rem) 46vw, 50vw"
+                    src={reviews.secondaryProductImage.src}
+                    width={1080}
+                  />
+                </span>
+              )}
             </div>
 
             {/* Every price is rendered before any long-form content, so a visitor
