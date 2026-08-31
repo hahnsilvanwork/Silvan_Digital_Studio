@@ -123,11 +123,10 @@ export function SplineProduct({
 }: SplineProductProps) {
   const leaseId = useId();
   const frameRef = useRef<HTMLElement>(null);
-  const [reducedMotion, setReducedMotion] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      Boolean(window.matchMedia?.("(prefers-reduced-motion: reduce)").matches),
-  );
+  // Server rendering cannot know the preference, and React keeps the server
+  // attribute when a hydration render disagrees. Starting at false and letting
+  // the effect below raise it guarantees a real re-render that reaches the DOM.
+  const [reducedMotion, setReducedMotion] = useState(false);
   const { isActive, reportProximity } = useSplineSceneLease(leaseId);
 
   useEffect(() => {
@@ -136,6 +135,7 @@ export function SplineProduct({
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReducedMotion(media.matches);
 
+    update();
     media.addEventListener("change", update);
 
     return () => media.removeEventListener("change", update);

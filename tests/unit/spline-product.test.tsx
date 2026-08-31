@@ -50,6 +50,20 @@ function subject() {
   );
 }
 
+async function mountedViewer() {
+  await waitFor(() =>
+    expect(document.querySelector("spline-viewer")).not.toBeNull(),
+  );
+  // The element reaches the DOM one commit before the passive effect that
+  // wires its listeners. Flush that effect so a dispatch cannot outrun it.
+  await act(async () => {});
+
+  const viewer = document.querySelector("spline-viewer");
+  if (!viewer) throw new Error("Spline viewer disappeared after mounting");
+
+  return viewer;
+}
+
 function expectState(state: string) {
   expect(
     screen.getByRole("img").querySelector("[data-spline-state]"),
@@ -98,16 +112,12 @@ describe("SplineProduct", () => {
     subject();
     enterViewport();
 
-    await waitFor(() =>
-      expect(document.querySelector("spline-viewer")).not.toBeNull(),
-    );
+    const viewer = await mountedViewer();
     expectState("loading");
 
-    act(() =>
-      document
-        .querySelector("spline-viewer")
-        ?.dispatchEvent(new CustomEvent("load-complete")),
-    );
+    act(() => {
+      viewer.dispatchEvent(new CustomEvent("load-complete"));
+    });
 
     expectState("ready");
   });
@@ -115,15 +125,12 @@ describe("SplineProduct", () => {
   it("keeps the fallback after context loss", async () => {
     subject();
     enterViewport();
-    await waitFor(() =>
-      expect(document.querySelector("spline-viewer")).not.toBeNull(),
-    );
 
-    act(() =>
-      document
-        .querySelector("spline-viewer")
-        ?.dispatchEvent(new CustomEvent("context-loss")),
-    );
+    const viewer = await mountedViewer();
+
+    act(() => {
+      viewer.dispatchEvent(new CustomEvent("context-loss"));
+    });
 
     expectState("error");
     expect(document.querySelector("spline-viewer")).toBeNull();

@@ -163,6 +163,28 @@ describe("Service pages", () => {
 });
 
 describe("ReviewsPage", () => {
+  it("keeps the CTA before the mobile product and retains only the stand photo", () => {
+    render(<ReviewsPage locale="de" />);
+
+    const main = screen.getByRole("main");
+    const cta = within(main).getByRole("link", {
+      name: de.reviews.ctaLabel,
+    });
+    const visualizations = within(main).getAllByRole("img", {
+      name: de.reviews.productVisualizations[0].ariaLabel,
+    });
+
+    expect(visualizations).toHaveLength(2);
+    expect(
+      cta.compareDocumentPosition(visualizations[0]) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      within(main).getByAltText(de.reviews.secondaryProductImage.alt),
+    ).toBeVisible();
+    expect(within(main).queryByAltText(/Scheckkartenformat/)).toBeNull();
+  });
+
   it("places every product price before the process section", () => {
     render(<ReviewsPage locale="de" />);
 

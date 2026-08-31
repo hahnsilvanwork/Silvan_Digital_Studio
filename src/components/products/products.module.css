@@ -68,10 +68,3 @@
 .selector button[aria-pressed="true"] {
   border-color: var(--color-ink);
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .fallback,
-  .viewer {
-    transition: none;
-  }
-}

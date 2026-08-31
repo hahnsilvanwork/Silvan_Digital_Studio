@@ -5,6 +5,8 @@ import { ContactActions } from "../../components/contact/ContactActions";
 import { SiteShell } from "../../components/layout/SiteShell";
 import { revealSequence } from "../../components/motion/reveal-sequence";
 import { SplitText } from "../../components/motion/SplitText";
+import { ProductShowcase } from "../../components/products/ProductShowcase";
+import { SplineSceneProvider } from "../../components/products/SplineSceneProvider";
 import { ReviewInquiryConfigurator } from "../../components/reviews/ReviewInquiryConfigurator";
 import { FaqList } from "../../components/services/FaqList";
 import { PriceTierList } from "../../components/services/PriceTierList";
@@ -29,73 +31,95 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
 
   return (
     <SiteShell currentPath={localizePath("/reviews", locale)} locale={locale}>
-      <div className={pageStyles.page}>
-        <section className={`${layoutStyles.container} ${pageStyles.pageHeader}`}>
-          <p className={pageStyles.heroLabel} data-reveal="rise">
-            {reviews.eyebrow}
-          </p>
-          <SplitText
-            as="h1"
-            className={pageStyles.pageTitle}
-            startIndex={sequence.titleStartIndex}
-            text={reviews.title}
-          />
-          <p
-            className={pageStyles.editorialTight}
-            data-reveal="rise"
-            style={{ "--reveal-index": sequence.introIndex } as CSSProperties}
+      <SplineSceneProvider>
+        <div className={pageStyles.page}>
+          <section
+            className={`${layoutStyles.container} ${pageStyles.pageHeader} ${pageStyles.reviewsHero}`}
           >
-            {reviews.intro}
-          </p>
-          {/* Every other service page offers its action in the first screen.
-              This one used to hold it back until after the process section,
-              which put the only real call on the page 2,000px below the fold
-              of the page an NFC card actually opens. */}
-          <div
-            className={pageStyles.heroActions}
-            data-reveal="rise"
-            style={{ "--reveal-index": sequence.actionsIndex } as CSSProperties}
+            <div className={pageStyles.reviewsHeroCopy} data-reviews-hero-copy>
+              <p className={pageStyles.heroLabel} data-reveal="rise">
+                {reviews.eyebrow}
+              </p>
+              <SplitText
+                as="h1"
+                className={pageStyles.pageTitle}
+                startIndex={sequence.titleStartIndex}
+                text={reviews.title}
+              />
+              <p
+                className={pageStyles.editorialTight}
+                data-reveal="rise"
+                style={
+                  { "--reveal-index": sequence.introIndex } as CSSProperties
+                }
+              >
+                {reviews.intro}
+              </p>
+              <div
+                className={pageStyles.heroActions}
+                data-reveal="rise"
+                style={
+                  { "--reveal-index": sequence.actionsIndex } as CSSProperties
+                }
+              >
+                <ButtonLink href="#inquiry">{reviews.ctaLabel}</ButtonLink>
+              </div>
+            </div>
+
+            <div
+              className={pageStyles.reviewsHeroProduct}
+              data-spline-placement="hero"
+            >
+              <ProductShowcase
+                priority
+                products={reviews.productVisualizations}
+                selectorLabel={reviews.productSelectorLabel}
+              />
+            </div>
+          </section>
+
+          <section
+            className={`${layoutStyles.container} ${pageStyles.section} ${pageStyles.sectionLead}`}
           >
-            <ButtonLink href="#inquiry">{reviews.ctaLabel}</ButtonLink>
-          </div>
-        </section>
+            <h2 className="visually-hidden">{reviews.priceLabel}</h2>
 
-        <section
-          className={`${layoutStyles.container} ${pageStyles.section} ${pageStyles.sectionLead}`}
-        >
-          <h2 className="visually-hidden">{reviews.priceLabel}</h2>
-
-          <div className={pageStyles.productShowcase}>
-            {[reviews.secondaryProductImage].map((image, index) => (
+            <div className={pageStyles.productShowcase}>
+              <div
+                className={pageStyles.productSpline}
+                data-spline-placement="products"
+              >
+                <ProductShowcase
+                  products={reviews.productVisualizations}
+                  selectorLabel={reviews.productSelectorLabel}
+                />
+              </div>
               <span
                 className={pageStyles.productImage}
                 data-reveal="scale"
-                key={image.src}
-                style={{ "--reveal-index": index } as CSSProperties}
+                style={{ "--reveal-index": 1 } as CSSProperties}
               >
                 <Image
-                  alt={image.alt}
-                  height={1000}
-                  sizes="46vw"
-                  src={image.src}
-                  width={1000}
+                  alt={reviews.secondaryProductImage.alt}
+                  height={1080}
+                  sizes="(min-width: 64rem) 46vw, 50vw"
+                  src={reviews.secondaryProductImage.src}
+                  width={1080}
                 />
               </span>
-            ))}
-          </div>
+            </div>
 
-          {/* Every price is rendered before any long-form content, so a visitor
+            {/* Every price is rendered before any long-form content, so a visitor
               never has to read the process to find out what it costs. */}
-          <div className={pageStyles.sectionBody}>
-            <p className={pageStyles.sectionLabel} data-reveal="rise">
-              {reviews.priceLabel}
-            </p>
-            <PriceTierList tiers={reviews.products} />
-            <p className={pageStyles.note} data-reveal="rise">
-              {reviews.quantityDiscount}
-            </p>
-          </div>
-        </section>
+            <div className={pageStyles.sectionBody}>
+              <p className={pageStyles.sectionLabel} data-reveal="rise">
+                {reviews.priceLabel}
+              </p>
+              <PriceTierList tiers={reviews.products} />
+              <p className={pageStyles.note} data-reveal="rise">
+                {reviews.quantityDiscount}
+              </p>
+            </div>
+          </section>
 
         <section className={pageStyles.darkBand}>
           <div className={layoutStyles.container}>
@@ -135,8 +159,9 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
           <div className={pageStyles.sectionBody}>
             <ContactActions locale={locale} />
           </div>
-        </section>
-      </div>
+          </section>
+        </div>
+      </SplineSceneProvider>
     </SiteShell>
   );
 }

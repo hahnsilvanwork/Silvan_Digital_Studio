@@ -195,6 +195,22 @@
   padding-block: var(--space-xl) var(--space-lg);
 }
 
+.reviewsHero {
+  align-items: center;
+}
+
+.reviewsHeroCopy {
+  display: grid;
+  gap: var(--space-sm);
+  min-inline-size: 0;
+}
+
+.reviewsHeroProduct {
+  inline-size: min(100%, 22rem);
+  justify-self: center;
+  margin-block-start: var(--space-sm);
+}
+
 .pageTitle {
   max-inline-size: 18ch;
   font-size: var(--text-title);
@@ -452,6 +468,10 @@
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
 }
 
+.productSpline {
+  min-inline-size: 0;
+}
+
 /* Both shots are photographed on near-white, so without a frame they dissolve
    into the paper and read as unfinished assets rather than as product images. */
 .productImage {
@@ -468,6 +488,16 @@
 }
 
 @media (min-width: 64rem) {
+  .reviewsHero {
+    grid-template-columns: minmax(0, 7fr) minmax(18rem, 5fr);
+    gap: var(--space-xl);
+  }
+
+  .reviewsHeroProduct {
+    inline-size: 100%;
+    margin-block-start: 0;
+  }
+
   .helloBody {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     gap: var(--space-xl);
