@@ -16,6 +16,7 @@ describe("review product visualizations", () => {
       "round-nfc-black",
       "stand-blue",
       "card-white-qr",
+      "card-stand-white",
     ]);
     for (const product of productVisualizations) {
       expect(product.sceneUrl).toMatch(

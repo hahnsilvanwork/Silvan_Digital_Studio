@@ -244,6 +244,15 @@ export const de = {
         ariaLabel:
           "Sich langsam drehendes 3D-Modell einer weissen Google-Review-Karte mit NFC und QR-Code",
       },
+      {
+        id: "card-stand-white",
+        fallbackImage: "/images/products/card-stand-white.webp",
+        title: "Kartenständer Weiss",
+        sceneUrl:
+          "https://prod.spline.design/9R8JSb5RsHstdJxk/scene.splinecode",
+        ariaLabel:
+          "Sich langsam drehendes 3D-Modell eines weissen Google-Review-Kartenständers für den Tisch",
+      },
     ],
     menuVisualizations: [],
     secondaryProductImage: {

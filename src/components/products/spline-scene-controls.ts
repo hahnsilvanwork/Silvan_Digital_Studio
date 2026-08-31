@@ -79,6 +79,25 @@ export function presentScene(
   }
 }
 
+/**
+ * Holds the turntable still or lets it turn again. Spline renders a coarse
+ * preview while the camera moves and only refines once it stops, so the
+ * product spends part of its cycle standing still and looking its best.
+ */
+export function setTurntableTurning(
+  app: SplineApplication,
+  turning: boolean,
+): void {
+  try {
+    const controls = app._controls?.orbitControls;
+    if (!controls) return;
+
+    controls.autoRotate = turning;
+  } catch {
+    // Decorative only.
+  }
+}
+
 /** Frees the GPU while a scene is off screen without disposing it. */
 export function setSceneRunning(app: SplineApplication, running: boolean): void {
   try {

@@ -5,6 +5,7 @@ import {
   getSplineApplication,
   presentScene,
   setSceneRunning,
+  setTurntableTurning,
   swapScene,
 } from "../../src/components/products/spline-scene-controls";
 
@@ -105,6 +106,23 @@ describe("spline scene controls", () => {
     expect(app.setBackgroundColor).toHaveBeenCalledWith("transparent");
   });
 
+  it("can hold the turntable still so the render can sharpen", () => {
+    const controls = orbitControls();
+    const app = application(controls);
+
+    presentScene(app);
+    expect(controls.autoRotate).toBe(true);
+
+    setTurntableTurning(app, false);
+    expect(controls.autoRotate).toBe(false);
+    // Holding still is not pausing: the scene keeps rendering, which is the
+    // whole point, because that is when Spline refines the image.
+    expect(app.stop).not.toHaveBeenCalled();
+
+    setTurntableTurning(app, true);
+    expect(controls.autoRotate).toBe(true);
+  });
+
   it("survives a runtime that no longer exposes its controls", () => {
     const app = { play: vi.fn(), stop: vi.fn() };
 
@@ -112,6 +130,7 @@ describe("spline scene controls", () => {
     // must cost the turntable, never the page.
     expect(() => presentScene(app)).not.toThrow();
     expect(() => setSceneRunning(app, true)).not.toThrow();
+    expect(() => setTurntableTurning(app, true)).not.toThrow();
     expect(getSplineApplication(document.createElement("div"))).toBeNull();
   });
 });

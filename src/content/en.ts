@@ -244,6 +244,15 @@ export const en = {
         ariaLabel:
           "Slowly rotating 3D model of a white Google Review card with NFC and a QR code",
       },
+      {
+        id: "card-stand-white",
+        fallbackImage: "/images/products/card-stand-white.webp",
+        title: "White card stand",
+        sceneUrl:
+          "https://prod.spline.design/9R8JSb5RsHstdJxk/scene.splinecode",
+        ariaLabel:
+          "Slowly rotating 3D model of a white Google Review card stand for a table",
+      },
     ],
     menuVisualizations: [],
     secondaryProductImage: {

@@ -212,6 +212,34 @@ describe("SplineProduct", () => {
     expect(app.setBackgroundColor).toHaveBeenCalledWith("transparent");
   });
 
+  it("rests between sweeps so the render can sharpen", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+
+    try {
+      subject();
+      enterViewport();
+
+      const { app } = await loadedViewer();
+      const controls = app._controls.orbitControls;
+
+      expect(controls.autoRotate).toBe(true);
+
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(5000);
+      });
+      // Standing still is when Spline refines the image, so the product has
+      // to actually stop rather than merely slow down.
+      expect(controls.autoRotate).toBe(false);
+
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(3500);
+      });
+      expect(controls.autoRotate).toBe(true);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it("pauses the scene off screen and resumes it without rebuilding", async () => {
     subject();
     enterViewport();

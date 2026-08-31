@@ -201,20 +201,44 @@ test.describe("Google Review Spline products", () => {
         };
         const controls = _spline._controls.orbitControls;
         return {
-          autoRotate: controls.autoRotate,
           hover: controls.hoverRotatePanMode,
           secondsPerTurn: Math.round(18.5 / controls.autoRotateSpeed),
           startsOffCentre: controls.rotateLeft.mock.calls.length > 0,
         };
       }),
     ).toEqual({
-      autoRotate: true,
       hover: 0,
       // The hero sits beside the headline, so it turns at half the pace of
       // the product section below.
       secondsPerTurn: 60,
       startsOffCentre: true,
     });
+  });
+
+  test("rests between sweeps so the render can sharpen", async ({ page }) => {
+    test.setTimeout(60_000);
+    await page.goto("/reviews");
+
+    const turning = () =>
+      page
+        .locator('[data-spline-placement="hero"] spline-viewer')
+        .evaluate(
+          (node: Element) =>
+            (
+              node as Element & {
+                _spline: {
+                  _controls: { orbitControls: { autoRotate: boolean } };
+                };
+              }
+            )._spline._controls.orbitControls.autoRotate,
+        );
+
+    // Spline only sharpens the image while the camera is still, so the rest
+    // is not a pause in the animation, it is what makes the product look
+    // like a product instead of a preview.
+    await expect.poll(turning, { timeout: 20_000 }).toBe(true);
+    await expect.poll(turning, { timeout: 20_000 }).toBe(false);
+    await expect.poll(turning, { timeout: 20_000 }).toBe(true);
   });
 
   test("cycles the hero products inside the same viewer", async ({ page }) => {

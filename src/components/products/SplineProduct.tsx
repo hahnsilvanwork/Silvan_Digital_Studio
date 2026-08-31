@@ -8,6 +8,7 @@ import {
   getSplineApplication,
   presentScene,
   setSceneRunning,
+  setTurntableTurning,
   swapScene,
   type ScenePresentation,
   type SplineApplication,
@@ -19,6 +20,12 @@ import styles from "./products.module.css";
 // either: on a weak phone the first frame can still be seconds away.
 const SLOT_RELEASE_MS = 10_000;
 const THRESHOLDS = [0, 0.25, 0.5, 0.75, 1];
+
+// Spline renders a coarse preview while the camera moves and only sharpens
+// once it stops, so the product turns in slow sweeps and rests in between.
+// The rest is long enough for the image to settle, measured on 2.0.16.
+const TURN_MS = 5000;
+const REST_MS = 3500;
 
 export interface SplineProductProps extends ScenePresentation {
   readonly sceneUrl: string;
@@ -156,6 +163,25 @@ function ActiveSpline({
     // safety timeout and keep the scene they can actually see waiting.
     onSettled();
   }, [onSettled, running, state]);
+
+  useEffect(() => {
+    const app = appRef.current;
+    if (!app || state !== "ready" || !running) return;
+
+    let turning = true;
+    let timer = window.setTimeout(function alternate() {
+      turning = !turning;
+      setTurntableTurning(app, turning);
+      timer = window.setTimeout(alternate, turning ? TURN_MS : REST_MS);
+    }, TURN_MS);
+
+    setTurntableTurning(app, true);
+
+    return () => {
+      window.clearTimeout(timer);
+      setTurntableTurning(app, false);
+    };
+  }, [running, state]);
 
   useEffect(() => {
     const app = appRef.current;
