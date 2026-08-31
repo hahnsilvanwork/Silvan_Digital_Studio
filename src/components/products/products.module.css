@@ -1,0 +1,77 @@
+.showcase {
+  display: grid;
+  gap: var(--space-xs);
+  min-inline-size: 0;
+}
+
+.product {
+  position: relative;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  aspect-ratio: 1;
+  overflow: clip;
+  contain: layout paint;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.active,
+.fallback,
+.viewer {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.fallback {
+  opacity: 1;
+  transition: opacity var(--duration-medium) var(--ease-out);
+}
+
+.fallbackImage {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+}
+
+.viewer {
+  display: block;
+  max-inline-size: 100%;
+  opacity: 0;
+  touch-action: pan-y;
+  transition: opacity var(--duration-medium) var(--ease-out);
+}
+
+.active[data-spline-state="ready"] .fallback {
+  opacity: 0;
+}
+
+.active[data-spline-state="ready"] .viewer {
+  opacity: 1;
+}
+
+.selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.selector button {
+  padding: var(--space-2xs) var(--space-xs);
+  border: var(--hairline) solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  cursor: pointer;
+}
+
+.selector button[aria-pressed="true"] {
+  border-color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fallback,
+  .viewer {
+    transition: none;
+  }
+}
