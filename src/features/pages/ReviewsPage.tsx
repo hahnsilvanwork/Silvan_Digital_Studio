@@ -20,10 +20,6 @@ import { localizePath } from "../../lib/routes";
 import layoutStyles from "../../styles/layout.module.css";
 import pageStyles from "../../styles/pages.module.css";
 
-// Long enough to read as a product shot rather than a slideshow: a visitor
-// should be able to take the product in, not catch it mid-change.
-const HERO_PRODUCT_MS = 14_000;
-
 // The hero sits beside the headline, so it sweeps more slowly than the
 // product section below.
 const HERO_SECONDS_PER_REVOLUTION = 60;
@@ -85,9 +81,9 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
               data-spline-placement="hero"
             >
               <ProductShowcase
-                autoAdvanceMs={HERO_PRODUCT_MS}
                 priority
                 products={reviews.productVisualizations}
+                rotatePerVisit
                 secondsPerRevolution={HERO_SECONDS_PER_REVOLUTION}
                 selectable={false}
                 selectorLabel={reviews.productSelectorLabel}

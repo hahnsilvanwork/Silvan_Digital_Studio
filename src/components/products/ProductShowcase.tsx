@@ -1,6 +1,29 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+
+const VISIT_COUNTER_KEY = "silvan.product-showcase.visit";
+
+/**
+ * Advances one product per visit so returning visitors meet the range, using
+ * a counter that survives reloads. Any storage failure just means a random
+ * product, which is still variety.
+ */
+function nextVisitIndex(count: number): number {
+  try {
+    const seen = Number.parseInt(
+      window.localStorage.getItem(VISIT_COUNTER_KEY) ?? "",
+      10,
+    );
+    const visit = Number.isFinite(seen) ? seen + 1 : 0;
+
+    window.localStorage.setItem(VISIT_COUNTER_KEY, String(visit));
+
+    return visit % count;
+  } catch {
+    return Math.floor(Math.random() * count);
+  }
+}
 
 import type { ProductVisualization } from "../../content/types";
 import { SplineProduct } from "./SplineProduct";
@@ -11,8 +34,12 @@ export interface ProductShowcaseProps extends ScenePresentation {
   readonly products: readonly ProductVisualization[];
   readonly selectorLabel: string;
   readonly priority?: boolean;
-  /** Cycles through the products while nobody has chosen one. */
-  readonly autoAdvanceMs?: number;
+  /**
+   * Opens on a different product each visit. Swapping during a visit is not
+   * an option: loading another scene blocks the main thread for up to nine
+   * hundred milliseconds, measured on the reviews page.
+   */
+  readonly rotatePerVisit?: boolean;
   /** The hero presents on its own; the buttons belong to the product section. */
   readonly selectable?: boolean;
   readonly className?: string;
@@ -22,46 +49,26 @@ export function ProductShowcase({
   products,
   selectorLabel,
   priority = false,
-  autoAdvanceMs,
+  rotatePerVisit = false,
   selectable = true,
   secondsPerRevolution,
   sweepDegrees,
   className,
 }: ProductShowcaseProps) {
-  const rootRef = useRef<HTMLDivElement>(null);
+  // Starts at the first product so the server and the first client render
+  // agree, then settles on this visit's product before anything loads.
   const [index, setIndex] = useState(0);
-  const [chosen, setChosen] = useState(false);
-  const [onScreen, setOnScreen] = useState(true);
   const [showing3d, setShowing3d] = useState(false);
 
   const count = products.length;
 
   useEffect(() => {
-    const root = rootRef.current;
-    if (!root || !window.IntersectionObserver) return;
+    if (!rotatePerVisit || count < 2) return;
 
-    const observer = new window.IntersectionObserver(([entry]) =>
-      setOnScreen(entry.isIntersecting),
-    );
+    const openOnThisVisitsProduct = () => setIndex(nextVisitIndex(count));
 
-    observer.observe(root);
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    // Cycling before the 3D has taken over would move the product on while
-    // the visitor is still looking at the still of the previous one.
-    if (!autoAdvanceMs || chosen || count < 2 || !onScreen || !showing3d) return;
-
-    // Advancing out of sight would download scene after scene for nobody.
-    const timer = window.setInterval(
-      () => setIndex((current) => (current + 1) % count),
-      autoAdvanceMs,
-    );
-
-    return () => window.clearInterval(timer);
-  }, [autoAdvanceMs, chosen, count, onScreen, showing3d]);
+    openOnThisVisitsProduct();
+  }, [count, rotatePerVisit]);
 
   useEffect(() => {
     if (!showing3d || count < 2) return;
@@ -83,10 +90,7 @@ export function ProductShowcase({
   if (!active) return null;
 
   return (
-    <div
-      className={[styles.showcase, className].filter(Boolean).join(" ")}
-      ref={rootRef}
-    >
+    <div className={[styles.showcase, className].filter(Boolean).join(" ")}>
       <SplineProduct
         ariaLabel={active.ariaLabel}
         fallbackImage={active.fallbackImage}
@@ -104,11 +108,7 @@ export function ProductShowcase({
               aria-pressed={product.id === active.id}
               data-touch-target
               key={product.id}
-              onClick={() => {
-                setIndex(position);
-                // Someone who picked a product should keep looking at it.
-                setChosen(true);
-              }}
+              onClick={() => setIndex(position)}
               type="button"
             >
               {product.title}

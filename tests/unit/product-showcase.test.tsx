@@ -85,59 +85,44 @@ describe("ProductShowcase", () => {
     );
   });
 
-  it("waits for the 3D before it starts cycling", () => {
+  it("shows one product for the whole visit", () => {
     vi.useFakeTimers();
     render(
       <ProductShowcase
-        autoAdvanceMs={6000}
         products={products}
+        rotatePerVisit
         selectorLabel="Choose"
       />,
     );
 
-    act(() => void vi.advanceTimersByTime(30_000));
+    const shown = screen.getByTestId("active-scene").textContent;
+    fireEvent.click(screen.getByRole("button", { name: "report ready" }));
+    act(() => void vi.advanceTimersByTime(120_000));
 
-    // Moving on while the visitor still sees the still of the first product
-    // would hand them a picture and a scene that disagree.
-    expect(screen.getByTestId("active-scene")).toHaveTextContent("white");
+    // Loading another scene blocks the main thread for up to nine hundred
+    // milliseconds, so the product on show must not change under the visitor.
+    expect(screen.getByTestId("active-scene")).toHaveTextContent(shown ?? "");
   });
 
-  it("advances through the products on its own", () => {
-    vi.useFakeTimers();
-    render(
-      <ProductShowcase
-        autoAdvanceMs={6000}
-        products={products}
-        selectorLabel="Choose"
-      />,
-    );
+  it("moves to the next product on the next visit", () => {
+    const seen = new Set<string>();
 
-    expect(screen.getByTestId("active-scene")).toHaveTextContent("white");
-    fireEvent.click(screen.getByRole("button", { name: "report ready" }));
+    for (let visit = 0; visit < products.length; visit += 1) {
+      const view = render(
+        <ProductShowcase
+          products={products}
+          rotatePerVisit
+          selectorLabel="Choose"
+        />,
+      );
 
-    act(() => void vi.advanceTimersByTime(6000));
-    expect(screen.getByTestId("active-scene")).toHaveTextContent("black");
+      seen.add(screen.getByTestId("active-scene").textContent ?? "");
+      view.unmount();
+    }
 
-    act(() => void vi.advanceTimersByTime(6000));
-    expect(screen.getByTestId("active-scene")).toHaveTextContent("white");
-  });
-
-  it("stops advancing once the visitor picks a product", () => {
-    vi.useFakeTimers();
-    render(
-      <ProductShowcase
-        autoAdvanceMs={6000}
-        products={products}
-        selectorLabel="Choose"
-      />,
-    );
-
-    fireEvent.click(screen.getByRole("button", { name: "report ready" }));
-    fireEvent.click(screen.getByRole("button", { name: "Black tag" }));
-    act(() => void vi.advanceTimersByTime(30_000));
-
-    // Yanking the product away from someone who just chose it is hostile.
-    expect(screen.getByTestId("active-scene")).toHaveTextContent("black");
+    // Variety comes from returning visitors seeing a different product, not
+    // from swapping one out while somebody is looking at it.
+    expect(seen.size).toBe(products.length);
   });
 
   it("never rebuilds the viewer when the product changes", async () => {

@@ -1,5 +1,11 @@
 import { expect, test, type Page } from "@playwright/test";
 
+declare global {
+  interface Window {
+    __splineLoads?: readonly string[];
+  }
+}
+
 const RUNTIME =
   "https://cdn.spline.design/@splinetool/viewer@2.0.16/build/spline-viewer.js";
 
@@ -241,20 +247,23 @@ test.describe("Google Review Spline products", () => {
     await expect.poll(turning, { timeout: 20_000 }).toBe(true);
   });
 
-  test("cycles the hero products inside the same viewer", async ({ page }) => {
+  test("never swaps the hero product out from under the visitor", async ({
+    page,
+  }) => {
+    test.setTimeout(60_000);
     await page.goto("/reviews");
 
     const hero = page.locator('[data-spline-placement="hero"] spline-viewer');
-    const first = await hero.getAttribute("data-loaded-scene");
+    await expect(hero).toHaveAttribute("data-loaded-scene", /splinecode$/);
+    const shown = await hero.getAttribute("data-loaded-scene");
 
-    // Switching must reuse the canvas: a rebuild would drop the GPU context
-    // and pull the whole runtime again.
-    await expect(hero).not.toHaveAttribute("data-loaded-scene", first ?? "", {
-      timeout: 20000,
-    });
-    await expect(
-      page.locator('[data-spline-placement="hero"] spline-viewer'),
-    ).toHaveCount(1);
+    // Loading another scene blocks the main thread for up to nine hundred
+    // milliseconds, measured every fourteen seconds while the hero cycled.
+    // Variety comes from opening on a different product each visit instead.
+    await page.waitForTimeout(30_000);
+
+    expect(await hero.getAttribute("data-loaded-scene")).toBe(shown);
+    expect(await page.evaluate(() => window.__splineLoads?.length ?? 0)).toBe(0);
   });
 
   test("lets the visitor choose a product in the section below", async ({
