@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 import {
-  SECONDS_PER_REVOLUTION,
+  DEFAULT_SECONDS_PER_REVOLUTION,
   getSplineApplication,
   presentScene,
   setSceneRunning,
@@ -14,6 +14,7 @@ function orbitControls() {
     autoRotateSpeed: 2,
     autoRotateClockwise: true,
     hoverRotatePanMode: 1,
+    rotateLeft: vi.fn(),
   };
 }
 
@@ -37,9 +38,36 @@ describe("spline scene controls", () => {
     expect(controls.autoRotate).toBe(true);
     // Measured against viewer 2.0.16: seconds per turn is 18.5 / speed.
     expect(18.5 / controls.autoRotateSpeed).toBeCloseTo(
-      SECONDS_PER_REVOLUTION,
+      DEFAULT_SECONDS_PER_REVOLUTION,
       0,
     );
+  });
+
+  it("takes a slower revolution when the placement asks for one", () => {
+    const controls = orbitControls();
+
+    presentScene(application(controls), { secondsPerRevolution: 60 });
+
+    expect(18.5 / controls.autoRotateSpeed).toBeCloseTo(60, 0);
+  });
+
+  it("starts turned away from dead-on so the product reads as an object", () => {
+    const controls = orbitControls();
+
+    presentScene(application(controls), { startOffsetDegrees: 33 });
+
+    // rotateLeft settles at roughly 6.2x its argument, so the argument is
+    // derived from the angle rather than written as a magic number.
+    const [argument] = controls.rotateLeft.mock.calls[0] as [number];
+    expect((argument * 6.2 * 180) / Math.PI).toBeCloseTo(33, 0);
+  });
+
+  it("leaves the pose alone when no offset is asked for", () => {
+    const controls = orbitControls();
+
+    presentScene(application(controls));
+
+    expect(controls.rotateLeft).not.toHaveBeenCalled();
   });
 
   it("keeps the scene transparent so it sits on the page background", () => {
@@ -64,13 +92,16 @@ describe("spline scene controls", () => {
     const controls = orbitControls();
     const app = application(controls);
 
-    await swapScene(app, "https://prod.spline.design/black/scene.splinecode");
+    await swapScene(app, "https://prod.spline.design/black/scene.splinecode", {
+      secondsPerRevolution: 60,
+    });
 
     expect(app.load).toHaveBeenCalledWith(
       "https://prod.spline.design/black/scene.splinecode",
     );
     // Loading a scene resets the camera rig and the background.
     expect(controls.autoRotate).toBe(true);
+    expect(18.5 / controls.autoRotateSpeed).toBeCloseTo(60, 0);
     expect(app.setBackgroundColor).toHaveBeenCalledWith("transparent");
   });
 

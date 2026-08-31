@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from "react";
 
 import type { ProductVisualization } from "../../content/types";
 import { SplineProduct } from "./SplineProduct";
+import type { ScenePresentation } from "./spline-scene-controls";
 import styles from "./products.module.css";
 
-export interface ProductShowcaseProps {
+export interface ProductShowcaseProps extends ScenePresentation {
   readonly products: readonly ProductVisualization[];
   readonly selectorLabel: string;
   readonly priority?: boolean;
@@ -23,6 +24,8 @@ export function ProductShowcase({
   priority = false,
   autoAdvanceMs,
   selectable = true,
+  secondsPerRevolution,
+  startOffsetDegrees,
   className,
 }: ProductShowcaseProps) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -74,6 +77,8 @@ export function ProductShowcase({
         fallbackImage={active.fallbackImage}
         onReady={() => setShowing3d(true)}
         priority={priority}
+        secondsPerRevolution={secondsPerRevolution}
+        startOffsetDegrees={startOffsetDegrees}
         sceneUrl={active.sceneUrl}
       />
 

@@ -11,9 +11,16 @@ import { resolve } from "node:path";
 
 import { chromium } from "playwright";
 
-const SIZE = 900;
+// Large enough for a 3x phone (352 CSS px) and a 2x laptop hero without
+// upscaling, which is what made the still look softer than the live scene.
+const SIZE = 1400;
 const QUALITY = 0.82;
 const SETTLE_MS = 4000;
+
+// Must match START_OFFSET_DEGREES in ReviewsPage: the still has to show the
+// pose the live scene starts on, or the hand-over jumps.
+const START_OFFSET_DEGREES = 33;
+const ROTATE_LEFT_GAIN = 6.2;
 
 function readProducts() {
   const source = readFileSync(resolve("src/content/de.ts"), "utf8");
@@ -39,16 +46,20 @@ async function renderStill(browser, { id, sceneUrl }) {
       background="transparent" url="${sceneUrl}"></spline-viewer>
   </body>`);
 
-  await page.waitForFunction(() => Boolean(document.querySelector("#v")?._spline), {
-    timeout: 120_000,
-  });
-  await page.evaluate(() => {
-    const controls = document.querySelector("#v")?._spline?._controls?.orbitControls;
-    if (!controls) return;
+  await page.waitForFunction(
+    () => Boolean(document.querySelector("#v")?._spline?._controls?.orbitControls),
+    { timeout: 120_000 },
+  );
+  await page.evaluate(
+    ({ degrees, gain }) => {
+      const controls = document.querySelector("#v")._spline._controls.orbitControls;
 
-    controls.autoRotate = false;
-    controls.hoverRotatePanMode = 0;
-  });
+      controls.autoRotate = false;
+      controls.hoverRotatePanMode = 0;
+      controls.rotateLeft(((degrees * Math.PI) / 180) / gain);
+    },
+    { degrees: START_OFFSET_DEGREES, gain: ROTATE_LEFT_GAIN },
+  );
   await page.waitForTimeout(SETTLE_MS);
 
   const png = await page.locator("#v").screenshot({ omitBackground: true });

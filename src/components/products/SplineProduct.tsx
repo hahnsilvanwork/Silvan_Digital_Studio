@@ -9,6 +9,7 @@ import {
   presentScene,
   setSceneRunning,
   swapScene,
+  type ScenePresentation,
   type SplineApplication,
 } from "./spline-scene-controls";
 import { loadSplineViewer } from "./spline-viewer-loader";
@@ -19,7 +20,7 @@ import styles from "./products.module.css";
 const SLOT_RELEASE_MS = 10_000;
 const THRESHOLDS = [0, 0.25, 0.5, 0.75, 1];
 
-export interface SplineProductProps {
+export interface SplineProductProps extends ScenePresentation {
   readonly sceneUrl: string;
   readonly fallbackImage?: string;
   readonly ariaLabel: string;
@@ -55,7 +56,7 @@ function Fallback({ fallbackImage, priority }: FallbackProps) {
   );
 }
 
-interface ActiveSplineProps extends FallbackProps {
+interface ActiveSplineProps extends FallbackProps, ScenePresentation {
   readonly sceneUrl: string;
   readonly running: boolean;
   readonly onSettled: () => void;
@@ -69,6 +70,8 @@ function ActiveSpline({
   running,
   onSettled,
   onReady,
+  secondsPerRevolution,
+  startOffsetDegrees,
 }: ActiveSplineProps) {
   const viewerRef = useRef<HTMLElement>(null);
   const appRef = useRef<SplineApplication | null>(null);
@@ -112,7 +115,7 @@ function ActiveSpline({
 
       const app = getSplineApplication(viewer);
       appRef.current = app;
-      if (app) presentScene(app);
+      if (app) presentScene(app, { secondsPerRevolution, startOffsetDegrees });
 
       setState("ready");
       onSettled();
@@ -128,7 +131,13 @@ function ActiveSpline({
       viewer.removeEventListener("load-complete", complete);
       viewer.removeEventListener("context-loss", lost);
     };
-  }, [onReady, onSettled, runtimeReady]);
+  }, [
+    onReady,
+    onSettled,
+    runtimeReady,
+    secondsPerRevolution,
+    startOffsetDegrees,
+  ]);
 
   useEffect(() => {
     const app = appRef.current;
@@ -156,14 +165,16 @@ function ActiveSpline({
     shownUrl.current = sceneUrl;
     // The previous product stays on screen until the new one is ready, which
     // reads far calmer than blanking the frame between products.
-    swapScene(app, sceneUrl).catch(() => {
-      if (!cancelled) setState("error");
-    });
+    swapScene(app, sceneUrl, { secondsPerRevolution, startOffsetDegrees }).catch(
+      () => {
+        if (!cancelled) setState("error");
+      },
+    );
 
     return () => {
       cancelled = true;
     };
-  }, [sceneUrl, state]);
+  }, [sceneUrl, secondsPerRevolution, startOffsetDegrees, state]);
 
   return (
     <span className={styles.active} data-spline-state={state}>
@@ -187,6 +198,8 @@ export function SplineProduct({
   ariaLabel,
   priority = false,
   onReady,
+  secondsPerRevolution,
+  startOffsetDegrees,
 }: SplineProductProps) {
   const slotId = useId();
   const frameRef = useRef<HTMLElement>(null);
@@ -281,6 +294,8 @@ export function SplineProduct({
           priority={priority}
           running={onScreen}
           sceneUrl={sceneUrl}
+          secondsPerRevolution={secondsPerRevolution}
+          startOffsetDegrees={startOffsetDegrees}
         />
       ) : (
         <span className={styles.active} data-spline-state={inactiveState}>

@@ -29,6 +29,12 @@ async function stubSpline(page: Page) {
                   autoRotateSpeed: 2,
                   autoRotateClockwise: true,
                   hoverRotatePanMode: 1,
+                  rotateLeft: (() => {
+                    const calls = [];
+                    const fn = (angle) => { calls.push(angle); };
+                    fn.mock = { calls };
+                    return fn;
+                  })(),
                 } },
               };
               setTimeout(() => {
@@ -188,6 +194,7 @@ test.describe("Google Review Spline products", () => {
                 autoRotate: boolean;
                 autoRotateSpeed: number;
                 hoverRotatePanMode: number;
+                rotateLeft: { mock: { calls: readonly unknown[] } };
               };
             };
           };
@@ -197,9 +204,17 @@ test.describe("Google Review Spline products", () => {
           autoRotate: controls.autoRotate,
           hover: controls.hoverRotatePanMode,
           secondsPerTurn: Math.round(18.5 / controls.autoRotateSpeed),
+          startsOffCentre: controls.rotateLeft.mock.calls.length > 0,
         };
       }),
-    ).toEqual({ autoRotate: true, hover: 0, secondsPerTurn: 30 });
+    ).toEqual({
+      autoRotate: true,
+      hover: 0,
+      // The hero sits beside the headline, so it turns at half the pace of
+      // the product section below.
+      secondsPerTurn: 60,
+      startsOffCentre: true,
+    });
   });
 
   test("cycles the hero products inside the same viewer", async ({ page }) => {
