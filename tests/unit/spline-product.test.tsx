@@ -10,7 +10,7 @@ vi.mock("../../src/components/products/spline-viewer-loader", () => ({
 import { SplineProduct } from "../../src/components/products/SplineProduct";
 import { SplineSceneProvider } from "../../src/components/products/SplineSceneProvider";
 
-let observerCallback: IntersectionObserverCallback;
+let observerCallback: IntersectionObserverCallback | null;
 
 function matchMedia(matches: boolean) {
   return {
@@ -27,11 +27,25 @@ function matchMedia(matches: boolean) {
 
 function enterViewport() {
   act(() =>
-    observerCallback(
+    observerCallback?.(
       [
         {
           isIntersecting: true,
           boundingClientRect: { top: 0, bottom: 300 },
+        } as IntersectionObserverEntry,
+      ],
+      {} as IntersectionObserver,
+    ),
+  );
+}
+
+function leaveViewport() {
+  act(() =>
+    observerCallback?.(
+      [
+        {
+          isIntersecting: false,
+          boundingClientRect: { top: -4000, bottom: -3700 },
         } as IntersectionObserverEntry,
       ],
       {} as IntersectionObserver,
@@ -84,7 +98,11 @@ beforeEach(() => {
         observerCallback = callback;
       }
 
-      disconnect() {}
+      // A disconnected observer delivers nothing, which is exactly how the
+      // component stops itself from starting a scene it no longer wants.
+      disconnect() {
+        observerCallback = null;
+      }
       observe() {}
       takeRecords() {
         return [];
@@ -120,6 +138,54 @@ describe("SplineProduct", () => {
     });
 
     expectState("ready");
+  });
+
+  it("stops observing once started and keeps the scene alive", async () => {
+    subject();
+    enterViewport();
+
+    const viewer = await mountedViewer();
+    act(() => {
+      viewer.dispatchEvent(new CustomEvent("load-complete"));
+    });
+
+    // Rebuilding the WebGPU context on every scroll pass is what made the
+    // viewer re-download its scene and log swapchain errors, so scrolling
+    // must not reach the component at all any more.
+    expect(observerCallback).toBeNull();
+
+    leaveViewport();
+
+    expect(document.querySelector("spline-viewer")).toBe(viewer);
+    expectState("ready");
+  });
+
+  it("keeps a slow scene mounted instead of tearing it down", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+
+    try {
+      subject();
+      enterViewport();
+
+      const viewer = await mountedViewer();
+
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(30_000);
+      });
+
+      // A phone that needs half a minute still deserves its product shot; the
+      // scene stays and reveals itself whenever it finally reports back.
+      expect(document.querySelector("spline-viewer")).toBe(viewer);
+      expectState("loading");
+
+      act(() => {
+        viewer.dispatchEvent(new CustomEvent("load-complete"));
+      });
+
+      expectState("ready");
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("keeps the fallback after context loss", async () => {

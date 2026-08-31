@@ -78,7 +78,7 @@ test.describe("Google Review Spline products", () => {
         // Mobile WebKit exposes no wheel. The equivalent guarantee there is
         // that the viewer only claims horizontal gestures and that the
         // document itself is never scroll-locked by the 3D surface.
-        await expect(page.locator("spline-viewer")).toHaveCSS(
+        await expect(heroPlacement.locator("spline-viewer")).toHaveCSS(
           "touch-action",
           "pan-y",
         );
@@ -99,20 +99,53 @@ test.describe("Google Review Spline products", () => {
     });
   }
 
-  test("keeps one active canvas while moving between showcases", async ({
-    page,
-  }) => {
+  test("never rebuilds a scene while the visitor scrolls", async ({ page }) => {
+    await page.addInitScript(() => {
+      const created: string[] = [];
+      (window as unknown as { __created: string[] }).__created = created;
+      const observer = new MutationObserver((records) => {
+        for (const record of records) {
+          for (const node of record.addedNodes) {
+            if (node.nodeName === "SPLINE-VIEWER") created.push("viewer");
+          }
+        }
+      });
+      const start = () =>
+        observer.observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+        });
+
+      if (document.documentElement) start();
+      else document.addEventListener("readystatechange", start, { once: true });
+    });
+
     await page.goto("/reviews");
     await expect(page.locator("spline-viewer")).toHaveCount(1);
 
     const products = page.locator('[data-spline-placement="products"]');
     await products.scrollIntoViewIfNeeded();
-
-    await expect(page.locator("spline-viewer")).toHaveCount(1);
     await expect(products.locator("[data-spline-state]")).toHaveAttribute(
       "data-spline-state",
       "ready",
     );
+
+    // Scrolling back and forth used to tear each scene down and rebuild it,
+    // which re-downloaded the scene and flooded the console with WebGPU
+    // swapchain errors.
+    for (let pass = 0; pass < 2; pass += 1) {
+      await page.evaluate(() => scrollTo(0, 0));
+      await page.waitForTimeout(300);
+      await products.scrollIntoViewIfNeeded();
+      await page.waitForTimeout(300);
+    }
+
+    expect(
+      await page.evaluate(
+        () => (window as unknown as { __created: string[] }).__created.length,
+      ),
+    ).toBe(2);
+    await expect(page.locator("spline-viewer")).toHaveCount(2);
   });
 
   test("uses two hero columns on desktop", async ({ page }) => {
