@@ -210,6 +210,7 @@ export const en = {
     productVisualizations: [
       {
         id: "round-nfc-white",
+        fallbackImage: "/images/products/round-nfc-white.webp",
         title: "Round white",
         sceneUrl:
           "https://prod.spline.design/Lu503y2nQ8XllpRe/scene.splinecode",
@@ -218,6 +219,7 @@ export const en = {
       },
       {
         id: "round-nfc-black",
+        fallbackImage: "/images/products/round-nfc-black.webp",
         title: "Round black",
         sceneUrl:
           "https://prod.spline.design/k2oyfSvDdVisnlUw/scene.splinecode",
@@ -226,11 +228,21 @@ export const en = {
       },
       {
         id: "stand-blue",
+        fallbackImage: "/images/products/stand-blue.webp",
         title: "Blue stand",
         sceneUrl:
           "https://prod.spline.design/fttoKfHSbrqCbrUd/scene.splinecode",
         ariaLabel:
           "Slowly rotating 3D model of a blue Google Review table stand",
+      },
+      {
+        id: "card-white-qr",
+        fallbackImage: "/images/products/card-white-qr.webp",
+        title: "White card",
+        sceneUrl:
+          "https://prod.spline.design/VXtEe7dRfsZEicnw/scene.splinecode",
+        ariaLabel:
+          "Slowly rotating 3D model of a white Google Review card with NFC and a QR code",
       },
     ],
     menuVisualizations: [],

@@ -210,6 +210,7 @@ export const de = {
     productVisualizations: [
       {
         id: "round-nfc-white",
+        fallbackImage: "/images/products/round-nfc-white.webp",
         title: "Rund Weiss",
         sceneUrl:
           "https://prod.spline.design/Lu503y2nQ8XllpRe/scene.splinecode",
@@ -218,6 +219,7 @@ export const de = {
       },
       {
         id: "round-nfc-black",
+        fallbackImage: "/images/products/round-nfc-black.webp",
         title: "Rund Schwarz",
         sceneUrl:
           "https://prod.spline.design/k2oyfSvDdVisnlUw/scene.splinecode",
@@ -226,11 +228,21 @@ export const de = {
       },
       {
         id: "stand-blue",
+        fallbackImage: "/images/products/stand-blue.webp",
         title: "Aufsteller Blau",
         sceneUrl:
           "https://prod.spline.design/fttoKfHSbrqCbrUd/scene.splinecode",
         ariaLabel:
           "Sich langsam drehendes 3D-Modell eines blauen Google-Review-Aufstellers für den Tisch",
+      },
+      {
+        id: "card-white-qr",
+        fallbackImage: "/images/products/card-white-qr.webp",
+        title: "Karte Weiss",
+        sceneUrl:
+          "https://prod.spline.design/VXtEe7dRfsZEicnw/scene.splinecode",
+        ariaLabel:
+          "Sich langsam drehendes 3D-Modell einer weissen Google-Review-Karte mit NFC und QR-Code",
       },
     ],
     menuVisualizations: [],

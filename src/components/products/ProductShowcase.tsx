@@ -29,6 +29,7 @@ export function ProductShowcase({
   const [index, setIndex] = useState(0);
   const [chosen, setChosen] = useState(false);
   const [onScreen, setOnScreen] = useState(true);
+  const [showing3d, setShowing3d] = useState(false);
 
   const count = products.length;
 
@@ -46,7 +47,9 @@ export function ProductShowcase({
   }, []);
 
   useEffect(() => {
-    if (!autoAdvanceMs || chosen || count < 2 || !onScreen) return;
+    // Cycling before the 3D has taken over would move the product on while
+    // the visitor is still looking at the still of the previous one.
+    if (!autoAdvanceMs || chosen || count < 2 || !onScreen || !showing3d) return;
 
     // Advancing out of sight would download scene after scene for nobody.
     const timer = window.setInterval(
@@ -55,7 +58,7 @@ export function ProductShowcase({
     );
 
     return () => window.clearInterval(timer);
-  }, [autoAdvanceMs, chosen, count, onScreen]);
+  }, [autoAdvanceMs, chosen, count, onScreen, showing3d]);
 
   const active = count > 0 ? products[index % count] : undefined;
 
@@ -69,6 +72,7 @@ export function ProductShowcase({
       <SplineProduct
         ariaLabel={active.ariaLabel}
         fallbackImage={active.fallbackImage}
+        onReady={() => setShowing3d(true)}
         priority={priority}
         sceneUrl={active.sceneUrl}
       />

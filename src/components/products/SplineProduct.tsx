@@ -24,6 +24,8 @@ export interface SplineProductProps {
   readonly fallbackImage?: string;
   readonly ariaLabel: string;
   readonly priority?: boolean;
+  /** Fires once, when the 3D has taken over from the still. */
+  readonly onReady?: () => void;
 }
 
 type LoadState = "idle" | "loading" | "ready" | "error" | "reduced-motion";
@@ -57,6 +59,7 @@ interface ActiveSplineProps extends FallbackProps {
   readonly sceneUrl: string;
   readonly running: boolean;
   readonly onSettled: () => void;
+  readonly onReady?: () => void;
 }
 
 function ActiveSpline({
@@ -65,6 +68,7 @@ function ActiveSpline({
   priority,
   running,
   onSettled,
+  onReady,
 }: ActiveSplineProps) {
   const viewerRef = useRef<HTMLElement>(null);
   const appRef = useRef<SplineApplication | null>(null);
@@ -112,6 +116,7 @@ function ActiveSpline({
 
       setState("ready");
       onSettled();
+      onReady?.();
     };
     const releaseSlot = window.setTimeout(onSettled, SLOT_RELEASE_MS);
 
@@ -123,7 +128,7 @@ function ActiveSpline({
       viewer.removeEventListener("load-complete", complete);
       viewer.removeEventListener("context-loss", lost);
     };
-  }, [onSettled, runtimeReady]);
+  }, [onReady, onSettled, runtimeReady]);
 
   useEffect(() => {
     const app = appRef.current;
@@ -181,6 +186,7 @@ export function SplineProduct({
   fallbackImage,
   ariaLabel,
   priority = false,
+  onReady,
 }: SplineProductProps) {
   const slotId = useId();
   const frameRef = useRef<HTMLElement>(null);
@@ -270,6 +276,7 @@ export function SplineProduct({
       {hasStarted ? (
         <ActiveSpline
           fallbackImage={fallbackImage}
+          onReady={onReady}
           onSettled={finishStart}
           priority={priority}
           running={onScreen}

@@ -8,14 +8,27 @@ vi.mock("../../src/components/products/SplineProduct", async () => {
   const { useEffect } = await import("react");
 
   return {
-    SplineProduct: ({ sceneUrl }: { readonly sceneUrl: string }) => {
+    SplineProduct: ({
+      sceneUrl,
+      onReady,
+    }: {
+      readonly sceneUrl: string;
+      readonly onReady?: () => void;
+    }) => {
       // Counts mounts, not renders: only a remount would drop the real
       // viewer's GPU context.
       useEffect(() => {
         mounts.count += 1;
       }, []);
 
-      return <output data-testid="active-scene">{sceneUrl}</output>;
+      return (
+        <output data-testid="active-scene">
+          {sceneUrl}
+          <button onClick={() => onReady?.()} type="button">
+            report ready
+          </button>
+        </output>
+      );
     },
   };
 });
@@ -72,6 +85,23 @@ describe("ProductShowcase", () => {
     );
   });
 
+  it("waits for the 3D before it starts cycling", () => {
+    vi.useFakeTimers();
+    render(
+      <ProductShowcase
+        autoAdvanceMs={6000}
+        products={products}
+        selectorLabel="Choose"
+      />,
+    );
+
+    act(() => void vi.advanceTimersByTime(30_000));
+
+    // Moving on while the visitor still sees the still of the first product
+    // would hand them a picture and a scene that disagree.
+    expect(screen.getByTestId("active-scene")).toHaveTextContent("white");
+  });
+
   it("advances through the products on its own", () => {
     vi.useFakeTimers();
     render(
@@ -83,6 +113,7 @@ describe("ProductShowcase", () => {
     );
 
     expect(screen.getByTestId("active-scene")).toHaveTextContent("white");
+    fireEvent.click(screen.getByRole("button", { name: "report ready" }));
 
     act(() => void vi.advanceTimersByTime(6000));
     expect(screen.getByTestId("active-scene")).toHaveTextContent("black");
@@ -101,6 +132,7 @@ describe("ProductShowcase", () => {
       />,
     );
 
+    fireEvent.click(screen.getByRole("button", { name: "report ready" }));
     fireEvent.click(screen.getByRole("button", { name: "Black tag" }));
     act(() => void vi.advanceTimersByTime(30_000));
 

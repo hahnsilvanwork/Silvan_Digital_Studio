@@ -1,3 +1,6 @@
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
+
 import { describe, expect, it } from "vitest";
 
 import { getContent } from "../../src/lib/locales";
@@ -12,6 +15,7 @@ describe("review product visualizations", () => {
       "round-nfc-white",
       "round-nfc-black",
       "stand-blue",
+      "card-white-qr",
     ]);
     for (const product of productVisualizations) {
       expect(product.sceneUrl).toMatch(
@@ -35,6 +39,22 @@ describe("review product visualizations", () => {
       productVisualizations.length,
     );
   });
+
+  it.each(locales)(
+    "ships a still of every product so the frame is never blank for %s",
+    (locale) => {
+      const { productVisualizations } = getContent(locale).reviews;
+
+      for (const { id, fallbackImage } of productVisualizations) {
+        expect(fallbackImage).toBe(`/images/products/${id}.webp`);
+        // A path that points at nothing would leave the very gap the still
+        // exists to close, and only in production.
+        expect(
+          existsSync(resolve(process.cwd(), "public", `images/products/${id}.webp`)),
+        ).toBe(true);
+      }
+    },
+  );
 
   it.each(locales)(
     "reserves the menu product family without inventing one for %s",
