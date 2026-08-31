@@ -55,6 +55,7 @@ const stylesheetByPath = new Map(
 const globals = stylesheetByPath.get("src/app/globals.css")!;
 const layout = stylesheetByPath.get("src/styles/layout.module.css")!;
 const pages = stylesheetByPath.get("src/styles/pages.module.css")!;
+const work = stylesheetByPath.get("src/components/work/work.module.css")!;
 
 const importerSource = readFileSync(
   resolve(process.cwd(), "scripts/import-mockup-assets.ps1"),
@@ -513,6 +514,15 @@ describe("SILVAN responsive design contract", () => {
     expect(stylesheetSource).toMatch(
       /\.previewlist\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\)/,
     );
+  });
+
+  it("aligns the desktop project columns with opposite container edges", () => {
+    expect(
+      exactDeclarationValues(work.root, ".previewList", "justify-content"),
+    ).toContain("space-between");
+    expect(
+      exactDeclarationValues(work.root, ".previewList", "max-inline-size"),
+    ).toHaveLength(0);
   });
 
   it("declares the dvh viewport enhancement after every svh fallback", () => {

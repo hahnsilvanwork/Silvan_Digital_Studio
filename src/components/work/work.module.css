@@ -159,20 +159,14 @@
 }
 
 @media (min-width: 64rem) {
-  /* The media caps at 32rem because the source images are 512px wide, so the
-     two tracks cannot grow with the canvas. `space-between` then pushed them
-     to the container edges instead: the wider the screen, the further apart the
-     projects drifted -- 768px of empty paper between two cards at 1920px, which
-     reads as two unrelated columns rather than one index.
-
-     Capping the list at the width the pair actually needs keeps them a normal
-     gap apart at every size, and lets the leftover canvas fall outside the
-     block where it belongs. */
+  /* The source images are only 512px wide, so each track stays capped at 32rem.
+     The list itself spans the normal content container and space-between pins
+     the left and right project columns to its opposite edges. */
   .previewList {
     grid-template-columns: repeat(2, minmax(0, 32rem));
+    justify-content: space-between;
     column-gap: var(--space-lg);
     row-gap: var(--space-lg);
-    max-inline-size: calc((2 * 32rem) + var(--space-lg));
   }
 
   /* Offsetting every second preview keeps the index editorial rather than

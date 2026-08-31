@@ -212,19 +212,27 @@ describe("WorkPage", () => {
   });
 
   it.each(["de", "en"] as const)(
-    "offers a way to act at the end of the %s portfolio",
+    "offers a header action before the %s portfolio",
     (locale) => {
-      // The portfolio was the only part of the site that ended without an
-      // invitation, so its most engaged readers were offered nothing but the
-      // next project.
       render(<WorkPage locale={locale} />);
 
       const main = screen.getByRole("main");
       const content = getContent(locale);
+      const cta = within(main).getByRole("link", {
+        name: content.work.ctaLabel,
+      });
+      const firstProject = within(main).getByRole("link", {
+        name: new RegExp(projects[0].name),
+      });
 
+      expect(cta).toHaveAttribute(
+        "href",
+        locale === "de" ? "/contact" : "/en/contact",
+      );
       expect(
-        within(main).getByRole("link", { name: content.work.ctaLabel }),
-      ).toHaveAttribute("href", locale === "de" ? "/contact" : "/en/contact");
+        cta.compareDocumentPosition(firstProject) &
+          Node.DOCUMENT_POSITION_FOLLOWING,
+      ).toBeTruthy();
     },
   );
 });

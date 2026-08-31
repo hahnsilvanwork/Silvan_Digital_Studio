@@ -41,6 +41,15 @@ export function WorkPage({ locale }: WorkPageProps) {
           >
             {content.work.intro}
           </p>
+          <div
+            className={pageStyles.heroActions}
+            data-reveal="rise"
+            style={{ "--reveal-index": sequence.actionsIndex } as CSSProperties}
+          >
+            <ButtonLink href={localizePath("/contact", locale)}>
+              {content.work.ctaLabel}
+            </ButtonLink>
+          </div>
         </section>
 
         <section className={`${layoutStyles.container} ${pageStyles.section}`}>
@@ -60,15 +69,6 @@ export function WorkPage({ locale }: WorkPageProps) {
           </ul>
         </section>
 
-        {/* The only pages on the site that used to end without one. A div, not
-            a section: it has no heading, so it is a container, not a region. */}
-        <div className={`${layoutStyles.container} ${pageStyles.section}`}>
-          <div className={pageStyles.sectionBody} data-reveal="rise">
-            <ButtonLink href={localizePath("/contact", locale)}>
-              {content.work.ctaLabel}
-            </ButtonLink>
-          </div>
-        </div>
       </div>
     </SiteShell>
   );
