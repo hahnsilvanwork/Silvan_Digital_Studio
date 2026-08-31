@@ -90,6 +90,8 @@ function fakeApplication() {
         autoRotateSpeed: 2,
         autoRotateClockwise: true,
         hoverRotatePanMode: 1,
+        rotateLeft: vi.fn(),
+        spherical: { theta: 0 },
       },
     },
   };
@@ -212,7 +214,7 @@ describe("SplineProduct", () => {
     expect(app.setBackgroundColor).toHaveBeenCalledWith("transparent");
   });
 
-  it("rests between sweeps so the render can sharpen", async () => {
+  it("sweeps, rests, then comes back instead of turning away", async () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
 
     try {
@@ -221,18 +223,39 @@ describe("SplineProduct", () => {
 
       const { app } = await loadedViewer();
       const controls = app._controls.orbitControls;
+      const sweep = (30 * Math.PI) / 180;
+      const start = controls.spherical.theta;
 
       expect(controls.autoRotate).toBe(true);
+      const firstDirection = controls.autoRotateClockwise;
 
+      // Still inside the sweep: it must keep going.
+      controls.spherical.theta = start - sweep / 4;
       await act(async () => {
-        await vi.advanceTimersByTimeAsync(5000);
+        await vi.advanceTimersByTimeAsync(400);
       });
-      // Standing still is when Spline refines the image, so the product has
-      // to actually stop rather than merely slow down.
+      expect(controls.autoRotate).toBe(true);
+
+      // The far edge of the sweep, reached by angle rather than by clock,
+      // because autoRotate advances per frame and a fast machine would
+      // otherwise carry on into the blank back of the product.
+      controls.spherical.theta = start - sweep;
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(400);
+      });
       expect(controls.autoRotate).toBe(false);
 
       await act(async () => {
-        await vi.advanceTimersByTimeAsync(3500);
+        await vi.advanceTimersByTimeAsync(4000);
+      });
+      expect(controls.autoRotate).toBe(true);
+      // Nobody wants to watch the blank back of a tag, so it comes back.
+      expect(controls.autoRotateClockwise).toBe(!firstDirection);
+
+      // Setting off from the edge must not count as reaching the edge, or the
+      // product would rest again immediately and stutter in place.
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(400);
       });
       expect(controls.autoRotate).toBe(true);
     } finally {

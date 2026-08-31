@@ -25,7 +25,7 @@ export function ProductShowcase({
   autoAdvanceMs,
   selectable = true,
   secondsPerRevolution,
-  startOffsetDegrees,
+  sweepDegrees,
   className,
 }: ProductShowcaseProps) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -63,6 +63,21 @@ export function ProductShowcase({
     return () => window.clearInterval(timer);
   }, [autoAdvanceMs, chosen, count, onScreen, showing3d]);
 
+  useEffect(() => {
+    if (!showing3d || count < 2) return;
+
+    // Warms the HTTP cache so switching product costs only the scene build,
+    // not a round trip. The files are a few dozen kilobytes each.
+    const aborter = new AbortController();
+    for (const { sceneUrl } of products) {
+      void fetch(sceneUrl, { signal: aborter.signal }).catch(() => {
+        // A cold cache on the next switch is the worst case, not an error.
+      });
+    }
+
+    return () => aborter.abort();
+  }, [count, products, showing3d]);
+
   const active = count > 0 ? products[index % count] : undefined;
 
   if (!active) return null;
@@ -78,7 +93,7 @@ export function ProductShowcase({
         onReady={() => setShowing3d(true)}
         priority={priority}
         secondsPerRevolution={secondsPerRevolution}
-        startOffsetDegrees={startOffsetDegrees}
+        sweepDegrees={sweepDegrees}
         sceneUrl={active.sceneUrl}
       />
 

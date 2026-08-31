@@ -24,10 +24,9 @@ import pageStyles from "../../styles/pages.module.css";
 // should be able to take the product in, not catch it mid-change.
 const HERO_PRODUCT_MS = 14_000;
 
-// The hero sits beside the headline, so it turns at half the pace of the
-// product section and starts angled rather than dead-on.
+// The hero sits beside the headline, so it sweeps more slowly than the
+// product section below.
 const HERO_SECONDS_PER_REVOLUTION = 60;
-const START_OFFSET_DEGREES = 33;
 
 interface ReviewsPageProps {
   readonly locale: Locale;
@@ -92,7 +91,6 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
                 secondsPerRevolution={HERO_SECONDS_PER_REVOLUTION}
                 selectable={false}
                 selectorLabel={reviews.productSelectorLabel}
-                startOffsetDegrees={START_OFFSET_DEGREES}
               />
             </div>
           </section>
@@ -110,7 +108,6 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
                 <ProductShowcase
                   products={reviews.productVisualizations}
                   selectorLabel={reviews.productSelectorLabel}
-                  startOffsetDegrees={START_OFFSET_DEGREES}
                 />
               </div>
               {reviews.menuVisualizations.length > 0 ? (
@@ -121,7 +118,6 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
                   <ProductShowcase
                     products={reviews.menuVisualizations}
                     selectorLabel={reviews.menuSelectorLabel}
-                    startOffsetDegrees={START_OFFSET_DEGREES}
                   />
                 </div>
               ) : (

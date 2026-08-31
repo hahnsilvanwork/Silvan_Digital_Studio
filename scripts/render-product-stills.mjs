@@ -17,9 +17,10 @@ const SIZE = 1400;
 const QUALITY = 0.82;
 const SETTLE_MS = 4000;
 
-// Must match START_OFFSET_DEGREES in ReviewsPage: the still has to show the
-// pose the live scene starts on, or the hand-over jumps.
-const START_OFFSET_DEGREES = 33;
+// Must match DEFAULT_SWEEP_DEGREES in spline-scene-controls: the still has to
+// show the pose the live scene starts on, or the hand-over jumps. Scenes turn
+// left, so a sweep starts half its width to the right.
+const SWEEP_DEGREES = 30;
 const ROTATE_LEFT_GAIN = 6.2;
 
 function readProducts() {
@@ -56,9 +57,9 @@ async function renderStill(browser, { id, sceneUrl }) {
 
       controls.autoRotate = false;
       controls.hoverRotatePanMode = 0;
-      controls.rotateLeft(((degrees * Math.PI) / 180) / gain);
+      controls.rotateLeft(-((degrees * Math.PI) / 180) / gain);
     },
-    { degrees: START_OFFSET_DEGREES, gain: ROTATE_LEFT_GAIN },
+    { degrees: SWEEP_DEGREES / 2, gain: ROTATE_LEFT_GAIN },
   );
   await page.waitForTimeout(SETTLE_MS);
 

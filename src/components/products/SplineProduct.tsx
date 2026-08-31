@@ -7,8 +7,12 @@ import { useSplineSceneSlot } from "./SplineSceneProvider";
 import {
   getSplineApplication,
   presentScene,
+  DEFAULT_SWEEP_DEGREES,
+  getTurntableAngle,
+  reverseTurntable,
   setSceneRunning,
   setTurntableTurning,
+  sweepTimeoutMs,
   swapScene,
   type ScenePresentation,
   type SplineApplication,
@@ -22,10 +26,14 @@ const SLOT_RELEASE_MS = 10_000;
 const THRESHOLDS = [0, 0.25, 0.5, 0.75, 1];
 
 // Spline renders a coarse preview while the camera moves and only sharpens
-// once it stops, so the product turns in slow sweeps and rests in between.
-// The rest is long enough for the image to settle, measured on 2.0.16.
-const TURN_MS = 5000;
-const REST_MS = 3500;
+// once it stops, so the product sweeps and then rests. The rest is long
+// enough for the image to settle, measured on 2.0.16, and it is also when the
+// renderer stops asking for frames.
+const REST_MS = 4000;
+
+// The angle is watched rather than the clock: autoRotate advances per frame,
+// so a fast machine would otherwise sweep far enough to show the blank back.
+const ANGLE_POLL_MS = 200;
 
 export interface SplineProductProps extends ScenePresentation {
   readonly sceneUrl: string;
@@ -78,10 +86,14 @@ function ActiveSpline({
   onSettled,
   onReady,
   secondsPerRevolution,
-  startOffsetDegrees,
+  sweepDegrees,
 }: ActiveSplineProps) {
   const viewerRef = useRef<HTMLElement>(null);
   const appRef = useRef<SplineApplication | null>(null);
+  const centreRef = useRef<number | null>(null);
+  // Bumped whenever a scene anchors its centre, so the sweep restarts around
+  // the product that is actually on screen.
+  const [centreVersion, setCentreVersion] = useState(0);
   const shownUrl = useRef(sceneUrl);
   const [runtimeReady, setRuntimeReady] = useState(false);
   const [state, setState] = useState<LoadState>("loading");
@@ -122,7 +134,13 @@ function ActiveSpline({
 
       const app = getSplineApplication(viewer);
       appRef.current = app;
-      if (app) presentScene(app, { secondsPerRevolution, startOffsetDegrees });
+      if (app) {
+        centreRef.current = presentScene(app, {
+          secondsPerRevolution,
+          sweepDegrees,
+        });
+        setCentreVersion((version) => version + 1);
+      }
 
       setState("ready");
       onSettled();
@@ -138,13 +156,7 @@ function ActiveSpline({
       viewer.removeEventListener("load-complete", complete);
       viewer.removeEventListener("context-loss", lost);
     };
-  }, [
-    onReady,
-    onSettled,
-    runtimeReady,
-    secondsPerRevolution,
-    startOffsetDegrees,
-  ]);
+  }, [onReady, onSettled, runtimeReady, secondsPerRevolution, sweepDegrees]);
 
   useEffect(() => {
     const app = appRef.current;
@@ -168,20 +180,53 @@ function ActiveSpline({
     const app = appRef.current;
     if (!app || state !== "ready" || !running) return;
 
-    let turning = true;
-    let timer = window.setTimeout(function alternate() {
-      turning = !turning;
-      setTurntableTurning(app, turning);
-      timer = window.setTimeout(alternate, turning ? TURN_MS : REST_MS);
-    }, TURN_MS);
+    const sweep = ((sweepDegrees ?? DEFAULT_SWEEP_DEGREES) * Math.PI) / 180;
+    const timeout = sweepTimeoutMs({ secondsPerRevolution, sweepDegrees });
+
+    let timer = 0;
+    let deadline = 0;
+    // A sweep begins at its own edge, and damping can carry it a little past.
+    // The edge only counts once the product has travelled back inside, which
+    // is what stops it from resting again the instant it sets off.
+    let insideSweep = false;
+
+    const rest = () => {
+      setTurntableTurning(app, false);
+      timer = window.setTimeout(() => {
+        reverseTurntable(app);
+        setTurntableTurning(app, true);
+        insideSweep = false;
+        deadline = Date.now() + timeout;
+        timer = window.setTimeout(watch, ANGLE_POLL_MS);
+      }, REST_MS);
+    };
+
+    const watch = () => {
+      const angle = getTurntableAngle(app);
+      // Read through the ref: switching product loads another scene, which
+      // brings its own camera and therefore its own centre to swing around.
+      const centre = centreRef.current;
+      const offCentre =
+        angle === null || centre === null ? null : Math.abs(angle - centre);
+
+      if (offCentre !== null && offCentre < sweep / 2) insideSweep = true;
+
+      const reachedEdge =
+        insideSweep && offCentre !== null && offCentre >= sweep / 2;
+
+      if (reachedEdge || Date.now() > deadline) rest();
+      else timer = window.setTimeout(watch, ANGLE_POLL_MS);
+    };
 
     setTurntableTurning(app, true);
+    deadline = Date.now() + timeout;
+    timer = window.setTimeout(watch, ANGLE_POLL_MS);
 
     return () => {
       window.clearTimeout(timer);
       setTurntableTurning(app, false);
     };
-  }, [running, state]);
+  }, [centreVersion, running, secondsPerRevolution, state, sweepDegrees]);
 
   useEffect(() => {
     const app = appRef.current;
@@ -189,18 +234,27 @@ function ActiveSpline({
 
     let cancelled = false;
     shownUrl.current = sceneUrl;
+    // Hold the turntable while the next product arrives. Swapping mid-sweep
+    // leaves the camera in flight, and the centre read afterwards lands
+    // somewhere between the two products rather than on the new one's front.
+    setTurntableTurning(app, false);
     // The previous product stays on screen until the new one is ready, which
     // reads far calmer than blanking the frame between products.
-    swapScene(app, sceneUrl, { secondsPerRevolution, startOffsetDegrees }).catch(
-      () => {
+    swapScene(app, sceneUrl, { secondsPerRevolution, sweepDegrees })
+      .then((centre) => {
+        if (cancelled) return;
+
+        centreRef.current = centre;
+        setCentreVersion((version) => version + 1);
+      })
+      .catch(() => {
         if (!cancelled) setState("error");
-      },
-    );
+      });
 
     return () => {
       cancelled = true;
     };
-  }, [sceneUrl, secondsPerRevolution, startOffsetDegrees, state]);
+  }, [sceneUrl, secondsPerRevolution, state, sweepDegrees]);
 
   return (
     <span className={styles.active} data-spline-state={state}>
@@ -225,7 +279,7 @@ export function SplineProduct({
   priority = false,
   onReady,
   secondsPerRevolution,
-  startOffsetDegrees,
+  sweepDegrees,
 }: SplineProductProps) {
   const slotId = useId();
   const frameRef = useRef<HTMLElement>(null);
@@ -321,7 +375,7 @@ export function SplineProduct({
           running={onScreen}
           sceneUrl={sceneUrl}
           secondsPerRevolution={secondsPerRevolution}
-          startOffsetDegrees={startOffsetDegrees}
+          sweepDegrees={sweepDegrees}
         />
       ) : (
         <span className={styles.active} data-spline-state={inactiveState}>

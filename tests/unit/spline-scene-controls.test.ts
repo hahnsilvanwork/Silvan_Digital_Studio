@@ -4,8 +4,11 @@ import {
   DEFAULT_SECONDS_PER_REVOLUTION,
   getSplineApplication,
   presentScene,
+  reverseTurntable,
   setSceneRunning,
   setTurntableTurning,
+  getTurntableAngle,
+  sweepTimeoutMs,
   swapScene,
 } from "../../src/components/products/spline-scene-controls";
 
@@ -16,6 +19,7 @@ function orbitControls() {
     autoRotateClockwise: true,
     hoverRotatePanMode: 1,
     rotateLeft: vi.fn(),
+    spherical: { theta: 0.26 },
   };
 }
 
@@ -52,23 +56,47 @@ describe("spline scene controls", () => {
     expect(18.5 / controls.autoRotateSpeed).toBeCloseTo(60, 0);
   });
 
-  it("starts turned away from dead-on so the product reads as an object", () => {
+  it("starts half a sweep to the right, against the direction of travel", () => {
     const controls = orbitControls();
 
-    presentScene(application(controls), { startOffsetDegrees: 33 });
+    presentScene(application(controls), { sweepDegrees: 30 });
 
-    // rotateLeft settles at roughly 6.2x its argument, so the argument is
-    // derived from the angle rather than written as a magic number.
+    // Scenes turn left on their own. Starting on the right is what lets the
+    // front of the product cross the middle of the view instead of leaving
+    // it, and rotateLeft settles at roughly 6.2x its argument.
     const [argument] = controls.rotateLeft.mock.calls[0] as [number];
-    expect((argument * 6.2 * 180) / Math.PI).toBeCloseTo(33, 0);
+    expect((argument * 6.2 * 180) / Math.PI).toBeCloseTo(-15, 0);
   });
 
-  it("leaves the pose alone when no offset is asked for", () => {
+  it("reverses at the end of a sweep instead of showing the back", () => {
+    const controls = orbitControls();
+    const app = application(controls);
+
+    presentScene(app);
+    expect(controls.autoRotateClockwise).toBe(true);
+
+    reverseTurntable(app);
+    expect(controls.autoRotateClockwise).toBe(false);
+
+    reverseTurntable(app);
+    expect(controls.autoRotateClockwise).toBe(true);
+  });
+
+  it("reports the orbit angle so the sweep can be bounded by it", () => {
     const controls = orbitControls();
 
-    presentScene(application(controls));
+    expect(getTurntableAngle(application(controls))).toBeCloseTo(0.26, 2);
+    expect(getTurntableAngle({})).toBeNull();
+  });
 
-    expect(controls.rotateLeft).not.toHaveBeenCalled();
+  it("allows a sweep far longer than it should take before giving up", () => {
+    // autoRotate advances per frame, so the pace drifts with the frame rate.
+    // The timeout only catches a scene that stopped turning altogether.
+    const nominal = (30 / (360 / 45)) * 1000;
+
+    expect(
+      sweepTimeoutMs({ secondsPerRevolution: 45, sweepDegrees: 30 }),
+    ).toBeGreaterThan(nominal * 2);
   });
 
   it("keeps the scene transparent so it sits on the page background", () => {
