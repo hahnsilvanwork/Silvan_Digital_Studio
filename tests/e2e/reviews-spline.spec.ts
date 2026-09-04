@@ -41,9 +41,16 @@ async function stubSpline(page: Page) {
 }
 
 test.describe("image-first NFC product catalogue", () => {
+  test("opens at the true top of the page", async ({ page }) => {
+    await page.goto("/reviews");
+    await page.waitForTimeout(1_500);
+
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  });
+
   test.beforeEach(async ({ page }) => stubSpline(page));
 
-  for (const width of [320, 768, 1024, 1280, 1536]) {
+  for (const width of [320, 390, 768, 1024, 1280, 1536]) {
     test(`fits the viewport and keeps prices visible at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto("/reviews");
@@ -62,6 +69,27 @@ test.describe("image-first NFC product catalogue", () => {
         expect(box?.height).toBeGreaterThanOrEqual(43.9);
         expect(box?.x).toBeGreaterThanOrEqual(0);
         expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(width);
+      }
+
+      const rail = page.locator("[data-product-rail]");
+      const railControls = page.locator("[data-product-rail-controls]");
+      if (width < 704) {
+        await expect(railControls).toBeVisible();
+        expect(
+          await rail.evaluate((node) => node.scrollWidth > node.clientWidth),
+        ).toBe(true);
+        for (const button of await railControls.getByRole("button").all()) {
+          expect((await button.boundingBox())?.height).toBeGreaterThanOrEqual(43.9);
+        }
+        await railControls.getByRole("button", { name: "Nächstes Produkt" }).click();
+        await expect(railControls.getByText("Produkt 2 von 5")).toBeVisible();
+      } else {
+        await expect(railControls).toBeHidden();
+        const cards = await rail.locator("[data-product-card]").all();
+        const first = await cards[0]?.boundingBox();
+        const second = await cards[1]?.boundingBox();
+        expect(first?.y).toBe(second?.y);
+        expect(first?.x).not.toBe(second?.x);
       }
     });
   }

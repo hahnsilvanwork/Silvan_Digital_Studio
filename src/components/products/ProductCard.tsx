@@ -5,6 +5,7 @@ import styles from "./products.module.css";
 
 interface ProductCardProps {
   readonly product: NfcProduct;
+  readonly index: number;
   readonly view3dLabel: string;
   readonly comingSoonLabel: string;
   readonly onView3D: (
@@ -15,19 +16,24 @@ interface ProductCardProps {
 
 export function ProductCard({
   product,
+  index,
   view3dLabel,
   comingSoonLabel,
   onView3D,
 }: ProductCardProps) {
   return (
-    <article className={styles.catalogCard}>
+    <article
+      className={styles.catalogCard}
+      data-product-card
+      data-product-index={index}
+    >
       <div className={styles.catalogMedia}>
         <Image
           alt={product.image.alt}
           className={styles.catalogImage}
           fill
           loading="lazy"
-          sizes="(min-width: 72rem) 29vw, (min-width: 44rem) 45vw, 100vw"
+          sizes="(min-width: 72rem) 29vw, (min-width: 44rem) 45vw, 82vw"
           src={product.image.src}
         />
       </div>

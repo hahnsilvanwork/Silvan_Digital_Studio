@@ -206,7 +206,7 @@
 }
 
 .reviewsHeroProduct {
-  inline-size: min(100%, 22rem);
+  inline-size: min(100%, 20rem);
   justify-self: center;
   margin-block-start: var(--space-sm);
 }

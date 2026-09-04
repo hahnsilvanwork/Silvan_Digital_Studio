@@ -27,7 +27,10 @@ export function RouteFocus() {
       return;
     }
 
-    document.getElementById(MAIN_CONTENT_ID)?.focus();
+    // Focusing a target directly below a sticky header can make Chromium scroll
+    // it underneath that header. Next.js already owns route scroll restoration,
+    // so move only the accessibility focus and preserve the visual position.
+    document.getElementById(MAIN_CONTENT_ID)?.focus({ preventScroll: true });
   }, [pathname]);
 
   return null;

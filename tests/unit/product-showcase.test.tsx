@@ -55,6 +55,24 @@ const products: readonly NfcProduct[] = [
     },
   },
   {
+    id: "review-white",
+    category: "reviews",
+    title: "White review card",
+    price: "CHF 49.–",
+    description: "White review description",
+    image: { src: "/review-white.webp", alt: "White review card photo" },
+    details: ["Round", "100 × 100 mm"],
+  },
+  {
+    id: "review-blue",
+    category: "reviews",
+    title: "Blue review card",
+    price: "CHF 49.–",
+    description: "Blue review description",
+    image: { src: "/review-blue.webp", alt: "Blue review card photo" },
+    details: ["Square", "80 × 80 mm"],
+  },
+  {
     id: "menu",
     category: "menu",
     title: "Menu card",
@@ -93,6 +111,10 @@ const props = {
     error: "3D model failed",
     retry: "Try again",
     interact: "Rotate with mouse or finger",
+    previousProduct: "Previous product",
+    nextProduct: "Next product",
+    productPosition: "Product",
+    productPositionOf: "of",
   },
 };
 
@@ -121,6 +143,10 @@ beforeEach(() => {
       this.removeAttribute("open");
     },
   });
+  Object.defineProperty(HTMLElement.prototype, "scrollTo", {
+    configurable: true,
+    value: vi.fn(),
+  });
 });
 
 describe("ProductCatalog", () => {
@@ -129,15 +155,41 @@ describe("ProductCatalog", () => {
 
     expect(screen.getByText("Choose an application")).toBeVisible();
     for (const category of props.categories) {
+      const count = products.filter(
+        ({ category: productCategory }) => productCategory === category.id,
+      ).length;
       expect(
         screen.getByRole("button", {
-          name: `${category.label} 1 product`,
+          name: `${category.label} ${count} ${count === 1 ? "product" : "products"}`,
         }),
       ).toBeVisible();
     }
     expect(
-      screen.getByRole("heading", { name: "Google Reviews · 1 product" }),
+      screen.getByRole("heading", { name: "Google Reviews · 3 products" }),
     ).toBeVisible();
+  });
+
+  it("navigates the product rail and resets its position per category", async () => {
+    const user = userEvent.setup();
+    render(<ProductCatalog {...props} />);
+
+    const previous = screen.getByRole("button", { name: "Previous product" });
+    const next = screen.getByRole("button", { name: "Next product" });
+    expect(screen.getByText("Product 1 of 3")).toBeVisible();
+    expect(previous).toBeDisabled();
+
+    await user.click(next);
+    expect(screen.getByText("Product 2 of 3")).toBeVisible();
+    expect(previous).toBeEnabled();
+
+    await user.click(next);
+    expect(screen.getByText("Product 3 of 3")).toBeVisible();
+    expect(next).toBeDisabled();
+
+    await user.click(screen.getByRole("button", { name: "Menu 1 product" }));
+    expect(screen.getByText("Product 1 of 1")).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Previous product" })).toBeNull();
+    expect(screen.queryByRole("button", { name: "Next product" })).toBeNull();
   });
 
   it("filters image-first cards with semantic category controls", async () => {
@@ -148,8 +200,8 @@ describe("ProductCatalog", () => {
     expect(within(categories).getByRole("button", { name: /Google Reviews/ }))
       .toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("img", { name: "Review card photo" })).toBeVisible();
-    expect(screen.getByText("CHF 49.–")).toBeVisible();
-    expect(screen.getByText("80 × 80 mm")).toBeVisible();
+    expect(screen.getAllByText("CHF 49.–")[0]).toBeVisible();
+    expect(screen.getAllByText("80 × 80 mm")[0]).toBeVisible();
 
     await user.click(within(categories).getByRole("button", { name: /Menu/ }));
 

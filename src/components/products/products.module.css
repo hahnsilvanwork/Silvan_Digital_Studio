@@ -219,14 +219,69 @@
 
 .catalogGrid {
   display: grid;
+  grid-auto-columns: minmax(16rem, calc(100% - 2rem));
+  grid-auto-flow: column;
   gap: var(--space-sm);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  scrollbar-width: none;
+}
+
+.catalogGrid::-webkit-scrollbar {
+  display: none;
 }
 
 .catalogCard {
   display: grid;
+  scroll-snap-align: start;
   overflow: clip;
   border: var(--hairline) solid var(--color-line);
   background: var(--color-paper-raised);
+}
+
+.catalogRailControls,
+.catalogRailButtons {
+  display: flex;
+  align-items: center;
+}
+
+.catalogRailControls {
+  justify-content: space-between;
+  gap: var(--space-sm);
+  margin-block-start: calc(-1 * var(--space-xs));
+}
+
+.catalogPosition {
+  color: var(--color-ink-muted);
+  font-size: var(--text-label);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.catalogRailButtons {
+  gap: var(--space-2xs);
+}
+
+.catalogRailButtons button {
+  display: grid;
+  inline-size: var(--control-target-min);
+  block-size: var(--control-target-min);
+  padding: 0;
+  place-items: center;
+  border: var(--hairline) solid var(--color-line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.catalogRailButtons button:disabled {
+  color: var(--color-ink-muted);
+  cursor: default;
+  opacity: 0.42;
 }
 
 .catalogMedia {
@@ -309,6 +364,7 @@
   margin: auto;
   padding: 0;
   overflow: hidden;
+  overscroll-behavior: contain;
   border: var(--hairline) solid var(--color-line);
   border-radius: var(--radius-media);
   background: var(--color-paper-raised);
@@ -424,7 +480,15 @@
   }
 
   .catalogGrid {
+    grid-auto-columns: initial;
+    grid-auto-flow: row;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  .catalogRailControls {
+    display: none;
   }
 }
 

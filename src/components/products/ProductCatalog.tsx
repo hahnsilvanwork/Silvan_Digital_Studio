@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useId, useLayoutEffect, useRef, useState } from "react";
 
 import type {
   NfcProduct,
@@ -17,6 +17,10 @@ interface ProductCatalogLabels extends Product3DLabels {
   readonly productPlural: string;
   readonly view3d: string;
   readonly comingSoon: string;
+  readonly previousProduct: string;
+  readonly nextProduct: string;
+  readonly productPosition: string;
+  readonly productPositionOf: string;
 }
 
 interface ProductCatalogProps {
@@ -39,7 +43,10 @@ export function ProductCatalog({
   const [selectedProduct, setSelectedProduct] = useState<NfcProduct | null>(
     null,
   );
+  const [activeProductIndex, setActiveProductIndex] = useState(0);
   const returnFocusRef = useRef<HTMLButtonElement | null>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const railId = useId();
 
   useLayoutEffect(() => {
     if (selectedProduct === null && returnFocusRef.current) {
@@ -56,6 +63,24 @@ export function ProductCatalog({
   const countLabel = (count: number) =>
     `${count} ${count === 1 ? labels.productSingular : labels.productPlural}`;
 
+  const selectProduct = (requestedIndex: number) => {
+    const nextIndex = Math.max(
+      0,
+      Math.min(requestedIndex, visibleProducts.length - 1),
+    );
+    setActiveProductIndex(nextIndex);
+
+    const card = railRef.current?.querySelector<HTMLElement>(
+      `[data-product-index="${nextIndex}"]`,
+    );
+    railRef.current?.scrollTo({
+      behavior: window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+      left: card?.offsetLeft ?? 0,
+    });
+  };
+
   return (
     <div className={styles.catalog}>
       <p className={styles.categoryPrompt}>{labels.categoryPrompt}</p>
@@ -70,7 +95,10 @@ export function ProductCatalog({
               aria-pressed={category.id === activeCategory}
               data-touch-target
               key={category.id}
-              onClick={() => setActiveCategory(category.id)}
+              onClick={() => {
+                setActiveProductIndex(0);
+                setActiveCategory(category.id);
+              }}
               type="button"
             >
               <span className={styles.categoryName}>{category.label}</span>
@@ -84,10 +112,37 @@ export function ProductCatalog({
         {activeCategoryLabel} · {countLabel(visibleProducts.length)}
       </h3>
 
-      <div className={styles.catalogGrid}>
-        {visibleProducts.map((product) => (
+      <div
+        aria-label={`${activeCategoryLabel}: ${countLabel(visibleProducts.length)}`}
+        className={styles.catalogGrid}
+        data-product-rail
+        id={railId}
+        key={activeCategory}
+        onScroll={(event) => {
+          const rail = event.currentTarget;
+          const cards = Array.from(
+            rail.querySelectorAll<HTMLElement>("[data-product-index]"),
+          );
+          let nearestIndex = 0;
+          let nearestDistance = Number.POSITIVE_INFINITY;
+
+          for (const [index, card] of cards.entries()) {
+            const distance = Math.abs(card.offsetLeft - rail.scrollLeft);
+            if (distance < nearestDistance) {
+              nearestDistance = distance;
+              nearestIndex = index;
+            }
+          }
+          setActiveProductIndex(nearestIndex);
+        }}
+        ref={railRef}
+        role="region"
+        tabIndex={0}
+      >
+        {visibleProducts.map((product, index) => (
           <ProductCard
             comingSoonLabel={labels.comingSoon}
+            index={index}
             key={product.id}
             onView3D={(selected, trigger) => {
               returnFocusRef.current = trigger;
@@ -97,6 +152,37 @@ export function ProductCatalog({
             view3dLabel={labels.view3d}
           />
         ))}
+      </div>
+
+      <div className={styles.catalogRailControls} data-product-rail-controls>
+        <p aria-live="polite" className={styles.catalogPosition}>
+          {labels.productPosition} {activeProductIndex + 1}{" "}
+          {labels.productPositionOf} {visibleProducts.length}
+        </p>
+        {visibleProducts.length > 1 ? (
+          <div className={styles.catalogRailButtons}>
+            <button
+              aria-controls={railId}
+              aria-label={labels.previousProduct}
+              data-touch-target
+              disabled={activeProductIndex === 0}
+              onClick={() => selectProduct(activeProductIndex - 1)}
+              type="button"
+            >
+              <span aria-hidden="true">←</span>
+            </button>
+            <button
+              aria-controls={railId}
+              aria-label={labels.nextProduct}
+              data-touch-target
+              disabled={activeProductIndex === visibleProducts.length - 1}
+              onClick={() => selectProduct(activeProductIndex + 1)}
+              type="button"
+            >
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        ) : null}
       </div>
 
       {selectedProduct ? (

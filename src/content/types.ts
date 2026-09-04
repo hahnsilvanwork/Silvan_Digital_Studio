@@ -324,6 +324,10 @@ interface SiteContentShape {
     categoryPrompt: string;
     productSingular: string;
     productPlural: string;
+    previousProductLabel: string;
+    nextProductLabel: string;
+    productPositionLabel: string;
+    productPositionOfLabel: string;
     catalog: readonly NfcProduct[];
     forms: readonly string[];
     sizes: readonly string[];
