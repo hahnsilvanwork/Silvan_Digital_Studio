@@ -194,6 +194,13 @@ describe("ReviewsPage", () => {
       expect(priceIndex).toBeGreaterThanOrEqual(0);
       expect(priceIndex).toBeLessThan(processIndex);
     }
+
+    expect(de.reviews.products).toHaveLength(4);
+    for (const product of de.reviews.products) {
+      expect(
+        screen.getByRole("heading", { level: 3, name: product.name }),
+      ).toBeVisible();
+    }
   });
 
   it("uses a generic TAP / OPEN / ACT process", () => {

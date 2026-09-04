@@ -177,10 +177,10 @@ export const de = {
     products: [
       {
         id: "standard-card",
-        name: "Standard Card",
+        name: "Standard Card oder Standard Stand",
         price: "CHF 49.–",
-        description: "Fixes schwarzes Design für Google Reviews oder digitale Menüs.",
-        features: ["Rund oder quadratisch", "80 × 80 oder 100 × 100 mm", "Programmierung inklusive"],
+        description: "Eine Standard Card im fixen Design oder ein sichtbarer Standard-Aufsteller.",
+        features: ["Ohne Personalisierung", "NFC und QR", "Programmierung inklusive"],
       },
       {
         id: "standard-pair",
@@ -188,13 +188,6 @@ export const de = {
         price: "CHF 80.–",
         description: "Zwei Standard Cards für mehrere Kontaktpunkte.",
         features: ["Freie Formwahl", "Beide Grössen möglich", "Einrichtung inklusive"],
-      },
-      {
-        id: "standard-stand",
-        name: "Standard Stand",
-        price: "CHF 69.–",
-        description: "Ein sichtbarer Standard-Aufsteller für Empfang, Kasse oder Tisch.",
-        features: ["Ohne Personalisierung", "NFC und QR", "Einrichtung inklusive"],
       },
       {
         id: "personalized-card",
@@ -288,7 +281,7 @@ export const de = {
         id: "review-stand-white",
         category: "reviews",
         title: "Standard Stand · Weiss",
-        price: "CHF 69.–",
+        price: "CHF 49.–",
         description: "Sichtbarer Aufsteller für Empfang, Kasse oder Tisch.",
         image: { src: "/images/products/catalog/review-stand-white.webp", alt: "Weisser Google-Review-NFC-Aufsteller" },
         details: ["Aufsteller", "Standarddesign ohne Personalisierung"],
@@ -428,7 +421,7 @@ export const de = {
       productOptions: [
         { value: "standard-card", label: "Standard Card · CHF 49.–" },
         { value: "standard-pair", label: "Zwei Standard Cards · CHF 80.–" },
-        { value: "standard-stand", label: "Standard Stand · CHF 69.–" },
+        { value: "standard-stand", label: "Standard Stand · CHF 49.–" },
         { value: "personalized-card", label: "Personalized Card · CHF 69.–" },
         { value: "fully-custom-card", label: "Fully Customized Card · CHF 99.–" },
       ],
@@ -484,7 +477,7 @@ export const de = {
         {
           question: "Was kostet es und was ist inbegriffen?",
           answer:
-            "Eine Standard Card kostet CHF 49, zwei CHF 80, der Standard Stand CHF 69, Personalized CHF 69 und Fully Customized CHF 99. Programmierung und Einrichtung sind enthalten; für grössere Mengen gibt es einen Mengenrabatt.",
+            "Eine Standard Card oder ein Standard Stand kostet CHF 49, zwei Standard Cards CHF 80, Personalized CHF 69 und Fully Customized CHF 99. Programmierung und Einrichtung sind enthalten; für grössere Mengen gibt es einen Mengenrabatt.",
         },
       ],
     },

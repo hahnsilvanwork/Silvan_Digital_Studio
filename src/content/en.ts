@@ -177,10 +177,10 @@ export const en = {
     products: [
       {
         id: "standard-card",
-        name: "Standard Card",
+        name: "Standard Card or Standard Stand",
         price: "CHF 49.–",
-        description: "A fixed black design for Google Reviews or digital menus.",
-        features: ["Round or square", "80 × 80 or 100 × 100 mm", "Programming included"],
+        description: "A Standard Card in the fixed design or a visible Standard Stand.",
+        features: ["No personalization", "NFC and QR", "Programming included"],
       },
       {
         id: "standard-pair",
@@ -188,13 +188,6 @@ export const en = {
         price: "CHF 80.–",
         description: "Two Standard Cards for more than one customer touchpoint.",
         features: ["Choose either shape", "Both sizes available", "Setup included"],
-      },
-      {
-        id: "standard-stand",
-        name: "Standard Stand",
-        price: "CHF 69.–",
-        description: "A visible standard stand for a reception, counter, or table.",
-        features: ["No personalization", "NFC and QR", "Setup included"],
       },
       {
         id: "personalized-card",
@@ -266,7 +259,7 @@ export const en = {
         scene: { url: "https://prod.spline.design/fttoKfHSbrqCbrUd/scene.splinecode", fallbackImage: "/images/products/stand-blue.webp", ariaLabel: "Interactive 3D model of a blue Google Review NFC card" },
       },
       {
-        id: "review-stand-white", category: "reviews", title: "Standard Stand · White", price: "CHF 69.–",
+        id: "review-stand-white", category: "reviews", title: "Standard Stand · White", price: "CHF 49.–",
         description: "A visible display stand for a reception, counter, or table.",
         image: { src: "/images/products/catalog/review-stand-white.webp", alt: "White Google Review NFC display stand" },
         details: ["Display stand", "Standard design without personalization"],
@@ -391,7 +384,7 @@ export const en = {
       productOptions: [
         { value: "standard-card", label: "Standard Card · CHF 49.–" },
         { value: "standard-pair", label: "Two Standard Cards · CHF 80.–" },
-        { value: "standard-stand", label: "Standard Stand · CHF 69.–" },
+        { value: "standard-stand", label: "Standard Stand · CHF 49.–" },
         { value: "personalized-card", label: "Personalized Card · CHF 69.–" },
         { value: "fully-custom-card", label: "Fully Customized Card · CHF 99.–" },
       ],
@@ -447,7 +440,7 @@ export const en = {
         {
           question: "What does it cost and what is included?",
           answer:
-            "A Standard Card costs CHF 49, two cost CHF 80, the Standard Stand CHF 69, Personalized CHF 69, and Fully Customized CHF 99. Programming and setup are included; quantity discounts apply to larger orders.",
+            "A Standard Card or Standard Stand costs CHF 49, two Standard Cards cost CHF 80, Personalized costs CHF 69, and Fully Customized costs CHF 99. Programming and setup are included; quantity discounts apply to larger orders.",
         },
       ],
     },

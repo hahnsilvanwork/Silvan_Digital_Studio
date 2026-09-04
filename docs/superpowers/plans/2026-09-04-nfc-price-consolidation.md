@@ -17,11 +17,11 @@
 - Modify: `tests/unit/locales.test.ts`
 - Modify: `tests/unit/pages.test.tsx`
 
-- [ ] **Step 1: Change the expected stand catalogue price**
+- [x] **Step 1: Change the expected stand catalogue price**
 
 In `spline-product-content.test.ts`, change the `standard-stand` expectation from `CHF 69.–` to `CHF 49.–`.
 
-- [ ] **Step 2: Assert four lower pricing entries**
+- [x] **Step 2: Assert four lower pricing entries**
 
 Add a locale-independent assertion:
 
@@ -35,11 +35,11 @@ expect(content.reviews.products.map(({ id }) => id)).toEqual([
 ]);
 ```
 
-- [ ] **Step 3: Update the localized price-array expectation**
+- [x] **Step 3: Update the localized price-array expectation**
 
 The catalogue array must expect the stand at CHF 49 while retaining Personalized at CHF 69.
 
-- [ ] **Step 4: Run the focused tests and confirm RED**
+- [x] **Step 4: Run the focused tests and confirm RED**
 
 Run:
 
@@ -55,19 +55,19 @@ Expected: failure because content still contains five tiers and a CHF 69 stand.
 - Modify: `src/content/de.ts`
 - Modify: `src/content/en.ts`
 
-- [ ] **Step 1: Consolidate the lower overview**
+- [x] **Step 1: Consolidate the lower overview**
 
 Rename the first tier to `Standard Card oder Standard Stand` / `Standard Card or Standard Stand`, keep it at CHF 49, and remove the separate `standard-stand` tier from `reviews.products`.
 
-- [ ] **Step 2: Update catalogue and inquiry prices**
+- [x] **Step 2: Update catalogue and inquiry prices**
 
 Set the `review-stand-white` catalogue price to `CHF 49.–` and the `standard-stand` inquiry label to `Standard Stand · CHF 49.–` in both locales.
 
-- [ ] **Step 3: Update the FAQ summary**
+- [x] **Step 3: Update the FAQ summary**
 
 State that a Standard Card or Standard Stand costs CHF 49 in German and English. Keep the two-card, Personalized, Fully Customized, setup, and quantity-discount information unchanged.
 
-- [ ] **Step 4: Run focused and complete verification**
+- [x] **Step 4: Run focused and complete verification**
 
 Run:
 
@@ -81,7 +81,7 @@ npm run build
 
 Expected: all commands exit with code 0.
 
-- [ ] **Step 5: Commit implementation**
+- [x] **Step 5: Commit implementation**
 
 ```powershell
 git add -- src/content/de.ts src/content/en.ts tests/unit/spline-product-content.test.ts tests/unit/locales.test.ts tests/unit/pages.test.tsx docs/superpowers/plans/2026-09-04-nfc-price-consolidation.md

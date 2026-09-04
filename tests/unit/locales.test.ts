@@ -208,8 +208,13 @@ describe("locale content", () => {
         "CHF 49.–",
         "CHF 80.–",
         "CHF 69.–",
-        "CHF 69.–",
         "CHF 99.–",
+      ]);
+      expect(content.reviews.products.map(({ id }) => id)).toEqual([
+        "standard-card",
+        "standard-pair",
+        "personalized-card",
+        "fully-custom-card",
       ]);
       expect(content.reviews.quantityDiscount).toMatch(quantityDiscount);
       expect(content.presence.startingPrice).toBe(presencePrice);

@@ -27,11 +27,20 @@ describe("NFC and QR product catalogue", () => {
       [
         ["standard-card", "CHF 49.–"],
         ["standard-pair", "CHF 80.–"],
-        ["standard-stand", "CHF 69.–"],
         ["personalized-card", "CHF 69.–"],
         ["fully-custom-card", "CHF 99.–"],
       ],
     );
+    expect(content.reviews.products).toHaveLength(4);
+    expect(
+      content.reviews.catalog.find(({ id }) => id === "review-stand-white")
+        ?.price,
+    ).toBe("CHF 49.–");
+    expect(
+      content.reviews.inquiry.productOptions.find(
+        ({ value }) => value === "standard-stand",
+      )?.label,
+    ).toContain("CHF 49.–");
   });
 
   it.each(locales)("ships every catalogue image for %s", (locale) => {
