@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import type {
   NfcProduct,
@@ -48,7 +48,7 @@ export function ProductCatalog({
   const railRef = useRef<HTMLDivElement>(null);
   const railId = useId();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (selectedProduct === null && returnFocusRef.current) {
       returnFocusRef.current.focus();
       returnFocusRef.current = null;
