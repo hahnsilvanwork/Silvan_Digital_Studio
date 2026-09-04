@@ -167,15 +167,15 @@ export interface PageSeo {
 }
 
 export type ReviewInquiryFieldName =
+  | "destination"
   | "product"
+  | "shape"
+  | "size"
   | "quantity"
-  | "variant"
   | "businessName"
   | "contactPerson"
-  | "googleUrl"
-  | "street"
-  | "postalCode"
-  | "city"
+  | "setup"
+  | "destinationUrl"
   | "note";
 
 export interface ReviewInquiryField {
@@ -202,7 +202,11 @@ export interface ReviewInquiryContent {
    * the order form -- which is exactly how the CHF 80 two-card bundle was
    * priced on the page but impossible to actually ask for.
    */
-  readonly productOptions: readonly string[];
+  readonly destinationOptions: readonly InquiryOption[];
+  readonly productOptions: readonly InquiryOption[];
+  readonly shapeOptions: readonly InquiryOption[];
+  readonly sizeOptions: readonly InquiryOption[];
+  readonly setupOptions: readonly InquiryOption[];
   readonly submitLabel: string;
   readonly editLabel: string;
   readonly requiredError: string;
@@ -223,6 +227,11 @@ export interface ProductVisualization {
   readonly sceneUrl: string;
   readonly fallbackImage?: string;
   readonly ariaLabel: string;
+}
+
+export interface InquiryOption {
+  readonly value: string;
+  readonly label: string;
 }
 
 export type ProductCategory = "reviews" | "menu" | "custom";

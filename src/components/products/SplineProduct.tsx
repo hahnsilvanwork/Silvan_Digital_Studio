@@ -42,6 +42,10 @@ export interface SplineProductProps extends ScenePresentation {
   readonly priority?: boolean;
   /** Fires once, when the 3D has taken over from the still. */
   readonly onReady?: () => void;
+  /** Reports a runtime, scene, or graphics-context failure to the owner. */
+  readonly onError?: () => void;
+  /** An explicit modal may load a stationary scene for reduced-motion users. */
+  readonly allowReducedMotion?: boolean;
 }
 
 type LoadState = "idle" | "loading" | "ready" | "error" | "reduced-motion";
@@ -76,6 +80,8 @@ interface ActiveSplineProps extends FallbackProps, ScenePresentation {
   readonly running: boolean;
   readonly onSettled: () => void;
   readonly onReady?: () => void;
+  readonly onError?: () => void;
+  readonly motionAllowed: boolean;
 }
 
 function ActiveSpline({
@@ -85,6 +91,8 @@ function ActiveSpline({
   running,
   onSettled,
   onReady,
+  onError,
+  motionAllowed,
   secondsPerRevolution,
   sweepDegrees,
 }: ActiveSplineProps) {
@@ -109,6 +117,7 @@ function ActiveSpline({
         if (cancelled) return;
 
         setState("error");
+        onError?.();
         onSettled();
       },
     );
@@ -116,7 +125,7 @@ function ActiveSpline({
     return () => {
       cancelled = true;
     };
-  }, [onSettled]);
+  }, [onError, onSettled]);
 
   useEffect(() => {
     const viewer = viewerRef.current;
@@ -127,6 +136,7 @@ function ActiveSpline({
       appRef.current = null;
       setRuntimeReady(false);
       setState("error");
+      onError?.();
       onSettled();
     };
     const complete = () => {
@@ -139,6 +149,7 @@ function ActiveSpline({
           secondsPerRevolution,
           sweepDegrees,
         });
+        if (!motionAllowed) setTurntableTurning(app, false);
         setCentreVersion((version) => version + 1);
       }
 
@@ -156,7 +167,7 @@ function ActiveSpline({
       viewer.removeEventListener("load-complete", complete);
       viewer.removeEventListener("context-loss", lost);
     };
-  }, [onReady, onSettled, runtimeReady, secondsPerRevolution, sweepDegrees]);
+  }, [motionAllowed, onError, onReady, onSettled, runtimeReady, secondsPerRevolution, sweepDegrees]);
 
   useEffect(() => {
     const app = appRef.current;
@@ -178,7 +189,7 @@ function ActiveSpline({
 
   useEffect(() => {
     const app = appRef.current;
-    if (!app || state !== "ready" || !running) return;
+    if (!app || state !== "ready" || !running || !motionAllowed) return;
 
     const sweep = ((sweepDegrees ?? DEFAULT_SWEEP_DEGREES) * Math.PI) / 180;
     const timeout = sweepTimeoutMs({ secondsPerRevolution, sweepDegrees });
@@ -226,7 +237,7 @@ function ActiveSpline({
       window.clearTimeout(timer);
       setTurntableTurning(app, false);
     };
-  }, [centreVersion, running, secondsPerRevolution, state, sweepDegrees]);
+  }, [centreVersion, motionAllowed, running, secondsPerRevolution, state, sweepDegrees]);
 
   useEffect(() => {
     const app = appRef.current;
@@ -248,13 +259,16 @@ function ActiveSpline({
         setCentreVersion((version) => version + 1);
       })
       .catch(() => {
-        if (!cancelled) setState("error");
+        if (!cancelled) {
+          setState("error");
+          onError?.();
+        }
       });
 
     return () => {
       cancelled = true;
     };
-  }, [sceneUrl, secondsPerRevolution, state, sweepDegrees]);
+  }, [onError, sceneUrl, secondsPerRevolution, state, sweepDegrees]);
 
   return (
     <span className={styles.active} data-spline-state={state}>
@@ -278,6 +292,8 @@ export function SplineProduct({
   ariaLabel,
   priority = false,
   onReady,
+  onError,
+  allowReducedMotion = false,
   secondsPerRevolution,
   sweepDegrees,
 }: SplineProductProps) {
@@ -291,6 +307,7 @@ export function SplineProduct({
   // answer for the moment before the first intersection is delivered.
   const [onScreen, setOnScreen] = useState(true);
   const { hasStarted, requestStart, finishStart } = useSplineSceneSlot(slotId);
+  const motionDisabled = reducedMotion && !allowReducedMotion;
 
   useEffect(() => {
     if (!window.matchMedia) return;
@@ -306,12 +323,15 @@ export function SplineProduct({
 
   useEffect(() => {
     const frame = frameRef.current;
-    if (!frame || reducedMotion) return;
+    if (!frame || motionDisabled) return;
 
     // Read the preference again rather than trusting this render: on the first
     // commit the state above is still the hydration default, and a browser can
     // deliver the first intersection before React re-renders with the truth.
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    if (
+      !allowReducedMotion &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    ) return;
 
     if (!window.IntersectionObserver) {
       requestStart(0);
@@ -337,11 +357,15 @@ export function SplineProduct({
     observer.observe(frame);
 
     return () => observer.disconnect();
-  }, [priority, reducedMotion, requestStart]);
+  }, [allowReducedMotion, motionDisabled, priority, requestStart]);
 
   useEffect(() => {
     const frame = frameRef.current;
-    if (!frame || reducedMotion || !window.IntersectionObserver) return;
+    if (
+      !frame ||
+      motionDisabled ||
+      !window.IntersectionObserver
+    ) return;
 
     // Deliberately without the head start above: the viewer suspends its own
     // loading the moment it truly leaves the viewport, so anything wider than
@@ -355,9 +379,10 @@ export function SplineProduct({
     observer.observe(frame);
 
     return () => observer.disconnect();
-  }, [reducedMotion]);
+  }, [motionDisabled]);
 
-  const inactiveState: LoadState = reducedMotion ? "reduced-motion" : "idle";
+  const inactiveState: LoadState =
+    motionDisabled ? "reduced-motion" : "idle";
 
   return (
     <figure
@@ -369,6 +394,8 @@ export function SplineProduct({
       {hasStarted ? (
         <ActiveSpline
           fallbackImage={fallbackImage}
+          motionAllowed={!reducedMotion}
+          onError={onError}
           onReady={onReady}
           onSettled={finishStart}
           priority={priority}

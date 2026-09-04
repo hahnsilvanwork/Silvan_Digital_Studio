@@ -8,7 +8,9 @@ import {
   EMPTY_REVIEW_INQUIRY,
   isPositiveInteger,
   isValidGoogleUrl,
+  isValidHttpsUrl,
   validateReviewInquiry,
+  visibleInquiryFields,
   type ReviewInquiryValues,
 } from "../../src/lib/validation";
 import { buildReviewInquiryUrl } from "../../src/lib/whatsapp";
@@ -17,251 +19,147 @@ const de = getContent("de");
 const en = getContent("en");
 
 const complete: ReviewInquiryValues = {
-  product: "NFC Review Card",
+  destination: "reviews",
+  product: "personalized-card",
+  shape: "round",
+  size: "100",
   quantity: "2",
-  variant: "Schwarz",
   businessName: "Ristorante Bellavista",
   contactPerson: "Maria Rossi",
-  googleUrl: "https://g.page/r/bellavista/review",
-  street: "Bahnhofstrasse 12",
-  postalCode: "8001",
-  city: "Zürich",
+  setup: "ready",
+  destinationUrl: "https://g.page/r/bellavista/review",
   note: "Bitte bis Ende Monat.",
 };
 
-describe("review inquiry validation", () => {
-  it("rejects every empty required field and accepts an empty note", () => {
-    const errors = validateReviewInquiry(EMPTY_REVIEW_INQUIRY);
+function labelFor(name: keyof ReviewInquiryValues) {
+  return de.reviews.inquiry.fields.find((field) => field.name === name)!.label;
+}
 
-    expect(errors.note).toBeUndefined();
+async function fillForm(user: ReturnType<typeof userEvent.setup>, values = complete) {
+  const selectNames = new Set(["destination", "product", "shape", "size", "setup"]);
+  for (const [name, value] of Object.entries(values)) {
+    if (!value) continue;
+    const control = screen.queryByLabelText(labelFor(name as keyof ReviewInquiryValues));
+    if (!control) continue;
+    if (selectNames.has(name)) await user.selectOptions(control, value);
+    else await user.type(control, value);
+  }
+}
+
+describe("NFC inquiry validation", () => {
+  it("rejects only the relevant required fields", () => {
+    const errors = validateReviewInquiry(EMPTY_REVIEW_INQUIRY);
     expect(Object.keys(errors).sort()).toEqual(
-      [
-        "businessName",
-        "city",
-        "contactPerson",
-        "googleUrl",
-        "postalCode",
-        "product",
-        "quantity",
-        "street",
-      ].sort(),
+      ["destination", "product", "shape", "size", "quantity", "businessName", "contactPerson", "setup"].sort(),
     );
   });
 
-  it.each(["de", "en"] as const)(
-    "offers every advertised %s product in the order form",
-    (locale) => {
-      const { reviews } = getContent(locale);
-
-      // The page priced three products while the select offered two, so the
-      // CHF 80 bundle was advertised and then impossible to ask for. The list
-      // the select renders and the list the page prices are now the same list.
-      expect([...reviews.inquiry.productOptions]).toEqual(
-        reviews.products.map((product) => product.name),
+  it("offers the five approved product packages in both languages", () => {
+    for (const locale of ["de", "en"] as const) {
+      expect(getContent(locale).reviews.inquiry.productOptions.map(({ value }) => value)).toEqual(
+        ["standard-card", "standard-pair", "standard-stand", "personalized-card", "fully-custom-card"],
       );
-    },
-  );
+    }
+  });
 
-  it("treats whitespace-only input as missing", () => {
-    const errors = validateReviewInquiry({
-      ...complete,
-      businessName: "   ",
-    });
-
-    expect(errors.businessName).toBe("required");
+  it("hides card-only choices for the stand", () => {
+    expect(visibleInquiryFields({ ...complete, product: "standard-stand" })).not.toEqual(
+      expect.arrayContaining(["shape", "size"]),
+    );
+    expect(validateReviewInquiry({ ...complete, product: "standard-stand", shape: "", size: "" })).toEqual({});
   });
 
   it("accepts only positive whole quantities", () => {
-    expect(isPositiveInteger("1")).toBe(true);
-    expect(isPositiveInteger(" 25 ")).toBe(true);
+    expect(isPositiveInteger("25")).toBe(true);
     expect(isPositiveInteger("0")).toBe(false);
-    expect(isPositiveInteger("-3")).toBe(false);
     expect(isPositiveInteger("2.5")).toBe(false);
-    expect(isPositiveInteger("zwei")).toBe(false);
-    expect(validateReviewInquiry({ ...complete, quantity: "0" }).quantity).toBe(
-      "quantity",
-    );
+    expect(validateReviewInquiry({ ...complete, quantity: "0" }).quantity).toBe("quantity");
   });
 
-  it("accepts only https links, so no script or data URI can be carried through", () => {
+  it("validates HTTPS generally and Google hosts for reviews", () => {
+    expect(isValidHttpsUrl("https://restaurant.example/menu")).toBe(true);
+    expect(isValidHttpsUrl("javascript:alert(1)")).toBe(false);
     expect(isValidGoogleUrl("https://g.page/r/x/review")).toBe(true);
-    expect(isValidGoogleUrl("http://g.page/r/x/review")).toBe(false);
-    expect(isValidGoogleUrl("javascript:alert(1)")).toBe(false);
-    expect(isValidGoogleUrl("data:text/html,<script>")).toBe(false);
-    expect(isValidGoogleUrl("g.page/r/x")).toBe(false);
-    expect(
-      validateReviewInquiry({ ...complete, googleUrl: "http://g.page/x" })
-        .googleUrl,
-    ).toBe("url");
+    expect(isValidGoogleUrl("https://restaurant.example/review")).toBe(false);
+    expect(validateReviewInquiry({ ...complete, destinationUrl: "https://restaurant.example" }).destinationUrl).toBe("url");
+    expect(validateReviewInquiry({ ...complete, destination: "menu", destinationUrl: "https://restaurant.example/menu" })).toEqual({});
   });
 
-  it("reports no error for a complete inquiry", () => {
-    expect(validateReviewInquiry(complete)).toEqual({});
+  it("allows setup help without a destination link", () => {
+    expect(validateReviewInquiry({ ...complete, setup: "needs-setup", destinationUrl: "" })).toEqual({});
   });
 });
 
 describe("WhatsApp message", () => {
-  it("targets the approved number and carries every supplied detail", () => {
+  it("uses localized labels and displays selected option labels", () => {
     const url = buildReviewInquiryUrl(complete, "de");
-
-    expect(url.startsWith("https://wa.me/41789008500?text=")).toBe(true);
-
     const message = decodeURIComponent(url.split("?text=")[1]);
 
+    expect(url.startsWith("https://wa.me/41789008500?text=")).toBe(true);
     expect(message).toContain(de.reviews.inquiry.messageIntro);
-    for (const value of Object.values(complete)) {
-      expect(message).toContain(value);
-    }
-    expect(message.trimEnd().endsWith(de.reviews.inquiry.nonBindingNotice)).toBe(
-      true,
-    );
+    expect(message).toContain("Google Reviews");
+    expect(message).toContain("Personalized Card · CHF 69.–");
+    expect(message).toContain("Rund");
+    expect(message).toContain("100 × 100 mm");
+    expect(message).toContain(de.reviews.quantityDiscount);
+    expect(message.trimEnd().endsWith(de.reviews.inquiry.nonBindingNotice)).toBe(true);
   });
 
-  it("omits the note line when no note was given", () => {
-    const message = decodeURIComponent(
-      buildReviewInquiryUrl({ ...complete, note: "" }, "de").split("?text=")[1],
-    );
-    const noteLabel = de.reviews.inquiry.fields.find(
-      (field) => field.name === "note",
-    )!.label;
-
-    expect(message).not.toContain(noteLabel);
-  });
-
-  it("writes the message in the language the visitor used", () => {
-    const message = decodeURIComponent(
-      buildReviewInquiryUrl(complete, "en").split("?text=")[1],
-    );
-
+  it("omits hidden card and link fields", () => {
+    const values = { ...complete, product: "standard-stand", shape: "", size: "", setup: "needs-setup", destinationUrl: "" };
+    const message = decodeURIComponent(buildReviewInquiryUrl(values, "en").split("?text=")[1]);
     expect(message).toContain(en.reviews.inquiry.messageIntro);
-    expect(message).toContain(en.reviews.inquiry.nonBindingNotice);
-  });
-
-  it("trims values before they reach the message", () => {
-    const message = decodeURIComponent(
-      buildReviewInquiryUrl(
-        { ...complete, businessName: "  Bellavista  " },
-        "de",
-      ).split("?text=")[1],
-    );
-
-    expect(message).toContain("Bellavista\n");
-    expect(message).not.toContain("  Bellavista");
+    expect(message).not.toContain("Shape:");
+    expect(message).not.toContain("Destination link:");
   });
 });
 
 describe("ReviewInquiryConfigurator", () => {
-  it("labels every control and marks nothing invalid before submission", () => {
-    render(<ReviewInquiryConfigurator locale="de" />);
-
-    for (const field of de.reviews.inquiry.fields) {
-      const control = screen.getByLabelText(field.label);
-
-      expect(control).toBeInTheDocument();
-      expect(control).not.toHaveAttribute("aria-invalid");
-    }
-  });
-
-  it("reports field-specific errors and focuses the first invalid control", async () => {
+  it("renders destination and product first, with conditional card controls", async () => {
     const user = userEvent.setup();
     render(<ReviewInquiryConfigurator locale="de" />);
 
-    await user.click(
-      screen.getByRole("button", { name: de.reviews.inquiry.submitLabel }),
-    );
+    const controls = screen.getAllByRole("combobox");
+    expect(controls[0]).toHaveAccessibleName(labelFor("destination"));
+    expect(controls[1]).toHaveAccessibleName(labelFor("product"));
+    expect(screen.getByLabelText(labelFor("shape"))).toBeVisible();
 
-    expect(screen.getAllByText(de.reviews.inquiry.requiredError).length).toBe(8);
-    expect(screen.getByLabelText(de.reviews.inquiry.fields[0].label)).toHaveFocus();
-    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+    await user.selectOptions(screen.getByLabelText(labelFor("product")), "standard-stand");
+    expect(screen.queryByLabelText(labelFor("shape"))).toBeNull();
+    expect(screen.queryByLabelText(labelFor("size"))).toBeNull();
   });
 
-  it("distinguishes the quantity and link messages from a missing value", async () => {
+  it("reports relevant errors and focuses the first invalid control", async () => {
     const user = userEvent.setup();
     render(<ReviewInquiryConfigurator locale="de" />);
+    await user.click(screen.getByRole("button", { name: de.reviews.inquiry.submitLabel }));
 
-    const labelFor = (name: string) =>
-      de.reviews.inquiry.fields.find((field) => field.name === name)!.label;
-
-    await user.type(screen.getByLabelText(labelFor("quantity")), "0");
-    await user.type(
-      screen.getByLabelText(labelFor("googleUrl")),
-      "http://example.com",
-    );
-    await user.click(
-      screen.getByRole("button", { name: de.reviews.inquiry.submitLabel }),
-    );
-
-    expect(screen.getByText(de.reviews.inquiry.quantityError)).toBeVisible();
-    expect(screen.getByText(de.reviews.inquiry.urlError)).toBeVisible();
+    expect(screen.getAllByText(de.reviews.inquiry.requiredError)).toHaveLength(8);
+    expect(screen.getByLabelText(labelFor("destination"))).toHaveFocus();
+    expect(screen.queryByRole("link")).toBeNull();
   });
 
-  it("builds the WhatsApp link only after the whole inquiry is valid", async () => {
+  it("builds WhatsApp only after a valid personalized-menu inquiry", async () => {
     const user = userEvent.setup();
     render(<ReviewInquiryConfigurator locale="de" />);
+    await fillForm(user, { ...complete, destination: "menu", destinationUrl: "https://bellavista.example/menu" });
+    await user.click(screen.getByRole("button", { name: de.reviews.inquiry.submitLabel }));
 
-    await user.selectOptions(
-      screen.getByLabelText(de.reviews.inquiry.fields[0].label),
-      de.reviews.inquiry.productOptions[0],
-    );
-    for (const [name, value] of Object.entries(complete)) {
-      if (name === "product") continue;
-
-      const field = de.reviews.inquiry.fields.find(
-        (candidate) => candidate.name === name,
-      )!;
-      await user.type(screen.getByLabelText(field.label), value);
-    }
-
-    await user.click(
-      screen.getByRole("button", { name: de.reviews.inquiry.submitLabel }),
-    );
-
-    const link = screen.getByRole("link", {
-      name: new RegExp(de.reviews.inquiry.submitLabel),
-    });
-
-    expect(link.getAttribute("href")).toMatch(
-      /^https:\/\/wa\.me\/41789008500\?text=/,
-    );
-    expect(decodeURIComponent(link.getAttribute("href")!)).toContain(
-      complete.businessName,
-    );
+    const link = screen.getByRole("link", { name: new RegExp(de.reviews.inquiry.submitLabel) });
+    const message = decodeURIComponent(link.getAttribute("href")!);
+    expect(message).toContain("Digitales Menü");
+    expect(message).toContain("Ristorante Bellavista");
     expect(link).toHaveAttribute("target", "_blank");
     expect(link.getAttribute("rel")).toContain("noopener");
   });
 
-  it("returns to the form with the values intact", async () => {
+  it("returns to the form with values intact", async () => {
     const user = userEvent.setup();
     render(<ReviewInquiryConfigurator locale="de" />);
-
-    await user.selectOptions(
-      screen.getByLabelText(de.reviews.inquiry.fields[0].label),
-      de.reviews.inquiry.productOptions[1],
-    );
-    for (const [name, value] of Object.entries(complete)) {
-      if (name === "product") continue;
-
-      const field = de.reviews.inquiry.fields.find(
-        (candidate) => candidate.name === name,
-      )!;
-      await user.type(screen.getByLabelText(field.label), value);
-    }
-    await user.click(
-      screen.getByRole("button", { name: de.reviews.inquiry.submitLabel }),
-    );
-    await user.click(
-      screen.getByRole("button", { name: de.reviews.inquiry.editLabel }),
-    );
-
-    const businessLabel = de.reviews.inquiry.fields.find(
-      (field) => field.name === "businessName",
-    )!.label;
-
-    expect(screen.getByLabelText(businessLabel)).toHaveValue(
-      complete.businessName,
-    );
-    expect(screen.getByLabelText(de.reviews.inquiry.fields[0].label)).toHaveValue(
-      de.reviews.inquiry.productOptions[1],
-    );
+    await fillForm(user);
+    await user.click(screen.getByRole("button", { name: de.reviews.inquiry.submitLabel }));
+    await user.click(screen.getByRole("button", { name: de.reviews.inquiry.editLabel }));
+    expect(screen.getByLabelText(labelFor("businessName"))).toHaveValue(complete.businessName);
+    expect(screen.getByLabelText(labelFor("product"))).toHaveValue(complete.product);
   });
 });

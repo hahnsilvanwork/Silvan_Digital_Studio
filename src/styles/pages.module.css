@@ -250,6 +250,29 @@
   font-size: var(--text-body);
 }
 
+.useCaseGrid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  margin-block-end: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.useCase {
+  display: grid;
+  gap: var(--space-xs);
+  padding-block: var(--space-sm);
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
+.useCase h3 {
+  font-size: var(--text-subitem);
+}
+
+.useCase p {
+  max-inline-size: 34ch;
+  color: var(--color-ink-muted);
+}
+
 /* The dark band re-points the muted and line tokens instead of restating a
    colour on every descendant. */
 .darkBand {

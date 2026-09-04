@@ -1,6 +1,10 @@
 import type { Locale } from "../content/types";
 import { getContent } from "./locales";
-import { trimInquiry, type ReviewInquiryValues } from "./validation";
+import {
+  trimInquiry,
+  visibleInquiryFields,
+  type ReviewInquiryValues,
+} from "./validation";
 
 /**
  * Builds the wa.me deep link for a Review Card enquiry.
@@ -21,14 +25,25 @@ export function buildReviewInquiryUrl(
   // screen summarises, so a new field cannot appear on screen and go missing
   // from the message.
   const lines = [inquiry.messageIntro, ""];
+  const visible = new Set(visibleInquiryFields(trimmed));
+  const optionGroups = {
+    destination: inquiry.destinationOptions,
+    product: inquiry.productOptions,
+    shape: inquiry.shapeOptions,
+    size: inquiry.sizeOptions,
+    setup: inquiry.setupOptions,
+  } as const;
 
   for (const field of inquiry.fields) {
+    if (!visible.has(field.name)) continue;
     const value = trimmed[field.name];
     if (value === "") continue;
-    lines.push(`${field.label}: ${value}`);
+    const options = optionGroups[field.name as keyof typeof optionGroups];
+    const displayed = options?.find((option) => option.value === value)?.label ?? value;
+    lines.push(`${field.label}: ${displayed}`);
   }
 
-  lines.push("", inquiry.nonBindingNotice);
+  lines.push("", content.reviews.quantityDiscount, inquiry.nonBindingNotice);
 
   return `${content.contact.details.whatsappHref}?text=${encodeURIComponent(
     lines.join("\n"),

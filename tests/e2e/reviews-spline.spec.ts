@@ -1,11 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
 
-declare global {
-  interface Window {
-    __splineLoads?: readonly string[];
-  }
-}
-
 const RUNTIME =
   "https://cdn.spline.design/@splinetool/viewer@2.0.16/build/spline-viewer.js";
 
@@ -13,305 +7,83 @@ async function stubSpline(page: Page) {
   await page.route(RUNTIME, (route) =>
     route.fulfill({
       contentType: "application/javascript",
-      // Stands in for the real runtime so the site integration is tested
-      // without depending on Spline uptime. It mimics the parts the page
-      // touches: the load event, the application handle, and in-place loading.
-      body: `setTimeout(() => {
-        if (!customElements.get("spline-viewer")) {
-          customElements.define("spline-viewer", class extends HTMLElement {
-            connectedCallback() {
-              window.__splineLoads = window.__splineLoads ?? [];
-              this._spline = {
-                load: (url) => {
-                  window.__splineLoads.push(url);
-                  this.setAttribute("data-loaded-scene", url);
-                  return Promise.resolve();
-                },
-                play: () => { this.setAttribute("data-running", "true"); },
-                stop: () => { this.setAttribute("data-running", "false"); },
-                setBackgroundColor: () => {},
-                _controls: { orbitControls: {
-                  autoRotate: false,
-                  autoRotateSpeed: 2,
-                  autoRotateClockwise: true,
-                  hoverRotatePanMode: 1,
-                  rotateLeft: (() => {
-                    const calls = [];
-                    const fn = (angle) => { calls.push(angle); };
-                    fn.mock = { calls };
-                    return fn;
-                  })(),
-                } },
-              };
-              setTimeout(() => {
-                this.setAttribute("data-loaded-scene", this.getAttribute("url"));
-                this.dispatchEvent(new CustomEvent("load-complete"));
-              }, 100);
-            }
-          });
-        }
-      }, 100);`,
+      body: `if (!customElements.get("spline-viewer")) {
+        customElements.define("spline-viewer", class extends HTMLElement {
+          connectedCallback() {
+            this._spline = {
+              play: () => {}, stop: () => {}, setBackgroundColor: () => {},
+              _controls: { orbitControls: {
+                autoRotate: false, autoRotateSpeed: 2,
+                autoRotateClockwise: true, hoverRotatePanMode: 1,
+                rotateLeft: () => {}, spherical: { theta: 0 }
+              } }
+            };
+            setTimeout(() => this.dispatchEvent(new CustomEvent("load-complete")), 50);
+          }
+        });
+      }`,
     }),
   );
 }
 
-test.describe("Google Review Spline products", () => {
-  test.beforeEach(async ({ page }) => {
-    await stubSpline(page);
-  });
+test.describe("image-first NFC product catalogue", () => {
+  test.beforeEach(async ({ page }) => stubSpline(page));
 
-  for (const width of [320, 375, 390, 430]) {
-    test(`fits and scrolls at ${width}px`, async ({ page }) => {
-      await page.setViewportSize({ width, height: 844 });
+  for (const width of [320, 768, 1024, 1280, 1536]) {
+    test(`fits the viewport and keeps prices visible at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
       await page.goto("/reviews");
 
-      const heroPlacement = page.locator('[data-spline-placement="hero"]');
-      const hero = heroPlacement.getByRole("img");
-      const state = hero.locator("[data-spline-state]");
-      const cta = page.getByRole("link", {
-        name: "Unverbindlich anfragen",
-      });
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
+      await expect(page.locator("spline-viewer")).toHaveCount(0);
+      await expect(page.locator('[data-product-hero] img')).toHaveCount(3);
+      await expect(page.getByText("CHF 49.–", { exact: true }).first()).toBeVisible();
 
-      await expect(hero).toBeVisible();
-      expect(
-        await page.evaluate(() => ({
-          clientWidth: document.documentElement.clientWidth,
-          scrollWidth: document.documentElement.scrollWidth,
-        })),
-      ).toEqual({ clientWidth: width, scrollWidth: width });
-      expect(
-        await cta.evaluate(
-          (node) => {
-            const placement = document.querySelector(
-              '[data-spline-placement="hero"]',
-            );
-
-            return (
-              placement !== null &&
-              Boolean(
-              node.compareDocumentPosition(
-                  placement,
-              ) & Node.DOCUMENT_POSITION_FOLLOWING,
-              )
-            );
-          },
-        ),
-      ).toBe(true);
-
-      const before = await hero.boundingBox();
-      await expect(state).toHaveAttribute("data-spline-state", "ready");
-      const after = await hero.boundingBox();
-
-      expect(after?.width).toBeCloseTo(before?.width ?? 0, 0);
-      expect(after?.height).toBeCloseTo(before?.height ?? 0, 0);
-      await expect(hero).toHaveCSS("touch-action", "pan-y");
-
-      await hero.scrollIntoViewIfNeeded();
-      const startY = await page.evaluate(() => scrollY);
-
-      if (test.info().project.use.hasTouch) {
-        // Mobile WebKit exposes no wheel. The equivalent guarantee there is
-        // that the viewer only claims horizontal gestures and that the
-        // document itself is never scroll-locked by the 3D surface.
-        await expect(heroPlacement.locator("spline-viewer")).toHaveCSS(
-          "touch-action",
-          "pan-y",
-        );
-        await page.evaluate(() => scrollBy(0, 500));
-      } else {
-        const box = await hero.boundingBox();
-        if (!box) throw new Error("Hero Spline frame has no box");
-        await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-        await page.mouse.wheel(0, 500);
+      for (const control of await page.getByRole("button", { name: /Google Reviews|Menü|Individuell/ }).all()) {
+        // Firefox reports a 44 CSS-pixel box as 43.9999 at some scale factors.
+        expect((await control.boundingBox())?.height).toBeGreaterThanOrEqual(43.9);
       }
-
-      await expect
-        .poll(() => page.evaluate(() => scrollY))
-        .toBeGreaterThan(startY);
-
-      await cta.click();
-      await expect(page).toHaveURL(/#inquiry$/);
     });
   }
 
-  test("never rebuilds a scene while the visitor scrolls", async ({ page }) => {
-    await page.addInitScript(() => {
-      const created: string[] = [];
-      (window as unknown as { __created: string[] }).__created = created;
-      const observer = new MutationObserver((records) => {
-        for (const record of records) {
-          for (const node of record.addedNodes) {
-            if (node.nodeName === "SPLINE-VIEWER") created.push("viewer");
-          }
-        }
-      });
-      const start = () =>
-        observer.observe(document.documentElement, {
-          childList: true,
-          subtree: true,
-        });
-
-      if (document.documentElement) start();
-      else document.addEventListener("readystatechange", start, { once: true });
+  test("loads one 3D scene only after a deliberate click and removes it on close", async ({ page }) => {
+    let runtimeRequests = 0;
+    page.on("request", (request) => {
+      if (request.url() === RUNTIME) runtimeRequests += 1;
     });
-
     await page.goto("/reviews");
-    await expect(page.locator("spline-viewer")).toHaveCount(1);
+    expect(runtimeRequests).toBe(0);
 
-    const products = page.locator('[data-spline-placement="products"]');
-    await products.scrollIntoViewIfNeeded();
-    await expect(products.locator("[data-spline-state]")).toHaveAttribute(
-      "data-spline-state",
-      "ready",
-    );
+    const trigger = page.getByRole("button", { name: "In 3D ansehen" }).first();
+    await trigger.click();
+    const dialog = page.locator('[data-product-3d-dialog]');
+    await expect(dialog).toBeVisible();
+    await expect(dialog.locator("spline-viewer")).toHaveCount(1);
+    await expect.poll(() => runtimeRequests).toBe(1);
 
-    // Scrolling back and forth used to tear each scene down and rebuild it,
-    // which re-downloaded the scene and flooded the console with WebGPU
-    // swapchain errors.
-    for (let pass = 0; pass < 2; pass += 1) {
-      await page.evaluate(() => scrollTo(0, 0));
-      await page.waitForTimeout(300);
-      await products.scrollIntoViewIfNeeded();
-      await page.waitForTimeout(300);
-    }
+    const box = await dialog.boundingBox();
+    const viewport = page.viewportSize();
+    expect(box && viewport && box.width <= viewport.width && box.height <= viewport.height).toBe(true);
 
-    expect(
-      await page.evaluate(
-        () => (window as unknown as { __created: string[] }).__created.length,
-      ),
-    ).toBe(2);
-    await expect(page.locator("spline-viewer")).toHaveCount(2);
+    await dialog.getByRole("button", { name: "3D-Ansicht schliessen" }).click();
+    await expect(dialog).toHaveCount(0);
+    await expect(page.locator("spline-viewer")).toHaveCount(0);
+    await expect(trigger).toBeFocused();
   });
 
-  test("turns the product instead of waiting for a pointer", async ({
-    page,
-  }) => {
+  test("shows exactly three menu placeholders", async ({ page }) => {
     await page.goto("/reviews");
-
-    const hero = page.locator('[data-spline-placement="hero"] spline-viewer');
-    await expect(hero).toHaveAttribute("data-loaded-scene", /splinecode$/);
-
-    expect(
-      await hero.evaluate((node: Element) => {
-        const { _spline } = node as Element & {
-          _spline: {
-            _controls: {
-              orbitControls: {
-                autoRotate: boolean;
-                autoRotateSpeed: number;
-                hoverRotatePanMode: number;
-                rotateLeft: { mock: { calls: readonly unknown[] } };
-              };
-            };
-          };
-        };
-        const controls = _spline._controls.orbitControls;
-        return {
-          hover: controls.hoverRotatePanMode,
-          secondsPerTurn: Math.round(18.5 / controls.autoRotateSpeed),
-          startsOffCentre: controls.rotateLeft.mock.calls.length > 0,
-        };
-      }),
-    ).toEqual({
-      hover: 0,
-      // The hero sits beside the headline, so it turns at half the pace of
-      // the product section below.
-      secondsPerTurn: 60,
-      startsOffCentre: true,
-    });
+    await page.getByRole("button", { name: "Menü", exact: true }).click();
+    await expect(page.getByText("3D-Modell folgt")).toHaveCount(3);
+    await expect(page.locator("spline-viewer")).toHaveCount(0);
   });
 
-  test("rests between sweeps so the render can sharpen", async ({ page }) => {
-    test.setTimeout(60_000);
-    await page.goto("/reviews");
-
-    const turning = () =>
-      page
-        .locator('[data-spline-placement="hero"] spline-viewer')
-        .evaluate(
-          (node: Element) =>
-            (
-              node as Element & {
-                _spline: {
-                  _controls: { orbitControls: { autoRotate: boolean } };
-                };
-              }
-            )._spline._controls.orbitControls.autoRotate,
-        );
-
-    // Spline only sharpens the image while the camera is still, so the rest
-    // is not a pause in the animation, it is what makes the product look
-    // like a product instead of a preview.
-    await expect.poll(turning, { timeout: 20_000 }).toBe(true);
-    await expect.poll(turning, { timeout: 20_000 }).toBe(false);
-    await expect.poll(turning, { timeout: 20_000 }).toBe(true);
-  });
-
-  test("never swaps the hero product out from under the visitor", async ({
-    page,
-  }) => {
-    test.setTimeout(60_000);
-    await page.goto("/reviews");
-
-    const hero = page.locator('[data-spline-placement="hero"] spline-viewer');
-    await expect(hero).toHaveAttribute("data-loaded-scene", /splinecode$/);
-    const shown = await hero.getAttribute("data-loaded-scene");
-
-    // Loading another scene blocks the main thread for up to nine hundred
-    // milliseconds, measured every fourteen seconds while the hero cycled.
-    // Variety comes from opening on a different product each visit instead.
-    await page.waitForTimeout(30_000);
-
-    expect(await hero.getAttribute("data-loaded-scene")).toBe(shown);
-    expect(await page.evaluate(() => window.__splineLoads?.length ?? 0)).toBe(0);
-  });
-
-  test("lets the visitor choose a product in the section below", async ({
-    page,
-  }) => {
-    await page.goto("/reviews");
-
-    const section = page.locator('[data-spline-placement="products"]');
-    await section.scrollIntoViewIfNeeded();
-
-    const viewer = section.locator("spline-viewer");
-    await expect(viewer).toHaveAttribute("data-loaded-scene", /splinecode$/);
-    const before = await viewer.getAttribute("data-loaded-scene");
-
-    const buttons = section.getByRole("button");
-    expect(await buttons.count()).toBeGreaterThan(1);
-
-    const box = await buttons.nth(1).boundingBox();
-    expect(box?.height).toBeGreaterThanOrEqual(44);
-
-    await buttons.nth(1).click();
-    await expect(buttons.nth(1)).toHaveAttribute("aria-pressed", "true");
-    await expect(viewer).not.toHaveAttribute("data-loaded-scene", before ?? "");
-    await expect(section.locator("spline-viewer")).toHaveCount(1);
-  });
-
-  test("uses two hero columns on desktop", async ({ page }) => {
-    await page.setViewportSize({ width: 1440, height: 1000 });
-    await page.goto("/reviews");
-
-    const copy = await page.locator("[data-reviews-hero-copy]").boundingBox();
-    const product = await page
-      .locator('[data-spline-placement="hero"]')
-      .boundingBox();
-
-    if (!copy || !product) throw new Error("Desktop hero boxes are missing");
-    expect(copy.x + copy.width).toBeLessThanOrEqual(product.x);
-  });
-
-  test("uses only the static representation with reduced motion", async ({
-    page,
-  }) => {
+  test("keeps the first hero image still under reduced motion", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/reviews");
-
-    await expect(page.locator("spline-viewer")).toHaveCount(0);
-    await expect(
-      page.locator('[data-spline-state="reduced-motion"]'),
-    ).toHaveCount(2);
+    const first = page.locator('[data-product-hero] img').first();
+    await expect(first).toHaveAttribute("data-active", "true");
+    await page.waitForTimeout(6000);
+    await expect(first).toHaveAttribute("data-active", "true");
   });
 });

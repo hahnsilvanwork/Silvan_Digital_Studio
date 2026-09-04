@@ -132,7 +132,7 @@ describe("locale content", () => {
   );
 
   it.each(["de" as const, "en" as const])(
-    "declares what each %s address field collects",
+    "declares what each %s personal field collects",
     (locale) => {
       const { fields } = getContent(locale).reviews.inquiry;
       const tokenFor = (name: string) =>
@@ -142,9 +142,7 @@ describe("locale content", () => {
       // nine fields typed by hand.
       expect(tokenFor("contactPerson")).toBe("name");
       expect(tokenFor("businessName")).toBe("organization");
-      expect(tokenFor("street")).toBe("street-address");
-      expect(tokenFor("postalCode")).toBe("postal-code");
-      expect(tokenFor("city")).toBe("address-level2");
+      expect(tokenFor("destinationUrl")).toBe("url");
     },
   );
 
@@ -159,12 +157,12 @@ describe("locale content", () => {
   );
 
   it.each(["de", "en"] as const)(
-    "uses the exact TAP / OPEN / REVIEW labels in %s",
+    "uses the exact TAP / OPEN / ACT labels in %s",
     (locale) => {
       expect(getContent(locale).reviews.process.map(({ label }) => label)).toEqual([
         "TAP",
         "OPEN",
-        "REVIEW",
+        "ACT",
       ]);
     },
   );
@@ -207,9 +205,11 @@ describe("locale content", () => {
         websitePrices,
       );
       expect(content.reviews.products.map(({ price }) => price)).toEqual([
-        "CHF 49",
-        "CHF 69",
-        "CHF 80",
+        "CHF 49.–",
+        "CHF 80.–",
+        "CHF 69.–",
+        "CHF 69.–",
+        "CHF 99.–",
       ]);
       expect(content.reviews.quantityDiscount).toMatch(quantityDiscount);
       expect(content.presence.startingPrice).toBe(presencePrice);
@@ -227,17 +227,15 @@ describe("locale content", () => {
           required,
         })),
       ).toEqual([
+        { name: "destination", required: true },
         { name: "product", required: true },
+        { name: "shape", required: true },
+        { name: "size", required: true },
         { name: "quantity", required: true },
-        // Optional on purpose: the page never publishes the available
-        // colours, so requiring one would only force a guess.
-        { name: "variant", required: false },
         { name: "businessName", required: true },
         { name: "contactPerson", required: true },
-        { name: "googleUrl", required: true },
-        { name: "street", required: true },
-        { name: "postalCode", required: true },
-        { name: "city", required: true },
+        { name: "setup", required: true },
+        { name: "destinationUrl", required: false },
         { name: "note", required: false },
       ]);
       expect(content.reviews.inquiry.requiredError).not.toBe("");

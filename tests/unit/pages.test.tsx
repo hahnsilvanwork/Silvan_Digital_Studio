@@ -163,26 +163,23 @@ describe("Service pages", () => {
 });
 
 describe("ReviewsPage", () => {
-  it("keeps the CTA before the mobile product and retains only the stand photo", () => {
+  it("keeps the CTA before the image-only hero and does not mount 3D", () => {
     render(<ReviewsPage locale="de" />);
 
     const main = screen.getByRole("main");
     const cta = within(main).getByRole("link", {
       name: de.reviews.ctaLabel,
     });
-    const visualizations = within(main).getAllByRole("img", {
-      name: de.reviews.productVisualizations[0].ariaLabel,
-    });
+    const heroImage = within(main).getByAltText(de.reviews.heroImages[0].alt);
 
-    expect(visualizations).toHaveLength(2);
     expect(
-      cta.compareDocumentPosition(visualizations[0]) &
+      cta.compareDocumentPosition(heroImage) &
         Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
-    expect(
-      within(main).getByAltText(de.reviews.secondaryProductImage.alt),
-    ).toBeVisible();
-    expect(within(main).queryByAltText(/Scheckkartenformat/)).toBeNull();
+    expect(main.querySelector("spline-viewer")).toBeNull();
+    expect(main.querySelector("[data-product-3d-dialog]")).toBeNull();
+    expect(within(main).getAllByAltText(de.reviews.heroImages[1].alt)).toHaveLength(1);
+    expect(within(main).getAllByAltText(de.reviews.heroImages[2].alt)).toHaveLength(1);
   });
 
   it("places every product price before the process section", () => {
@@ -199,15 +196,26 @@ describe("ReviewsPage", () => {
     }
   });
 
-  it("uses TAP / OPEN / REVIEW without prompting for five stars", () => {
+  it("uses a generic TAP / OPEN / ACT process", () => {
     render(<ReviewsPage locale="de" />);
 
     const main = screen.getByRole("main");
 
-    for (const label of ["TAP", "OPEN", "REVIEW"]) {
+    for (const label of ["TAP", "OPEN", "ACT"]) {
       expect(within(main).getByText(label)).toBeVisible();
     }
-    expect(main.textContent).not.toMatch(/5\s*Sterne|fünf Sterne/i);
+  });
+
+  it("shows the catalogue categories and broader use cases", () => {
+    render(<ReviewsPage locale="de" />);
+
+    const main = screen.getByRole("main");
+    for (const category of de.reviews.categories) {
+      expect(within(main).getByRole("button", { name: category.label })).toBeVisible();
+    }
+    for (const useCase of de.reviews.useCases) {
+      expect(within(main).getAllByText(useCase.title).length).toBeGreaterThan(0);
+    }
   });
 
   it("shows the quantity discount and the non-binding notice", () => {

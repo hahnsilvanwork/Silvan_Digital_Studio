@@ -1,12 +1,11 @@
-import Image from "next/image";
 import type { CSSProperties } from "react";
 
 import { ContactActions } from "../../components/contact/ContactActions";
 import { SiteShell } from "../../components/layout/SiteShell";
 import { revealSequence } from "../../components/motion/reveal-sequence";
 import { SplitText } from "../../components/motion/SplitText";
-import { ProductShowcase } from "../../components/products/ProductShowcase";
-import { SplineSceneProvider } from "../../components/products/SplineSceneProvider";
+import { ProductCatalog } from "../../components/products/ProductCatalog";
+import { ProductHero } from "../../components/products/ProductHero";
 import { ReviewInquiryConfigurator } from "../../components/reviews/ReviewInquiryConfigurator";
 import { FaqList } from "../../components/services/FaqList";
 import { PriceTierList } from "../../components/services/PriceTierList";
@@ -20,10 +19,6 @@ import { localizePath } from "../../lib/routes";
 import layoutStyles from "../../styles/layout.module.css";
 import pageStyles from "../../styles/pages.module.css";
 
-// The hero sits beside the headline, so it sweeps more slowly than the
-// product section below.
-const HERO_SECONDS_PER_REVOLUTION = 60;
-
 interface ReviewsPageProps {
   readonly locale: Locale;
 }
@@ -35,17 +30,10 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
 
   return (
     <SiteShell currentPath={localizePath("/reviews", locale)} locale={locale}>
-      {/* The runtime and the scenes come from two Spline hosts. Opening those
-        connections while the page is still parsing takes the handshakes off
-        the critical path on mobile. */}
-      <link crossOrigin="anonymous" href="https://cdn.spline.design" rel="preconnect" />
-      <link crossOrigin="anonymous" href="https://prod.spline.design" rel="preconnect" />
-
-      <SplineSceneProvider>
-        <div className={pageStyles.page}>
-          <section
-            className={`${layoutStyles.container} ${pageStyles.pageHeader} ${pageStyles.reviewsHero}`}
-          >
+      <div className={pageStyles.page}>
+        <section
+          className={`${layoutStyles.container} ${pageStyles.pageHeader} ${pageStyles.reviewsHero}`}
+        >
             <div className={pageStyles.reviewsHeroCopy} data-reviews-hero-copy>
               <p className={pageStyles.heroLabel} data-reveal="rise">
                 {reviews.eyebrow}
@@ -76,65 +64,38 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
               </div>
             </div>
 
-            <div
-              className={pageStyles.reviewsHeroProduct}
-              data-spline-placement="hero"
-            >
-              <ProductShowcase
-                priority
-                products={reviews.productVisualizations}
-                rotatePerVisit
-                secondsPerRevolution={HERO_SECONDS_PER_REVOLUTION}
-                selectable={false}
-                selectorLabel={reviews.productSelectorLabel}
+            <div className={pageStyles.reviewsHeroProduct}>
+              <ProductHero
+                images={reviews.heroImages}
+                indicatorLabel={reviews.heroIndicatorLabel}
               />
             </div>
-          </section>
+        </section>
 
-          <section
-            className={`${layoutStyles.container} ${pageStyles.section} ${pageStyles.sectionLead}`}
-          >
-            <h2 className="visually-hidden">{reviews.priceLabel}</h2>
-
-            <div className={pageStyles.productShowcase}>
-              <div
-                className={pageStyles.productSpline}
-                data-spline-placement="products"
-              >
-                <ProductShowcase
-                  products={reviews.productVisualizations}
-                  selectorLabel={reviews.productSelectorLabel}
-                />
-              </div>
-              {reviews.menuVisualizations.length > 0 ? (
-                <div
-                  className={pageStyles.productSpline}
-                  data-spline-placement="menu"
-                >
-                  <ProductShowcase
-                    products={reviews.menuVisualizations}
-                    selectorLabel={reviews.menuSelectorLabel}
-                  />
-                </div>
-              ) : (
-                <span
-                  className={pageStyles.productImage}
-                  data-reveal="scale"
-                  style={{ "--reveal-index": 1 } as CSSProperties}
-                >
-                  <Image
-                    alt={reviews.secondaryProductImage.alt}
-                    height={1080}
-                    sizes="(min-width: 64rem) 46vw, 50vw"
-                    src={reviews.secondaryProductImage.src}
-                    width={1080}
-                  />
-                </span>
-              )}
+        <section
+          className={`${layoutStyles.container} ${pageStyles.section} ${pageStyles.sectionLead}`}
+        >
+            <SectionHeading
+              eyebrow={reviews.eyebrow}
+              title={reviews.catalogLabel}
+            />
+            <div className={pageStyles.sectionBody}>
+              <ProductCatalog
+                categories={reviews.categories}
+                labels={{
+                  category: reviews.catalogLabel,
+                  view3d: reviews.view3dLabel,
+                  comingSoon: reviews.comingSoonLabel,
+                  close: reviews.close3dLabel,
+                  loading: reviews.loading3dLabel,
+                  error: reviews.error3dLabel,
+                  retry: reviews.retry3dLabel,
+                  interact: reviews.interact3dLabel,
+                }}
+                products={reviews.catalog}
+              />
             </div>
 
-            {/* Every price is rendered before any long-form content, so a visitor
-              never has to read the process to find out what it costs. */}
             <div className={pageStyles.sectionBody}>
               <p className={pageStyles.sectionLabel} data-reveal="rise">
                 {reviews.priceLabel}
@@ -144,7 +105,19 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
                 {reviews.quantityDiscount}
               </p>
             </div>
-          </section>
+        </section>
+
+        <section className={`${layoutStyles.container} ${pageStyles.section}`}>
+            <SectionHeading title={reviews.useCasesTitle} />
+            <ul className={`${pageStyles.sectionBody} ${pageStyles.useCaseGrid}`}>
+              {reviews.useCases.map((useCase) => (
+                <li className={pageStyles.useCase} key={useCase.title}>
+                  <h3>{useCase.title}</h3>
+                  <p>{useCase.description}</p>
+                </li>
+              ))}
+            </ul>
+        </section>
 
         <section className={pageStyles.darkBand}>
           <div className={layoutStyles.container}>
@@ -184,9 +157,8 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
           <div className={pageStyles.sectionBody}>
             <ContactActions locale={locale} />
           </div>
-          </section>
-        </div>
-      </SplineSceneProvider>
+        </section>
+      </div>
     </SiteShell>
   );
 }

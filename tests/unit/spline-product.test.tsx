@@ -388,4 +388,38 @@ describe("SplineProduct", () => {
     expect(document.querySelector("spline-viewer")).toBeNull();
     expect(loadSplineViewer).not.toHaveBeenCalled();
   });
+
+  it("reports a runtime failure to an on-demand dialog", async () => {
+    const onError = vi.fn();
+    loadSplineViewer.mockRejectedValueOnce(new Error("offline"));
+    render(
+      <SplineSceneProvider>
+        <SplineProduct
+          ariaLabel="White round tag"
+          onError={onError}
+          sceneUrl="https://example.com/white.splinecode"
+        />
+      </SplineSceneProvider>,
+    );
+    enterViewport();
+
+    await waitFor(() => expect(onError).toHaveBeenCalledTimes(1));
+  });
+
+  it("allows an explicitly requested reduced-motion scene without auto rotation", async () => {
+    vi.stubGlobal("matchMedia", vi.fn(() => matchMedia(true)));
+    render(
+      <SplineSceneProvider>
+        <SplineProduct
+          allowReducedMotion
+          ariaLabel="White round tag"
+          sceneUrl="https://example.com/white.splinecode"
+        />
+      </SplineSceneProvider>,
+    );
+    enterViewport();
+
+    const { app } = await loadedViewer();
+    expect(app._controls.orbitControls.autoRotate).toBe(false);
+  });
 });

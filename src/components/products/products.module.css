@@ -105,16 +105,247 @@
   inline-size: 1.5rem;
   block-size: var(--hairline);
   background: var(--color-line);
-  transition: background-color var(--duration-fast) var(--ease-out);
 }
 
 .heroIndicator[data-active="true"] {
   background: var(--color-ink);
 }
 
+.catalog {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.categoryTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+.categoryTabs button,
+.view3dButton,
+.dialogClose,
+.dialogError button {
+  min-block-size: var(--control-target-min);
+  border: var(--hairline) solid var(--color-line);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: var(--text-action);
+  cursor: pointer;
+}
+
+.categoryTabs button {
+  padding: var(--space-2xs) var(--space-sm);
+}
+
+.categoryTabs button[aria-pressed="true"] {
+  border-color: var(--color-ink);
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.catalogGrid {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.catalogCard {
+  display: grid;
+  overflow: clip;
+  border: var(--hairline) solid var(--color-line);
+  background: var(--color-paper-raised);
+}
+
+.catalogMedia {
+  position: relative;
+  min-inline-size: 0;
+  aspect-ratio: 1;
+  overflow: clip;
+  background: #f0efec;
+}
+
+.catalogImage {
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.catalogCard:hover .catalogImage {
+  transform: scale(1.025);
+}
+
+.catalogCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+}
+
+.catalogCardHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+
+.catalogCardHeading h3 {
+  font-size: var(--text-subitem);
+}
+
+.catalogPrice {
+  flex: none;
+  color: var(--color-ink-muted);
+  font-size: var(--text-price);
+}
+
+.catalogDescription,
+.catalogDetails {
+  color: var(--color-ink-muted);
+}
+
+.catalogDetails {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding-inline-start: 1.15rem;
+  font-size: var(--text-label);
+}
+
+.view3dButton,
+.comingSoon {
+  align-self: flex-start;
+  margin-block-start: auto;
+}
+
+.view3dButton {
+  padding: var(--space-2xs) var(--space-sm);
+  border-color: var(--color-ink);
+}
+
+.comingSoon {
+  padding-block: var(--space-2xs);
+  color: var(--color-ink-muted);
+  font-size: var(--text-label);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.productDialog {
+  inline-size: min(64rem, calc(100% - 2 * var(--page-gutter)));
+  max-block-size: calc(100dvh - 2 * var(--page-gutter));
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: var(--hairline) solid var(--color-line);
+  border-radius: var(--radius-media);
+  background: var(--color-paper-raised);
+  color: var(--color-ink);
+}
+
+.productDialog::backdrop {
+  background: rgb(12 12 12 / 72%);
+  backdrop-filter: blur(0.35rem);
+}
+
+.dialogHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  border-block-end: var(--hairline) solid var(--color-line);
+}
+
+.dialogHeader h2 {
+  font-size: var(--text-item);
+}
+
+.dialogEyebrow,
+.dialogHint {
+  color: var(--color-ink-muted);
+  font-size: var(--text-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dialogClose {
+  display: grid;
+  flex: none;
+  inline-size: var(--control-target-min);
+  padding: 0;
+  place-items: center;
+  font-size: 1.5rem;
+}
+
+.dialogStage {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #f0efec;
+}
+
+.dialogStill,
+.dialogViewer {
+  position: absolute;
+  inset: 0;
+}
+
+.dialogStill {
+  object-fit: cover;
+  opacity: 1;
+  transition: opacity var(--duration-medium) var(--ease-out);
+}
+
+.dialogStill[data-hidden="true"] {
+  opacity: 0;
+}
+
+.dialogViewer {
+  z-index: 1;
+}
+
+.dialogStatus,
+.dialogError {
+  position: absolute;
+  z-index: 2;
+  inset-inline: var(--space-sm);
+  inset-block-end: var(--space-sm);
+  padding: var(--space-xs);
+  background: rgb(255 255 255 / 92%);
+}
+
+.dialogError {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+}
+
+.dialogError button {
+  flex: none;
+  padding-inline: var(--space-sm);
+}
+
+.dialogHint {
+  padding: var(--space-xs) var(--space-sm);
+  text-align: center;
+}
+
+@media (min-width: 44rem) {
+  .catalogGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 72rem) {
+  .catalogGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .heroImage,
-  .heroIndicator {
-    transition: none;
+  .catalogCard:hover .catalogImage {
+    transform: none;
   }
 }

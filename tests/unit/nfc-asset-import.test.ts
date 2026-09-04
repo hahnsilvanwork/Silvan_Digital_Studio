@@ -5,10 +5,10 @@ import { join, resolve } from "node:path";
 import sharp from "sharp";
 import { afterEach, describe, expect, it } from "vitest";
 
-import {
-  SOURCE_TO_OUTPUT,
-  importNfcAssets,
-} from "../../scripts/import-nfc-assets.mjs";
+// The importer stays executable as plain Node.js; its public shape is asserted
+// by these tests and does not need to enter the application TypeScript graph.
+// @ts-expect-error JavaScript maintenance script intentionally has no .d.ts.
+import { SOURCE_TO_OUTPUT, importNfcAssets } from "../../scripts/import-nfc-assets.mjs";
 
 sharp.cache(false);
 
@@ -52,7 +52,9 @@ describe("NFC catalogue asset importer", () => {
 
     await importNfcAssets({ outputDir, sourceDir });
 
-    for (const [sourceName, outputName] of Object.entries(SOURCE_TO_OUTPUT)) {
+    for (const [sourceName, outputName] of Object.entries(
+      SOURCE_TO_OUTPUT as Record<string, string>,
+    )) {
       const source = await stat(join(sourceDir, sourceName));
       const outputPath = join(outputDir, outputName);
       const output = await stat(outputPath);

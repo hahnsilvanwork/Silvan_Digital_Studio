@@ -12,7 +12,9 @@ import type { Locale, ReviewInquiryFieldName } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import {
   EMPTY_REVIEW_INQUIRY,
+  requiredInquiryFields,
   validateReviewInquiry,
+  visibleInquiryFields,
   type ReviewInquiryErrorKind,
   type ReviewInquiryErrors,
   type ReviewInquiryValues,
@@ -40,6 +42,17 @@ export function ReviewInquiryConfigurator({
   const [inquiryUrl, setInquiryUrl] = useState<string | null>(null);
 
   const errorCount = Object.keys(errors).length;
+  const visibleFields = new Set(visibleInquiryFields(values));
+  const requiredFields = new Set(requiredInquiryFields(values));
+
+  const optionsFor = (name: ReviewInquiryFieldName) => {
+    if (name === "destination") return inquiry.destinationOptions;
+    if (name === "product") return inquiry.productOptions;
+    if (name === "shape") return inquiry.shapeOptions;
+    if (name === "size") return inquiry.sizeOptions;
+    if (name === "setup") return inquiry.setupOptions;
+    return null;
+  };
 
   const messageFor = (kind: ReviewInquiryErrorKind) => {
     if (kind === "quantity") return inquiry.quantityError;
@@ -115,7 +128,11 @@ export function ReviewInquiryConfigurator({
         </h3>
         <dl className={styles.summary}>
           {inquiry.fields
-            .filter((field) => values[field.name].trim() !== "")
+            .filter(
+              (field) =>
+                visibleFields.has(field.name) &&
+                values[field.name].trim() !== "",
+            )
             .map((field) => (
               <div className={styles.summaryRow} key={field.name}>
                 <dt className={styles.summaryLabel}>{field.label}</dt>
@@ -174,10 +191,11 @@ export function ReviewInquiryConfigurator({
       </p>
 
       <div className={styles.fields}>
-        {inquiry.fields.map((field) => {
+        {inquiry.fields.filter((field) => visibleFields.has(field.name)).map((field) => {
           const fieldId = `${fieldPrefix}-${field.name}`;
           const errorId = `${fieldId}-error`;
           const error = errors[field.name];
+          const options = optionsFor(field.name);
 
           return (
             <p className={styles.field} key={field.name}>
@@ -187,11 +205,11 @@ export function ReviewInquiryConfigurator({
                 {field.label}
               </label>
 
-              {field.name === "product" ? (
+              {options ? (
                 <select
                   aria-describedby={error ? errorId : undefined}
                   aria-invalid={error ? true : undefined}
-                  aria-required={field.required || undefined}
+                  aria-required={requiredFields.has(field.name) || undefined}
                   className={styles.control}
                   id={fieldId}
                   name={field.name}
@@ -199,9 +217,9 @@ export function ReviewInquiryConfigurator({
                   value={values[field.name]}
                 >
                   <option value="">{field.placeholder}</option>
-                  {inquiry.productOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
+                  {options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
                     </option>
                   ))}
                 </select>
@@ -219,7 +237,7 @@ export function ReviewInquiryConfigurator({
                 <input
                   aria-describedby={error ? errorId : undefined}
                   aria-invalid={error ? true : undefined}
-                  aria-required={field.required || undefined}
+                  aria-required={requiredFields.has(field.name) || undefined}
                   autoComplete={field.autoComplete}
                   className={styles.control}
                   id={fieldId}
@@ -227,7 +245,7 @@ export function ReviewInquiryConfigurator({
                   name={field.name}
                   onChange={(event) => update(field.name, event.target.value)}
                   placeholder={field.placeholder}
-                  type={field.name === "googleUrl" ? "url" : "text"}
+                  type={field.name === "destinationUrl" ? "url" : "text"}
                   value={values[field.name]}
                 />
               )}

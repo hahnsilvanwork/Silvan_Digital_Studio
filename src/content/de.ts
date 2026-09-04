@@ -215,8 +215,8 @@ export const de = {
     processTitle: "Drei einfache Schritte",
     process: [
       { id: "tap", label: "TAP", title: "Berühren", description: "Der Kunde berührt die NFC-Karte oder den Aufsteller mit dem Smartphone." },
-      { id: "open", label: "OPEN", title: "Öffnen", description: "Die Google-Bewertungsseite Ihres Unternehmens öffnet sich direkt." },
-      { id: "review", label: "REVIEW", title: "Bewerten", description: "Der Kunde hinterlässt freiwillig sein ehrliches Feedback." },
+      { id: "open", label: "OPEN", title: "Öffnen", description: "Das hinterlegte Ziel öffnet sich direkt – ohne App und ohne Suchen." },
+      { id: "act", label: "ACT", title: "Handeln", description: "Der Gast bewertet, liest das Menü, reserviert oder speichert Ihre Kontaktdaten." },
     ],
     ctaLabel: "Unverbindlich anfragen",
     heroImages: [
@@ -399,21 +399,41 @@ export const de = {
       alt: "NFC Aufsteller für Tisch oder Kasse mit der Aufforderung, das Unternehmen auf Google zu bewerten",
     },
     inquiry: {
-      title: "Review Card anfragen",
-      intro: "Senden Sie die Eckdaten direkt per WhatsApp. Ich melde mich persönlich bei Ihnen.",
+      title: "NFC & QR Lösung anfragen",
+      intro: "Konfigurieren Sie Ihre Lösung. Die Angaben werden als unverbindliche Anfrage in WhatsApp vorbereitet.",
       fields: [
+        { name: "destination", label: "Ziel oder Anwendung", placeholder: "Anwendung wählen", required: true },
         { name: "product", label: "Produkt", placeholder: "Produkt wählen", required: true },
+        { name: "shape", label: "Form", placeholder: "Form wählen", required: true },
+        { name: "size", label: "Grösse", placeholder: "Grösse wählen", required: true },
         { name: "quantity", label: "Menge", placeholder: "Zum Beispiel 2", required: true },
-        { name: "variant", label: "Farbe oder Variante (optional)", placeholder: "Falls Sie eine Wunschfarbe haben", required: false },
         { name: "businessName", label: "Unternehmen", placeholder: "Name Ihres Unternehmens", required: true, autoComplete: "organization" },
         { name: "contactPerson", label: "Kontaktperson", placeholder: "Vor- und Nachname", required: true, autoComplete: "name" },
-        { name: "googleUrl", label: "Google-Unternehmensprofil oder Bewertungslink", placeholder: "https://…", required: true, autoComplete: "url" },
-        { name: "street", label: "Strasse", placeholder: "Strasse und Hausnummer", required: true, autoComplete: "street-address" },
-        { name: "postalCode", label: "PLZ", placeholder: "8000", required: true, autoComplete: "postal-code" },
-        { name: "city", label: "Ort", placeholder: "Zürich", required: true, autoComplete: "address-level2" },
-        { name: "note", label: "Optionale Nachricht", placeholder: "Was sollte ich noch wissen?", required: false },
+        { name: "setup", label: "Zielseite", placeholder: "Stand der Zielseite wählen", required: true },
+        { name: "destinationUrl", label: "Link zur Zielseite", placeholder: "https://…", required: false, autoComplete: "url" },
+        { name: "note", label: "Design, Farbe oder Nachricht (optional)", placeholder: "Logo, CI-Farben oder weitere Wünsche", required: false },
       ],
-      productOptions: ["NFC Review Card", "NFC Stand", "Zwei NFC Review Cards"],
+      destinationOptions: [
+        { value: "reviews", label: "Google Reviews" },
+        { value: "menu", label: "Digitales Menü" },
+        { value: "booking", label: "Booking & Reservation" },
+        { value: "wifi", label: "Gäste-WLAN" },
+        { value: "contact", label: "Digitale Visitenkarte" },
+        { value: "other", label: "Anderes Ziel" },
+      ],
+      productOptions: [
+        { value: "standard-card", label: "Standard Card · CHF 49.–" },
+        { value: "standard-pair", label: "Zwei Standard Cards · CHF 80.–" },
+        { value: "standard-stand", label: "Standard Stand · CHF 69.–" },
+        { value: "personalized-card", label: "Personalized Card · CHF 69.–" },
+        { value: "fully-custom-card", label: "Fully Customized Card · CHF 99.–" },
+      ],
+      shapeOptions: [{ value: "round", label: "Rund" }, { value: "square", label: "Quadratisch" }],
+      sizeOptions: [{ value: "80", label: "80 × 80 mm" }, { value: "100", label: "100 × 100 mm" }],
+      setupOptions: [
+        { value: "ready", label: "Link ist vorhanden" },
+        { value: "needs-setup", label: "Ziel muss noch eingerichtet werden" },
+      ],
       submitLabel: "Anfrage in WhatsApp öffnen",
       editLabel: "Angaben bearbeiten",
       requiredError: "Bitte füllen Sie dieses Feld aus.",
@@ -422,19 +442,19 @@ export const de = {
           ? "Ein Feld muss noch ausgefüllt oder korrigiert werden."
           : `${count} Felder müssen noch ausgefüllt oder korrigiert werden.`,
       quantityError: "Bitte geben Sie eine gültige Menge ab 1 ein.",
-      urlError: "Bitte geben Sie einen gültigen Google-Link ein.",
+      urlError: "Bitte geben Sie einen gültigen HTTPS-Link ein; für Reviews einen Google-Link.",
       confirmTitle: "Bitte prüfen Sie Ihre Angaben",
       nonBindingNotice: "Dies ist eine unverbindliche Anfrage. Sie wird erst nach meiner persönlichen Bestätigung verbindlich.",
       privacyNotice: "Ihre Angaben werden nicht auf dieser Website gespeichert, sondern nur in die WhatsApp-Nachricht eingefügt.",
-      messageIntro: "Hallo Silvan, ich möchte unverbindlich NFC Review Cards anfragen.",
+      messageIntro: "Hallo Silvan, ich möchte unverbindlich eine NFC & QR Lösung anfragen.",
     },
     faq: {
-      title: "Häufige Fragen zu Review Cards",
+      title: "Häufige Fragen zu NFC & QR Lösungen",
       items: [
         {
-          question: "Wie funktioniert eine NFC Review Card?",
+          question: "Wie funktioniert eine NFC & QR Lösung?",
           answer:
-            "Ihr Kunde hält sein Smartphone an die Karte oder den Aufsteller. Die Google-Bewertungsseite Ihres Unternehmens öffnet sich direkt – ohne Suche, ohne App und ohne abgetippten Link.",
+            "Ihr Gast hält das Smartphone an die Karte oder scannt den QR-Code. Das hinterlegte Ziel öffnet sich direkt – ohne Suche, zusätzliche App oder abgetippten Link.",
         },
         {
           question: "Funktioniert das mit jedem Smartphone?",
@@ -447,15 +467,20 @@ export const de = {
             "Nein, und das ist beabsichtigt. Die Karte verkürzt nur den Weg zur Bewertungsseite. Was Ihr Kunde dort schreibt, entscheidet er selbst – alles andere verstösst gegen die Richtlinien von Google und schadet Ihrem Profil mehr, als es nützt.",
         },
         {
-          question: "Brauche ich ein Google-Unternehmensprofil?",
+          question: "Welche Ziele kann die Karte öffnen?",
           answer:
-            "Ja, die Karte verweist darauf. Falls Sie noch keines haben oder es unvollständig ist, richte ich es unter Online-Präsenz ein.",
+            "Neben Google Reviews sind digitale Menüs, Booking und Reservationen, Gäste-WLAN, Kontaktdaten und weitere HTTPS-Ziele möglich. Falls Ihr Google-Profil noch fehlt, kann ich es ebenfalls einrichten.",
           link: { label: "Google-Unternehmensprofil einrichten", href: "/presence" },
+        },
+        {
+          question: "Welche Designs und Grössen sind möglich?",
+          answer:
+            "Standard und personalisierte Karten sind rund oder quadratisch in 80 × 80 mm oder 100 × 100 mm möglich. Bei Personalized ergänze ich Logo oder Firmenname; Fully Customized wird komplett in Ihrer Firmen-CI gestaltet.",
         },
         {
           question: "Was kostet es und was ist inbegriffen?",
           answer:
-            "Eine Karte kostet CHF 49, ein Aufsteller CHF 69, zwei Karten CHF 80. Die Programmierung und die Einrichtung auf Ihr Google-Profil sind jeweils enthalten. Für grössere Mengen gibt es einen Mengenrabatt.",
+            "Eine Standard Card kostet CHF 49, zwei CHF 80, der Standard Stand CHF 69, Personalized CHF 69 und Fully Customized CHF 99. Programmierung und Einrichtung sind enthalten; für grössere Mengen gibt es einen Mengenrabatt.",
         },
       ],
     },

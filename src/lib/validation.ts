@@ -8,32 +8,27 @@ export type ReviewInquiryErrors = Partial<
   Record<ReviewInquiryFieldName, ReviewInquiryErrorKind>
 >;
 
-/**
- * `variant` is deliberately absent: the page prices the products but never says
- * which colours or variants exist, so demanding one only forces a guess. It is
- * asked for as an optional preference instead.
- */
-export const REQUIRED_FIELDS: readonly ReviewInquiryFieldName[] = [
+const BASE_REQUIRED_FIELDS: readonly ReviewInquiryFieldName[] = [
+  "destination",
   "product",
+  "shape",
+  "size",
   "quantity",
   "businessName",
   "contactPerson",
-  "googleUrl",
-  "street",
-  "postalCode",
-  "city",
+  "setup",
 ];
 
 export const EMPTY_REVIEW_INQUIRY: ReviewInquiryValues = {
+  destination: "",
   product: "",
+  shape: "",
+  size: "",
   quantity: "",
-  variant: "",
   businessName: "",
   contactPerson: "",
-  googleUrl: "",
-  street: "",
-  postalCode: "",
-  city: "",
+  setup: "",
+  destinationUrl: "",
   note: "",
 };
 
@@ -45,12 +40,54 @@ export function isPositiveInteger(value: string): boolean {
  * Only https URLs are accepted. A javascript: or data: value would otherwise be
  * carried verbatim into a message that someone is expected to act on.
  */
-export function isValidGoogleUrl(value: string): boolean {
+export function isValidHttpsUrl(value: string): boolean {
   try {
     return new URL(value.trim()).protocol === "https:";
   } catch {
     return false;
   }
+}
+
+export function isValidGoogleUrl(value: string): boolean {
+  if (!isValidHttpsUrl(value)) return false;
+
+  const hostname = new URL(value.trim()).hostname.toLowerCase();
+  return (
+    hostname === "g.page" ||
+    hostname === "maps.app.goo.gl" ||
+    hostname === "google.com" ||
+    hostname.endsWith(".google.com") ||
+    hostname === "google.ch" ||
+    hostname.endsWith(".google.ch")
+  );
+}
+
+export function visibleInquiryFields(
+  values: ReviewInquiryValues,
+): readonly ReviewInquiryFieldName[] {
+  return (Object.keys(EMPTY_REVIEW_INQUIRY) as ReviewInquiryFieldName[]).filter(
+    (name) => {
+      if (name === "shape" || name === "size") {
+        return values.product !== "standard-stand";
+      }
+      if (name === "destinationUrl") return values.setup === "ready";
+      return true;
+    },
+  );
+}
+
+export function requiredInquiryFields(
+  values: ReviewInquiryValues,
+): readonly ReviewInquiryFieldName[] {
+  return BASE_REQUIRED_FIELDS.filter(
+    (name) =>
+      !(["shape", "size"] as ReviewInquiryFieldName[]).includes(name) ||
+      values.product !== "standard-stand",
+  ).concat(
+    values.destination === "reviews" && values.setup === "ready"
+      ? ["destinationUrl"]
+      : [],
+  );
 }
 
 export function trimInquiry(values: ReviewInquiryValues): ReviewInquiryValues {
@@ -65,7 +102,7 @@ export function validateReviewInquiry(
   const trimmed = trimInquiry(values);
   const errors: ReviewInquiryErrors = {};
 
-  for (const field of REQUIRED_FIELDS) {
+  for (const field of requiredInquiryFields(trimmed)) {
     if (trimmed[field] === "") {
       errors[field] = "required";
     }
@@ -75,8 +112,13 @@ export function validateReviewInquiry(
     errors.quantity = "quantity";
   }
 
-  if (errors.googleUrl === undefined && !isValidGoogleUrl(trimmed.googleUrl)) {
-    errors.googleUrl = "url";
+  if (
+    trimmed.destinationUrl !== "" &&
+    !(trimmed.destination === "reviews"
+      ? isValidGoogleUrl(trimmed.destinationUrl)
+      : isValidHttpsUrl(trimmed.destinationUrl))
+  ) {
+    errors.destinationUrl = "url";
   }
 
   return errors;
