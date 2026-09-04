@@ -225,6 +225,30 @@ export interface ProductVisualization {
   readonly ariaLabel: string;
 }
 
+export type ProductCategory = "reviews" | "menu" | "custom";
+
+export interface ProductScene {
+  readonly url: string;
+  readonly fallbackImage: string;
+  readonly ariaLabel: string;
+}
+
+export interface NfcProduct {
+  readonly id: string;
+  readonly category: ProductCategory;
+  readonly title: string;
+  readonly price: string;
+  readonly description: string;
+  readonly image: { readonly src: string; readonly alt: string };
+  readonly details: readonly string[];
+  readonly scene?: ProductScene;
+}
+
+export interface ProductHeroImage {
+  readonly src: string;
+  readonly alt: string;
+}
+
 interface SiteContentShape {
   brand: {
     name: string;
@@ -278,6 +302,25 @@ interface SiteContentShape {
     processTitle: string;
     process: ProcessStep[];
     ctaLabel: string;
+    heroImages: readonly ProductHeroImage[];
+    heroIndicatorLabel: string;
+    categories: readonly {
+      readonly id: ProductCategory;
+      readonly label: string;
+    }[];
+    catalogLabel: string;
+    catalog: readonly NfcProduct[];
+    forms: readonly string[];
+    sizes: readonly string[];
+    view3dLabel: string;
+    comingSoonLabel: string;
+    close3dLabel: string;
+    loading3dLabel: string;
+    error3dLabel: string;
+    retry3dLabel: string;
+    interact3dLabel: string;
+    useCasesTitle: string;
+    useCases: readonly { readonly title: string; readonly description: string }[];
     productSelectorLabel: string;
     menuSelectorLabel: string;
     productVisualizations: readonly ProductVisualization[];

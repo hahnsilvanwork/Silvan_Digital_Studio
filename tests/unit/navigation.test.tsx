@@ -56,7 +56,7 @@ describe("Navigation", () => {
 
     expect(links.map((link) => link.textContent)).toEqual([
       "Websites",
-      "Google Reviews",
+      "NFC & QR",
       "Online-Präsenz",
       "Automation",
       "Arbeiten",

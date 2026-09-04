@@ -107,6 +107,21 @@ describe("sitemap", () => {
 });
 
 describe("page metadata", () => {
+  it("describes the broad NFC and QR offer in both languages", () => {
+    clearOrigin();
+
+    for (const locale of ["de", "en"] as const) {
+      const metadata = buildPageMetadata({
+        locale,
+        page: "reviews",
+        route: "/reviews",
+      });
+
+      expect(metadata.title).toMatch(/NFC.*QR/);
+      expect(metadata.description).toMatch(/Menü|menu/i);
+    }
+  });
+
   it("claims a canonical only once a domain is configured", () => {
     clearOrigin();
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://silvan.ch");
