@@ -5,7 +5,7 @@ import { ProductHero } from "../../src/components/products/ProductHero";
 
 const images = [
   { src: "/first.webp", alt: "First product" },
-  { src: "/second.webp", alt: "Second product" },
+  { src: "/second.webp", alt: "Second product", fit: "contain" },
   { src: "/third.webp", alt: "Third product" },
 ] as const;
 
@@ -52,6 +52,19 @@ describe("ProductHero", () => {
       "true",
     );
     expect(document.querySelector("spline-viewer")).toBeNull();
+  });
+
+  it("preserves the natural fit selected for a wide overview", () => {
+    render(<ProductHero images={images} indicatorLabel="Shown image" />);
+
+    expect(screen.getByRole("img", { name: "First product" })).toHaveAttribute(
+      "data-fit",
+      "cover",
+    );
+    expect(screen.getByRole("img", { name: "Second product" })).toHaveAttribute(
+      "data-fit",
+      "contain",
+    );
   });
 
   it("pauses while the document is hidden and resumes when visible", () => {

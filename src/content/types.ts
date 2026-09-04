@@ -256,6 +256,7 @@ export interface NfcProduct {
 export interface ProductHeroImage {
   readonly src: string;
   readonly alt: string;
+  readonly fit?: "cover" | "contain";
 }
 
 interface SiteContentShape {

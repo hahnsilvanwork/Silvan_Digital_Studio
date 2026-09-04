@@ -55,6 +55,7 @@ export function ProductHero({ images, indicatorLabel }: ProductHeroProps) {
             alt={image.alt}
             className={styles.heroImage}
             data-active={index === activeIndex}
+            data-fit={image.fit ?? "cover"}
             fill
             key={image.src}
             loading={index === 0 ? "eager" : "lazy"}

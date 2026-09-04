@@ -221,7 +221,7 @@ export const en = {
     ctaLabel: "Make a no-obligation inquiry",
     heroImages: [
       { src: "/images/products/catalog/review-round-black.webp", alt: "Black round NFC card for Google reviews" },
-      { src: "/images/products/catalog/all-products.webp", alt: "Overview of NFC cards and display stands" },
+      { src: "/images/products/catalog/all-products.webp", alt: "Overview of NFC cards and display stands", fit: "contain" },
       { src: "/images/products/catalog/menu-personalized-white.webp", alt: "White personalized NFC menu card with the SilvanDigital logo" },
     ],
     heroIndicatorLabel: "Product image shown",

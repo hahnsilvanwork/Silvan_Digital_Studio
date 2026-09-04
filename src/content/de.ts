@@ -227,6 +227,7 @@ export const de = {
       {
         src: "/images/products/catalog/all-products.webp",
         alt: "Übersicht verschiedener NFC-Karten und Aufsteller",
+        fit: "contain",
       },
       {
         src: "/images/products/catalog/menu-personalized-white.webp",

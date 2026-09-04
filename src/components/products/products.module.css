@@ -90,6 +90,10 @@
   transition: opacity 700ms var(--ease-out);
 }
 
+.heroImage[data-fit="contain"] {
+  object-fit: contain;
+}
+
 .heroImage[data-active="true"] {
   z-index: 1;
   opacity: 1;
