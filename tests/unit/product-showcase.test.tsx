@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -8,11 +8,13 @@ vi.mock("../../src/components/products/SplineProduct", () => ({
   SplineProduct: ({
     sceneUrl,
     onError,
+    active,
   }: {
     sceneUrl: string;
     onError?: () => void;
+    active?: boolean;
   }) => (
-    <div data-testid="viewer">
+    <div data-active={active ? "true" : "false"} data-testid="viewer">
       {sceneUrl}
       <button onClick={onError} type="button">
         Fail viewer
@@ -22,6 +24,20 @@ vi.mock("../../src/components/products/SplineProduct", () => ({
 }));
 
 import { ProductCatalog } from "../../src/components/products/ProductCatalog";
+
+let resizeCallbacks: ResizeObserverCallback[] = [];
+
+function measureDialog(width = 360, height = 420) {
+  const callback = resizeCallbacks.at(-1);
+  if (!callback) throw new Error("Dialog stage was not observed");
+
+  act(() =>
+    callback(
+      [{ contentRect: { width, height } as DOMRectReadOnly } as ResizeObserverEntry],
+      {} as ResizeObserver,
+    ),
+  );
+}
 
 const products: readonly NfcProduct[] = [
   {
@@ -81,6 +97,18 @@ const props = {
 };
 
 beforeEach(() => {
+  resizeCallbacks = [];
+  vi.stubGlobal(
+    "ResizeObserver",
+    class {
+      constructor(callback: ResizeObserverCallback) {
+        resizeCallbacks.push(callback);
+      }
+      observe() {}
+      disconnect() {}
+      unobserve() {}
+    },
+  );
   Object.defineProperty(HTMLDialogElement.prototype, "showModal", {
     configurable: true,
     value() {
@@ -139,13 +167,16 @@ describe("ProductCatalog", () => {
     await user.click(trigger);
 
     const dialog = screen.getByRole("dialog", { name: "Round review card" });
+    expect(within(dialog).queryByTestId("viewer")).toBeNull();
+    fireEvent.resize(window);
+    measureDialog();
     expect(within(dialog).getByTestId("viewer")).toHaveTextContent(
       "https://example.com/review.splinecode",
     );
     expect(within(dialog).getByText("Rotate with mouse or finger")).toBeVisible();
 
     await user.click(within(dialog).getByRole("button", { name: "Close 3D view" }));
-    expect(screen.queryByRole("dialog")).toBeNull();
+    await vi.waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     expect(screen.queryByTestId("viewer")).toBeNull();
     expect(trigger).toHaveFocus();
   });
@@ -156,10 +187,11 @@ describe("ProductCatalog", () => {
     const trigger = screen.getByRole("button", { name: "View in 3D" });
     await user.click(trigger);
     const dialog = screen.getByRole("dialog");
+    measureDialog();
 
     fireEvent(dialog, new Event("cancel", { cancelable: true }));
 
-    expect(screen.queryByRole("dialog")).toBeNull();
+    await vi.waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     expect(trigger).toHaveFocus();
   });
 
@@ -168,6 +200,7 @@ describe("ProductCatalog", () => {
     render(<ProductCatalog {...props} />);
     await user.click(screen.getByRole("button", { name: "View in 3D" }));
     const dialog = screen.getByRole("dialog");
+    measureDialog();
 
     await user.click(within(dialog).getByRole("button", { name: "Fail viewer" }));
     expect(within(dialog).getByText("3D model failed")).toBeVisible();
@@ -178,5 +211,27 @@ describe("ProductCatalog", () => {
     expect(within(dialog).getByTestId("viewer")).toHaveTextContent(
       "https://example.com/review.splinecode",
     );
+  });
+
+  it("closes from the backdrop only after marking the renderer inactive", async () => {
+    const user = userEvent.setup();
+    render(<ProductCatalog {...props} />);
+    await user.click(screen.getByRole("button", { name: "View in 3D" }));
+    const dialog = screen.getByRole("dialog");
+    measureDialog();
+
+    expect(within(dialog).getByTestId("viewer")).toHaveAttribute(
+      "data-active",
+      "true",
+    );
+    fireEvent.click(dialog);
+
+    expect(within(dialog).getByTestId("viewer")).toHaveAttribute(
+      "data-active",
+      "false",
+    );
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+
+    await vi.waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
   });
 });

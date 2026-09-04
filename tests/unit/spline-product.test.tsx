@@ -422,4 +422,23 @@ describe("SplineProduct", () => {
     const { app } = await loadedViewer();
     expect(app._controls.orbitControls.autoRotate).toBe(false);
   });
+
+  it("stops a ready renderer before an on-demand dialog removes it", async () => {
+    const tree = (active: boolean) => (
+      <SplineSceneProvider>
+        <SplineProduct
+          active={active}
+          ariaLabel="White round tag"
+          sceneUrl="https://example.com/white.splinecode"
+        />
+      </SplineSceneProvider>
+    );
+    const view = render(tree(true));
+    enterViewport();
+    const { app } = await loadedViewer();
+
+    view.rerender(tree(false));
+
+    await waitFor(() => expect(app.stop).toHaveBeenCalled());
+  });
 });

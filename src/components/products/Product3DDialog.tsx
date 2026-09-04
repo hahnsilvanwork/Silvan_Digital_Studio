@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { NfcProduct } from "../../content/types";
 import { SplineProduct } from "./SplineProduct";
@@ -28,10 +28,24 @@ export function Product3DDialog({
   onClose,
 }: Product3DDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const closeFrameRef = useRef(0);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
+  const [stageReady, setStageReady] = useState(false);
+  const [closing, setClosing] = useState(false);
   const scene = product.scene;
+
+  const requestClose = useCallback(() => {
+    if (closing) return;
+
+    // Keep the dialog measurable for one committed render after deactivating
+    // Spline. This lets its application stop before the custom element leaves
+    // the document and can never expose WebGPU to a 0 × 0 canvas.
+    setClosing(true);
+    closeFrameRef.current = window.requestAnimationFrame(onClose);
+  }, [closing, onClose]);
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -40,7 +54,29 @@ export function Product3DDialog({
     if (typeof dialog.showModal === "function") dialog.showModal();
     else dialog.setAttribute("open", "");
 
+    const stage = stageRef.current;
+    let observer: ResizeObserver | undefined;
+    let measureFrame = 0;
+
+    const measure = () => {
+      const bounds = stage?.getBoundingClientRect();
+      setStageReady(Boolean(bounds && bounds.width > 0 && bounds.height > 0));
+    };
+
+    if (stage && typeof ResizeObserver !== "undefined") {
+      observer = new ResizeObserver(([entry]) => {
+        const bounds = entry?.contentRect;
+        setStageReady(Boolean(bounds && bounds.width > 0 && bounds.height > 0));
+      });
+      observer.observe(stage);
+    } else {
+      measureFrame = window.requestAnimationFrame(measure);
+    }
+
     return () => {
+      observer?.disconnect();
+      window.cancelAnimationFrame(measureFrame);
+      window.cancelAnimationFrame(closeFrameRef.current);
       if (dialog.open && typeof dialog.close === "function") dialog.close();
     };
   }, []);
@@ -51,10 +87,14 @@ export function Product3DDialog({
     <dialog
       aria-labelledby={`product-3d-title-${product.id}`}
       className={styles.productDialog}
+      data-closing={closing ? "true" : "false"}
       data-product-3d-dialog
       onCancel={(event) => {
         event.preventDefault();
-        onClose();
+        requestClose();
+      }}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) requestClose();
       }}
       ref={dialogRef}
     >
@@ -67,14 +107,14 @@ export function Product3DDialog({
           aria-label={labels.close}
           className={styles.dialogClose}
           data-touch-target
-          onClick={onClose}
+          onClick={requestClose}
           type="button"
         >
           <span aria-hidden="true">×</span>
         </button>
       </div>
 
-      <div className={styles.dialogStage}>
+      <div className={styles.dialogStage} data-product-3d-stage ref={stageRef}>
         <Image
           alt=""
           aria-hidden="true"
@@ -84,10 +124,11 @@ export function Product3DDialog({
           sizes="(min-width: 48rem) 60rem, 100vw"
           src={scene.fallbackImage}
         />
-        {!failed ? (
+        {stageReady && !failed ? (
           <div className={styles.dialogViewer} key={attempt}>
             <SplineSceneProvider>
               <SplineProduct
+                active={!closing}
                 allowReducedMotion
                 ariaLabel={scene.ariaLabel}
                 onError={() => setFailed(true)}

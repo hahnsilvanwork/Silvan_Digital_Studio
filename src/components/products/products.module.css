@@ -275,14 +275,20 @@
 
 .productDialog {
   inline-size: min(64rem, calc(100% - 2 * var(--page-gutter)));
+  block-size: min(44rem, calc(100dvh - 2 * var(--page-gutter)));
   max-block-size: calc(100dvh - 2 * var(--page-gutter));
   margin: auto;
   padding: 0;
-  overflow: auto;
+  overflow: hidden;
   border: var(--hairline) solid var(--color-line);
   border-radius: var(--radius-media);
   background: var(--color-paper-raised);
   color: var(--color-ink);
+}
+
+.productDialog[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
 }
 
 .productDialog::backdrop {
@@ -295,12 +301,12 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-sm);
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--space-2xs) var(--space-sm);
   border-block-end: var(--hairline) solid var(--color-line);
 }
 
 .dialogHeader h2 {
-  font-size: var(--text-item);
+  font-size: var(--text-subitem);
 }
 
 .dialogEyebrow,
@@ -322,7 +328,7 @@
 
 .dialogStage {
   position: relative;
-  aspect-ratio: 1;
+  min-block-size: 0;
   overflow: hidden;
   background: #f0efec;
 }
@@ -334,7 +340,7 @@
 }
 
 .dialogStill {
-  object-fit: cover;
+  object-fit: contain;
   opacity: 1;
   transition: opacity var(--duration-medium) var(--ease-out);
 }
@@ -345,6 +351,11 @@
 
 .dialogViewer {
   z-index: 1;
+}
+
+.dialogViewer > .product {
+  block-size: 100%;
+  aspect-ratio: auto;
 }
 
 .dialogStatus,
@@ -370,7 +381,7 @@
 }
 
 .dialogHint {
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--space-2xs) var(--space-sm);
   text-align: center;
 }
 

@@ -46,6 +46,8 @@ export interface SplineProductProps extends ScenePresentation {
   readonly onError?: () => void;
   /** An explicit modal may load a stationary scene for reduced-motion users. */
   readonly allowReducedMotion?: boolean;
+  /** Lets an owner pause rendering before it removes a measured surface. */
+  readonly active?: boolean;
 }
 
 type LoadState = "idle" | "loading" | "ready" | "error" | "reduced-motion";
@@ -176,6 +178,8 @@ function ActiveSpline({
     // Pausing an off-screen scene frees the GPU without disposing anything,
     // so coming back is instant instead of another full start-up.
     setSceneRunning(app, running);
+
+    return () => setSceneRunning(app, false);
   }, [running, state]);
 
   useEffect(() => {
@@ -294,6 +298,7 @@ export function SplineProduct({
   onReady,
   onError,
   allowReducedMotion = false,
+  active = true,
   secondsPerRevolution,
   sweepDegrees,
 }: SplineProductProps) {
@@ -399,7 +404,7 @@ export function SplineProduct({
           onReady={onReady}
           onSettled={finishStart}
           priority={priority}
-          running={onScreen}
+          running={active && onScreen}
           sceneUrl={sceneUrl}
           secondsPerRevolution={secondsPerRevolution}
           sweepDegrees={sweepDegrees}
