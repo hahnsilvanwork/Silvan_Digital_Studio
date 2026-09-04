@@ -19,7 +19,7 @@ Each hero image declares its natural presentation. Square product shots retain `
 
 ### Product-family navigation
 
-The catalogue begins with “Wählen Sie eine Anwendung” / “Choose an application”. Each category control is a substantial segmented panel containing its category name and product count: Google Reviews (5), Menu (3), and Custom (1). The selected panel has a filled ink treatment and a persistent underline/accent. On mobile the controls form a horizontally scrollable, snap-aligned row; on wider layouts they share the full width in three columns. A live result heading below restates the selected category and count, so switching cannot be mistaken for adding duplicate product cards.
+The catalogue begins with “Wählen Sie eine Anwendung” / “Choose an application”. Each category control is a substantial segmented panel containing its category name and product count: Google Reviews (5), Menu (3), and Custom (1). The selected panel has a filled ink treatment and a persistent underline/accent. On mobile all three choices stay visible in a two-column grid, with the third choice spanning the row; on wider layouts they share the full width in three columns. A live result heading below restates the selected category and count, so switching cannot be mistaken for adding duplicate product cards.
 
 ### 3D dialog
 

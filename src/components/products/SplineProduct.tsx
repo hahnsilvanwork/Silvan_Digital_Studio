@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 
 import { useSplineSceneSlot } from "./SplineSceneProvider";
 import {
@@ -171,7 +171,7 @@ function ActiveSpline({
     };
   }, [motionAllowed, onError, onReady, onSettled, runtimeReady, secondsPerRevolution, sweepDegrees]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const app = appRef.current;
     if (!app || state !== "ready") return;
 

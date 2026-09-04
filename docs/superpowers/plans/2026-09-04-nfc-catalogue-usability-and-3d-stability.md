@@ -40,7 +40,7 @@
 - [ ] Add failing tests that require a “choose application” legend, localized product-count text on every category control, and a live selected-category result heading.
 - [ ] Run the two focused test files and confirm the new assertions fail against the compact chip navigation.
 - [ ] Add singular/plural count formatters to localized catalogue labels and render each control as a named panel with count. Render a polite result heading above the cards.
-- [ ] Replace compact chip CSS with a full-width segmented navigation: horizontal snap row on mobile and equal three-column grid from tablet width. Keep every control at least 44 pixels tall.
+- [ ] Replace compact chip CSS with a full-width segmented navigation: all choices visible in a two-column mobile grid and equal three-column grid from tablet width. Keep every control at least 44 pixels tall.
 - [ ] Re-run focused tests and commit the navigation change.
 
 ### Task 3: Gate 3D creation on real geometry

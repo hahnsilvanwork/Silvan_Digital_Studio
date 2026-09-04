@@ -122,13 +122,12 @@
 
 .categoryTabs {
   display: grid;
-  grid-auto-columns: minmax(12rem, 78%);
-  grid-auto-flow: column;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-2xs);
-  padding-block-end: var(--space-2xs);
-  overflow-x: auto;
-  scroll-snap-type: inline mandatory;
-  scrollbar-width: thin;
+}
+
+.categoryTabs button:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
 }
 
 .categoryPrompt {
@@ -157,7 +156,6 @@
   padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-media);
   text-align: start;
-  scroll-snap-align: start;
 }
 
 .categoryTabs button[aria-pressed="true"] {
@@ -387,9 +385,11 @@
 
 @media (min-width: 44rem) {
   .categoryTabs {
-    grid-auto-flow: initial;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    overflow: visible;
+  }
+
+  .categoryTabs button:last-child:nth-child(odd) {
+    grid-column: auto;
   }
 
   .catalogGrid {
