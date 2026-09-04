@@ -228,6 +228,8 @@ export const de = {
       },
     ],
     heroIndicatorLabel: "Gezeigtes Produktbild",
+    heroPauseLabel: "Bildwechsel pausieren",
+    heroResumeLabel: "Bildwechsel fortsetzen",
     categories: [
       { id: "reviews", label: "Google Reviews" },
       { id: "menu", label: "Menü" },

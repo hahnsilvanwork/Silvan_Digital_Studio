@@ -314,6 +314,8 @@ interface SiteContentShape {
     ctaLabel: string;
     heroImages: readonly ProductHeroImage[];
     heroIndicatorLabel: string;
+    heroPauseLabel: string;
+    heroResumeLabel: string;
     categories: readonly {
       readonly id: ProductCategory;
       readonly label: string;

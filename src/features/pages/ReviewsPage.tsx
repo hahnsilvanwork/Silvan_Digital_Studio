@@ -68,6 +68,8 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
               <ProductHero
                 images={reviews.heroImages}
                 indicatorLabel={reviews.heroIndicatorLabel}
+                pauseLabel={reviews.heroPauseLabel}
+                resumeLabel={reviews.heroResumeLabel}
               />
             </div>
         </section>

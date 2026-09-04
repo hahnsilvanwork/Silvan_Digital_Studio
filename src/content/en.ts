@@ -218,6 +218,8 @@ export const en = {
       { src: "/images/products/catalog/menu-personalized-white.webp", alt: "White personalized NFC menu card with the SilvanDigital logo" },
     ],
     heroIndicatorLabel: "Product image shown",
+    heroPauseLabel: "Pause image rotation",
+    heroResumeLabel: "Resume image rotation",
     categories: [
       { id: "reviews", label: "Google Reviews" },
       { id: "menu", label: "Menu" },

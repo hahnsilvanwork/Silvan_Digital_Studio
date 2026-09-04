@@ -11,18 +11,26 @@ const HERO_INTERVAL_MS = 5_500;
 interface ProductHeroProps {
   readonly images: readonly ProductHeroImage[];
   readonly indicatorLabel: string;
+  readonly pauseLabel: string;
+  readonly resumeLabel: string;
 }
 
-export function ProductHero({ images, indicatorLabel }: ProductHeroProps) {
+export function ProductHero({
+  images,
+  indicatorLabel,
+  pauseLabel,
+  resumeLabel,
+}: ProductHeroProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [userPaused, setUserPaused] = useState(false);
+  const [visibilityPaused, setVisibilityPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
     const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
     const updateMotion = () => setReducedMotion(Boolean(media?.matches));
     const updateVisibility = () =>
-      setPaused(document.visibilityState === "hidden");
+      setVisibilityPaused(document.visibilityState === "hidden");
 
     updateMotion();
     updateVisibility();
@@ -36,14 +44,15 @@ export function ProductHero({ images, indicatorLabel }: ProductHeroProps) {
   }, []);
 
   useEffect(() => {
-    if (paused || reducedMotion || images.length < 2) return;
+    if (userPaused || visibilityPaused || reducedMotion || images.length < 2)
+      return;
 
     const timer = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % images.length);
     }, HERO_INTERVAL_MS);
 
     return () => window.clearInterval(timer);
-  }, [images.length, paused, reducedMotion]);
+  }, [images.length, reducedMotion, userPaused, visibilityPaused]);
 
   if (images.length === 0) return null;
 
@@ -64,19 +73,43 @@ export function ProductHero({ images, indicatorLabel }: ProductHeroProps) {
           />
         ))}
       </div>
-      <figcaption className={styles.heroIndicators}>
-        <span className="visually-hidden">{indicatorLabel}: </span>
-        {images.map((image, index) => (
-          <span
-            aria-hidden="true"
-            className={styles.heroIndicator}
-            data-active={index === activeIndex}
-            key={image.src}
-          />
-        ))}
+      <figcaption className={styles.heroControls}>
+        <div
+          aria-label={indicatorLabel}
+          className={styles.heroIndicators}
+          role="group"
+        >
+          {images.map((image, index) => (
+            <button
+              aria-label={`${indicatorLabel} ${index + 1}: ${image.alt}`}
+              aria-pressed={index === activeIndex}
+              className={styles.heroIndicator}
+              data-active={index === activeIndex}
+              data-touch-target
+              key={image.src}
+              onClick={() => {
+                setActiveIndex(index);
+                setUserPaused(true);
+              }}
+              type="button"
+            />
+          ))}
+        </div>
         <span className="visually-hidden">
           {activeIndex + 1} / {images.length}
         </span>
+        {images.length > 1 && !reducedMotion ? (
+          <button
+            aria-label={userPaused ? resumeLabel : pauseLabel}
+            className={styles.heroPause}
+            data-touch-target
+            onClick={() => setUserPaused((current) => !current)}
+            title={userPaused ? resumeLabel : pauseLabel}
+            type="button"
+          >
+            <span aria-hidden="true">{userPaused ? "▶" : "Ⅱ"}</span>
+          </button>
+        ) : null}
       </figcaption>
     </figure>
   );
