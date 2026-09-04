@@ -319,6 +319,9 @@ interface SiteContentShape {
       readonly label: string;
     }[];
     catalogLabel: string;
+    categoryPrompt: string;
+    productSingular: string;
+    productPlural: string;
     catalog: readonly NfcProduct[];
     forms: readonly string[];
     sizes: readonly string[];

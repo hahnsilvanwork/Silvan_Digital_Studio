@@ -121,9 +121,19 @@
 }
 
 .categoryTabs {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-auto-columns: minmax(12rem, 78%);
+  grid-auto-flow: column;
   gap: var(--space-2xs);
+  padding-block-end: var(--space-2xs);
+  overflow-x: auto;
+  scroll-snap-type: inline mandatory;
+  scrollbar-width: thin;
+}
+
+.categoryPrompt {
+  font-size: var(--text-subitem);
+  letter-spacing: var(--tracking-item);
 }
 
 .categoryTabs button,
@@ -141,13 +151,41 @@
 }
 
 .categoryTabs button {
-  padding: var(--space-2xs) var(--space-sm);
+  display: grid;
+  gap: 0.2rem;
+  min-block-size: 5rem;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-media);
+  text-align: start;
+  scroll-snap-align: start;
 }
 
 .categoryTabs button[aria-pressed="true"] {
   border-color: var(--color-ink);
   background: var(--color-ink);
   color: var(--color-paper);
+}
+
+.categoryName {
+  font-size: var(--text-subitem);
+  letter-spacing: var(--tracking-item);
+}
+
+.categoryCount {
+  color: var(--color-ink-muted);
+  font-size: var(--text-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.categoryTabs button[aria-pressed="true"] .categoryCount {
+  color: rgb(249 248 246 / 70%);
+}
+
+.catalogResult {
+  padding-block-end: var(--space-xs);
+  border-block-end: var(--hairline) solid var(--color-line);
+  font-size: var(--text-item);
 }
 
 .catalogGrid {
@@ -337,6 +375,12 @@
 }
 
 @media (min-width: 44rem) {
+  .categoryTabs {
+    grid-auto-flow: initial;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+  }
+
   .catalogGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }

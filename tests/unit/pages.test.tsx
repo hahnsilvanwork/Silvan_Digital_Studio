@@ -211,7 +211,11 @@ describe("ReviewsPage", () => {
 
     const main = screen.getByRole("main");
     for (const category of de.reviews.categories) {
-      expect(within(main).getByRole("button", { name: category.label })).toBeVisible();
+      expect(
+        within(main).getByRole("button", {
+          name: new RegExp(`^${category.label}`),
+        }),
+      ).toBeVisible();
     }
     for (const useCase of de.reviews.useCases) {
       expect(within(main).getAllByText(useCase.title).length).toBeGreaterThan(0);

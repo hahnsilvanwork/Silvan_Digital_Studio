@@ -12,6 +12,9 @@ import styles from "./products.module.css";
 
 interface ProductCatalogLabels extends Product3DLabels {
   readonly category: string;
+  readonly categoryPrompt: string;
+  readonly productSingular: string;
+  readonly productPlural: string;
   readonly view3d: string;
   readonly comingSoon: string;
 }
@@ -48,22 +51,38 @@ export function ProductCatalog({
   const visibleProducts = products.filter(
     ({ category }) => category === activeCategory,
   );
+  const activeCategoryLabel =
+    categories.find(({ id }) => id === activeCategory)?.label ?? "";
+  const countLabel = (count: number) =>
+    `${count} ${count === 1 ? labels.productSingular : labels.productPlural}`;
 
   return (
     <div className={styles.catalog}>
+      <p className={styles.categoryPrompt}>{labels.categoryPrompt}</p>
       <div aria-label={labels.category} className={styles.categoryTabs} role="group">
-        {categories.map((category) => (
-          <button
-            aria-pressed={category.id === activeCategory}
-            data-touch-target
-            key={category.id}
-            onClick={() => setActiveCategory(category.id)}
-            type="button"
-          >
-            {category.label}
-          </button>
-        ))}
+        {categories.map((category) => {
+          const productCount = products.filter(
+            (product) => product.category === category.id,
+          ).length;
+
+          return (
+            <button
+              aria-pressed={category.id === activeCategory}
+              data-touch-target
+              key={category.id}
+              onClick={() => setActiveCategory(category.id)}
+              type="button"
+            >
+              <span className={styles.categoryName}>{category.label}</span>
+              <span className={styles.categoryCount}>{countLabel(productCount)}</span>
+            </button>
+          );
+        })}
       </div>
+
+      <h3 aria-live="polite" className={styles.catalogResult}>
+        {activeCategoryLabel} · {countLabel(visibleProducts.length)}
+      </h3>
 
       <div className={styles.catalogGrid}>
         {visibleProducts.map((product) => (

@@ -84,6 +84,9 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
                 categories={reviews.categories}
                 labels={{
                   category: reviews.catalogLabel,
+                  categoryPrompt: reviews.categoryPrompt,
+                  productSingular: reviews.productSingular,
+                  productPlural: reviews.productPlural,
                   view3d: reviews.view3dLabel,
                   comingSoon: reviews.comingSoonLabel,
                   close: reviews.close3dLabel,

@@ -67,6 +67,9 @@ const props = {
   ] as const,
   labels: {
     category: "Choose category",
+    categoryPrompt: "Choose an application",
+    productSingular: "product",
+    productPlural: "products",
     view3d: "View in 3D",
     comingSoon: "3D model coming soon",
     close: "Close 3D view",
@@ -93,18 +96,34 @@ beforeEach(() => {
 });
 
 describe("ProductCatalog", () => {
+  it("makes every product family and its inventory visible before filtering", () => {
+    render(<ProductCatalog {...props} />);
+
+    expect(screen.getByText("Choose an application")).toBeVisible();
+    for (const category of props.categories) {
+      expect(
+        screen.getByRole("button", {
+          name: `${category.label} 1 product`,
+        }),
+      ).toBeVisible();
+    }
+    expect(
+      screen.getByRole("heading", { name: "Google Reviews · 1 product" }),
+    ).toBeVisible();
+  });
+
   it("filters image-first cards with semantic category controls", async () => {
     const user = userEvent.setup();
     render(<ProductCatalog {...props} />);
 
     const categories = screen.getByRole("group", { name: "Choose category" });
-    expect(within(categories).getByRole("button", { name: "Google Reviews" }))
+    expect(within(categories).getByRole("button", { name: /Google Reviews/ }))
       .toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("img", { name: "Review card photo" })).toBeVisible();
     expect(screen.getByText("CHF 49.–")).toBeVisible();
     expect(screen.getByText("80 × 80 mm")).toBeVisible();
 
-    await user.click(within(categories).getByRole("button", { name: "Menu" }));
+    await user.click(within(categories).getByRole("button", { name: /Menu/ }));
 
     expect(screen.getByRole("img", { name: "Menu card photo" })).toBeVisible();
     expect(screen.getByText("3D model coming soon")).toBeVisible();
