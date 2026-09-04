@@ -21,7 +21,7 @@
 - Replace: `public/images/products/catalog/review-stand-white.webp`
 - Local source directory: `assets/nfc-products/source/`
 
-- [ ] **Step 1: Write the normalized mapping expectation**
+- [x] **Step 1: Write the normalized mapping expectation**
 
 Update the importer contract to expect keys such as:
 
@@ -33,23 +33,23 @@ Update the importer contract to expect keys such as:
 
 and the seven corresponding normalized source paths.
 
-- [ ] **Step 2: Run the importer contract and confirm RED**
+- [x] **Step 2: Run the importer contract and confirm RED**
 
 Run `npx vitest run tests/unit/nfc-asset-import.test.ts`. Expected: the current root-level mapping differs from the normalized mapping.
 
-- [ ] **Step 3: Verify and reorganize exact source paths**
+- [x] **Step 3: Verify and reorganize exact source paths**
 
 Resolve every source and destination inside the repository. Move the seven retained originals into `assets/nfc-products/source/` under normalized names. Move the three superseded originals to `.superpowers/replaced-nfc-assets/`, then move the three `new…` files into the active source directory under their normalized product names. Do not delete the replaced originals.
 
-- [ ] **Step 4: Update the importer and ignore rule**
+- [x] **Step 4: Update the importer and ignore rule**
 
 Use normalized paths in `SOURCE_TO_OUTPUT` and add `/assets/nfc-products/source/*.png` to `.gitignore`, documenting that full-resolution sources stay local while derivatives are committed.
 
-- [ ] **Step 5: Regenerate and verify derivatives**
+- [x] **Step 5: Regenerate and verify derivatives**
 
 Run `node scripts/import-nfc-assets.mjs` and `npx vitest run tests/unit/nfc-asset-import.test.ts`. Expected: 2 tests pass, all derivatives are WebP at no more than 1600 × 1600 without EXIF, ICC, or XMP metadata.
 
-- [ ] **Step 6: Commit the asset pipeline change**
+- [x] **Step 6: Commit the asset pipeline change**
 
 Commit `.gitignore`, importer, test, and three changed WebP derivatives as `feat: refresh normalized NFC product assets`.
 
@@ -64,23 +64,23 @@ Commit `.gitignore`, importer, test, and three changed WebP derivatives as `feat
 - Modify: `src/features/pages/ReviewsPage.tsx`
 - Modify: `tests/unit/product-hero.test.tsx`
 
-- [ ] **Step 1: Write failing hero-control tests**
+- [x] **Step 1: Write failing hero-control tests**
 
 Render labels for pause and resume, then assert three labelled indicator buttons. Clicking the second indicator must activate the second image and prevent the timer from advancing; clicking pause/resume must stop and restart advancement.
 
-- [ ] **Step 2: Run the hero test and confirm RED**
+- [x] **Step 2: Run the hero test and confirm RED**
 
 Run `npx vitest run tests/unit/product-hero.test.tsx`. Expected: the current indicators are spans and no pause control exists.
 
-- [ ] **Step 3: Implement independent pause states**
+- [x] **Step 3: Implement independent pause states**
 
 Separate document visibility from visitor pause state so a `visibilitychange` cannot undo a visitor's choice. Replace indicator spans with `button` elements using `aria-pressed`, descriptive labels, and explicit `type="button"`. Render a compact pause/resume button when multiple images exist and reduced motion is not requested.
 
-- [ ] **Step 4: Style controls and connect localized content**
+- [x] **Step 4: Style controls and connect localized content**
 
 Add German `Bildwechsel pausieren` / `Bildwechsel fortsetzen` and English `Pause image rotation` / `Resume image rotation` labels. Keep the visual line motif, visible focus state, and minimum 44 px hit areas without visually enlarging the lines themselves.
 
-- [ ] **Step 5: Run the hero tests and commit**
+- [x] **Step 5: Run the hero tests and commit**
 
 Run `npx vitest run tests/unit/product-hero.test.tsx tests/unit/locales.test.ts`. Expected: all tests pass. Commit as `feat: add controlled NFC hero gallery`.
 
@@ -97,27 +97,27 @@ Run `npx vitest run tests/unit/product-hero.test.tsx tests/unit/locales.test.ts`
 - Modify: `tests/unit/product-showcase.test.tsx`
 - Modify: `tests/e2e/reviews-spline.spec.ts`
 
-- [ ] **Step 1: Expand the fixture and write failing rail tests**
+- [x] **Step 1: Expand the fixture and write failing rail tests**
 
 Use at least three review products. Assert localized previous/next buttons, `Produkt 1 von 3`, disabled first/last boundaries, advancement to product 2, and reset to `1 von 1` after category selection. Add browser assertions at 320 and 390 px for a horizontally scrollable rail, next-button advancement, 44 px controls, and no document overflow; at 768 px and above assert a multi-column grid and hidden rail controls.
 
-- [ ] **Step 2: Run the catalogue unit test and confirm RED**
+- [x] **Step 2: Run the catalogue unit test and confirm RED**
 
 Run `npx vitest run tests/unit/product-showcase.test.tsx` and `npx playwright test tests/e2e/reviews-spline.spec.ts --project=chromium`. Expected: rail controls and position announcement are absent, so the new unit and browser assertions fail.
 
-- [ ] **Step 3: Implement rail state and navigation**
+- [x] **Step 3: Implement rail state and navigation**
 
 Add a rail ref and active-product index to `ProductCatalog`. Previous/next buttons scroll the selected card horizontally with reduced-motion awareness. A passive React scroll handler chooses the nearest card and updates the live position label. Category changes synchronously reset the index and rail scroll position.
 
-- [ ] **Step 4: Implement mobile-first rail styling**
+- [x] **Step 4: Implement mobile-first rail styling**
 
 Below 44 rem, use grid auto-flow columns, approximately 88% card width, scroll snapping, contained horizontal overscroll, hidden scrollbar, and a visible next-card edge. At 44 rem restore the existing two-column grid and hide rail controls; at 72 rem retain three columns. Update mobile image `sizes` and tighten the hero media maximum to 20 rem.
 
-- [ ] **Step 5: Add dialog touch containment**
+- [x] **Step 5: Add dialog touch containment**
 
 Set `overscroll-behavior: contain` on the 3D dialog without changing its size, lifecycle, or scene-loading rules.
 
-- [ ] **Step 6: Run unit tests and commit**
+- [x] **Step 6: Run unit tests and commit**
 
 Run `npx vitest run tests/unit/product-showcase.test.tsx tests/unit/spline-product.test.tsx tests/unit/pages.test.tsx`. Expected: all tests pass. Commit as `feat: streamline mobile NFC catalogue`.
 
@@ -126,22 +126,22 @@ Run `npx vitest run tests/unit/product-showcase.test.tsx tests/unit/spline-produ
 **Files:**
 - Modify: `docs/superpowers/plans/2026-09-04-nfc-asset-refresh-mobile-usability.md`
 
-- [ ] **Step 1: Run the cross-device rail assertions**
+- [x] **Step 1: Run the cross-device rail assertions**
 
 Run the rail assertions at 320, 390, 768, 1024, 1280, and 1536 px. Confirm mobile advancement and touch targets, desktop grid restoration, and no document-level horizontal overflow.
 
-- [ ] **Step 2: Run Chromium E2E after implementation**
+- [x] **Step 2: Run Chromium E2E after implementation**
 
 Run `npx playwright test tests/e2e/reviews-spline.spec.ts --project=chromium`. Expected: new rail assertions and existing 3D, pricing, and placeholder checks all pass.
 
-- [ ] **Step 3: Inspect visual screenshots**
+- [x] **Step 3: Inspect visual screenshots**
 
 Capture scrolled 390 × 844 hero, catalogue, price transition, and 1440 × 900 catalogue screenshots. Confirm corrected backgrounds, legible card text, visible next-card affordance, no clipped controls, and a materially shorter mobile product section.
 
-- [ ] **Step 4: Run full verification**
+- [x] **Step 4: Run full verification**
 
 Run `npm test`, `npm run typecheck`, `npm run lint`, `npm run build`, and the full `reviews-spline.spec.ts` browser matrix. Expected: every command exits 0 with no test failures.
 
-- [ ] **Step 5: Mark the plan complete and commit**
+- [x] **Step 5: Mark the plan complete and commit**
 
 Check every plan box and commit the E2E coverage and plan status as `test: verify NFC mobile catalogue usability`. Keep the local server running and do not deploy.
