@@ -55,6 +55,7 @@ The carousel controls are absent when a category contains only one product. Disa
 
 - The hero keeps the copy → CTA → image order and still shows all essential content within the first phone viewport at 390 × 844.
 - Phone hero spacing and image maximum size become slightly tighter at narrow widths while preserving the square media frame.
+- The three hero indicators become labelled image-selection buttons. A compact pause/resume control gives visitors control over the 5.5-second automatic sequence, and manual selection pauses automatic advancement.
 - Catalogue controls remain a visible two-column layout with the third category spanning the row.
 - Product cards in the rail use consistent image proportions and equal-height composition, aligned to the tallest item in the active category.
 - The four price tiers remain a vertical reading sequence on narrow phones because a 2 × 2 layout would make the names and included details cramped. Spacing between tiers is reduced only enough to remove dead space.
@@ -77,6 +78,7 @@ Localized review content adds concise labels for previous product, next product,
 - Native horizontal scrolling remains available even if JavaScript enhancement fails.
 - Programmatic rail movement uses instant scrolling under reduced motion and smooth scrolling otherwise.
 - Existing focus restoration, dialog lifecycle, and 3D reduced-motion behavior remain intact.
+- The 3D dialog contains touch overscroll so gestures cannot scroll the obscured page behind it.
 
 ## Performance
 
