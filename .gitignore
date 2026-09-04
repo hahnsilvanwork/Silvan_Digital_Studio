@@ -16,6 +16,10 @@ coverage/
 /*.jpg
 /*.jpeg
 
+# Full-resolution NFC product sources stay local. The site serves the
+# metadata-stripped WebP derivatives committed under public/images/products/.
+/assets/nfc-products/source/*.png
+
 # Throwaway scripts used to drive a browser or probe the running build during an
 # audit. They are written to the repo root so Node resolves the project's own
 # dependencies, and they are never part of the site.

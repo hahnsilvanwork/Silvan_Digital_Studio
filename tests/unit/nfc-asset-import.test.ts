@@ -30,18 +30,26 @@ afterEach(async () => {
 describe("NFC catalogue asset importer", () => {
   it("maps every supplied source to a stable public filename", () => {
     expect(SOURCE_TO_OUTPUT).toEqual({
-      "All Card Types.png": "all-products.webp",
-      "Bookiing selve designed blue square.png": "booking-custom-blue.webp",
-      "Google Review Circle Black.png": "review-round-black.webp",
-      "Google Review Circle White.png": "review-round-white.webp",
-      "Google Review Square Blue.png": "review-square-blue.webp",
-      "Google review stand white.png": "review-stand-white.webp",
-      "google selfe designed black circle.png":
+      "assets/nfc-products/source/nfc-product-range-overview.png":
+        "all-products.webp",
+      "assets/nfc-products/source/nfc-booking-custom-square-blue.png":
+        "booking-custom-blue.webp",
+      "assets/nfc-products/source/nfc-google-review-round-black.png":
+        "review-round-black.webp",
+      "assets/nfc-products/source/nfc-google-review-round-white.png":
+        "review-round-white.webp",
+      "assets/nfc-products/source/nfc-google-review-square-blue.png":
+        "review-square-blue.webp",
+      "assets/nfc-products/source/nfc-google-review-stand-white.png":
+        "review-stand-white.webp",
+      "assets/nfc-products/source/nfc-google-review-personalized-round-black.png":
         "review-personalized-black.webp",
-      "Menu Circle Black.png": "menu-round-black.webp",
-      "Menu selfe designed white circle.png":
+      "assets/nfc-products/source/nfc-menu-round-black.png":
+        "menu-round-black.webp",
+      "assets/nfc-products/source/nfc-menu-personalized-round-white.png":
         "menu-personalized-white.webp",
-      "Menu Square Black.png": "menu-square-black.webp",
+      "assets/nfc-products/source/nfc-menu-square-black.png":
+        "menu-square-black.webp",
     });
   });
 
