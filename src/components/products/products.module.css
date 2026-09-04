@@ -68,3 +68,53 @@
 .selector button[aria-pressed="true"] {
   border-color: var(--color-ink);
 }
+
+.heroMedia {
+  display: grid;
+  gap: var(--space-xs);
+  min-inline-size: 0;
+  margin: 0;
+}
+
+.heroFrames {
+  position: relative;
+  inline-size: 100%;
+  aspect-ratio: 1;
+  overflow: clip;
+  background: var(--color-paper-raised);
+}
+
+.heroImage {
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out);
+}
+
+.heroImage[data-active="true"] {
+  z-index: 1;
+  opacity: 1;
+}
+
+.heroIndicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.heroIndicator {
+  inline-size: 1.5rem;
+  block-size: var(--hairline);
+  background: var(--color-line);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.heroIndicator[data-active="true"] {
+  background: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroImage,
+  .heroIndicator {
+    transition: none;
+  }
+}
