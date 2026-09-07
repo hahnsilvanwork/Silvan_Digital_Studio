@@ -18,6 +18,9 @@ import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
 import layoutStyles from "../../styles/layout.module.css";
 import pageStyles from "../../styles/pages.module.css";
+import { inquiryCopy } from "../../content/inquiry-copy";
+import { auditCopy } from "../../content/audit-copy";
+import inquiryStyles from "../../components/reviews/review-inquiry.module.css";
 
 interface ReviewsPageProps {
   readonly locale: Locale;
@@ -78,14 +81,14 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
         </section>
 
         <section
-          className={`${layoutStyles.container} ${pageStyles.section} ${pageStyles.sectionLead}`}
+          className={`${layoutStyles.container} ${inquiryStyles.catalogueSection}`}
           id="products"
         >
             <SectionHeading
               eyebrow={reviews.eyebrow}
               title={reviews.catalogLabel}
             />
-            <div className={pageStyles.sectionBody}>
+            <div className={inquiryStyles.contentBlock}>
               <ProductCatalog
                 categories={reviews.categories}
                 labels={{
@@ -104,12 +107,14 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
                   error: reviews.error3dLabel,
                   retry: reviews.retry3dLabel,
                   interact: reviews.interact3dLabel,
+                  requestModel: inquiryCopy[locale].requestModel,
+                  external3d: inquiryCopy[locale].external3d,
                 }}
                 products={reviews.catalog}
               />
             </div>
 
-            <div className={pageStyles.sectionBody}>
+            <div className={inquiryStyles.pricingBlock}>
               <p className={pageStyles.sectionLabel} data-reveal="rise">
                 {reviews.priceLabel}
               </p>
@@ -117,12 +122,21 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
               <p className={pageStyles.note} data-reveal="rise">
                 {reviews.quantityDiscount}
               </p>
+              <div className={inquiryStyles.conditionsBlock}>
+              <h3 className={inquiryStyles.conditionsTitle}>{auditCopy[locale].nfcConditions.title}</h3>
+              <FaqList items={auditCopy[locale].nfcConditions.items} locale={locale} />
+              </div>
             </div>
         </section>
 
-        <section className={`${layoutStyles.container} ${pageStyles.section}`}>
-            <SectionHeading title={reviews.useCasesTitle} />
-            <ul className={`${pageStyles.sectionBody} ${pageStyles.useCaseGrid}`}>
+        <section className={`${layoutStyles.container} ${inquiryStyles.compactSection}`}>
+          <SectionHeading title={reviews.processTitle} />
+          <div className={inquiryStyles.contentBlock}>
+            <ProcessSteps steps={reviews.process} />
+          </div>
+          <details className={inquiryStyles.disclosure}>
+            <summary>{reviews.useCasesTitle}</summary>
+            <ul className={`${inquiryStyles.contentBlock} ${pageStyles.useCaseGrid}`}>
               {reviews.useCases.map((useCase) => (
                 <li className={pageStyles.useCase} key={useCase.title}>
                   <h3>{useCase.title}</h3>
@@ -130,19 +144,11 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
                 </li>
               ))}
             </ul>
-        </section>
-
-        <section className={pageStyles.darkBand}>
-          <div className={layoutStyles.container}>
-            <SectionHeading title={reviews.processTitle} />
-            <div className={pageStyles.sectionBody}>
-              <ProcessSteps steps={reviews.process} />
-            </div>
-          </div>
+          </details>
         </section>
 
         <section
-          className={`${layoutStyles.container} ${pageStyles.section}`}
+          className={`${layoutStyles.container} ${inquiryStyles.compactSection}`}
           id="inquiry"
         >
           <SectionHeading

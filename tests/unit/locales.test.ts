@@ -132,25 +132,14 @@ describe("locale content", () => {
     }).toMatchObject(hero);
   });
 
-  it.each(["de" as const, "en" as const])(
-    "describes each %s product visualization separately",
-    (locale) => {
-      const { productVisualizations, secondaryProductImage } =
-        getContent(locale).reviews;
-
-      // The 3D tags and the remaining stand photograph are different products,
-      // so each keeps its own useful description outside the Spline canvas.
-      expect(productVisualizations.length).toBeGreaterThan(0);
-      expect(secondaryProductImage.alt.length).toBeGreaterThan(20);
-      for (const { ariaLabel } of productVisualizations) {
-        expect(ariaLabel.length).toBeGreaterThan(20);
-        expect(ariaLabel).not.toBe(secondaryProductImage.alt);
-      }
-      expect(
-        new Set(productVisualizations.map(({ ariaLabel }) => ariaLabel)).size,
-      ).toBe(productVisualizations.length);
-    },
-  );
+  it.each(["de" as const, "en" as const])("describes each %s catalogue model accessibly", (locale) => {
+    const catalog = getContent(locale).reviews.catalog;
+    expect(catalog.length).toBeGreaterThan(0);
+    for (const product of catalog) {
+      expect(product.image.alt.length).toBeGreaterThan(20);
+      if (product.scene) expect(product.scene.ariaLabel.length).toBeGreaterThan(20);
+    }
+  });
 
   it.each(["de" as const, "en" as const])(
     "declares what each %s personal field collects",
@@ -283,8 +272,8 @@ describe("locale content", () => {
         { name: "shape", required: true },
         { name: "size", required: true },
         { name: "quantity", required: true },
-        { name: "businessName", required: true },
-        { name: "contactPerson", required: true },
+        { name: "businessName", required: false },
+        { name: "contactPerson", required: false },
         { name: "setup", required: true },
         { name: "destinationUrl", required: false },
         { name: "note", required: false },

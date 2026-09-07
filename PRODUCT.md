@@ -18,7 +18,7 @@ Preserve existing routes, prices, bilingual content, contact destinations, produ
 SILVAN, independent developer Silvan Hahn in Boppelsen near Zurich. User rejected generic pastel cards and saturated blue accents and delegates a new, professional image-led design informed by Awwwards.
 
 ## Evidence on Hand
-Approved portrait in public/images/portrait; product imagery in public/images/products; four clearly labelled self-initiated website concepts in src/content/projects.ts. Current project stills are 512 by 279 and should not be stretched into large hero images.
+Approved portrait in public/images/portrait; product imagery in public/images/products; four implemented and clearly labelled fictional demo websites in src/content/projects.ts. Actual 1440 by 1000 browser screenshots replace the previous placeholders. Demo exports are served from public/demos.
 
 ## Product Principles
 Mobile usability first. Make services and next actions understandable. Imagery must explain the work. Preserve factual honesty. User has delegated design decisions in the current request.

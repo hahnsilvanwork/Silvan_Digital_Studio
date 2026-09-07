@@ -203,13 +203,15 @@ describe("ReviewsPage", () => {
     }
   });
 
-  it("uses a generic TAP / OPEN / ACT process", () => {
+  it("keeps the TAP / OPEN / ACT process visible without opening a disclosure", () => {
     render(<ReviewsPage locale="de" />);
 
     const main = screen.getByRole("main");
 
     for (const label of ["TAP", "OPEN", "ACT"]) {
-      expect(within(main).getByText(label)).toBeVisible();
+      const step = within(main).getByText(label);
+      expect(step).toBeVisible();
+      expect(step.closest("details")).toBeNull();
     }
   });
 

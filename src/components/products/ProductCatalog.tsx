@@ -9,6 +9,7 @@ import type {
 import { Product3DDialog, type Product3DLabels } from "./Product3DDialog";
 import { ProductCard } from "./ProductCard";
 import styles from "./products.module.css";
+import { useCatalogueSelection, setCatalogueSelection } from "../reviews/use-catalogue-selection";
 
 interface ProductCatalogLabels extends Product3DLabels {
   readonly category: string;
@@ -21,6 +22,8 @@ interface ProductCatalogLabels extends Product3DLabels {
   readonly nextProduct: string;
   readonly productPosition: string;
   readonly productPositionOf: string;
+  readonly requestModel?: string;
+  readonly external3d?: string;
 }
 
 interface ProductCatalogProps {
@@ -37,9 +40,8 @@ export function ProductCatalog({
   categories,
   labels,
 }: ProductCatalogProps) {
-  const [activeCategory, setActiveCategory] = useState<ProductCategory>(
-    categories[0]?.id ?? "reviews",
-  );
+  const selection = useCatalogueSelection();
+  const activeCategory = categories.find((category) => category.id === selection.category)?.id ?? categories[0]?.id ?? "reviews";
   const [selectedProduct, setSelectedProduct] = useState<NfcProduct | null>(
     null,
   );
@@ -97,7 +99,7 @@ export function ProductCatalog({
               key={category.id}
               onClick={() => {
                 setActiveProductIndex(0);
-                setActiveCategory(category.id);
+                setCatalogueSelection(category.id);
               }}
               type="button"
             >
@@ -150,9 +152,12 @@ export function ProductCatalog({
             }}
             product={product}
             view3dLabel={labels.view3d}
+            requestModelLabel={labels.requestModel}
           />
         ))}
       </div>
+
+      {labels.external3d ? <p className={styles.catalogDescription}>{labels.external3d}</p> : null}
 
       <div className={styles.catalogRailControls} data-product-rail-controls>
         <p aria-live="polite" className={styles.catalogPosition}>

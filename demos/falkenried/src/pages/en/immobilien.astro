@@ -1,0 +1,161 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import PropertyFilter from "../../components/PropertyFilter.astro";
+import PropertyCard from "../../components/PropertyCard.astro";
+import ProcessSteps from "../../components/ProcessSteps.astro";
+import ContactPerson from "../../components/ContactPerson.astro";
+import ContactForm from "../../components/ContactForm.astro";
+import FaqAccordion from "../../components/FaqAccordion.astro";
+import { routes } from "../../i18n/nav";
+import { realEstateSchema } from "../../lib/schema";
+import { people } from "../../data/company";
+import heroImage from "../../assets/images/immobilien/apartment-living-1.jpg";
+import apartmentImg from "../../assets/images/immobilien/apartment-living-2.jpg";
+import officeImg from "../../assets/images/immobilien/office-glass.jpg";
+import parkingImg from "../../assets/images/immobilien/parking-garage.jpg";
+
+const lang = "en";
+const accent = "--color-realestate" as const;
+---
+
+<BaseLayout
+  lang={lang}
+  route="immobilien"
+  title="Real Estate | Rental Apartments & Commercial Space – Falkenried Gruppe"
+  description="Falkenried Gruppe rents and manages only its own properties in the Zürcher Unterland: apartments, commercial space, and parking."
+  jsonLd={realEstateSchema(lang)}
+>
+  <Hero
+    variant="full"
+    eyebrow="REAL ESTATE PORTFOLIO"
+    title={`Timeless Spaces <span class="italic font-light">for Generations.</span>`}
+    subtitle="For over 50 years we have managed and developed real estate with a focus on quality, permanence, and discretion. We rent exclusively properties from our own portfolio."
+    image={heroImage}
+    imageAlt="Modern living space with large windows"
+    primaryCta={{ label: "View Properties", href: "#objekte" }}
+    secondaryCta={{ label: "Rental Process", href: "#mietprozess" }}
+  />
+
+  <section id="objekte" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <div class="mb-10">
+        <span class="label-caps mb-4 block" style={`color: var(${accent})`}>Currently Available</span>
+        <h2 class="font-display text-3xl font-semibold">Carefully Maintained Homes & Commercial Space</h2>
+      </div>
+      <PropertyFilter
+        gridId="property-grid"
+        filters={[
+          { key: "all", label: "All" },
+          { key: "wohnungen", label: "Apartments" },
+          { key: "gewerbe", label: "Commercial" },
+          { key: "parkplatz", label: "Parking" },
+        ]}
+      />
+      <div id="property-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <PropertyCard
+          image={apartmentImg}
+          imageAlt="Apartment in Zürcher Unterland Chlupf"
+          status="On Request"
+          statusTone="neutral"
+          category="wohnungen"
+          title="Apartment, Zürcher Unterland Chlupf"
+          address="Zürcher Unterland, Zürcher Unterland"
+          price="Price on request"
+          priceLabel="Monthly Rent"
+          detailsLabel="Request Details"
+        />
+        <PropertyCard
+          image={officeImg}
+          imageAlt="Commercial space, Steinbruggstrasse Zürcher Unterland"
+          status="On Request"
+          statusTone="neutral"
+          category="gewerbe"
+          title="Commercial Space, Steinbruggstrasse"
+          address="Zürcher Unterland, next to Schöfflisdorf-Zürcher Unterland station"
+          price="Price on request"
+          priceLabel="Monthly Rent"
+          detailsLabel="Request Details"
+        />
+        <PropertyCard
+          image={parkingImg}
+          imageAlt="Underground parking space in Zürcher Unterland"
+          status="On Request"
+          statusTone="neutral"
+          category="parkplatz"
+          title="Underground Parking Space"
+          address="Zürcher Unterland Chlupf"
+          price="Price on request"
+          priceLabel="Monthly Rent"
+          detailsLabel="Request Details"
+        />
+      </div>
+      <p class="text-sm text-[var(--color-ink-muted)] mt-8">
+        Current availability changes regularly. Contact us for the latest overview of available properties.
+      </p>
+    </div>
+  </section>
+
+  <section id="mietprozess" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <div class="text-center mb-16">
+        <span class="label-caps" style={`color: var(${accent})`}>Good to Know</span>
+        <h2 class="font-display text-3xl font-semibold mt-4">The Rental Process</h2>
+      </div>
+      <ProcessSteps
+        steps={[
+          { number: "1", title: "Viewing", description: "Arrange an appointment for a private viewing – we take the time to show you everything." },
+          { number: "2", title: "Application", description: "Submit your application dossier including a current debt collection extract – discreet and straightforward." },
+          { number: "3", title: "Signing", description: "Once approved, we prepare the lease and hand over the keys in person." },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-4">
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Your Contact</span>
+        <div class="space-y-4">
+          <ContactPerson name={people["mara-linden"].name} roles={people["mara-linden"].roles[lang]} accentVar={accent} />
+          <ContactPerson name={people["nora-feldmann"].name} roles={people["nora-feldmann"].roles[lang]} accentVar={accent} />
+        </div>
+        <p class="text-sm text-[var(--color-ink-muted)] mt-6 leading-relaxed">
+          Contact us directly or use the form for your specific property inquiry.
+        </p>
+      </div>
+      <div class="lg:col-span-8">
+        <ContactForm
+          lang={lang}
+          area="real-estate"
+          source="/en/immobilien/"
+          subject="New Inquiry – Real Estate"
+          submitLabel="Send Inquiry"
+          successMessage="Thank you for your inquiry! We'll be in touch shortly."
+          errorMessage="Something went wrong. Please try again or call us."
+          fields={[
+            { type: "text", name: "name", label: "First & Last Name", placeholder: "Jane Doe" },
+            { type: "email", name: "email", label: "Email Address", placeholder: "jane@example.com" },
+            { type: "select", name: "objekt", label: "Interested In", options: ["Apartment", "Commercial", "Parking", "Not sure yet"] },
+            { type: "textarea", name: "message", label: "Your Message", placeholder: "How can we help you?" },
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
+    <div class="max-w-3xl mx-auto px-6 lg:px-16">
+      <h2 class="font-display text-2xl font-semibold mb-10 text-center">Frequently Asked Questions</h2>
+      <FaqAccordion
+        items={[
+          { question: "Are pets allowed in your apartments?", answer: "Pets are generally welcome by prior arrangement. We review this on a case-by-case basis considering the building and the specific unit." },
+          { question: "How much is the security deposit?", answer: "Typically a deposit of two to three months' rent is required, held in a blocked account or via a deposit insurance." },
+        ]}
+      />
+      <div class="text-center mt-10">
+        <a href={routes.faq[lang]} class="label-caps" style={`color: var(${accent})`}>View all FAQs →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

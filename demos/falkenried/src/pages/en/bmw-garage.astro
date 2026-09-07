@@ -1,0 +1,168 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import ServiceList from "../../components/ServiceList.astro";
+import ProcessSteps from "../../components/ProcessSteps.astro";
+import ContactPerson from "../../components/ContactPerson.astro";
+import FaqAccordion from "../../components/FaqAccordion.astro";
+import Testimonial from "../../components/Testimonial.astro";
+import SectionNav from "../../components/SectionNav.astro";
+import { Image } from "astro:assets";
+import { routes } from "../../i18n/nav";
+import { automotiveBusinessSchema } from "../../lib/schema";
+import { bmwOpeningHours, externalLinks, people } from "../../data/company";
+import heroImage from "../../assets/images/bmw/workshop-hero.jpg";
+import detailImage from "../../assets/images/bmw/workshop-detail.jpg";
+
+const lang = "en";
+const accent = "--color-bmw-text" as const;
+const formatRanges = (ranges: readonly (readonly [string, string])[]) => ranges.map(([opens, closes]) => `${opens}–${closes}`).join(" · ");
+---
+
+<BaseLayout
+  lang={lang}
+  route="bmw"
+  title="Autowerkstatt | Service, Sales & Fuel Station – Falkenried Gruppe"
+  description="Official vehicle service in Zürcher Unterland: maintenance, repairs, new and used cars, our own fuel station with EV charging and a car wash."
+  jsonLd={automotiveBusinessSchema(lang)}
+>
+  <Hero
+    variant="full"
+    eyebrow="AUTHORIZED BMW PARTNER"
+    title={`Precision in <span class="italic font-light">Every Turn.</span>`}
+    subtitle="Swiss workshop expertise and BMW's engineering excellence – for a vehicle that deserves your full attention."
+    image={heroImage}
+    imageAlt="BMW in front of the garage"
+    primaryCta={{ label: "Book Online", href: routes.kontakt[lang] + "#general-inquiry" }}
+    secondaryCta={{ label: "View Services", href: "#services" }}
+  />
+
+  <SectionNav label="BMW section" activePath={routes.bmw[lang]} accentVar="--color-bmw-text" items={[
+    { label: "Overview", href: routes.bmw[lang] },
+    { label: "Service", href: routes.bmwService[lang] },
+    { label: "Used cars", href: routes.bmwOccasions[lang] },
+    { label: "Service station", href: routes.bmwStation[lang] },
+    { label: "Accessories", href: routes.bmwAccessories[lang] },
+  ]} />
+
+  <section id="services" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <div class="text-center mb-16">
+        <span class="label-caps" style={`color: var(${accent})`}>Our Services</span>
+        <h2 class="font-display text-3xl lg:text-4xl font-semibold mt-4">Service Excellence</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div class="card p-8 border-t-4" style={`border-top-color: var(${accent})`}>
+          <h3 class="font-semibold text-lg mb-3">Master Repairs</h3>
+          <p class="text-[var(--color-ink-muted)] text-sm leading-relaxed">
+            State-of-the-art diagnostics, genuine BMW parts, and certified technicians for every service and repair.
+          </p>
+        </div>
+        <div class="card p-8 border-t-4" style={`border-top-color: var(${accent})`}>
+          <h3 class="font-semibold text-lg mb-3">New & Pre-Owned Cars</h3>
+          <p class="text-[var(--color-ink-muted)] text-sm leading-relaxed">
+            Personal advice when buying your next BMW – from the latest model to a thoroughly inspected pre-owned car.
+          </p>
+        </div>
+        <div class="card p-8 border-t-4" style={`border-top-color: var(${accent})`}>
+          <h3 class="font-semibold text-lg mb-3">Fuel Station & Car Wash</h3>
+          <p class="text-[var(--color-ink-muted)] text-sm leading-relaxed">
+            24/7 self-service fuel station for diesel and petrol, two EV charging stations, and a textile car wash.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-lowest)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="order-2 lg:order-1">
+          <span class="label-caps mb-6 block" style={`color: var(${accent})`}>AUTOMOTIVE EXCELLENCE</span>
+          <h2 class="font-display text-3xl font-semibold mb-8">Your BMW in the Best Hands</h2>
+          <p class="text-lg text-[var(--color-ink-muted)] mb-10 leading-relaxed">
+            For decades we have been your point of contact for BMW in the Zürcher Unterland. Our specialized
+            team uses state-of-the-art diagnostics for every service and repair – personal and reliable.
+          </p>
+          <ServiceList
+            accentVar={accent}
+            items={[
+              "Certified BMW service & repairs",
+              "Sales of new cars & premium pre-owned vehicles",
+              "Own fuel station, EV charging & car wash",
+            ]}
+          />
+          <a href={routes.kontakt[lang] + "#general-inquiry"} class="btn-primary mt-10 inline-flex">Book Online</a>
+        </div>
+        <div class="order-1 lg:order-2 relative">
+          <div class="aspect-[4/3] rounded-xl overflow-hidden">
+            <Image src={detailImage} alt="BMW vehicles – tradition meets modernity" class="w-full h-full object-cover" widths={[400, 800, 1200]} sizes="(min-width: 1024px) 45vw, 90vw" />
+          </div>
+          <div class="absolute -bottom-8 -right-8 bg-[var(--color-surface)] p-8 hidden lg:block rounded-lg border border-[var(--color-outline-variant)]/40">
+            <span class="block font-display text-[var(--color-primary)] text-5xl font-bold mb-1">100%</span>
+            <span class="block label-caps text-[var(--color-ink-muted)]">Genuine Parts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <div class="text-center mb-16">
+        <span class="label-caps" style={`color: var(${accent})`}>Process</span>
+        <h2 class="font-display text-3xl font-semibold mt-4">Your Path to a Service Appointment</h2>
+      </div>
+      <ProcessSteps
+        steps={[
+          { number: "1", title: "Choose a date", description: "Choose your preferred date and service in the external BMW online booking system." },
+          { number: "2", title: "Drop off your vehicle", description: "Bring your vehicle in or use our pick-up service." },
+          { number: "3", title: "Collect & drive off", description: "We'll let you know as soon as your vehicle is serviced and ready." },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-3xl mx-auto px-6 lg:px-16">
+      <h2 class="font-display text-3xl font-semibold mb-8">Garage Opening Hours</h2>
+      <dl class="divide-y divide-[var(--color-outline-variant)]/40">
+        <div class="flex justify-between py-4 gap-6"><dt>Mon–Thu</dt><dd>{formatRanges(bmwOpeningHours.monday)}</dd></div>
+        <div class="flex justify-between py-4 gap-6"><dt>Fri</dt><dd>{formatRanges(bmwOpeningHours.friday)}</dd></div>
+        <div class="flex justify-between py-4 gap-6"><dt>Sat</dt><dd>{formatRanges(bmwOpeningHours.saturday)}</dd></div>
+        <div class="flex justify-between py-4 gap-6"><dt>Sun</dt><dd>closed</dd></div>
+      </dl>
+      <p class="text-sm text-[var(--color-ink-muted)] mt-5">Closed on the last Saturday of every month. Please check special opening hours before visiting.</p>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-primary)] text-white">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <h2 class="font-display text-2xl font-semibold mb-12">Your Personal Service Team</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl">
+        <ContactPerson name={people["jonas-lindberg"].name} roles={people["jonas-lindberg"].roles[lang]} accentVar={accent} dark />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <Testimonial
+        accentVar={accent}
+        quote="The attention to detail at Falkenried Gruppe was unmatched. They don't just care for cars, they care for people."
+        name="M. W."
+        role="Customer, Zürich"
+      />
+      <div>
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Frequently Asked Questions</span>
+        <FaqAccordion
+          items={[
+            { question: "Does my BMW factory warranty stay valid after a service?", answer: "Yes. As an official vehicle service we work exclusively to manufacturer specifications with genuine parts – your factory warranty remains fully intact." },
+            { question: "Do you offer a replacement vehicle during workshop visits?", answer: "Let us know when booking your appointment – we're happy to arrange a mobility solution for you, subject to availability." },
+          ]}
+        />
+        <a href={routes.faq[lang]} class="label-caps mt-8 inline-block" style={`color: var(${accent})`}>View all FAQs →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

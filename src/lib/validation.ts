@@ -2,7 +2,16 @@ import type { ReviewInquiryFieldName } from "../content/types";
 
 export type ReviewInquiryValues = Record<ReviewInquiryFieldName, string>;
 
-export type ReviewInquiryErrorKind = "required" | "quantity" | "url";
+export type ReviewInquiryErrorKind = "required" | "quantity" | "url" | "length";
+
+export const MAX_INQUIRY_QUANTITY = 999;
+export const INQUIRY_LIMITS: Partial<Record<ReviewInquiryFieldName, number>> = {
+  quantity: 16,
+  businessName: 100,
+  contactPerson: 100,
+  destinationUrl: 500,
+  note: 600,
+};
 
 export type ReviewInquiryErrors = Partial<
   Record<ReviewInquiryFieldName, ReviewInquiryErrorKind>
@@ -14,8 +23,6 @@ const BASE_REQUIRED_FIELDS: readonly ReviewInquiryFieldName[] = [
   "shape",
   "size",
   "quantity",
-  "businessName",
-  "contactPerson",
   "setup",
 ];
 
@@ -33,7 +40,8 @@ export const EMPTY_REVIEW_INQUIRY: ReviewInquiryValues = {
 };
 
 export function isPositiveInteger(value: string): boolean {
-  return /^\d+$/.test(value.trim()) && Number.parseInt(value.trim(), 10) >= 1;
+  const quantity = Number(value.trim());
+  return /^\d+$/.test(value.trim()) && Number.isSafeInteger(quantity) && quantity >= 1 && quantity <= MAX_INQUIRY_QUANTITY;
 }
 
 /**
@@ -42,7 +50,8 @@ export function isPositiveInteger(value: string): boolean {
  */
 export function isValidHttpsUrl(value: string): boolean {
   try {
-    return new URL(value.trim()).protocol === "https:";
+    const url = new URL(value.trim());
+    return url.protocol === "https:" && !url.username && !url.password;
   } catch {
     return false;
   }
@@ -113,12 +122,18 @@ export function validateReviewInquiry(
   }
 
   if (
+    visibleInquiryFields(trimmed).includes("destinationUrl") &&
     trimmed.destinationUrl !== "" &&
     !(trimmed.destination === "reviews"
       ? isValidGoogleUrl(trimmed.destinationUrl)
       : isValidHttpsUrl(trimmed.destinationUrl))
   ) {
     errors.destinationUrl = "url";
+  }
+
+  for (const field of visibleInquiryFields(trimmed)) {
+    const limit = INQUIRY_LIMITS[field];
+    if (limit && trimmed[field].length > limit) errors[field] = "length";
   }
 
   return errors;

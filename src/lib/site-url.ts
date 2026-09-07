@@ -31,7 +31,12 @@ function parseHttpsUrl(value: string | undefined): URL | null {
   try {
     const url = new URL(value.trim());
 
-    return url.protocol === "https:" ? url : null;
+    const host = url.hostname;
+    const publicDomain = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i.test(host)
+      && !/\.(?:localhost|local|internal|test|invalid)$/i.test(host);
+    return url.protocol === "https:" && publicDomain && !url.username && !url.password
+      && !url.port && url.pathname === "/" && !url.search && !url.hash
+      ? new URL(url.origin) : null;
   } catch {
     return null;
   }
@@ -40,7 +45,9 @@ function parseHttpsUrl(value: string | undefined): URL | null {
 export function getSiteOrigin(): SiteOrigin {
   const configured = parseHttpsUrl(process.env.NEXT_PUBLIC_SITE_URL);
 
-  if (configured !== null) {
+  const deploymentEnvironment = process.env.VERCEL_ENV?.trim();
+  const isNonProduction = Boolean(deploymentEnvironment && deploymentEnvironment !== "production");
+  if (configured !== null && !isNonProduction) {
     return { base: configured, isCanonical: true };
   }
 
@@ -51,8 +58,8 @@ export function getSiteOrigin(): SiteOrigin {
   // VERCEL_PROJECT_PRODUCTION_URL would otherwise shadow a perfectly good
   // VERCEL_URL and drop the whole build back to localhost.
   const deployment = firstConfigured(
-    process.env.VERCEL_PROJECT_PRODUCTION_URL,
     process.env.VERCEL_URL,
+    isNonProduction ? undefined : process.env.VERCEL_PROJECT_PRODUCTION_URL,
   );
   const deploymentUrl = parseHttpsUrl(
     deployment === undefined ? undefined : `https://${deployment}`,

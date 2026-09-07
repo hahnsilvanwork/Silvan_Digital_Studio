@@ -1,0 +1,5 @@
+---
+const { title, lang = "de" } = Astro.props;
+const de = lang === "de";
+---
+<div class="card p-10 text-center"><span class="label-caps">{de ? "DEMO · FAHRZEUGANGEBOT" : "DEMO · VEHICLE SELECTION"}</span><h2 class="font-display text-3xl mt-4">{title}</h2><p class="mt-4 text-[var(--color-ink-muted)]">{de ? "In dieser Vorschau werden keine externen Fahrzeugangebote geladen." : "This preview does not load external vehicle listings."}</p><a href={de ? "/kontakt/" : "/en/contact/"} class="btn-primary mt-8">{de ? "Beratung entdecken" : "Explore our advice"}</a></div>

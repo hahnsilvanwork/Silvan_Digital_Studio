@@ -1,0 +1,175 @@
+@import "tailwindcss";
+@import "@fontsource-variable/hanken-grotesk";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+/*
+  Design tokens consolidated from Falkenried visual direction
+  (heritage_precision_1 direction). Contrast ratios computed against
+  WCAG 2.1 formulas; see DESIGN.md for the full table.
+*/
+@theme {
+  --font-display: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Hanken Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* Neutrals / surfaces */
+  --color-surface: #f5f3ed;
+  --color-surface-dim: #d9dadb;
+  --color-surface-lowest: #ffffff;
+  --color-surface-low: #ebece4;
+  --color-surface-container: #edeeef;
+  --color-surface-high: #e7e8e9;
+  --color-surface-highest: #e1e3e4;
+  --color-ink: #191c1d;               /* body text on light surfaces: 16.26:1 on --color-surface */
+  --color-ink-muted: #424751;         /* secondary text: 9.33:1 on white */
+  --color-outline: #737782;
+  --color-outline-variant: #c2c6d3;   /* borders only, never text: 1.71:1 */
+  --color-inverse-surface: #2e3132;   /* dark section background (Immobilien) */
+  --color-inverse-ink: #f0f1f2;       /* text on inverse-surface: 13.9:1 */
+
+  /* Brand */
+  --color-primary: #163c35;           /* Swiss Navy: 12.17:1 on white, 12.17:1 white-on-navy */
+  --color-primary-strong: #265b4e;    /* hover/active state */
+  --color-charcoal: #333333;          /* 12.63:1 on white */
+  --color-heritage-gold: #e9b63c;     /* DECORATIVE ONLY (badges/borders) — 1.87:1, fails as text */
+
+  /* Division accents */
+  --color-bmw: #3c8cbf;               /* decorative: borders/icons/backgrounds only, 3.69:1 */
+  --color-bmw-text: #1c4f73;          /* use for BMW-division text/links: 8.69:1 on white */
+  --color-garden: #2d5a27;            /* safe as text: 8.07:1 on white, 8.07:1 white-on-garden */
+  --color-realestate: #55606b;        /* darker than mockup's #707070 for text safety: 7.1:1 on white */
+  --color-realestate-muted: #707070;  /* decorative only (icons/dividers): 4.95:1, borderline for small text */
+
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+
+  /* Radius */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  /* Layout */
+  --container-max: 1280px;
+  --spacing-gutter: 1.5rem;
+  --spacing-section-gap: clamp(4rem, 8vw, 7.5rem);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 1rem;
+    z-index: 100;
+    background: var(--color-primary);
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-md);
+  }
+  .skip-link:focus {
+    left: 1rem;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.8125rem;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-primary-strong);
+  }
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 1.5px solid var(--color-primary);
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.8125rem;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .btn-secondary:hover {
+    background-color: var(--color-primary);
+    color: #ffffff;
+  }
+  .label-caps {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .card {
+    background-color: var(--color-surface-lowest);
+    border: 1px solid var(--color-outline-variant);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.brand-wordmark{display:flex;align-items:center;gap:12px;color:var(--color-primary);font-weight:700;font-size:20px;letter-spacing:.1em;line-height:1.1}.brand-wordmark small{display:block;font-size:8px;letter-spacing:.17em;margin-top:6px}.brand-symbol{font-family:Georgia,serif;font-size:44px;letter-spacing:-.1em;line-height:1;border-right:1px solid #163c3533;padding-right:14px}
+.falkenried-hero{display:grid;grid-template-columns:1fr 1fr;min-height:740px;padding-top:91px;background:#f4f1e8}.hero-copy{padding:84px max(32px,calc((100vw - 1152px)/2)) 52px;padding-right:38px;display:flex;align-items:flex-start;justify-content:center;flex-direction:column}.hero-eyebrow{font-size:10px;letter-spacing:.18em;color:#476555;margin-bottom:32px}.hero-copy h1{font-family:Georgia,serif;font-size:clamp(48px,5.3vw,82px);font-weight:400;line-height:1.05;letter-spacing:-.055em;color:#183d35;margin:0 0 28px}.hero-copy h1 em{font-weight:400;color:#6e7962}.hero-copy>p{max-width:350px;font-size:18px;line-height:1.7;color:#4d5950}.hero-actions{display:flex;flex-direction:column;align-items:flex-start;gap:23px;margin-top:32px}.hero-actions .btn-primary{font-size:11px;letter-spacing:.09em;border-radius:0;padding:19px 23px;gap:22px}.hero-text-link{font-size:13px;color:#344c41;border-bottom:1px solid #899786;padding-bottom:4px}.hero-signature{display:flex;align-items:center;gap:18px;border-top:1px solid #bdc3b6;margin-top:48px;padding-top:24px;width:100%;max-width:350px}.hero-signature>span{font-family:Georgia,serif;font-size:46px;color:#7a856d}.hero-signature p{font-size:12px;line-height:1.8;color:#53604f}.hero-signature strong{font-weight:600;color:#23483e}.hero-visual{position:relative;min-height:650px;overflow:hidden}.hero-visual>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hero-visual:after{content:'';position:absolute;inset:50% 0 0;background:linear-gradient(transparent,#062f1e66);pointer-events:none}.hero-image-note{position:absolute;bottom:35px;left:35px;color:white;font-size:10px;letter-spacing:.2em;z-index:1}.hero-seal{position:absolute;right:32px;bottom:28px;background:#f4f1e8;color:#244637;width:118px;height:118px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:42px;border-radius:50%;z-index:1}.hero-seal small{font-family:var(--font-body);font-size:7px;letter-spacing:.15em;text-align:center;line-height:1.8}.portrait-panel{position:relative;overflow:hidden;min-height:430px;background:#14392e}.portrait-panel img{width:100%;height:500px;object-fit:cover;opacity:.55}.portrait-panel figcaption{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:48px;color:white}.portrait-panel figcaption p{font-family:Georgia,serif;font-size:clamp(30px,4vw,54px);line-height:1.15;margin:22px 0}.portrait-panel figcaption a{text-decoration:underline;text-underline-offset:6px;font-size:14px}.demo-notice{padding:20px 24px;text-align:center;background:#163c35;color:#f6f3e9;font-size:12px;line-height:1.7}section[id]{scroll-margin-top:110px}button,a,input,textarea,select{-webkit-tap-highlight-color:transparent}input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid #365e4d;outline-offset:5px}
+@media(min-width:1024px) and (max-width:1199px){header .label-caps{font-size:10px;letter-spacing:.08em}.brand-wordmark{font-size:16px}.brand-symbol{font-size:36px}header .btn-primary{padding:14px;font-size:10px;min-width:0}}
+@media(max-width:1023px){.falkenried-hero{padding-top:83px;grid-template-columns:1fr;min-height:0}.hero-copy{padding:54px 24px 40px}.hero-copy h1{font-size:clamp(48px,10vw,78px)}.hero-copy>p{max-width:500px}.hero-visual{min-height:420px}.hero-signature{margin-top:30px}.hero-eyebrow{font-size:9px;margin-bottom:24px}.hero-actions{margin-top:25px}.hero-visual>img{object-position:center 55%}.brand-wordmark{font-size:18px}.brand-symbol{font-size:37px}.hero-image-note{left:24px}.portrait-panel figcaption{padding:28px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+
+.legal-demo{max-width:760px;margin:auto;padding:0 24px}.legal-demo h1{font-size:40px;line-height:1.15;margin:24px 0 40px}.legal-demo h2{font-size:22px;margin:28px 0 12px}.legal-demo p{line-height:1.8;color:var(--color-ink-muted)}
+
+/* Consistent, measurable contrast for controls over photography. */
+.image-hero .hero-contrast-overlay{background:linear-gradient(90deg,rgba(7,24,34,.84),rgba(7,24,34,.62) 60%,rgba(7,24,34,.38))}
+.image-hero .btn-primary{background:#fff;color:#163c35;border:1.5px solid #fff}
+.image-hero .btn-primary:hover{background:#e5eddf;border-color:#e5eddf;color:#163c35}
+.image-hero .btn-secondary{background:#163c35;color:#fff;border-color:#fff}
+.image-hero .btn-secondary:hover{background:#265b4e;color:#fff;border-color:#fff}
+.image-hero :focus-visible{outline:3px solid #fff;outline-offset:5px}
+.portal-hero{padding-top:76px}.portal-hero p{line-height:1.7}.service-card>h3,.service-card>.label-caps{padding-right:54px}
+.section-navigation a{min-height:44px;display:inline-flex;align-items:center}.btn-primary,.btn-secondary{min-height:48px;line-height:1.4;text-align:center}
+#mobile-menu{max-height:calc(100dvh - 80px);overflow-y:auto}#mobile-menu li>a{display:flex;min-height:44px;align-items:center}#mobile-menu ul{gap:8px}
+@media(max-width:639px){.image-hero{padding-top:148px;min-height:620px}.image-hero .btn-primary,.image-hero .btn-secondary{width:100%}.image-hero h1{font-size:clamp(36px,9.2vw,44px)}.portal-hero{padding-top:78px}.portal-hero>div.relative{padding-top:54px;padding-bottom:54px}.service-card{padding:24px}.service-card>h3{font-size:23px}.hero-image-note{max-width:190px;line-height:1.7}.hero-seal{width:100px;height:100px;right:20px}.hero-copy h1{letter-spacing:-.035em}.section-navigation>div{padding-left:16px;padding-right:16px}}
+
+/* The closing invitation uses a reversed button, visibly distinct from its surface. */
+.contact-invitation { padding-block: var(--spacing-section-gap); background: #163c35; color: #ffffff; }
+.contact-invitation h2 { color: #ffffff; text-wrap: balance; line-height: 1.2; }
+.contact-invitation .contact-invitation-copy { color: #f3f0e8; font-size: 1.125rem; line-height: 1.75; }
+.contact-invitation .btn-primary { background: #ffffff; color: #163c35; border: 2px solid #ffffff; min-height: 52px; font-size: .875rem; }
+.contact-invitation .btn-primary:hover { background: #e7eee9; color: #163c35; border-color: #e7eee9; }
+.contact-invitation .btn-primary:focus-visible { outline: 3px solid #ffffff; outline-offset: 6px; }
+.demo-notice { background: #f3f0e8; color: #163c35; border-block: 1px solid #c3cdc5; padding: 24px max(24px, calc((100% - 920px) / 2)); font-size: .875rem; line-height: 1.75; }
+@media(max-width:639px) { .contact-invitation .btn-primary { width: 100%; max-width: 360px; } .contact-invitation .contact-invitation-copy { font-size: 1rem; } }

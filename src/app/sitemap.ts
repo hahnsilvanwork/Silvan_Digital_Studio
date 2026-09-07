@@ -28,7 +28,7 @@ const ROUTES: readonly InternalPath[] = [
  * Bump this when the published copy of the site actually changes. It is the
  * date every entry reports, so it has to mean something.
  */
-const CONTENT_REVISION = "2026-08-27";
+const CONTENT_REVISION = "2026-09-07";
 
 /** The service pages are what a visitor is meant to land on from a search. */
 const PRIORITY: Partial<Record<string, number>> = {

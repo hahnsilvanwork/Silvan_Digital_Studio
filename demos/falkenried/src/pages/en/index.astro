@@ -1,0 +1,100 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import Hero from "../../components/Hero.astro";
+import DivisionCard from "../../components/DivisionCard.astro";
+import VideoPreview from "../../components/VideoPreview.astro";
+import Testimonial from "../../components/Testimonial.astro";
+import { routes } from "../../i18n/nav";
+import { organizationSchema } from "../../lib/schema";
+import heroImage from "../../assets/images/garden/garden-path.jpg";
+
+const lang = "en";
+---
+
+<BaseLayout
+  lang={lang}
+  route="home"
+  title="Falkenried Gruppe | Autowerkstatt, Landscaping & Real Estate in Zürcher Unterland"
+  description="Falkenried Gruppe in Zürcher Unterland: your vehicle service specialist, landscaping specialist, and real estate expert for 55 years. Personal advice in the Zürcher Unterland."
+  jsonLd={organizationSchema(lang)}
+>
+  <section class="falkenried-hero">
+    <div class="hero-copy"><span class="label-caps hero-eyebrow">FALKENRIED GROUP · ZÜRCHER UNTERLAND</span><h1>Made for life.<br /><em>And tomorrow.</em></h1><p>Keeping you moving. Creating room to feel at home. Growing the places you love.</p><div class="hero-actions"><a href="#bereiche" class="btn-primary">Explore our expertise ↗</a><a href={routes.kontakt[lang]} class="hero-text-link">Let's talk →</a></div><div class="hero-signature"><span>03</span><p>Areas. One commitment.<br /><strong>Quality that lasts.</strong></p></div></div>
+    <div class="hero-visual"><Image src={heroImage} alt="A green garden path and a quiet place to recharge" widths={[640,1000,1400]} sizes="(min-width: 1024px) 52vw, 100vw" loading="eager" fetchpriority="high" /><span class="hero-image-note">SPACE FOR WHAT MATTERS.</span><span class="hero-seal">F.<small>WITH CARE.<br />WITH VISION.</small></span></div>
+  </section>
+
+  <section id="bereiche" class="border-y border-[var(--color-outline-variant)]/30 py-16 bg-[var(--color-surface-lowest)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <h2 class="sr-only">Our Three Business Divisions</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 md:divide-x divide-[var(--color-outline-variant)]/40">
+        <DivisionCard
+          index="01 / MOBILITY"
+          accentVar="--color-bmw-text"
+          title="Autowerkstatt"
+          description="Certified service, sales, and expertise straight from the BMW partner."
+          href={routes.bmw[lang]}
+        />
+        <DivisionCard
+          index="02 / NATURE"
+          accentVar="--color-garden"
+          title="Landscaping"
+          description="Masterful design and care for your private outdoor retreat."
+          href={routes.gartenbau[lang]}
+        />
+        <DivisionCard
+          index="03 / LIVING"
+          accentVar="--color-realestate"
+          title="Real Estate"
+          description="Exclusive living and professional management of our own properties."
+          href={routes.immobilien[lang]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <div class="mb-10 text-center">
+        <span class="label-caps text-[var(--color-primary)] mb-4 block">MEET FALKENRIED GRUPPE</span>
+        <h2 class="font-display text-3xl lg:text-4xl font-semibold">Personal. Versatile. Since 1969.</h2>
+      </div>
+      <VideoPreview title="Preview of the Falkenried Gruppe company video" playLabel="Play company video" externalLabel="Watch video on YouTube" />
+
+      <div class="mt-20">
+        <div class="mb-12 text-center">
+          <span class="label-caps text-[var(--color-primary)] mb-4 block">CUSTOMER TESTIMONIALS</span>
+          <h2 class="font-display text-3xl font-semibold">What our customers say</h2>
+          <p class="mt-3 text-sm text-[var(--color-ink-muted)]">Original customer quotes in German</p>
+        </div>
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
+          <Testimonial quote="Professionell, freundlich, zuverlässig. Die Anliegen werden ernst genommen und Lösungen gefunden." name="H. B. aus Nassenwil" role="Original customer quote in German" />
+          <Testimonial quote="Top Beratung – der Kunde im Vordergrund, einfach übersichtlich." name="J. W. aus Bachs" role="Original customer quote in German" />
+          <Testimonial quote="Sehr nette und kompetente Mitarbeiter, fühle mich sehr wohl und komme gerne. Sehr kundenorientiert, super – weiter so." name="C. H. aus Schleinikon" role="Original customer quote in German" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-3xl mx-auto px-6 lg:px-16 text-center">
+      <span class="label-caps text-[var(--color-primary)] mb-6 block">OUR STORY</span>
+      <h2 class="font-display text-3xl lg:text-4xl font-semibold italic font-light mb-8">Grown since 1969.</h2>
+      <p class="text-lg text-[var(--color-ink-muted)] leading-relaxed mb-10">
+        What began in 1969 as a local workshop in Zürcher Unterland is today a modern, second-generation family
+        business – with three strong pillars and deep roots in the Zürcher Unterland.
+      </p>
+      <a href={routes.geschichte[lang]} class="btn-secondary">Discover our history</a>
+    </div>
+  </section>
+
+  <section id="kontakt-einstieg" class="contact-invitation">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 text-center">
+      <h2 class="font-display text-3xl lg:text-4xl font-semibold mb-6">Ready for the next step?</h2>
+      <p class="contact-invitation-copy max-w-xl mx-auto mb-10 leading-relaxed">
+        Whether it's a workshop appointment, a garden project, or a rental inquiry – our team gets back to you within 24 hours.
+      </p>
+      <a href={routes.kontakt[lang]} class="btn-primary">Open contact form</a>
+    </div>
+  </section>
+</BaseLayout>

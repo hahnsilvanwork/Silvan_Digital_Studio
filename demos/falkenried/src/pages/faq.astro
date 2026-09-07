@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqTabs from "../components/FaqTabs.astro";
+import { routes, common } from "../i18n/nav";
+import { organizationSchema, faqSchema } from "../lib/schema";
+import { bmwFaqs } from "../data/bmw";
+
+const lang = "de";
+const c = common[lang];
+
+const groups = [
+  {
+    key: "bmw",
+    label: "Autowerkstatt",
+    items: [
+      ...bmwFaqs.map((item) => ({ question: item.question.de, answer: item.answer.de })),
+      { question: "Welche BMW Modelle werden in Ihrer Garage gewartet?", answer: "Wir warten und reparieren alle aktuellen sowie ältere BMW Modelle – vom Kompaktwagen bis zum SUV. Als offizieller Servicepartner verfügen wir über die passende Diagnosetechnik für jede Baureihe." },
+      { question: "Bleibt meine BMW Werksgarantie bei einem Service erhalten?", answer: "Ja. Wir arbeiten ausschliesslich nach Herstellervorgaben und mit Originalteilen – Ihre Werksgarantie bleibt vollumfänglich bestehen." },
+      { question: "Bieten Sie Ersatzwagen während des Werkstattaufenthalts an?", answer: "Sprechen Sie uns bei der Terminvereinbarung an, wir organisieren nach Verfügbarkeit gerne eine Lösung." },
+      { question: "Wie oft sollte ein Ölwechsel bei meinem BMW durchgeführt werden?", answer: "Das hängt vom Modell und der Fahrweise ab. Grundsätzlich empfehlen wir, das BMW Service-Intervall im Fahrzeug zu beachten und uns bei Unsicherheit direkt zu kontaktieren." },
+      { question: "Betreiben Sie auch die Tankstelle und Waschanlage?", answer: "Ja, unsere 24/7 Selbstbedienungstankstelle (Diesel, Benzin, 2 E-Ladestationen) sowie die Textil-Waschanlage stehen allen Kundinnen und Kunden offen." },
+    ],
+  },
+  {
+    key: "gartenbau",
+    label: "Gartenbau",
+    items: [
+      { question: "In welchem Gebiet sind Sie im Gartenbau tätig?", answer: "Wir sind primär im Zürcher Unterland tätig, insbesondere in Zürcher Unterland, Schöfflisdorf, Dielsdorf und Umgebung." },
+      { question: "Wann ist der beste Zeitpunkt für eine Umgestaltung?", answer: "Frühling und Herbst eignen sich ideal für Pflanzarbeiten. Beratung und Planung führen wir ganzjährig durch." },
+      { question: "Bieten Sie auch reine Pflegeabos an?", answer: "Ja, wir bieten flexible Pflegeverträge für Rasen, Hecken und Beete – saisonal oder ganzjährig." },
+      { question: "Übernehmen Sie auch grössere Umgestaltungsprojekte?", answer: "Von der Neuanlage eines Sitzplatzes bis zur weitläufigen Parkanlage – wir begleiten Projekte jeder Grösse von der Planung bis zur Pflege." },
+    ],
+  },
+  {
+    key: "immobilien",
+    label: "Immobilien",
+    items: [
+      { question: "Vermieten Sie auch fremde Objekte?", answer: "Nein, wir konzentrieren uns bewusst auf die Bewirtschaftung und Vermietung ausschliesslich eigener Liegenschaften, um höchste Service-Qualität zu garantieren." },
+      { question: "Sind Haustiere in Ihren Wohnungen erlaubt?", answer: "Grundsätzlich sind Haustiere nach vorheriger Absprache willkommen. Wir prüfen dies im Einzelfall." },
+      { question: "Wie hoch ist die Mietkaution?", answer: "In der Regel zwei bis drei Monatsmieten, hinterlegt auf einem Sperrkonto oder via Kautionsversicherung." },
+      { question: "Bieten Sie auch Immobilien zum Kauf an?", answer: "Aktuell konzentrieren wir uns vollumfänglich auf Vermietung und Verwaltung. Sprechen Sie uns bei Interesse trotzdem gerne an." },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  route="faq"
+  title="Häufige Fragen | Falkenried Gruppe"
+  description="Antworten zu Autowerkstatt, Gartenbau und Immobilien bei Falkenried Gruppe – Schweizer Qualität und Transparenz seit 1969."
+  jsonLd={[organizationSchema(lang), faqSchema(groups.flatMap((g) => g.items))]}
+>
+  <section class="pt-40 pb-20 bg-[var(--color-surface)] text-center">
+    <div class="max-w-2xl mx-auto px-6 lg:px-16">
+      <h1 class="font-display text-4xl font-bold mb-6">Häufig gestellte Fragen</h1>
+      <p class="text-[var(--color-ink-muted)] leading-relaxed">
+        Finden Sie präzise Antworten zu unseren Dienstleistungen in den Bereichen Autowerkstatt, Gartenbau und
+        Immobilien. Wir setzen auf Schweizer Qualität und Transparenz.
+      </p>
+    </div>
+  </section>
+
+  <section class="pb-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-3xl mx-auto px-6 lg:px-16">
+      <FaqTabs groups={groups} />
+    </div>
+  </section>
+
+  <section class="py-20 bg-[var(--color-surface-low)]">
+    <div class="max-w-2xl mx-auto px-6 lg:px-16 text-center">
+      <h2 class="font-display text-2xl font-semibold mb-4">Noch Fragen?</h2>
+      <p class="text-[var(--color-ink-muted)] mb-8 leading-relaxed">
+        Unser Team steht Ihnen für eine persönliche Beratung gerne zur Verfügung. Kontaktieren Sie uns unverbindlich.
+      </p>
+      <div class="flex flex-wrap justify-center gap-6">
+        <a href={routes.kontakt[lang]} class="btn-primary">Kontaktieren Sie uns</a>
+        <a href={c.phoneHref} class="btn-secondary">Jetzt anrufen</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

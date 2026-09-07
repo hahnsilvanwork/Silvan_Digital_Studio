@@ -1,0 +1,87 @@
+---
+import { nav, routes, type Lang } from "../i18n/nav";
+
+interface Props {
+  lang: Lang;
+  route: keyof typeof routes;
+}
+
+const { lang, route } = Astro.props;
+const t = nav[lang];
+const otherLang: Lang = lang === "de" ? "en" : "de";
+
+const links: { key: keyof typeof routes; label: string }[] = [
+  { key: "bmw", label: t.bmw },
+  { key: "gartenbau", label: t.gartenbau },
+  { key: "immobilien", label: t.immobilien },
+  { key: "geschichte", label: t.geschichte },
+  { key: "faq", label: t.faq },
+];
+
+const kontaktHref = routes.kontakt[lang];
+const langSwitchHref = routes[route][otherLang];
+---
+
+<header class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur-xl border-b border-[var(--color-outline-variant)]/40">
+  <div class="max-w-[var(--container-max)] mx-auto flex items-center justify-between px-6 py-5 lg:grid lg:grid-cols-[minmax(12rem,1fr)_auto_minmax(12rem,1fr)] lg:gap-3 lg:px-8 xl:gap-6 xl:px-12 2xl:px-16">
+    <a href={routes.home[lang]} class="block shrink-0 lg:justify-self-start" aria-label="Falkenried Gruppe – Startseite">
+      <span class="brand-wordmark"><span class="brand-symbol" aria-hidden="true">F.</span><span>FALKENRIED<small>GRUPPE · ZÜRCHER UNTERLAND</small></span></span>
+    </a>
+
+    <nav class="hidden lg:flex items-center justify-self-center gap-3 whitespace-nowrap xl:gap-6" aria-label="Hauptnavigation">
+      {links.map((link) => (
+        <a
+          href={routes[link.key][lang]}
+          class="label-caps text-[var(--color-ink-muted)] hover:text-[var(--color-primary)] transition-colors aria-[current=page]:text-[var(--color-primary)]"
+          aria-current={route === link.key ? "page" : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden lg:flex items-center justify-self-end gap-2 xl:gap-4">
+      <a href={langSwitchHref} class="label-caps min-w-10 text-center text-[var(--color-ink-muted)] hover:text-[var(--color-primary)] transition-colors">
+        {t.langSwitch}
+      </a>
+      <a href={kontaktHref} class="btn-primary min-w-[10rem] px-5 whitespace-nowrap">{t.cta}</a>
+    </div>
+
+    <button
+      id="mobile-menu-button"
+      class="lg:hidden inline-flex items-center justify-center w-10 h-10 text-[var(--color-primary)]"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="sr-only">{lang === "de" ? "Menü öffnen" : "Open menu"}</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+
+  <nav id="mobile-menu" class="hidden lg:hidden border-t border-[var(--color-outline-variant)]/40 bg-white px-6 py-6" aria-label="Mobile Navigation">
+    <ul class="flex flex-col gap-5">
+      {links.map((link) => (
+        <li>
+          <a href={routes[link.key][lang]} class="label-caps text-[var(--color-ink)]/80">{link.label}</a>
+        </li>
+      ))}
+      <li><a href={kontaktHref} class="btn-primary w-full">{t.cta}</a></li>
+      <li><a href={langSwitchHref} class="label-caps text-[var(--color-ink-muted)]">{t.langSwitch}</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const button = document.getElementById("mobile-menu-button");
+  const menu = document.getElementById("mobile-menu");
+  button?.addEventListener("click", () => {
+    const isOpen = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!isOpen));
+    menu?.classList.toggle("hidden");
+    const label = button.querySelector(".sr-only");
+    if (label) label.textContent = document.documentElement.lang === "de" ? (!isOpen ? "Menü schliessen" : "Menü öffnen") : (!isOpen ? "Close menu" : "Open menu");
+  });
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape") { button?.setAttribute("aria-expanded", "false"); menu?.classList.add("hidden"); button?.focus(); } });
+</script>

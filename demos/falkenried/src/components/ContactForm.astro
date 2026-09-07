@@ -1,0 +1,148 @@
+---
+import type { Lang } from "../i18n/nav";
+import { routes } from "../i18n/nav";
+import { buildFormMetadata, isWeb3FormsEnabled, type FormArea } from "../lib/form-config";
+
+interface SelectField {
+  type: "select";
+  name: string;
+  label: string;
+  options: string[];
+}
+interface TextField {
+  type: "text" | "email" | "tel";
+  name: string;
+  label: string;
+  placeholder?: string;
+}
+interface TextareaField {
+  type: "textarea";
+  name: string;
+  label: string;
+  placeholder?: string;
+}
+type Field = SelectField | TextField | TextareaField;
+
+interface Props {
+  lang: Lang;
+  area: FormArea;
+  source: string;
+  objectId?: string;
+  subject: string;
+  fields: Field[];
+  submitLabel: string;
+  successMessage: string;
+  errorMessage: string;
+}
+
+const { lang, area, source, objectId, subject, fields, submitLabel, successMessage, errorMessage } = Astro.props;
+const accessKey = undefined;
+const isEnabled = true;
+const metadata = buildFormMetadata({ area, lang, source, objectId });
+const demoMessage = lang === "de"
+  ? "Demoformular: Sie können die Eingabe ausprobieren. Ihre Daten werden weder übertragen noch gespeichert."
+  : "Demo form: Try the interaction. Your details are neither transmitted nor stored.";
+const privacyLabel = lang === "de" ? "Ich habe die Datenschutzerklärung gelesen." : "I have read the privacy policy.";
+const disabledLabel = lang === "de" ? "Formular noch nicht aktiviert" : "Form not activated yet";
+const formId = `form-${subject.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+---
+
+<form
+  id={formId}
+  class="contact-form space-y-8 card p-8 lg:p-12"
+  data-success={successMessage}
+  data-error={errorMessage}
+  data-enabled={String(isEnabled)}
+>
+  {isEnabled && <input type="hidden" name="access_key" value={accessKey} />}
+  <input type="hidden" name="subject" value={subject} />
+  <input type="hidden" name="area" value={metadata.area} />
+  <input type="hidden" name="language" value={metadata.language} />
+  <input type="hidden" name="source" value={metadata.source} />
+  <input type="hidden" name="object_id" value={metadata.object_id ?? ""} />
+  <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    {fields
+      .filter((f) => f.type !== "textarea")
+      .map((field) => (
+        <div class="relative">
+          <label class="label-caps text-[var(--color-ink-muted)] block mb-2" for={`${formId}-${field.name}`}>
+            {field.label}
+          </label>
+          {field.type === "select" ? (
+            <select
+              id={`${formId}-${field.name}`}
+              name={field.name}
+              required
+              class="w-full border-0 border-b border-[var(--color-outline-variant)] focus:ring-0 focus:border-[var(--color-primary)] px-0 py-3 bg-transparent outline-none appearance-none"
+            >
+              {(field as SelectField).options.map((opt) => (
+                <option value={opt}>{opt}</option>
+              ))}
+            </select>
+          ) : (
+            <input
+              id={`${formId}-${field.name}`}
+              type={field.type}
+              name={field.name}
+              required
+              placeholder={(field as TextField).placeholder}
+              class="w-full border-0 border-b border-[var(--color-outline-variant)] focus:ring-0 focus:border-[var(--color-primary)] px-0 py-3 bg-transparent outline-none"
+            />
+          )}
+        </div>
+      ))}
+  </div>
+
+  {fields
+    .filter((f) => f.type === "textarea")
+    .map((field) => (
+      <div class="relative">
+        <label class="label-caps text-[var(--color-ink-muted)] block mb-2" for={`${formId}-${field.name}`}>
+          {field.label}
+        </label>
+        <textarea
+          id={`${formId}-${field.name}`}
+          name={field.name}
+          required
+          rows="4"
+          placeholder={(field as TextareaField).placeholder}
+          class="w-full border-0 border-b border-[var(--color-outline-variant)] focus:ring-0 focus:border-[var(--color-primary)] px-0 py-3 bg-transparent outline-none resize-none"
+        ></textarea>
+      </div>
+    ))}
+
+  <label class="flex items-start gap-3 text-sm text-[var(--color-ink-muted)]">
+    <input type="checkbox" name="privacy_consent" value="accepted" required class="mt-1" />
+    <span>
+      {privacyLabel} <a href={routes.datenschutz[lang]} class="underline underline-offset-2">{lang === "de" ? "Datenschutz" : "Privacy"}</a>
+    </span>
+  </label>
+
+  {true && (
+    <p class="rounded-lg bg-[var(--color-surface-low)] p-4 text-sm text-[var(--color-ink-muted)]">
+      {demoMessage}
+    </p>
+  )}
+
+  <button
+    type="submit"
+    class="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50"
+    disabled={!isEnabled}
+  >
+    {lang === "de" ? "Demo-Anfrage testen" : "Try demo enquiry"}
+  </button>
+  <p class="form-feedback text-sm hidden" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>(".contact-form").forEach((form) => {
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const feedback = form.querySelector<HTMLElement>(".form-feedback");
+      if (feedback) { feedback.textContent = document.documentElement.lang === "de" ? "Vielen Dank! So sieht die Bestätigung aus. Dies ist eine Demo – es wurde nichts versendet oder gespeichert." : "Thank you! This is a demo confirmation. Nothing has been sent or stored."; feedback.classList.remove("hidden"); }
+      form.reset();
+    });
+  });
+</script>

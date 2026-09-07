@@ -2,12 +2,14 @@ import Image from "next/image";
 
 import type { NfcProduct } from "../../content/types";
 import styles from "./products.module.css";
+import { setCatalogueSelection } from "../reviews/use-catalogue-selection";
 
 interface ProductCardProps {
   readonly product: NfcProduct;
   readonly index: number;
   readonly view3dLabel: string;
   readonly comingSoonLabel: string;
+  readonly requestModelLabel?: string;
   readonly onView3D: (
     product: NfcProduct,
     trigger: HTMLButtonElement,
@@ -20,6 +22,7 @@ export function ProductCard({
   view3dLabel,
   comingSoonLabel,
   onView3D,
+  requestModelLabel,
 }: ProductCardProps) {
   return (
     <article
@@ -48,6 +51,18 @@ export function ProductCard({
             <li key={detail}>{detail}</li>
           ))}
         </ul>
+        {requestModelLabel ? <a
+          className={styles.requestModel}
+          data-touch-target
+          href={`?category=${encodeURIComponent(product.category)}&model=${encodeURIComponent(product.id)}#inquiry`}
+          onClick={(event) => {
+            if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+            event.preventDefault();
+            setCatalogueSelection(product.category, product.id);
+            window.history.replaceState(window.history.state, "", `${window.location.pathname}${window.location.search}#inquiry`);
+            document.getElementById("inquiry")?.scrollIntoView({behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth"});
+          }}
+        >{requestModelLabel}</a> : null}
         {product.scene ? (
           <button
             className={styles.view3dButton}

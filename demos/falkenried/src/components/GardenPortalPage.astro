@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SectionNav from "./SectionNav.astro";
+import ServiceList from "./ServiceList.astro";
+import { Image } from "astro:assets";
+import { routes, type Lang } from "../i18n/nav";
+import { gardenServices, gardenTips } from "../data/garden";
+import { gardenReferenceImages } from "../data/garden-images";
+import { gardenHeroImages } from "../data/garden-hero-images";
+type Kind = "design" | "maintenance" | "transport" | "references" | "tips";
+const { lang, kind } = Astro.props as { lang: Lang; kind: Kind };
+const hero = gardenHeroImages[kind];
+const de = lang === "de";
+const keys = { design: "gardenDesign", maintenance: "gardenMaintenance", transport: "gardenTransport", references: "gardenReferences", tips: "gardenTips" } as const;
+const active = routes[keys[kind]][lang];
+const nav = [
+  { label: de ? "Übersicht" : "Overview", href: routes.gartenbau[lang] }, { label: de ? "Gestaltung" : "Design", href: routes.gardenDesign[lang] },
+  { label: de ? "Unterhalt" : "Maintenance", href: routes.gardenMaintenance[lang] }, { label: de ? "Mulden & Transporte" : "Containers & transport", href: routes.gardenTransport[lang] },
+  { label: de ? "Referenzen" : "References", href: routes.gardenReferences[lang] }, { label: de ? "Tipps" : "Tips", href: routes.gardenTips[lang] },
+] as const;
+const service = kind === "design" ? gardenServices[0] : kind === "maintenance" ? gardenServices[1] : gardenServices[2];
+const title = kind === "references" ? (de ? "Gärten, die wir gestaltet haben." : "Gardens we have shaped.") : kind === "tips" ? (de ? "Gartenwissen für jede Saison." : "Garden knowledge for every season.") : service.title[lang];
+---
+<BaseLayout lang={lang} route={keys[kind]} title={`${title} | Falkenried Gruppe`} description={kind === "references" ? (de ? "Garteninspirationen im fiktiven Falkenried Designkonzept." : "Garden inspiration in the fictional Falkenried design concept.") : kind === "tips" ? (de ? "Praktische Gartenbau-Tipps." : "Practical garden tips.") : service.intro[lang]}>
+  <section class="portal-hero relative overflow-hidden bg-[#173521] text-white"><div class="absolute inset-0"><Image src={hero.image} alt={hero.alt[lang]} class="h-full w-full object-cover opacity-50" widths={[800, 1400, 1800]} sizes="100vw" /><div class="absolute inset-0 bg-gradient-to-r from-[#173521]/95 via-[#173521]/70 to-[#173521]/20"></div></div><div class="relative mx-auto max-w-[var(--container-max)] px-6 py-28 lg:px-16"><span class="label-caps text-[#b9dd7b]">FALKENRIED GARTENBAU</span><h1 class="mt-5 max-w-4xl font-display text-4xl font-semibold lg:text-6xl">{title}</h1>{kind !== "references" && kind !== "tips" && <p class="mt-6 max-w-2xl text-lg text-white/80">{service.intro[lang]}</p>}</div></section>
+  <SectionNav label={de ? "Gartenbau Bereich" : "Landscaping section"} items={nav} activePath={active} accentVar="--color-garden" />
+  {(["design", "maintenance", "transport"].includes(kind)) && <section class="bg-[var(--color-surface)] py-[var(--spacing-section-gap)]"><div class="mx-auto grid max-w-[var(--container-max)] gap-14 px-6 lg:grid-cols-[1fr_1.2fr] lg:px-16"><div><span class="label-caps text-[var(--color-garden)]">{de ? "Unser Angebot" : "Our services"}</span><h2 class="mt-4 font-display text-3xl font-semibold">{service.title[lang]}</h2><p class="mt-5 text-[var(--color-ink-muted)]">{service.intro[lang]}</p><a href={routes.kontakt[lang]} class="btn-primary mt-8 inline-flex">{de ? "Projekt besprechen" : "Discuss your project"}</a></div><div class="card p-8"><ServiceList accentVar="--color-garden" items={service.items[lang]} /></div></div></section>}
+  {kind === "references" && <section class="bg-[var(--color-surface)] py-[var(--spacing-section-gap)]"><div class="mx-auto max-w-[var(--container-max)] px-6 lg:px-16"><p class="mb-10 max-w-3xl text-[var(--color-ink-muted)]">{de ? "Diese Bildauswahl illustriert mögliche Gartenprojekte. Sie gehört zum fiktiven Designkonzept und stellt keine Kundenreferenzen von Falkenried dar." : "These illustrative images are part of a fictional design concept and do not represent Falkenried client projects."}</p><div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{gardenReferenceImages.map((item, index) => <figure class={`group overflow-hidden rounded-xl bg-[var(--color-surface-low)] ${index === 0 ? "sm:col-span-2" : ""}`}><div class="aspect-[4/3] overflow-hidden"><Image src={item.image} alt={item.alt[lang]} class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" widths={[400, 800, 1200]} sizes="(min-width:1024px) 33vw, 50vw" /></div><figcaption class="p-4 text-sm text-[var(--color-ink-muted)]">{item.alt[lang]}</figcaption></figure>)}</div></div></section>}
+  {kind === "tips" && <section class="bg-[var(--color-surface-low)] py-[var(--spacing-section-gap)]"><div class="mx-auto grid max-w-[var(--container-max)] gap-6 px-6 md:grid-cols-3 lg:px-16">{gardenTips.map((tip, i) => <article class="card p-8"><span class="font-display text-5xl text-[#5b7052]">{String(i + 1).padStart(2, "0")}</span><h2 class="mt-6 font-display text-2xl font-semibold">{tip.title[lang]}</h2><p class="mt-4 text-[var(--color-ink-muted)]">{tip.text[lang]}</p></article>)}</div></section>}
+</BaseLayout>

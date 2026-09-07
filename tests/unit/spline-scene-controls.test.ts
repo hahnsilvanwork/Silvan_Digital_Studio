@@ -34,6 +34,12 @@ function application(controls = orbitControls()) {
 }
 
 describe("spline scene controls", () => {
+  it("enables one-finger rotation while preserving pinch and pan gestures", () => {
+    const controls = { ...orbitControls(), touches: [null, 3, 1] as (number | null)[] };
+    presentScene(application(controls));
+    expect(controls.touches).toEqual([0, 3, 1]);
+  });
+
   it("replaces hover interaction with a slow turntable", () => {
     const controls = orbitControls();
 

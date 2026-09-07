@@ -1,0 +1,139 @@
+
+@import "tailwindcss";
+
+@theme inline {
+  --color-paper: #F2E8D5;
+  --color-paper-dark: #E5D7BF;
+  --color-ink: #1A1208;
+  --color-ink-light: #4A3C28;
+  --color-brown: #8B6040;
+  --color-brown-light: #A07848;
+  --color-cream: #FDF8F0;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'EB Garamond', Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background-color: #F2E8D5;
+  color: #1A1208;
+  font-family: 'EB Garamond', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+:focus-visible { outline: 3px solid #8b6040; outline-offset: 5px; }
+.skip-link { position: fixed; top: -80px; left: 20px; z-index: 100; padding: 12px 20px; background: #1a1208; color: #f2e8d5; }
+.skip-link:focus { top: 12px; }
+.cafe-hero { padding-top: 80px; display: grid; grid-template-columns: 1fr 1fr; min-height: 790px; }
+.hero-copy { padding: 84px max(32px, calc((100vw - 1200px) / 2)); padding-right: 50px; display: flex; flex-direction: column; align-items: flex-start; }
+.eyebrow { font-family: Georgia, serif; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #795135; margin-bottom: 33px; }
+.hero-copy h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(52px, 5.2vw, 82px); font-weight: 400; line-height: 1.08; letter-spacing: -.045em; }
+.hero-copy h1 em { color: #8b6040; font-weight: 400; }
+.hero-description { max-width: 365px; font-size: 19px; line-height: 1.6; color: #665641; margin-top: 28px; }
+.hero-actions { display: flex; align-items: center; gap: 26px; margin-top: 32px; flex-wrap: wrap; }
+.cafe-button { padding: 16px 22px; background: #302317; color: #f2e8d5; font-size: 14px; display: inline-flex; gap: 27px; align-items: center; }
+.cafe-button:hover { background: #795135; }
+.cafe-text-link { font-size: 15px; border-bottom: 1px solid #8b6040; padding: 6px 0; }
+.hero-note { display: flex; gap: 15px; align-items: center; border-top: 1px solid #caba9f; width: 100%; margin-top: 44px; padding-top: 23px; color: #665641; font-size: 14px; line-height: 1.4; }
+.hero-note > span { font-size: 34px; color: #8b6040; }
+.hero-note strong { font-weight: 400; }
+.hero-photo { position: relative; min-height: 700px; }
+.hero-photo > img { position: absolute; width: 100%; height: 100%; object-fit: cover; object-position: 50% 47%; }
+.photo-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, #20170bca); color: #fff6e9; padding: 60px 32px 25px; display: flex; justify-content: space-between; gap: 20px; font-size: 13px; }
+.hero-seal { position: absolute; right: 35px; top: 35px; width: 130px; height: 130px; border-radius: 50%; background: #f2e8d5; outline: 1px solid #8b6040; outline-offset: -8px; display: flex; flex-direction: column; justify-content: center; text-align: center; font-size: 12px; line-height: 1.3; transform: rotate(9deg); color: #705036; }
+.hero-seal em { font-size: 18px; }
+.cafe-ribbon { display: flex; gap: 35px; align-items: center; justify-content: center; padding: 20px; background: #e5d7bf; color: #665139; text-transform: uppercase; font-size: 11px; letter-spacing: .18em; border-block: 1px solid #cbbb9f; }
+.demo-location { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #e5d7bf; padding: 20px; }
+.demo-location > span { font-size: 40px; }
+.demo-form-note { padding: 16px; background: #e5d7bf; color: #4a3c28; font-size: 15px; line-height: 1.5; border-left: 2px solid #8b6040; }
+input, select, textarea { min-width: 0; }
+main > section:first-child:not(.cafe-hero) { padding-top: 100px; }
+footer { overflow-wrap: anywhere; }
+@media (max-width: 767px) {
+ .cafe-hero { grid-template-columns: 1fr; min-height: 0; }
+ .hero-copy { padding: 46px 25px 32px; }
+ .eyebrow { font-size: 10px; letter-spacing: .14em; margin-bottom: 24px; }
+ .hero-copy h1 { font-size: clamp(48px, 13vw, 72px); }
+ .hero-description { font-size: 18px; }
+ .hero-note { margin-top: 29px; padding-top: 18px; }
+ .hero-photo { min-height: 430px; }
+ .hero-seal { width: 110px; height: 110px; right: 22px; top: 22px; }
+ .photo-caption { padding-inline: 22px; font-size: 12px; }
+ .cafe-ribbon { font-size: 10px; gap: 10px; flex-wrap: wrap; letter-spacing: .1em; }
+ .cafe-ribbon span:last-child, .cafe-ribbon span:nth-child(4) { display: none; }
+ input, select, textarea { font-size: 16px !important; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
+
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/demos/cafe/fonts/cafe-font-1.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/demos/cafe/fonts/cafe-font-2.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/demos/cafe/fonts/cafe-font-3.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/demos/cafe/fonts/cafe-font-4.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/demos/cafe/fonts/cafe-font-5.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/demos/cafe/fonts/cafe-font-6.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/demos/cafe/fonts/cafe-font-7.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(/demos/cafe/fonts/cafe-font-8.woff2) format('truetype');
+}
+
+/* Semantic surface contrast and comfortable interaction targets. */
+section.bg-\[\#1A1208\] .text-\[\#755031\] { color: #cda982; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+header nav a { min-height: 44px; display: inline-flex; align-items: center; }
+footer li a { display: inline-block; padding-block: 8px; }
+input, select, textarea { border-color: #88765f !important; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #755031 !important; outline-offset: 3px; }
+.photo-caption { background: linear-gradient(transparent, #20170bef); text-shadow: 0 1px 2px #20170b; }
+.cafe-text-link { min-height: 44px; display: inline-flex; align-items: center; }
+.cafe-button:active, button[type=submit]:active { transform: translateY(1px); }
+@media(max-width: 767px) { main p.text-sm { font-size: 16px; line-height: 1.65; } }

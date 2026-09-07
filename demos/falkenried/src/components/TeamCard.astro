@@ -1,0 +1,27 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  image: ImageMetadata;
+  name: string;
+  role: string;
+  accentVar?: "--color-bmw-text" | "--color-garden" | "--color-realestate" | "--color-primary";
+  dark?: boolean;
+}
+
+const { image, name, role, accentVar = "--color-primary", dark = false } = Astro.props;
+
+// On dark (navy) sections the accessible "text" accent variants are too close
+// in value to the navy background to read as a visible top-border, so swap
+// in the brighter decorative variant (still >=3:1 non-text contrast there).
+const borderVar = dark && accentVar === "--color-bmw-text" ? "--color-bmw" : accentVar;
+---
+
+<div>
+  <div class="aspect-square rounded-lg overflow-hidden mb-4" style={`border-top: 3px solid var(${borderVar})`}>
+    <Image src={image} alt={name} class="w-full h-full object-cover" widths={[200, 400]} sizes="200px" />
+  </div>
+  <p class={`font-semibold ${dark ? "text-white" : ""}`}>{name}</p>
+  <p class={`text-sm uppercase tracking-wide ${dark ? "text-white/70" : "text-[var(--color-ink-muted)]"}`}>{role}</p>
+</div>

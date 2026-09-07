@@ -1,9 +1,3 @@
-.showcase {
-  display: grid;
-  gap: var(--space-xs);
-  min-inline-size: 0;
-}
-
 .product {
   position: relative;
   inline-size: 100%;
@@ -49,24 +43,6 @@
 
 .active[data-spline-state="ready"] .viewer {
   opacity: 1;
-}
-
-.selector {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-}
-
-.selector button {
-  padding: var(--space-2xs) var(--space-xs);
-  border: var(--hairline) solid var(--color-line);
-  border-radius: var(--radius-pill);
-  background: transparent;
-  cursor: pointer;
-}
-
-.selector button[aria-pressed="true"] {
-  border-color: var(--color-ink);
 }
 
 .heroMedia {
@@ -222,6 +198,7 @@
   display: grid;
   grid-auto-columns: minmax(16rem, calc(100% - 2rem));
   grid-auto-flow: column;
+  grid-template-rows: repeat(7, auto);
   gap: var(--space-sm);
   overflow-x: auto;
   overscroll-behavior-inline: contain;
@@ -235,6 +212,9 @@
 
 .catalogCard {
   display: grid;
+  grid-row: span 7;
+  grid-template-rows: subgrid;
+  row-gap: 0;
   scroll-snap-align: start;
   overflow: clip;
   border: var(--hairline) solid var(--color-line);
@@ -304,26 +284,24 @@
 }
 
 .catalogCardBody {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-row: span 6;
+  grid-template-rows: subgrid;
   gap: var(--space-xs);
   padding: var(--space-sm);
 }
 
 .catalogCardHeading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--space-xs);
-  flex-wrap: wrap;
+  display: contents;
 }
 
 .catalogCardHeading h3 {
   font-size: var(--text-subitem);
+  align-self: start;
 }
 
 .catalogPrice {
-  flex: none;
+  align-self: start;
   color: var(--color-ink-muted);
   font-size: var(--text-price);
 }
@@ -335,6 +313,7 @@
 
 .catalogDetails {
   display: grid;
+  align-content: start;
   gap: 0.25rem;
   margin: 0;
   padding-inline-start: 1.15rem;
@@ -343,8 +322,9 @@
 
 .view3dButton,
 .comingSoon {
-  align-self: flex-start;
-  margin-block-start: auto;
+  align-self: start;
+  margin-block-start: 0;
+  min-block-size: var(--control-target-min);
 }
 
 .view3dButton {
@@ -462,6 +442,13 @@
   aspect-ratio: auto;
 }
 
+/* Inside the explicit 3D dialog, dragging belongs to the model rather than
+   page scrolling. The regular catalogue retains its vertical scroll gesture. */
+.dialogViewer .product,
+.dialogViewer .viewer {
+  touch-action: none;
+}
+
 .dialogStatus,
 .dialogError {
   position: absolute;
@@ -501,6 +488,7 @@
   .catalogGrid {
     grid-auto-columns: initial;
     grid-auto-flow: row;
+    grid-template-rows: none;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     overflow: visible;
     scroll-snap-type: none;
@@ -522,3 +510,18 @@
     transform: none;
   }
 }
+.requestModel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 2.75rem;
+  padding: 0.625rem 0.75rem;
+  color: var(--color-paper);
+  background: var(--color-ink);
+  border-radius: 4px;
+  text-align: center;
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+
+.requestModel:hover { text-decoration: underline; text-underline-offset: 0.2em; }

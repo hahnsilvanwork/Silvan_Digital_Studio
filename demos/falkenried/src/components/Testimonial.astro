@@ -1,0 +1,18 @@
+---
+interface Props {
+  quote: string;
+  name: string;
+  role: string;
+  accentVar?: "--color-bmw-text" | "--color-garden" | "--color-realestate" | "--color-primary";
+}
+
+const { quote, name, role, accentVar = "--color-primary" } = Astro.props;
+---
+
+<div class="border-l-2 pl-8" style={`border-color: var(${accentVar})`}>
+  <p class="italic text-xl font-light mb-6 leading-relaxed">&ldquo;{quote}&rdquo;</p>
+  <div class="flex items-center gap-3">
+    <span class="font-bold text-sm uppercase tracking-wider">{name}</span>
+    <span class="text-[var(--color-ink-muted)] text-sm">{role}</span>
+  </div>
+</div>

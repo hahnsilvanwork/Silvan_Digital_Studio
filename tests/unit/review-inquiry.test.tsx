@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
@@ -14,6 +14,7 @@ import {
   type ReviewInquiryValues,
 } from "../../src/lib/validation";
 import { buildReviewInquiryUrl } from "../../src/lib/whatsapp";
+import { inquiryCopy } from "../../src/content/inquiry-copy";
 
 const de = getContent("de");
 const en = getContent("en");
@@ -50,7 +51,7 @@ describe("NFC inquiry validation", () => {
   it("rejects only the relevant required fields", () => {
     const errors = validateReviewInquiry(EMPTY_REVIEW_INQUIRY);
     expect(Object.keys(errors).sort()).toEqual(
-      ["destination", "product", "shape", "size", "quantity", "businessName", "contactPerson", "setup"].sort(),
+      ["destination", "product", "shape", "size", "quantity", "setup"].sort(),
     );
   });
 
@@ -87,6 +88,20 @@ describe("NFC inquiry validation", () => {
 
   it("allows setup help without a destination link", () => {
     expect(validateReviewInquiry({ ...complete, setup: "needs-setup", destinationUrl: "" })).toEqual({});
+  });
+
+  it("ignores a stale invalid URL when its field is hidden", () => {
+    expect(validateReviewInquiry({ ...complete, setup: "needs-setup", destinationUrl: "not-a-url" })).toEqual({});
+  });
+
+  it("rejects unsafe quantities and oversized messages", () => {
+    expect(isPositiveInteger("9007199254740993")).toBe(false);
+    expect(isPositiveInteger("1000")).toBe(false);
+    expect(validateReviewInquiry({ ...complete, note: "x".repeat(601) }).note).toBe("length");
+  });
+
+  it("does not require identity for an initial enquiry", () => {
+    expect(validateReviewInquiry({ ...complete, businessName: "", contactPerson: "" })).toEqual({});
   });
 });
 
@@ -132,9 +147,11 @@ describe("ReviewInquiryConfigurator", () => {
   it("reports relevant errors and focuses the first invalid control", async () => {
     const user = userEvent.setup();
     render(<ReviewInquiryConfigurator locale="de" />);
-    await user.click(screen.getByRole("button", { name: de.reviews.inquiry.submitLabel }));
+    // Let initial catalogue-state restoration finish before submitting.
+    await act(() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())));
+    await user.click(screen.getByRole("button", { name: inquiryCopy.de.review }));
 
-    expect(screen.getAllByText(de.reviews.inquiry.requiredError)).toHaveLength(8);
+    expect(screen.getAllByText(de.reviews.inquiry.requiredError)).toHaveLength(6);
     expect(screen.getByLabelText(labelFor("destination"))).toHaveFocus();
     expect(screen.queryByRole("link")).toBeNull();
   });
@@ -143,7 +160,7 @@ describe("ReviewInquiryConfigurator", () => {
     const user = userEvent.setup();
     render(<ReviewInquiryConfigurator locale="de" />);
     await fillForm(user, { ...complete, destination: "menu", destinationUrl: "https://bellavista.example/menu" });
-    await user.click(screen.getByRole("button", { name: de.reviews.inquiry.submitLabel }));
+    await user.click(screen.getByRole("button", { name: inquiryCopy.de.review }));
 
     const link = screen.getByRole("link", { name: new RegExp(de.reviews.inquiry.submitLabel) });
     const message = decodeURIComponent(link.getAttribute("href")!);
@@ -151,13 +168,19 @@ describe("ReviewInquiryConfigurator", () => {
     expect(message).toContain("Ristorante Bellavista");
     expect(link).toHaveAttribute("target", "_blank");
     expect(link.getAttribute("rel")).toContain("noopener");
+    expect(screen.getByText("100 × 100 mm")).toBeVisible();
+    expect(screen.queryByText("personalized-card")).toBeNull();
+    const email = screen.getByRole("link", { name: inquiryCopy.de.email });
+    expect(decodeURIComponent(email.getAttribute("href")!)).toContain("Ristorante Bellavista");
+    await user.click(screen.getByRole("button", { name: inquiryCopy.de.copy }));
+    expect(await navigator.clipboard.readText()).toContain("Ristorante Bellavista");
   });
 
   it("returns to the form with values intact", async () => {
     const user = userEvent.setup();
     render(<ReviewInquiryConfigurator locale="de" />);
     await fillForm(user);
-    await user.click(screen.getByRole("button", { name: de.reviews.inquiry.submitLabel }));
+    await user.click(screen.getByRole("button", { name: inquiryCopy.de.review }));
     await user.click(screen.getByRole("button", { name: de.reviews.inquiry.editLabel }));
     expect(screen.getByLabelText(labelFor("businessName"))).toHaveValue(complete.businessName);
     expect(screen.getByLabelText(labelFor("product"))).toHaveValue(complete.product);

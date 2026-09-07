@@ -1,0 +1,64 @@
+{
+  "manifests": [
+    {
+      "slug": "handwerk",
+      "files": 52,
+      "checkedHtmlReferences": 40,
+      "omittedJpegs": [
+        "hero-handwerk.jpg",
+        "proj-1.jpg",
+        "proj-2.jpg",
+        "proj-3.jpg",
+        "proj-4.jpg",
+        "team.jpg"
+      ],
+      "omittedBytes": 24899329
+    },
+    {
+      "slug": "cafe",
+      "files": 70,
+      "checkedHtmlReferences": 195,
+      "omittedJpegs": [],
+      "omittedBytes": 0
+    },
+    {
+      "slug": "salon",
+      "files": 65,
+      "checkedHtmlReferences": 188,
+      "omittedJpegs": [
+        "coloring.jpg",
+        "scissors.jpg"
+      ],
+      "omittedBytes": 104020
+    },
+    {
+      "slug": "falkenried",
+      "files": 193,
+      "checkedHtmlReferences": 1821,
+      "omittedJpegs": [],
+      "omittedBytes": 0
+    }
+  ],
+  "interactions": [
+    {
+      "slug": "falkenried",
+      "menuOpenEscape": true,
+      "demoForm": true
+    },
+    {
+      "slug": "cafe",
+      "menuOpenEscape": true,
+      "demoForm": false
+    },
+    {
+      "slug": "handwerk",
+      "menuOpenEscape": true,
+      "demoForm": false
+    },
+    {
+      "slug": "salon",
+      "menuOpenEscape": true,
+      "demoForm": true
+    }
+  ]
+}

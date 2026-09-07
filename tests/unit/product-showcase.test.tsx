@@ -119,6 +119,7 @@ const props = {
 };
 
 beforeEach(() => {
+  window.history.replaceState(null, "", "/reviews");
   resizeCallbacks = [];
   vi.stubGlobal(
     "ResizeObserver",

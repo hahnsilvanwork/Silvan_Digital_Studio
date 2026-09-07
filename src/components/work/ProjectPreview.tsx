@@ -48,11 +48,12 @@ export function ProjectPreview({
               detail page carries the described image. */}
           <Image
             alt=""
-            height={279}
+            height={1000}
             priority={priority}
+            quality={90}
             sizes="(min-width: 64rem) 44vw, 100vw"
-            src={project.image}
-            width={512}
+            src={project.image[locale]}
+            width={1440}
           />
         </span>
 

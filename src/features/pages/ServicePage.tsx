@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { projects } from "../../content/projects";
+import { auditCopy } from "../../content/audit-copy";
 import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 
@@ -47,9 +49,9 @@ export function ServicePage({
             text={service.title}
           />
           {route === "/websites" ? (
-            <Link className={pageStyles.serviceVisual} href={localizePath("/work/archa", locale)}>
-              <Image src="/images/editorial/architecture-concept.webp" width={1536} height={1024} sizes="(min-width: 64rem) 48vw, 100vw" priority alt={locale === "de" ? "Archa: Website-Konzept für ein Architekturbüro" : "Archa: website concept for an architecture practice"} />
-              <span>Archa / {content.work.conceptLabel}</span>
+            <Link className={pageStyles.serviceVisual} href={localizePath(`/work/${projects[0].slug}`, locale)}>
+              <Image quality={90} src={projects[0].image[locale]} width={1440} height={1000} sizes="(min-width: 64rem) 48vw, 100vw" priority alt={projects[0].copy[locale].imageAlt} />
+              <span>{projects[0].name} / {content.work.conceptLabel}</span>
             </Link>
           ) : null}
           </div>
@@ -62,24 +64,20 @@ export function ServicePage({
             {service.intro}
           </p>
           <div
-            className={pageStyles.heroActions}
+            className={pageStyles.serviceActions}
             data-reveal="rise"
             style={{ "--reveal-index": sequence.actionsIndex } as CSSProperties}
           >
             <ButtonLink href={localizePath(service.ctaHref, locale)}>
               {service.ctaLabel}
             </ButtonLink>
-          </div>
-        <div className={pageStyles.studioNote}>
-          <p className={pageStyles.studioNoteLinks} data-reveal="rise">
-            <Link className="hoverUnderline" href={localizePath("/about", locale)}>
+            <Link className={pageStyles.serviceSecondaryAction} href={localizePath("/about", locale)}>
               {content.about.eyebrow}
             </Link>
-            <Link className="hoverUnderline" href={localizePath("/work", locale)}>
+            <Link className={pageStyles.serviceSecondaryAction} href={localizePath("/work", locale)}>
               {content.common.viewWork}
             </Link>
-          </p>
-        </div>
+          </div>
           </div>
         </section>
 
@@ -93,6 +91,14 @@ export function ServicePage({
               recommendedLabel={content.common.recommended}
               tiers={service.priceTiers}
             />
+
+            {route === "/websites" ? (
+              <div className={pageStyles.legalSection}>
+                <h3 className={pageStyles.legalHeading}>{auditCopy[locale].websiteScope.title}</h3>
+                <p className={pageStyles.note}>{auditCopy[locale].websiteScope.costs}</p>
+                <p className={pageStyles.note}>{auditCopy[locale].websiteScope.agreement}</p>
+              </div>
+            ) : null}
 
             <ul className={pageStyles.benefitList}>
               {service.benefits.map((benefit, index) => (

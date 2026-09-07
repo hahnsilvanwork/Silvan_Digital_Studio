@@ -18,6 +18,7 @@ async function stubSpline(page: Page) {
               _controls: { orbitControls: {
                 autoRotate: false, autoRotateSpeed: 2,
                 autoRotateClockwise: true, hoverRotatePanMode: 1,
+                touches: [null, 3, 1],
                 rotateLeft: () => {}, spherical: { theta: 0 }
               } }
             };
@@ -108,6 +109,12 @@ test.describe("image-first NFC product catalogue", () => {
     await expect(dialog).toBeVisible();
     await expect(dialog.locator("spline-viewer")).toHaveCount(1);
     await expect.poll(() => runtimeRequests).toBe(1);
+    const viewer = dialog.locator("spline-viewer");
+    await expect(viewer).toHaveCSS("touch-action", "none");
+    await expect.poll(() => viewer.evaluate((element) => {
+      const runtime = element as HTMLElement & { _spline?: { _controls: { orbitControls: { touches: (number | null)[] } } } };
+      return runtime._spline?._controls.orbitControls.touches;
+    })).toEqual([0, 3, 1]);
 
     const box = await dialog.boundingBox();
     const viewport = page.viewportSize();

@@ -1,0 +1,23 @@
+Demo Website/
+demos/**/node_modules/
+demos/**/.next/
+demos/**/.astro/
+demos/**/out/
+demos/**/dist/
+public/demos/
+.github/
+docs/
+.scratch/
+.worktrees/
+.superpowers/
+.idea/
+artifacts/
+assets/
+stitch_silvan_digital_studio/
+test-results/
+playwright-report/
+coverage/
+*.tsbuildinfo
+/*.jpg
+/*.jpeg
+.tmp-*

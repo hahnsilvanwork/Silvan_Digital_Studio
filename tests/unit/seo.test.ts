@@ -15,6 +15,7 @@ import { getSiteOrigin } from "../../src/lib/site-url";
 const ROUTE_COUNT = 10;
 
 function clearOrigin() {
+  vi.stubEnv("VERCEL_ENV", "");
   vi.stubEnv("NEXT_PUBLIC_SITE_URL", "");
   vi.stubEnv("VERCEL_PROJECT_PRODUCTION_URL", "");
   vi.stubEnv("VERCEL_URL", "");
@@ -25,6 +26,22 @@ afterEach(() => {
 });
 
 describe("site origin", () => {
+  it("never indexes an explicit preview even with a production URL configured", () => {
+    clearOrigin();
+    vi.stubEnv("VERCEL_ENV", "preview");
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://silvandigital.ch");
+    vi.stubEnv("VERCEL_URL", "preview.vercel.app");
+    expect(getSiteOrigin().isCanonical).toBe(false);
+    expect(getSiteOrigin().base.origin).toBe("https://preview.vercel.app");
+    expect(robots().rules).toEqual([{ userAgent: "*", disallow: "/" }]);
+    expect(buildPageMetadata({ locale: "de", page: "reviews", route: "/reviews" }).robots).toMatchObject({ index: false });
+  });
+
+  it.each(["https://user:pass@example.com", "https://example.com/path", "https://example.com/?name=private", "https://example.com/#private", "https://localhost", "https://127.0.0.1", "https://[::1]", "https://example.com:8443", "https://intranet"])("rejects non-public/non-origin configuration %s", (value) => {
+    clearOrigin();
+    vi.stubEnv("NEXT_PUBLIC_SITE_URL", value);
+    expect(getSiteOrigin().isCanonical).toBe(false);
+  });
   it("treats a configured https domain as canonical", () => {
     clearOrigin();
     vi.stubEnv("NEXT_PUBLIC_SITE_URL", "https://silvan.ch");
@@ -96,8 +113,8 @@ describe("sitemap", () => {
     expect(urls).toContain("https://silvan.ch/en/reviews");
     expect(urls).toContain("https://silvan.ch/imprint");
     expect(urls).toContain("https://silvan.ch/en/privacy");
-    expect(urls).toContain("https://silvan.ch/work/archa");
-    expect(urls).toContain("https://silvan.ch/en/work/archa");
+    expect(urls).toContain("https://silvan.ch/work/falkenried");
+    expect(urls).toContain("https://silvan.ch/en/work/falkenried");
 
     for (const entry of entries) {
       expect(entry.url.startsWith("https://silvan.ch")).toBe(true);

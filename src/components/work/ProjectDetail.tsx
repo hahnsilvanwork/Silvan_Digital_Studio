@@ -42,6 +42,11 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
         <p className={styles.detailTagline} data-reveal="rise">
           {copy.tagline}
         </p>
+        <div className={pageStyles.heroActions}>
+          <ButtonLink href={project.demoUrl} externalHint={locale === "de" ? " (neuer Tab)" : " (new tab)"}>
+            {locale === "de" ? "Demo-Website öffnen ↗" : "Open demo website ↗"}
+          </ButtonLink>
+        </div>
       </header>
 
       <div className={layoutStyles.container}>
@@ -53,11 +58,12 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
         >
           <Image
             alt={copy.imageAlt}
-            height={279}
+            height={1000}
             priority
-            sizes="(min-width: 64rem) 70vw, 100vw"
-            src={project.image}
-            width={512}
+            quality={90}
+            sizes="(min-width: 98rem) 1440px, 92vw"
+            src={project.image[locale]}
+            width={1440}
           />
         </span>
       </div>

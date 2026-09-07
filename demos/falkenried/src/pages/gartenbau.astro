@@ -1,0 +1,152 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import ServiceList from "../components/ServiceList.astro";
+import ProcessSteps from "../components/ProcessSteps.astro";
+import Testimonial from "../components/Testimonial.astro";
+import ContactForm from "../components/ContactForm.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import SectionNav from "../components/SectionNav.astro";
+import { Image } from "astro:assets";
+import { routes } from "../i18n/nav";
+import { people } from "../data/company";
+import { organizationSchema } from "../lib/schema";
+import heroImage from "../assets/images/garden/garden-aerial.jpg";
+import pathImage from "../assets/images/garden/garden-path.jpg";
+import hedgeImage from "../assets/images/garden/hedge-work.jpg";
+
+const lang = "de";
+const accent = "--color-garden" as const;
+---
+
+<BaseLayout
+  lang={lang}
+  route="gartenbau"
+  title="Gartenbau | Gartengestaltung & Unterhalt – Falkenried Gruppe"
+  description="Gartengestaltung und Gartenunterhalt im Zürcher Unterland: Planung, Realisierung und Pflege Ihrer Gartenanlage durch Falkenried Gruppe."
+  jsonLd={organizationSchema(lang)}
+>
+  <Hero
+    variant="full"
+    eyebrow="LANDSCHAFTSGESTALTUNG & PFLEGE"
+    title={`Exklusive <span class="italic font-light">Gartenwelten.</span>`}
+    subtitle="Wir gestalten Aussenräume, die bleibende Werte schaffen. Von der ersten Skizze bis zur vollendeten Pflege – der Garten in Meisterhand."
+    image={heroImage}
+    imageAlt="Kunstvoll gestalteter Garten mit Buchsbaumhecken"
+    primaryCta={{ label: "Beratung vereinbaren", href: routes.kontakt[lang] }}
+    secondaryCta={{ label: "Unsere Expertise", href: "#expertise" }}
+  />
+  <SectionNav label="Gartenbau Bereich" activePath={routes.gartenbau[lang]} accentVar="--color-garden" items={[
+    { label: "Übersicht", href: routes.gartenbau[lang] }, { label: "Gestaltung", href: routes.gardenDesign[lang] },
+    { label: "Unterhalt", href: routes.gardenMaintenance[lang] }, { label: "Mulden & Transporte", href: routes.gardenTransport[lang] },
+    { label: "Referenzen", href: routes.gardenReferences[lang] }, { label: "Tipps", href: routes.gardenTips[lang] },
+  ]} />
+
+  <section id="expertise" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <div>
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Landschaftsgestaltung & Werterhaltung</span>
+        <h2 class="font-display text-3xl font-semibold mb-8">Individuelle Gartenplanung</h2>
+        <p class="text-[var(--color-ink-muted)] leading-relaxed mb-8">
+          Hinter jedem aussergewöhnlichen Garten steht ein tiefes Verständnis für Natur, Architektur und Handwerk.
+          Wir vereinen diese Disziplinen zu einer harmonischen Einheit.
+        </p>
+        <ServiceList accentVar={accent} items={["Planung und Neuanlage", "Wege, Mauern und Sitzplätze", "Wasserspiele und Erdarbeiten"]} />
+      </div>
+      <div>
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Gartenpflege & Unterhalt</span>
+        <h2 class="font-display text-3xl font-semibold mb-8">Ein lebendiges Ökosystem</h2>
+        <p class="text-[var(--color-ink-muted)] leading-relaxed mb-8">
+          Ein Garten ist ein sich stetig veränderndes Ökosystem. Unsere Experten sorgen dafür, dass seine Pracht
+          über die Jahreszeiten hinweg erhalten bleibt und wächst.
+        </p>
+        <ServiceList accentVar={accent} items={["Saisonaler Schnitt & Gehölzpflege", "Rasenpflege & Pflanzenschutz", "Ganzjahresbetreuung & Winterschutz"]} />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <div class="text-center mb-16">
+        <h2 class="font-display text-3xl font-semibold italic font-light">Ihr Weg zum Traumgarten</h2>
+      </div>
+      <ProcessSteps
+        steps={[
+          { number: "1", title: "Beratung", description: "Ein erstes Gespräch vor Ort, um Ihre Wünsche und Träume zu verstehen." },
+          { number: "2", title: "Konzeption", description: "Erstellung eines massgeschneiderten Entwurfs inkl. Visualisierung." },
+          { number: "3", title: "Umsetzung", description: "Fachgerechte Realisierung durch unser erfahrenes Landschaftsbau-Team." },
+          { number: "4", title: "Begleitung", description: "Nachhaltige Pflegepläne für die langfristige Pracht Ihres Gartens." },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="aspect-square rounded-lg overflow-hidden">
+          <Image src={pathImage} alt="Gartenanlage mit Wasserspiel und Bepflanzung" class="w-full h-full object-cover" widths={[300, 600]} sizes="300px" />
+        </div>
+        <div class="aspect-square rounded-lg overflow-hidden mt-10">
+          <Image src={hedgeImage} alt="Blühende Rosen und Stauden im Garten" class="w-full h-full object-cover" widths={[300, 600]} sizes="300px" />
+        </div>
+      </div>
+      <div>
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>UNSERE PHILOSOPHIE</span>
+        <h2 class="font-display text-3xl font-semibold mb-8">Natur nach Mass</h2>
+        <p class="text-lg text-[var(--color-ink-muted)] mb-10 leading-relaxed">
+          Ein schöner Garten ist ein Rückzugsort für die Seele. Wir planen, realisieren und pflegen Ihre
+          Gartenanlage mit Leidenschaft und Fachverstand – vom kleinen Sitzplatz bis zur weitläufigen Parkanlage.
+        </p>
+        <Testimonial
+          accentVar={accent}
+          quote="Wir sehen nicht nur die Pflanzen, sondern das gesamte Ökosystem Ihres Gartens."
+          name={people["lukas-falkenried"].name}
+          role={people["lukas-falkenried"].roles[lang].join(" · ")}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div>
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Projekt anfragen</span>
+        <h2 class="font-display text-3xl font-semibold mb-6">Persönliche Beratung</h2>
+        <p class="text-[var(--color-ink-muted)] leading-relaxed">
+          Erzählen Sie uns von Ihrem Projekt – wir melden uns innerhalb von 24 Stunden für ein erstes Gespräch.
+        </p>
+      </div>
+      <ContactForm
+        lang={lang}
+        area="garden"
+        source="/gartenbau/"
+        subject="Neue Anfrage – Gartenbau"
+        submitLabel="Anfrage senden"
+        successMessage="Danke! Wir melden uns in Kürze bei Ihnen."
+        errorMessage="Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder rufen Sie uns an."
+        fields={[
+          { type: "text", name: "name", label: "Vorname & Name", placeholder: "Erika Muster" },
+          { type: "email", name: "email", label: "E-Mail Adresse", placeholder: "erika@beispiel.ch" },
+          { type: "select", name: "interesse", label: "Ihr Anliegen", options: ["Neugestaltung & Planung", "Gartenunterhalt", "Beides / Unsicher"] },
+          { type: "textarea", name: "message", label: "Nachricht", placeholder: "Wie können wir Ihnen helfen?" },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-3xl mx-auto px-6 lg:px-16">
+      <h2 class="font-display text-2xl font-semibold mb-10 text-center">Häufige Fragen</h2>
+      <FaqAccordion
+        items={[
+          { question: "Wann ist der beste Zeitpunkt für eine Umgestaltung?", answer: "Frühling und Herbst eignen sich ideal für Pflanzarbeiten. Planung und Beratung führen wir jedoch ganzjährig durch." },
+          { question: "Bieten Sie auch regelmässigen Unterhalt an?", answer: "Ja. Rasenpflege, Schneidarbeiten, Bepflanzungen und weitere Pflegearbeiten gehören zu unserem veröffentlichten Angebot." },
+        ]}
+      />
+      <div class="text-center mt-10">
+        <a href={routes.faq[lang]} class="label-caps" style={`color: var(${accent})`}>Alle Fragen ansehen →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,18 +1,7 @@
-# Product image assets
+# Product images
 
-`round-nfc-white.webp`, `round-nfc-black.webp`, `stand-blue.webp` and
-`card-white-qr.webp` are stills of the Spline scenes they belong to, rendered
-from the same camera the viewer starts on. They fill the product frame while
-the 3D runtime loads, so the frame is never blank and never resizes.
+catalog/ contains the active NFC product photography and hero images. Regenerate these derivatives with node scripts/import-nfc-assets.mjs when the locally archived source PNGs are available.
 
-Regenerate them with:
+round-nfc-black.webp, round-nfc-white.webp, stand-blue.webp and card-stand-white.webp are the stills used while the four Spline scenes load. node scripts/render-product-stills.mjs reads the current scene URLs and fallback filenames from src/content/de.ts; optional arguments select a fallback basename. Rendering accesses the external Spline runtime.
 
-    node scripts/render-product-stills.mjs            # every product
-    node scripts/render-product-stills.mjs stand-blue # one product
-
-Run it after adding a product to `src/content/de.ts` and after re-exporting a
-scene. A still that no longer matches its scene makes the hand-over to 3D
-visibly jump, and a missing one fails the content test.
-
-`review-cards.png` and `review-stands.png` are photographs of the physical
-products and are unrelated to the Spline scenes.
+Retired composite PNGs and unused fallback stills have been archived locally.

@@ -1,0 +1,18 @@
+---
+type Item = { label: string; href: string };
+type Props = { label: string; items: readonly Item[]; activePath: string; accentVar?: string };
+const { label, items, activePath, accentVar = "--color-primary" } = Astro.props;
+---
+
+<nav aria-label={label} class="section-navigation border-y border-[var(--color-outline-variant)]/40 bg-[var(--color-surface)]">
+  <div class="mx-auto flex max-w-[var(--container-max)] gap-2 overflow-x-auto px-6 py-3 lg:justify-center lg:px-16">
+    {items.map((item) => (
+      <a
+        href={item.href}
+        aria-current={activePath === item.href ? "page" : undefined}
+        class="shrink-0 rounded-full px-4 py-3 text-sm font-semibold transition-colors hover:bg-[var(--color-surface-low)] aria-[current=page]:text-white"
+        style={activePath === item.href ? `background:var(${accentVar})` : undefined}
+      >{item.label}</a>
+    ))}
+  </div>
+</nav>

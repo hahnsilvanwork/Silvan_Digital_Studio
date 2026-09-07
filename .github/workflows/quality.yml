@@ -1,0 +1,72 @@
+name: Website quality
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npx next typegen && npm run typecheck
+      - run: npm test
+      - run: npx playwright install --with-deps chromium firefox webkit
+      # Playwright starts a fresh production build, then tests that server.
+      - name: Production build and browser journeys
+        run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-failures
+          path: test-results
+          retention-days: 7
+  dependencies:
+    uses: ./.github/workflows/dependencies.yml
+  demos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        directory:
+          - 'demos/steiner-handwerk'
+          - 'demos/cafe-vogel'
+          - 'demos/salon-lumiere'
+          - 'demos/falkenried'
+    defaults:
+      run:
+        working-directory: ${{ matrix.directory }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ${{ matrix.directory }}/package-lock.json
+      - run: npm ci
+      - run: npm run lint --if-present
+      - name: Falkenried source contracts
+        if: matrix.directory == 'demos/falkenried'
+        run: |
+          npm run test:data
+          npm run test:forms
+          npm run test:portfolio
+          npm run test:home-media
+          npm run test:bmw
+          npm run test:garden
+          npm run test:content
+          npm run test:subpage-images
+      - name: Build static demo export
+        run: npm run build

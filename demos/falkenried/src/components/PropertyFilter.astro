@@ -1,0 +1,46 @@
+---
+interface Filter {
+  key: string; // "all" | "wohnungen" | "gewerbe" | "parkplatz"
+  label: string;
+}
+
+interface Props {
+  filters: Filter[];
+  gridId: string;
+}
+
+const { filters, gridId } = Astro.props;
+---
+
+<div class="property-filter flex flex-wrap gap-3 mb-10" data-grid={gridId}>
+  {filters.map((filter, i) => (
+    <button
+      type="button"
+      data-filter={filter.key}
+      aria-pressed={i === 0 ? "true" : "false"}
+      class="filter-btn px-5 py-2.5 rounded-full text-sm font-semibold border border-[var(--color-outline-variant)] transition-colors aria-pressed:bg-[var(--color-primary)] aria-pressed:text-white aria-pressed:border-[var(--color-primary)]"
+    >
+      {filter.label}
+    </button>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".property-filter").forEach((bar) => {
+    const gridId = bar.dataset.grid;
+    const grid = gridId ? document.getElementById(gridId) : null;
+    if (!grid) return;
+    const buttons = bar.querySelectorAll<HTMLButtonElement>(".filter-btn");
+    const cards = grid.querySelectorAll<HTMLElement>("[data-category]");
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        buttons.forEach((b) => b.setAttribute("aria-pressed", "false"));
+        btn.setAttribute("aria-pressed", "true");
+        const key = btn.dataset.filter;
+        cards.forEach((card) => {
+          card.style.display = key === "all" || card.dataset.category === key ? "" : "none";
+        });
+      });
+    });
+  });
+</script>

@@ -1,0 +1,152 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import ServiceList from "../../components/ServiceList.astro";
+import ProcessSteps from "../../components/ProcessSteps.astro";
+import Testimonial from "../../components/Testimonial.astro";
+import ContactForm from "../../components/ContactForm.astro";
+import FaqAccordion from "../../components/FaqAccordion.astro";
+import SectionNav from "../../components/SectionNav.astro";
+import { Image } from "astro:assets";
+import { routes } from "../../i18n/nav";
+import { people } from "../../data/company";
+import { organizationSchema } from "../../lib/schema";
+import heroImage from "../../assets/images/garden/garden-aerial.jpg";
+import pathImage from "../../assets/images/garden/garden-path.jpg";
+import hedgeImage from "../../assets/images/garden/hedge-work.jpg";
+
+const lang = "en";
+const accent = "--color-garden" as const;
+---
+
+<BaseLayout
+  lang={lang}
+  route="gartenbau"
+  title="Landscaping | Garden Design & Maintenance – Falkenried Gruppe"
+  description="Garden design and maintenance in the Zürcher Unterland: planning, realization, and care of your garden by Falkenried Gruppe."
+  jsonLd={organizationSchema(lang)}
+>
+  <Hero
+    variant="full"
+    eyebrow="LANDSCAPE DESIGN & CARE"
+    title={`Exclusive <span class="italic font-light">Garden Worlds.</span>`}
+    subtitle="We design outdoor spaces that create lasting value. From the first sketch to fully realized care – your garden in master hands."
+    image={heroImage}
+    imageAlt="Artfully designed garden with boxwood hedges"
+    primaryCta={{ label: "Book a Consultation", href: routes.kontakt[lang] }}
+    secondaryCta={{ label: "Our Expertise", href: "#expertise" }}
+  />
+  <SectionNav label="Landscaping section" activePath={routes.gartenbau[lang]} accentVar="--color-garden" items={[
+    { label: "Overview", href: routes.gartenbau[lang] }, { label: "Design", href: routes.gardenDesign[lang] },
+    { label: "Maintenance", href: routes.gardenMaintenance[lang] }, { label: "Containers & transport", href: routes.gardenTransport[lang] },
+    { label: "References", href: routes.gardenReferences[lang] }, { label: "Tips", href: routes.gardenTips[lang] },
+  ]} />
+
+  <section id="expertise" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+      <div>
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Landscape Design & Value Preservation</span>
+        <h2 class="font-display text-3xl font-semibold mb-8">Individual Garden Planning</h2>
+        <p class="text-[var(--color-ink-muted)] leading-relaxed mb-8">
+          Behind every exceptional garden is a deep understanding of nature, architecture, and craft. We bring
+          these disciplines together into one harmonious whole.
+        </p>
+        <ServiceList accentVar={accent} items={["Planning and new gardens", "Paths, walls and seating areas", "Water features and earthworks"]} />
+      </div>
+      <div>
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Garden Care & Maintenance</span>
+        <h2 class="font-display text-3xl font-semibold mb-8">A Living Ecosystem</h2>
+        <p class="text-[var(--color-ink-muted)] leading-relaxed mb-8">
+          A garden is a constantly evolving ecosystem. Our experts make sure its splendor is preserved and
+          continues to grow through every season.
+        </p>
+        <ServiceList accentVar={accent} items={["Seasonal pruning & tree care", "Lawn care & plant protection", "Year-round care & winter protection"]} />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <div class="text-center mb-16">
+        <h2 class="font-display text-3xl font-semibold italic font-light">Your Path to a Dream Garden</h2>
+      </div>
+      <ProcessSteps
+        steps={[
+          { number: "1", title: "Consultation", description: "An initial on-site conversation to understand your wishes and vision." },
+          { number: "2", title: "Concept", description: "Creating a tailor-made design including visualization." },
+          { number: "3", title: "Realization", description: "Expert implementation by our experienced landscaping team." },
+          { number: "4", title: "Ongoing Care", description: "Sustainable maintenance plans for your garden's long-term splendor." },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="aspect-square rounded-lg overflow-hidden">
+          <Image src={pathImage} alt="Garden with water feature and planting" class="w-full h-full object-cover" widths={[300, 600]} sizes="300px" />
+        </div>
+        <div class="aspect-square rounded-lg overflow-hidden mt-10">
+          <Image src={hedgeImage} alt="Blooming roses and perennials in the garden" class="w-full h-full object-cover" widths={[300, 600]} sizes="300px" />
+        </div>
+      </div>
+      <div>
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>OUR PHILOSOPHY</span>
+        <h2 class="font-display text-3xl font-semibold mb-8">Nature, Tailored</h2>
+        <p class="text-lg text-[var(--color-ink-muted)] mb-10 leading-relaxed">
+          A beautiful garden is a retreat for the soul. We plan, build, and maintain your garden with passion
+          and expertise – from a small seating area to an expansive park.
+        </p>
+        <Testimonial
+          accentVar={accent}
+          quote="We don't just see the plants – we see your garden's entire ecosystem."
+          name={people["lukas-falkenried"].name}
+          role={people["lukas-falkenried"].roles[lang].join(" · ")}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div>
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Request a Project</span>
+        <h2 class="font-display text-3xl font-semibold mb-6">Personal Consultation</h2>
+        <p class="text-[var(--color-ink-muted)] leading-relaxed">
+          Tell us about your project – we'll get back to you within 24 hours for an initial conversation.
+        </p>
+      </div>
+      <ContactForm
+        lang={lang}
+        area="garden"
+        source="/en/gartenbau/"
+        subject="New Inquiry – Landscaping"
+        submitLabel="Send Inquiry"
+        successMessage="Thank you! We'll be in touch shortly."
+        errorMessage="Something went wrong. Please try again or call us."
+        fields={[
+          { type: "text", name: "name", label: "First & Last Name", placeholder: "Jane Doe" },
+          { type: "email", name: "email", label: "Email Address", placeholder: "jane@example.com" },
+          { type: "select", name: "interesse", label: "Your Request", options: ["Redesign & Planning", "Garden Maintenance", "Both / Not Sure"] },
+          { type: "textarea", name: "message", label: "Message", placeholder: "How can we help you?" },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-3xl mx-auto px-6 lg:px-16">
+      <h2 class="font-display text-2xl font-semibold mb-10 text-center">Frequently Asked Questions</h2>
+      <FaqAccordion
+        items={[
+          { question: "What's the best time for a redesign?", answer: "Spring and autumn are ideal for planting work. However, we handle planning and consultations year-round." },
+          { question: "Do you offer regular garden maintenance?", answer: "Yes. Lawn care, pruning, planting and further maintenance work are part of our published services." },
+        ]}
+      />
+      <div class="text-center mt-10">
+        <a href={routes.faq[lang]} class="label-caps" style={`color: var(${accent})`}>View all FAQs →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

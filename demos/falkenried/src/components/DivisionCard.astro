@@ -1,0 +1,20 @@
+---
+interface Props {
+  index: string; // "01 / MOBILITÄT"
+  accentVar: "--color-bmw-text" | "--color-garden" | "--color-realestate";
+  title: string;
+  description: string;
+  href: string;
+}
+
+const { index, accentVar, title, description, href } = Astro.props;
+---
+
+<a
+  class="group py-10 md:px-10 first:md:pl-0 last:md:pr-0 border-t md:border-t-0 first:border-t-0 border-[var(--color-outline-variant)]/40 block"
+  href={href}
+>
+  <span class="text-xs font-bold tracking-[0.2em] mb-5 block" style={`color: var(${accentVar})`}>{index}</span>
+  <h3 class="font-display text-2xl font-semibold mb-3 group-hover:text-[var(--color-primary)] transition-colors">{title}</h3>
+  <p class="text-[var(--color-ink-muted)] text-sm leading-relaxed">{description}</p>
+</a>

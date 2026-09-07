@@ -1,97 +1,81 @@
 # SILVAN Digital Studio
 
-The website of SILVAN Digital Studio — Silvan Hahn, independent digital
-developer in Switzerland. German and English, statically rendered. The only runtime
-dependencies are Next.js, React and Vercel's cookieless analytics.
+Bilingual portfolio and NFC product catalogue for Silvan Hahn. Main website: **https://silvandigital.ch**. Repository: https://github.com/hahnsilvanwork/Silvan_Digital_Studio.
 
-Live domain: **https://silvandigital.ch**
+## Start locally
 
-## Requirements
-
-- Node.js `^20.9.0 || >=22.0.0`
-
-## Getting started
+Requires Node.js **22.12 or newer** (Node 24 is used on Vercel).
 
 ```bash
-npm install
-npm run dev          # http://localhost:3000
+npm ci
+# Copy .env.example to .env.local and review its settings.
+npm run dev
 ```
 
-## Scripts
+The website runs at http://localhost:3000. Before opening bundled demos on a fresh checkout, run `npm run demos:build && npm run demos:sync`.
 
-| Command | What it does |
+## Repository map
+
+| Directory | Responsibility |
 | --- | --- |
-| `npm run dev` | Development server |
-| `npm run build` | Production build (32 static routes) |
+| `src/app` | German/English routes, layouts and generated SEO endpoints |
+| `src/features/pages` | Complete page compositions |
+| `src/components` | Shared UI and its component styles |
+| `src/content` | Typed German/English copy, products and project definitions |
+| `src/lib` | Validation, inquiry messages, routing and optional measurement |
+| `src/styles` | Global layout and motion styles |
+| `demos/` | Four independent demo applications, each with its own lockfile |
+| `public/images/` | Only active, web-ready portfolio/product/portrait assets |
+| `scripts/` | Repeatable build, image capture, publication and verification tools |
+| `tests/` | Unit tests and browser journeys |
+| `docs/` | Operating guides, audits and historical design decisions |
+| `.github/workflows/` | Quality checks, dependency audits and availability monitoring |
+
+Generated `public/demos/`, demo `out/` or `dist/`, `.next/`, `node_modules/`, local archives and test artifacts are ignored. Do not edit or commit generated exports. The four demo source trees are ordinary folders in this repository, not nested Git repositories or submodules.
+
+## Build and check
+
+| Command | Purpose |
+| --- | --- |
+| `npm run build` | Build all demos, regenerate bundled exports, then build the main website |
 | `npm run start` | Serve the production build |
-| `npm run lint` | ESLint |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm test` | Unit tests (Vitest) |
-| `npm run test:e2e` | End-to-end tests (Playwright, builds first) |
+| `npm run demos:install` | Install all demo dependencies from their lockfiles |
+| `npm run demos:build` | Build each demo; installs missing dependencies on a clean checkout |
+| `npm run demos:sync` | Generate bundled `/demos/...` files from verified exports |
+| `npm run demos:prepare-vercel` | Generate independent demo deployment packages |
+| `npm run lint` | Main ESLint checks; demos have separate checks |
+| `npm run typecheck` | Main TypeScript checks (run `npx next typegen` first on a clean checkout) |
+| `npm test` | Unit tests |
+| `npm run test:e2e` | Four-browser production journeys, including the build |
+| `npm run check:availability` | Live main/demo status, headings, JavaScript and real 404 |
 
-## Environment
+Run `npm ci` again after changing the main lockfile and `npm run demos:install` after changing demo lockfiles. The source/export/hosting map is maintained once in `scripts/demos.config.mjs`.
 
-One variable decides whether this deployment is the real site or a preview.
+## Configuration and deployment
 
-```bash
-NEXT_PUBLIC_SITE_URL=https://silvandigital.ch
-```
+Only `.env.example` is committed. Local `.env*` files and Vercel credentials remain private.
 
-**This has to be set in the Vercel project settings for production, or the site
-stays invisible.** Without a valid `https` value:
+- Production origin: `NEXT_PUBLIC_SITE_URL=https://silvandigital.ch`.
+- Vercel supplies `VERCEL_ENV`; previews remain noindex even if the production origin is accidentally present.
+- Optional measurement defaults to `NEXT_PUBLIC_MEASUREMENT_ENABLED=false`. Enable only after checking the Vercel account configuration and payloads described in the operating guide.
+- Main Vercel project: `silvan-digital-studio`, scope `silvan1`. Its normal `npm run build` also generates the demos from source.
+- Main deployment: `npx vercel deploy --prod --yes --project silvan-digital-studio --scope silvan1`.
+- Standalone demo URLs and release instructions: [demo operations](docs/DEMO-OPERATIONS.md).
 
-- `robots.txt` serves `Disallow: /`, so no search engine indexes anything,
-- no canonical URL is claimed,
-- every page carries `noindex`.
+The application has no customer database or message-sending backend. NFC inquiries remain in the browser until the visitor opens the selected contact channel. Demo forms are fictional previews and do not send data. Customer testimonials and results must be real and approved.
 
-That is deliberate — it keeps preview deployments out of the search index so
-they can never compete with the production domain. It also means production
-without the variable is a silent launch failure. Copy `.env.example` to
-`.env.local` for local work.
+## Images and languages
 
-## Deployment
+Project images are selected by locale in `src/content/projects.ts`. `npm run demos:screenshots` captures the demos with a 1440 x 1000 CSS viewport at 2x density, producing 2880 x 2000 WebP files. Set `DEMO_BASE_URL` to the running main website origin (default: http://localhost:3110).
 
-1. Set `NEXT_PUBLIC_SITE_URL` in the Vercel project (Production environment).
-2. Add `silvandigital.ch` as a domain in Vercel and let it be the primary one.
-3. Enter the DNS records Vercel shows into the Infomaniak DNS zone.
-4. Redeploy, then check `https://silvandigital.ch/robots.txt` actually reads
-   `Allow: /`.
+German images end in `-retina.webp`; English images end in `-retina-en.webp`. Falkenried has a real English route. Cafe, Steiner and Salon use translated screenshot previews defined in `scripts/demo-screenshot-copy.mjs`; their linked demos remain German. Only the current language's image is rendered, with responsive sizes and quality 90.
 
-## Structure
+Original photos and retired assets are local archival material, not deployment inputs. NFC source PNGs remain under the ignored `assets/nfc-products/source/`; `node scripts/import-nfc-assets.mjs` regenerates their web derivatives when the originals are available.
 
-```
-src/
-  app/          Routes. (de) and (en) are separate root layouts, so <html lang>
-                really matches the page. Icons, manifest, robots, sitemap and
-                the OG card are generated here.
-  components/   Presentational units, one stylesheet each.
-  content/      All copy, per language, typed against content/types.ts.
-  features/     Whole pages, composed from components.
-  lib/          Routing, locale, metadata and validation helpers.
-  styles/       Design tokens, layout primitives, shared page scaffolding.
-tests/
-  unit/         Vitest, including a stylesheet contract test.
-  e2e/          Playwright across Chromium, Firefox, WebKit and iPhone 13.
-```
+## Further documentation
 
-## Content
-
-Copy lives in `src/content/de.ts` and `src/content/en.ts` and is checked against
-`SiteContent`, so the two languages cannot drift apart in shape. Both are frozen
-at runtime.
-
-Two things are intentionally empty and should stay that way until they can be
-filled truthfully:
-
-- `home.testimonials` — the section renders only once a real, named client quote
-  exists. No `Review` or `AggregateRating` markup is emitted until then.
-- `public/images/portrait/` — no generated likeness stands in for a photograph.
-
-The projects under `/work` are self-initiated concepts and are labelled as such
-on every view, in the copy and in the imprint.
-
-## Legal
-
-`/imprint` and `/privacy` (and their `/en/...` equivalents) are generated from
-`imprint` and `privacy` in the content files. If the hosting provider changes,
-update the "Hosting" section in both languages — it currently names Vercel.
+- [Documentation index](docs/README.md)
+- [Operations, privacy-safe measurement, CSP rollout and recovery](docs/OPERATIONS.md)
+- [Demo build and publication](docs/DEMO-OPERATIONS.md)
+- [Repository cleanup and validation](docs/REPOSITORY-CLEANUP-2026-09-07.md)
+- [Design direction](DESIGN.md) and [product context](PRODUCT.md)

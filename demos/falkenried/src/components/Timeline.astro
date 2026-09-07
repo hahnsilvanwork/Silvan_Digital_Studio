@@ -1,0 +1,24 @@
+---
+interface Entry {
+  year: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  entries: Entry[];
+}
+
+const { entries } = Astro.props;
+---
+
+<div class="space-y-20 relative">
+  <div class="absolute left-0 top-0 bottom-0 w-px bg-[var(--color-outline-variant)]/40 hidden md:block"></div>
+  {entries.map((entry) => (
+    <div class="relative md:pl-16">
+      <span class="font-display text-[var(--color-primary)] text-4xl lg:text-5xl mb-4 block font-bold">{entry.year}</span>
+      <h3 class="font-display text-xl font-semibold mb-3">{entry.title}</h3>
+      <p class="text-[var(--color-ink-muted)] max-w-lg leading-relaxed">{entry.description}</p>
+    </div>
+  ))}
+</div>

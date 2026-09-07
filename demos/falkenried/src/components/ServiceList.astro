@@ -1,0 +1,19 @@
+---
+interface Props {
+  items: readonly string[];
+  accentVar?: "--color-bmw-text" | "--color-garden" | "--color-realestate" | "--color-primary";
+}
+
+const { items, accentVar = "--color-primary" } = Astro.props;
+---
+
+<div class="space-y-5">
+  {items.map((item, i) => (
+    <div class={`flex items-center gap-4 ${i < items.length - 1 ? "pb-5 border-b border-[var(--color-outline-variant)]/40" : ""}`}>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style={`color: var(${accentVar})`} aria-hidden="true" class="shrink-0">
+        <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <span>{item}</span>
+    </div>
+  ))}
+</div>

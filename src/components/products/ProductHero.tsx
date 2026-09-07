@@ -68,7 +68,8 @@ export function ProductHero({
             fill
             key={image.src}
             loading={index === 0 ? "eager" : "lazy"}
-            sizes="(min-width: 64rem) 42vw, 100vw"
+            fetchPriority={index === 0 ? "high" : undefined}
+            sizes="(min-width: 90rem) 560px, (min-width: 64rem) 42vw, 92vw"
             src={image.src}
           />
         ))}

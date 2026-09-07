@@ -1,0 +1,1 @@
+Read the version-matched Next.js guides in `node_modules/next/dist/docs/` before changing framework code. This demo is a static export; verify `npm run lint`, `npm run build`, and `npm audit` after dependency upgrades.

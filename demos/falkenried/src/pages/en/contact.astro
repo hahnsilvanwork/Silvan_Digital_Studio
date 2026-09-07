@@ -1,0 +1,132 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContactForm from "../../components/ContactForm.astro";
+import { routes } from "../../i18n/nav";
+import { organizationSchema } from "../../lib/schema";
+import { company, externalLinks, people } from "../../data/company";
+
+const lang = "en";
+const divisions = [
+  {
+    name: "Autowerkstatt",
+    person: "jonas-lindberg",
+    accent: "--color-bmw-text",
+    description: "Service & Sales",
+    cta: "Book an Appointment",
+    href: routes.kontakt[lang] + "#general-inquiry",
+  },
+  {
+    name: "Landscaping",
+    person: "lukas-falkenried",
+    accent: "--color-garden",
+    description: "Design & Care",
+    cta: "Request a Consultation",
+    href: "#general-inquiry",
+  },
+  {
+    name: "Real Estate",
+    person: "mara-linden",
+    accent: "--color-realestate",
+    description: "Rental & Management",
+    cta: "View Properties",
+    href: routes.immobilien[lang],
+  },
+] as const;
+---
+
+<BaseLayout
+  lang={lang}
+  route="kontakt"
+  title="Contact | Falkenried Gruppe in Zürcher Unterland"
+  description="Contact Falkenried Gruppe: Autowerkstatt, Landscaping, and Real Estate in Zürcher Unterland. Phone Telefon auf Anfrage."
+  jsonLd={organizationSchema(lang)}
+>
+  <section class="pt-40 pb-16 bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <span class="label-caps text-[var(--color-primary)] mb-4 block">TRADITION MEETS MODERNITY</span>
+      <h1 class="font-display text-4xl font-bold mb-6 max-w-2xl">Contact Us</h1>
+      <p class="text-lg text-[var(--color-ink-muted)] max-w-xl leading-relaxed">
+        Whether it's servicing your BMW, redesigning your garden, or finding a first-class property – our
+        experts are here to help.
+      </p>
+    </div>
+  </section>
+
+  <section class="pb-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <h2 class="sr-only">Your Contacts by Division</h2>
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+      {divisions.map((division) => (
+        <div class="card p-8 border-t-4" style={`border-top-color: var(${division.accent})`}>
+          <h3 class="font-display text-xl font-semibold mb-1">{division.name}</h3>
+          <p class="text-sm text-[var(--color-ink-muted)] mb-6">{division.description}</p>
+          <p class="text-sm font-semibold mb-1">{people[division.person].name}</p>
+          <p class="text-xs text-[var(--color-ink-muted)] mb-6">{people[division.person].roles[lang].join(" · ")}</p>
+          <p class="text-sm mb-6">
+            <a href={company.phone.href} class="block hover:text-[var(--color-primary)]">{company.phone.display}</a>
+            <a href={`/kontakt/#allgemeine-anfrage`} class="block hover:text-[var(--color-primary)]">{company.email}</a>
+          </p>
+          <a href={division.href} class="btn-primary w-full" style={`background-color: var(${division.accent})`}>
+            {division.cta}
+          </a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="general-inquiry" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-4">
+        <h2 class="font-display text-2xl font-semibold mb-6">General Inquiry</h2>
+        <p class="text-[var(--color-ink-muted)] leading-relaxed mb-10">
+          Use our form for general questions or if you're not sure which department to contact. We'll get
+          back to you within 24 hours.
+        </p>
+        <div class="space-y-6 text-sm">
+          <div>
+            <p class="label-caps text-[var(--color-ink-muted)] mb-2">Head Office</p>
+            <p>{company.address.street}, {company.address.postalCode} {company.address.locality}</p>
+          </div>
+          <div>
+            <p class="label-caps text-[var(--color-ink-muted)] mb-2">Phone</p>
+            <a href={company.phone.href} class="hover:text-[var(--color-primary)]">{company.phone.display}</a>
+          </div>
+          <div>
+            <p class="label-caps text-[var(--color-ink-muted)] mb-2">Fax</p>
+            <p>{company.fax.display}</p>
+          </div>
+          <div>
+            <p class="label-caps text-[var(--color-ink-muted)] mb-2">Email</p>
+            <a href={`/kontakt/#allgemeine-anfrage`} class="hover:text-[var(--color-primary)]">{company.email}</a>
+          </div>
+        </div>
+      </div>
+      <div class="lg:col-span-8">
+        <ContactForm
+          lang={lang}
+          area="general"
+          source="/en/contact/"
+          subject="General Inquiry – Contact Form"
+          submitLabel="Send Message"
+          successMessage="Thank you for your message! We'll be in touch shortly."
+          errorMessage="Something went wrong. Please try again or call us."
+          fields={[
+            { type: "text", name: "name", label: "Name", placeholder: "Enter your name" },
+            { type: "email", name: "email", label: "Email", placeholder: "email@example.com" },
+            { type: "select", name: "betreff", label: "Subject", options: ["General Information", "Autowerkstatt", "Landscaping", "Real Estate"] },
+            { type: "textarea", name: "message", label: "Message", placeholder: "How can we help you?" },
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-[var(--color-primary)] text-white text-center">
+    <div class="max-w-xl mx-auto px-6 lg:px-16">
+      <h2 class="font-display text-2xl font-semibold mb-4">Have Quick Questions?</h2>
+      <p class="text-white/70 mb-8 leading-relaxed">
+        Visit our FAQ page for instant answers to the most common questions about our services.
+      </p>
+      <a href={routes.faq[lang]} class="btn-secondary !border-white !text-white hover:!bg-white hover:!text-[var(--color-primary)]">View FAQs →</a>
+    </div>
+  </section>
+</BaseLayout>

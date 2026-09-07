@@ -1,0 +1,37 @@
+# Website operations
+
+## Release checks
+
+The GitHub quality workflow runs lint, generated Next route types, TypeScript, unit tests and the production build with all four Playwright browser projects. A separate matrix independently installs and builds all four demo sources, runs their available lint and all eight Falkenried source-contract suites. The separate audit workflow checks the main lockfile and all four demo lockfiles, including build tools, and fails at moderate severity. It also runs weekly. The live monitor checks the home, contact and NFC pages, all four standalone demos, visible headings, browser exceptions and a real missing-page HTTP 404 each hour (`npm run check:availability` locally). Scheduled GitHub runs are best-effort; they are not a guaranteed minute-level uptime service.
+
+Before publishing: all checks must pass, review the deployment diff, open both languages, exercise inquiry validation/review/copy and prepared external links without sending a message, and open a real Spline model. Mocked Spline tests do not verify the CDN or GPU runtime. Recheck on actual iOS and Android devices after changing the viewer.
+
+After publishing: run `node scripts/check-availability.mjs`; inspect canonical, language alternates, robots and security response headers on the production URL. A production build must have `NEXT_PUBLIC_SITE_URL=https://silvandigital.ch` and Vercel's `VERCEL_ENV=production`. Preview builds remain noindex even if that public URL was accidentally configured for them. Do not override Vercel's system environment flag. Other hosting providers must use an equivalent explicit environment flag and avoid giving preview builds production settings.
+
+## Activation outside the repository
+
+These files prepare automation; they do not activate any external account setting. The site owner must enable GitHub Actions on the repository/default branch, require the quality checks in branch protection, and subscribe to failed workflow notifications. Run the availability workflow manually once and verify an actual failure notification reaches the responsible owner. Do not assume email alerts are configured just because YAML exists. For faster response, configure an independent uptime service with the same seven public URLs and a named recipient.
+
+The site owner is responsible for incident triage, domain auto-renewal/payment method, DNS access, Vercel access recovery and dependency updates. Review renewal and account recovery quarterly. Review dependency findings weekly, and respond to high/critical advisories promptly after checking whether shipped code is affected. Do not apply blind forced upgrades. Keep previous deployments available for rollback.
+
+Enable Vercel Web Analytics/custom events in the project dashboard only after checking plan support, event allowance and current privacy copy. Then explicitly set `NEXT_PUBLIC_MEASUREMENT_ENABLED=true` for Production and rebuild. The example defaults to false; this is an operator opt-in, not a visitor consent mechanism. DNT and Global Privacy Control suppress tracking. No telemetry script is mounted when disabled. Verify actual network payloads after activation using an inquiry containing dummy sensitive text; none of that text, query parameters or fragments may appear in analytics requests. Check the dashboard receives events before treating measurement as operational.
+
+Allowed measurement: known public page paths, contact channel clicks, configuration reviewed, prepared WhatsApp/email link opened, successful clipboard copy, and numeric LCP/INP/CLS samples. Unknown paths are dropped. No form values, full outgoing URLs, metric IDs, DOM selectors or performance resource entries are sent by application event handlers. A link opening is never a confirmed message send or sale. Browser metrics are custom events via the existing Analytics package; this is not a Speed Insights dashboard integration. LCP/INP are milliseconds and CLS is unitless. Aggregate adequate real visitor samples before drawing conclusions; do not substitute laboratory TBT for INP. Provider referrer/device/location handling is described in [Vercel privacy documentation](https://vercel.com/docs/analytics/privacy-policy); our URL hook follows its [redaction guidance](https://vercel.com/docs/analytics/redacting-sensitive-data).
+
+## CSP rollout
+
+The enforced baseline blocks embedding, plugins and foreign base URLs. `nosniff`, explicit referrer policy and disabled unused device permissions apply to all main-domain responses, including static demos. A broader resource/script policy is report-only. It intentionally reports Next inline scripts, JSON-LD and the pre-paint motion script until a verified per-build hash strategy exists. Reports currently appear only in browser developer tools; no report collector is configured, and no claim of centralized CSP monitoring is made.
+
+Before enforcing script restrictions, collect reports across both languages, navigation, 404s, analytics enabled, standalone/static demos and real Spline loading. Add build-specific hashes for every inline script and verify them after every build. Do not simply turn report-only into enforcement: Next hydration would break. Installed Next 16.3.3 documentation says nonces require dynamic rendering; that would sacrifice the current static-rendering architecture. Experimental SRI protects external bundles and is not by itself a complete allowlist for inline payloads. Avoid broadening enforcement with `unsafe-inline` just to hide reports. External demo domains have separate hosting configurations and must be checked independently.
+
+## Incident and rollback
+
+On a failed availability run, retry from another network, inspect the failed URL and deployment logs, and distinguish DNS/TLS/CDN problems from an application regression. Inspect Vercel error/404 rates and JavaScript failures; log alerts require separate dashboard activation and an owner/recipient. Do not include inquiry URLs or messages in shared logs or tickets.
+
+For a confirmed deployment regression, restore the last verified deployment using the project's Vercel rollback/promote controls, then rerun availability and inquiry smoke checks. Revert the responsible source change separately before the next release. If measurement is problematic, set its flag false and rebuild. If only the CSP trial is noisy, adjust the report-only policy while retaining the enforced baseline. Preserve failed-run artifacts for diagnosis; CI browser traces expire after seven days.
+
+The audit's local `Internal: NoFallbackError` remains a diagnostic observation, not a confirmed user-facing failure. Next uses this internal exception in static-route fallback handling; existing rewrites deliberately cover static demo paths. The new response test checks both HTTP 404 and security headers on an unknown route. Reproduce using the same production server/build, record the exact route/status/log stack, and compare with production before changing fallback routing. Do not suppress the error globally or replace real 404s with 200 responses.
+
+## Search and proof
+
+Search Console and business profile access are external tasks: verify domain ownership, submit the production sitemap, review actual search queries and indexing, and keep previews excluded. Do not invent rankings or results. Publish customer statements and project outcomes only when factual evidence and customer approval exist. Bump the sitemap content revision when published copy changes, not on every technical build.

@@ -1,0 +1,31 @@
+name: Dependency audits
+on:
+  workflow_call:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 6 * * 1'
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        directory:
+          - '.'
+          - 'demos/steiner-handwerk'
+          - 'demos/cafe-vogel'
+          - 'demos/salon-lumiere'
+          - 'demos/falkenried'
+    defaults:
+      run:
+        working-directory: ${{ matrix.directory }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # Lockfile audit includes development tools without executing lifecycle scripts.
+      - run: npm audit --package-lock-only --audit-level=moderate

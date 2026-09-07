@@ -1,0 +1,140 @@
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream text-charcoal font-body antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+::selection { background: #B8965A; color: #1C1C1C; }
+:focus-visible { outline: 2px solid #87662f; outline-offset: 5px; }
+h1,h2,h3 { text-wrap: balance; }
+input, textarea { font-size: 16px !important; caret-color: #87662f; }
+input::placeholder, textarea::placeholder { color: #726c61 !important; }
+.salon-skip { position: fixed; top: -6rem; left: 1rem; z-index: 100; padding: 1rem; background: #F5F0E8; }
+.salon-skip:focus { top: 1rem; }
+.salon-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: min(850px, 100svh); padding-top: 80px; }
+.salon-hero-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(2rem,6vw,6rem); }
+.salon-hero h1 { font-size: clamp(3.2rem,5.8vw,5.8rem); line-height: 1.05; letter-spacing: -.035em; font-weight: 400; }
+.salon-hero h1 em { color: #87662f; }
+.salon-hero-copy > p { color: #625d53; font-size: 1.05rem; line-height: 1.8; max-width: 34rem; margin-top: 2rem; }
+.salon-hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; }
+.salon-button { background: #1C1C1C; color: #F5F0E8; padding: 1rem 1.5rem; font-size: .875rem; }
+.salon-button:hover { background: #59472c; }
+.salon-text-link { font-size: .875rem; text-decoration: underline; text-underline-offset: 6px; padding-block: .8rem; }
+.salon-hero-note { margin-top: 4rem; padding-top: 1.4rem; border-top: 1px solid #d4cbbc; display: flex; justify-content: space-between; gap: 1rem; font-size: .8rem; }
+.salon-hero-note span { color: #625d53; }
+.salon-hero-image { position: relative; min-width: 0; margin: 0; }
+.salon-hero-image img { width: 100%; height: 100%; object-fit: cover; position: absolute; }
+.salon-hero-image figcaption { position: absolute; bottom: 1.5rem; left: 1.5rem; background: #F5F0E8; padding: .75rem 1rem; font-size: .75rem; }
+.salon-footer { background: #1C1C1C; color: #F5F0E8; padding: 4rem max(1.5rem,calc((100vw - 1104px)/2)); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+.salon-footer p { max-width: 40rem; color: #cec8be; margin-top: 1rem; font-size: .875rem; line-height: 1.7; }
+.salon-footer nav { display: flex; flex-direction: column; align-items: flex-start; }
+.salon-footer a { padding-block: .6rem; }
+.salon-demo { grid-column: 1/-1; border-top: 1px solid #55514b; padding-top: 1rem; display: flex; gap: 2rem; justify-content: space-between; align-items: center; }
+.salon-demo a { white-space: nowrap; text-decoration: underline; text-underline-offset: 4px; font-size: .875rem; }
+@media (max-width: 767px) { .salon-hero { grid-template-columns: 1fr; padding-top: 64px; } .salon-hero-copy { padding: 3rem 1.5rem 2rem; } .salon-hero h1 { font-size: clamp(3rem,12vw,4.5rem); } .salon-hero-note { margin-top: 2rem; } .salon-hero-image { min-height: 340px; } .salon-footer { grid-template-columns: 1fr; } .salon-demo { align-items: flex-start; flex-direction: column; gap: .5rem; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *,*::before,*::after { animation: none !important; transition: none !important; } }
+
+html { scroll-padding-top: 100px; }
+.text-gold { color: #80602e; }
+.bg-charcoal .text-gold, .group:hover .text-gold { color: #d4af78; }
+.hover\:text-gold:hover { color: #80602e; }
+.group:hover .group-hover\:text-gold { color: #d4af78; }
+input:focus-visible,textarea:focus-visible { outline: 2px solid #87662f; outline-offset: 3px; }
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(/demos/salon/fonts/salon-font-1.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/demos/salon/fonts/salon-font-2.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/demos/salon/fonts/salon-font-3.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/demos/salon/fonts/salon-font-4.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/demos/salon/fonts/salon-font-5.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/demos/salon/fonts/salon-font-6.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/demos/salon/fonts/salon-font-7.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/demos/salon/fonts/salon-font-8.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/demos/salon/fonts/salon-font-9.woff2) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/demos/salon/fonts/salon-font-10.woff2) format('truetype');
+}
+
+button, a { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+header nav a { min-height: 44px; display: inline-flex; align-items: center; }
+input,textarea { border-color: #8c8272 !important; }
+.salon-button:active, button[type=submit]:active { transform: translateY(1px); }
+.salon-text-link { min-height: 44px; display: inline-flex; align-items: center; }

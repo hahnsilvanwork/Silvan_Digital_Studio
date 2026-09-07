@@ -9,6 +9,43 @@
   background: var(--color-paper-raised);
 }
 
+.alternatives {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+}
+
+.hint {
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.catalogueSection,
+.compactSection { padding-block: var(--space-md); }
+.compactSection { border-block-start: var(--hairline) solid var(--color-line); }
+.contentBlock { margin-block-start: var(--space-sm); }
+.pricingBlock {
+  display: grid;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-lg);
+}
+.conditionsBlock {
+  display: grid;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-xs);
+}
+.conditionsTitle { margin: 0; font-size: var(--text-subitem); font-weight: 500; }
+.disclosure { margin-block-start: var(--space-md); border-block-start: var(--hairline) solid var(--color-line); }
+.disclosure > summary {
+  padding-block: var(--space-sm);
+  min-block-size: 2.75rem;
+  cursor: pointer;
+  font-size: var(--text-subitem);
+}
+.disclosure > ul { padding-block-end: var(--space-sm); }
+
 .formIntro,
 .privacy,
 .confirmNotice {
@@ -72,26 +109,48 @@
 
 .field {
   display: grid;
-  gap: 0.35em;
+  align-content: start;
+  gap: 0.5rem;
   margin: 0;
+  min-inline-size: 0;
 }
+
+.fieldMessages {
+  display: grid;
+  align-content: start;
+  gap: 0.25rem;
+}
+
+.fieldMessages:empty { display: none; }
 
 .label {
   font-size: var(--text-label);
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  line-height: 1.4;
 }
 
 .control {
   min-inline-size: 0;
   inline-size: 100%;
+  block-size: 3.25rem;
   min-block-size: var(--control-target-min);
-  padding: var(--space-2xs) var(--space-xs);
+  padding: 0.75rem 1rem;
   border: var(--hairline) solid var(--color-line);
   border-radius: 0;
   background: var(--color-paper-raised);
   color: inherit;
   font: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+select.control { padding-inline-end: 2rem; }
+
+textarea.control {
+  block-size: auto;
+  min-block-size: 8rem;
+  resize: vertical;
 }
 
 /* The invalid border and the error text used to be the same blue as the focus
@@ -151,9 +210,18 @@
 @media (min-width: 48rem) {
   .fields {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem var(--space-sm);
   }
 
-  .field:last-child {
+  .field {
+    grid-row: span 3;
+    grid-template-rows: subgrid;
+    margin-block-end: var(--space-xs);
+  }
+
+  .fieldMessages:empty { display: grid; }
+
+  .fieldWide {
     grid-column: 1 / -1;
   }
 }

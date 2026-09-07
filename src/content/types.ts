@@ -221,14 +221,6 @@ export interface ReviewInquiryContent {
   readonly messageIntro: string;
 }
 
-export interface ProductVisualization {
-  readonly id: string;
-  readonly title: string;
-  readonly sceneUrl: string;
-  readonly fallbackImage?: string;
-  readonly ariaLabel: string;
-}
-
 export interface InquiryOption {
   readonly value: string;
   readonly label: string;
@@ -340,12 +332,6 @@ interface SiteContentShape {
     interact3dLabel: string;
     useCasesTitle: string;
     useCases: readonly { readonly title: string; readonly description: string }[];
-    productSelectorLabel: string;
-    menuSelectorLabel: string;
-    productVisualizations: readonly ProductVisualization[];
-    /** Restaurant and digital menu products. Empty until their scenes exist. */
-    menuVisualizations: readonly ProductVisualization[];
-    secondaryProductImage: { readonly src: string; readonly alt: string };
     inquiry: ReviewInquiryContent;
     faq: FaqContent;
   };

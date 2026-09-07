@@ -1,0 +1,118 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Timeline from "../components/Timeline.astro";
+import ContactPerson from "../components/ContactPerson.astro";
+import { routes } from "../i18n/nav";
+import { organizationSchema } from "../lib/schema";
+import heroImage from "../assets/images/bmw/workshop-lift.jpg";
+import { people } from "../data/company";
+
+const lang = "de";
+---
+
+<BaseLayout
+  lang={lang}
+  route="geschichte"
+  title="Geschichte & Team | Falkenried Gruppe seit 1969"
+  description="Die Geschichte der Falkenried Gruppe: vom lokalen Werkstattbetrieb 1969 zum modernen Familienunternehmen mit drei Standbeinen im Zürcher Unterland."
+  jsonLd={organizationSchema(lang)}
+>
+  <Hero
+    variant="full"
+    eyebrow="SEIT 1969"
+    title={`Tradition trifft <span class="italic font-light">Schweizer Ingenieurskunst.</span>`}
+    subtitle="Über fünf Jahrzehnte Werkstattpräzision, Landschaftsarchitektur und Immobilienverwaltung – erzählt in Menschen und Meilensteinen."
+    image={heroImage}
+    imageAlt="Klassischer BMW als Symbol unserer Geschichte seit 1969"
+    primaryCta={{ label: "Kontakt aufnehmen", href: routes.kontakt[lang] }}
+    secondaryCta={{ label: "Zur Timeline", href: "#zeitreise" }}
+  />
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <h2 class="label-caps text-[var(--color-primary)] mb-6 block text-center">Unsere Grundwerte</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+        <div class="border-l-2 border-[var(--color-primary)] pl-6">
+          <h3 class="font-semibold mb-2">Persönlich</h3>
+          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+            Wir glauben an direkte Beziehungen. Jeder Kunde wird von einer festen Ansprechperson betreut, die
+            seine spezifischen Anliegen und langfristigen Ziele kennt.
+          </p>
+        </div>
+        <div class="border-l-2 border-[var(--color-primary)] pl-6">
+          <h3 class="font-semibold mb-2">Zuverlässig</h3>
+          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+            Schweizer Präzision ist für uns kein Slogan, sondern operativer Standard – von der mechanischen
+            Reparatur bis zur Immobilienpflege liefern wir Exzellenz.
+          </p>
+        </div>
+        <div class="border-l-2 border-[var(--color-primary)] pl-6">
+          <h3 class="font-semibold mb-2">Regional</h3>
+          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+            Tief verwurzelt in der Schweizer Landschaft nutzen wir unser lokales Netzwerk, um exklusive
+            Möglichkeiten und einen reaktionsschnellen Service zu bieten.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="zeitreise" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
+    <div class="max-w-3xl mx-auto px-6 lg:px-16">
+      <div class="text-center mb-20">
+        <span class="label-caps text-[var(--color-primary)] mb-4 block">Die Reise der Falkenried Gruppe</span>
+        <h2 class="font-display text-3xl font-semibold italic font-light">Seit 1969 gewachsen.</h2>
+      </div>
+      <Timeline
+        entries={[
+          { year: "1969", title: "Gründung", description: "Emil Falkenried eröffnet die erste Werkstatt in Zürcher Unterland und legt den Grundstein für über fünf Jahrzehnte Expertise." },
+          { year: "1985", title: "Werkstattausbau", description: "Ernennung zum offiziellen Fahrzeugservice und strategischer Ausbau der Werkstattinfrastruktur." },
+          { year: "2000", title: "Erweiterung", description: "Integration des Bereichs Gartenbau sowie Aufbau der Immobilienverwaltung als drittes Standbein." },
+          { year: "Heute", title: "Zweite Generation", description: "Ein modernes Familienunternehmen mit über 55 Jahren Erfahrung und tiefen lokalen Wurzeln im Zürcher Unterland." },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <div class="text-center mb-16">
+        <span class="label-caps text-[var(--color-primary)] mb-4 block">Die Menschen dahinter</span>
+        <h2 class="font-display text-3xl font-semibold">Unser Team nach Bereich</h2>
+      </div>
+
+      <div class="mb-16">
+        <p class="label-caps text-[var(--color-bmw-text)] mb-6">Autowerkstatt & Service</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl">
+          <ContactPerson name={people["jonas-lindberg"].name} roles={people["jonas-lindberg"].roles[lang]} accentVar="--color-bmw-text" />
+        </div>
+      </div>
+
+      <div class="mb-16">
+        <p class="label-caps text-[var(--color-garden)] mb-6">Gartenbau & Unterhalt</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl">
+          <ContactPerson name={people["lukas-falkenried"].name} roles={people["lukas-falkenried"].roles[lang]} accentVar="--color-garden" />
+        </div>
+      </div>
+
+      <div>
+        <p class="label-caps text-[var(--color-realestate)] mb-6">Immobilien & Verwaltung</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl">
+          <ContactPerson name={people["mara-linden"].name} roles={people["mara-linden"].roles[lang]} accentVar="--color-realestate" />
+          <ContactPerson name={people["nora-feldmann"].name} roles={people["nora-feldmann"].roles[lang]} accentVar="--color-realestate" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-inverse-surface)] text-white text-center">
+    <div class="max-w-2xl mx-auto px-6 lg:px-16">
+      <h2 class="font-display text-3xl font-semibold mb-6">Lernen Sie uns persönlich kennen</h2>
+      <p class="text-white/70 mb-10 leading-relaxed">
+        Ob Werkstatt, Garten oder Immobilie – wir freuen uns, Sie kennenzulernen.
+      </p>
+      <a href={routes.kontakt[lang]} class="btn-primary">Kontakt aufnehmen</a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,57 @@
+---
+import { footer, nav, routes, common, type Lang } from "../i18n/nav";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const f = footer[lang];
+const n = nav[lang];
+const c = common[lang];
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-[var(--color-surface-highest)] border-t border-[var(--color-outline-variant)]/30 py-16 lg:py-20">
+  <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 items-start">
+      <div class="md:col-span-2">
+        <p class="font-display text-lg font-bold text-[var(--color-primary)] mb-4">Falkenried Gruppe</p>
+        <p class="text-[var(--color-ink-muted)] max-w-sm leading-relaxed">{f.tagline}</p>
+      </div>
+      <div>
+        <p class="label-caps text-[var(--color-ink-muted)] mb-5">{f.divisionsHeading}</p>
+        <ul class="space-y-3 text-sm font-medium">
+          <li><a href={routes.bmw[lang]} class="hover:text-[var(--color-primary)] transition-colors">{n.bmw}</a></li>
+          <li><a href={routes.gartenbau[lang]} class="hover:text-[var(--color-primary)] transition-colors">{n.gartenbau}</a></li>
+          <li><a href={routes.immobilien[lang]} class="hover:text-[var(--color-primary)] transition-colors">{n.immobilien}</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="label-caps text-[var(--color-ink-muted)] mb-5">{f.companyHeading}</p>
+        <ul class="space-y-3 text-sm font-medium">
+          <li><a href={routes.geschichte[lang]} class="hover:text-[var(--color-primary)] transition-colors">{f.ueberUns}</a></li>
+          <li><a href={routes.faq[lang]} class="hover:text-[var(--color-primary)] transition-colors">{n.faq}</a></li>
+          <li><a href={routes.kontakt[lang]} class="hover:text-[var(--color-primary)] transition-colors">{n.kontakt}</a></li>
+          <li><a href={routes.news[lang]} class="hover:text-[var(--color-primary)] transition-colors">{lang === "de" ? "Aktuelles" : "News"}</a></li>
+          <li><a href={routes.events[lang]} class="hover:text-[var(--color-primary)] transition-colors">{lang === "de" ? "Veranstaltungen" : "Events"}</a></li>
+          <li><a href={routes.jobs[lang]} class="hover:text-[var(--color-primary)] transition-colors">Jobs</a></li>
+          <li><a href={routes.partners[lang]} class="hover:text-[var(--color-primary)] transition-colors">{lang === "de" ? "Partner" : "Partners"}</a></li>
+        </ul>
+        <p class="label-caps text-[var(--color-ink-muted)] mt-8 mb-3">{lang === "de" ? "Kontakt" : "Contact"}</p>
+        <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+          {c.address}<br />
+          <a href={c.phoneHref} class="hover:text-[var(--color-primary)]">{c.phone}</a><br />
+          <a href={c.emailHref} class="hover:text-[var(--color-primary)]">{c.email}</a>
+        </p>
+      </div>
+    </div>
+    <div class="mt-16 pt-8 border-t border-[var(--color-outline-variant)]/30 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-xs font-bold tracking-[0.2em] text-[var(--color-ink-muted)]">© {year} {f.copyright}</p>
+      <ul class="flex gap-6 text-xs font-medium text-[var(--color-ink-muted)]">
+        <li><a href={routes.impressum[lang]} class="hover:text-[var(--color-primary)]">{f.impressum}</a></li>
+        <li><a href={routes.datenschutz[lang]} class="hover:text-[var(--color-primary)]">{f.datenschutz}</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

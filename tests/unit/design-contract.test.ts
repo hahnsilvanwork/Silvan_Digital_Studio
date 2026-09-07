@@ -57,10 +57,6 @@ const layout = stylesheetByPath.get("src/styles/layout.module.css")!;
 const pages = stylesheetByPath.get("src/styles/pages.module.css")!;
 const work = stylesheetByPath.get("src/components/work/work.module.css")!;
 
-const importerSource = readFileSync(
-  resolve(process.cwd(), "scripts/import-mockup-assets.ps1"),
-  "utf8",
-);
 const portraitReadme = readFileSync(
   resolve(process.cwd(), "public/images/portrait/README.md"),
   "utf8",
@@ -77,54 +73,6 @@ const packageJson = JSON.parse(
 ) as { devDependencies?: Record<string, string> };
 
 const assets = [
-  {
-    fileName: "products/review-cards.png",
-    bytes: 374_204,
-    width: 1_000,
-    height: 1_000,
-    mime: "image/png",
-    sha256: "D29E0ED19F4520DC6EB9D51AB9468EDF4B463441FA5705C99C4E0E799B3F7622",
-  },
-  {
-    fileName: "products/review-stands.png",
-    bytes: 540_492,
-    width: 1_080,
-    height: 1_080,
-    mime: "image/png",
-    sha256: "AA1BBCAA30D76A3D516BAEF948B745F4DF097F3FD8F47607E5A58C75F79E56DE",
-  },
-  {
-    fileName: "projects/objects-shop.jpg",
-    bytes: 40_918,
-    width: 512,
-    height: 279,
-    mime: "image/jpeg",
-    sha256: "7B2D8F8F7C11A00BB0B2A6BAB40A12614D9A217EDEA2922ABC7FC174ED86CE3F",
-  },
-  {
-    fileName: "projects/studio-mobile.jpg",
-    bytes: 15_505,
-    width: 512,
-    height: 279,
-    mime: "image/jpeg",
-    sha256: "C6CC75CD14762FC45BA9A9444256F43F883547321A81AD9439CC950E519B4EAE",
-  },
-  {
-    fileName: "projects/architecture-practice.jpg",
-    bytes: 32_765,
-    width: 512,
-    height: 279,
-    mime: "image/jpeg",
-    sha256: "0F8F449BC10FF69160528AF13DABCBA8BD0D41D44EAC0392E3E18BF2AE016953",
-  },
-  {
-    fileName: "projects/apparel-store.jpg",
-    bytes: 30_523,
-    width: 512,
-    height: 279,
-    mime: "image/jpeg",
-    sha256: "F9C235D52848F63C585FA95FDB11A0C5385F05174C80C2A0383E4C13F3AD2D87",
-  },
   {
     // Pinned like the rest, and for one extra reason: PORTRAIT.width/height are
     // published as fact in the Person markup, so the committed file has to
@@ -462,40 +410,10 @@ describe("SILVAN responsive design contract", () => {
     expect(guards.filter((selector) => !selector.startsWith(":where("))).toEqual([]);
   });
 
-  it("presents low-resolution project concepts without cropping or upscaling", () => {
-    const directMediaSelector = ".projectMedia >";
-
-    expect(declarationValues(pages.root, ".projectMedia", "aspect-ratio")).not.toContain(
-      "4 / 5",
-    );
-    expect(
-      declarationValues(pages.root, directMediaSelector, "max-inline-size"),
-    ).toContain("min(100%, 32rem)");
-    expect(declarationValues(pages.root, directMediaSelector, "object-fit")).toContain(
-      "contain",
-    );
-    expect(
-      declarationValues(pages.root, directMediaSelector, "object-position"),
-    ).toContain("var(--project-media-object-position)");
-
-    for (const project of [
-      "archa",
-      "lumen",
-      "architech-studio",
-      "vanguard-apparel",
-    ]) {
-      expect(
-        declarationValues(
-          pages.root,
-          `.projectMedia[data-project="${project}"]`,
-          "--project-media-object-position",
-        ),
-      ).toHaveLength(1);
-    }
-
-    expect(projectReadme).toContain("512×279");
-    expect(projectReadme).toContain("32rem");
-    expect(projectReadme).toContain("object-position");
+  it("presents actual demo screenshots without cropping", () => {
+    expect(declarationValues(pages.root, ".projectMedia", "aspect-ratio")).toContain("1440 / 1000");
+    expect(declarationValues(pages.root, ".projectMedia > img", "object-fit")).toContain("contain");
+    expect(projectReadme).toContain("1440×1000");
   });
 
   it("signals the current page with more than colour", () => {
@@ -602,31 +520,9 @@ describe("SILVAN responsive design contract", () => {
       );
       expect(decodeImage(asset)).toEqual({ mime, width, height });
 
-      if (fileName.startsWith("projects/")) {
-        expect(importerSource).toContain(`ExpectedBytes = ${bytes}`);
-        expect(importerSource).toContain(`ExpectedSha256 = "${sha256}"`);
-      }
+
     },
   );
-
-  it("validates response origin and body before replacing an imported target", () => {
-    const responseUriCheck = importerSource.indexOf(
-      "Assert-ApprovedAssetUri -Uri $response.RequestMessage.RequestUri",
-    );
-    const boundedCopy = importerSource.indexOf("Install-ApprovedAssetStream");
-    const replacement = importerSource.lastIndexOf("Move-Item");
-
-    expect(responseUriCheck).toBeGreaterThanOrEqual(0);
-    expect(boundedCopy).toBeGreaterThan(responseUriCheck);
-    expect(replacement).toBeGreaterThan(boundedCopy);
-    expect(importerSource).toContain("$asset.ExpectedBytes + 1");
-    // The token has to reach the request itself, otherwise cancelling on an
-    // oversized body would abandon a download that keeps streaming.
-    expect(importerSource).toMatch(
-      /GetAsync\([\s\S]*?\$CancellationTokenSource\.Token/,
-    );
-    expect(importerSource).toContain("$CancellationTokenSource.Cancel()");
-  });
 
   it("keeps mobile-first queries, safe areas, and the portrait asset contract", () => {
     expect(stylesheetSource).not.toMatch(/@media\s*\([^)]*max-width\s*:/);

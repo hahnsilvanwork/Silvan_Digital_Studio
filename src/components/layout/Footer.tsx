@@ -66,6 +66,7 @@ export function Footer({ locale }: FooterProps) {
             {contactActions.map((action) => (
               <li key={action.href}>
                 <a
+                  aria-label={`${action.label}: ${action.value}${action.external ? `. ${content.a11y.externalLink}` : ""}`}
                   className={styles.footerContactLink}
                   data-touch-target
                   href={action.href}

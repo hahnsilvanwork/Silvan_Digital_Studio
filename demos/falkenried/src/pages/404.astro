@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { routes } from "../i18n/nav";
+
+const lang = "de";
+---
+
+<BaseLayout
+  lang={lang}
+  route="notfound"
+  title="Seite nicht gefunden | Falkenried Gruppe"
+  description="Diese Seite existiert nicht."
+  noindex={true}
+>
+  <section class="pt-48 pb-[var(--spacing-section-gap)] bg-[var(--color-surface)] text-center">
+    <div class="max-w-xl mx-auto px-6 lg:px-16">
+      <span class="font-display text-7xl font-bold text-[var(--color-primary)] block mb-6">404</span>
+      <h1 class="font-display text-2xl font-semibold mb-4">Seite nicht gefunden</h1>
+      <p class="text-[var(--color-ink-muted)] mb-4 leading-relaxed">
+        Die gesuchte Seite existiert nicht oder wurde verschoben.
+      </p>
+      <p class="text-[var(--color-ink-muted)] mb-10 leading-relaxed">
+        This page could not be found or has moved.
+      </p>
+      <div class="flex flex-wrap justify-center gap-6">
+        <a href={routes.home.de} class="btn-primary">Zur Startseite</a>
+        <a href={routes.home.en} class="btn-secondary">Homepage (EN)</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

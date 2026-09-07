@@ -1,3 +1,4 @@
+import { measurementCopy } from "./measurement-copy";
 import type { SiteContent } from "./types";
 
 export const en = {
@@ -241,7 +242,7 @@ export const en = {
     loading3dLabel: "Loading 3D model …",
     error3dLabel: "The 3D model could not be loaded.",
     retry3dLabel: "Try again",
-    interact3dLabel: "Rotate with your mouse or finger",
+    interact3dLabel: "Drag with one finger or your mouse to rotate",
     catalog: [
       {
         id: "review-round-black", category: "reviews", title: "Standard Card · Round Black", price: "CHF 49.–",
@@ -275,7 +276,7 @@ export const en = {
         id: "review-personalized-black", category: "reviews", title: "Personalized · Round Black", price: "CHF 69.–",
         description: "A Google Review design with your logo and company name.",
         image: { src: "/images/products/catalog/review-personalized-black.webp", alt: "Personalized black Google Review card with the SilvanDigital logo" },
-        details: ["Round", "Example with logo and company name"],
+        details: ["Round or square", "80 × 80 or 100 × 100 mm"],
       },
       {
         id: "menu-round-black", category: "menu", title: "Standard Menu · Round Black", price: "CHF 49.–",
@@ -293,13 +294,13 @@ export const en = {
         id: "menu-personalized-white", category: "menu", title: "Personalized Menu · White", price: "CHF 69.–",
         description: "A menu design with your logo and company name.",
         image: { src: "/images/products/catalog/menu-personalized-white.webp", alt: "White personalized round NFC menu card" },
-        details: ["Round", "Example with logo and company name"],
+        details: ["Round or square", "80 × 80 or 100 × 100 mm"],
       },
       {
         id: "booking-custom-blue", category: "custom", title: "Fully Customized · Booking", price: "CHF 99.–",
         description: "A fully custom design in your brand identity for bookings or reservations.",
         image: { src: "/images/products/catalog/booking-custom-blue.webp", alt: "Blue custom-designed NFC booking card" },
-        details: ["Square", "Custom design and digital destination"],
+        details: ["Round or square", "80 × 80 or 100 × 100 mm", "Custom design and digital destination"],
       },
     ],
     useCasesTitle: "One product, many possibilities",
@@ -310,71 +311,17 @@ export const en = {
       { title: "Guest Wi-Fi", description: "Makes joining your guest Wi-Fi easier." },
       { title: "Digital contact card", description: "Saves contact and business details quickly." },
     ],
-    productSelectorLabel: "Choose a Google Review product",
-    menuSelectorLabel: "Choose a menu product",
-    productVisualizations: [
-      {
-        id: "round-nfc-white",
-        fallbackImage: "/images/products/round-nfc-white.webp",
-        title: "Round white",
-        sceneUrl:
-          "https://prod.spline.design/Lu503y2nQ8XllpRe/scene.splinecode",
-        ariaLabel:
-          "Slowly rotating 3D model of a white round Google Review NFC tag",
-      },
-      {
-        id: "round-nfc-black",
-        fallbackImage: "/images/products/round-nfc-black.webp",
-        title: "Round black",
-        sceneUrl:
-          "https://prod.spline.design/k2oyfSvDdVisnlUw/scene.splinecode",
-        ariaLabel:
-          "Slowly rotating 3D model of a black round Google Review NFC tag",
-      },
-      {
-        id: "stand-blue",
-        fallbackImage: "/images/products/stand-blue.webp",
-        title: "Blue stand",
-        sceneUrl:
-          "https://prod.spline.design/fttoKfHSbrqCbrUd/scene.splinecode",
-        ariaLabel:
-          "Slowly rotating 3D model of a blue Google Review table stand",
-      },
-      {
-        id: "card-white-qr",
-        fallbackImage: "/images/products/card-white-qr.webp",
-        title: "White card",
-        sceneUrl:
-          "https://prod.spline.design/VXtEe7dRfsZEicnw/scene.splinecode",
-        ariaLabel:
-          "Slowly rotating 3D model of a white Google Review card with NFC and a QR code",
-      },
-      {
-        id: "card-stand-white",
-        fallbackImage: "/images/products/card-stand-white.webp",
-        title: "White card stand",
-        sceneUrl:
-          "https://prod.spline.design/9R8JSb5RsHstdJxk/scene.splinecode",
-        ariaLabel:
-          "Slowly rotating 3D model of a white Google Review card stand for a table",
-      },
-    ],
-    menuVisualizations: [],
-    secondaryProductImage: {
-      src: "/images/products/review-stands.png",
-      alt: "NFC stand for a table or counter, asking the customer to review the business on Google",
-    },
     inquiry: {
       title: "Ask about an NFC & QR solution",
-      intro: "Configure your solution. Your details are prepared as a no-obligation WhatsApp inquiry.",
+      intro: "Choose your solution. Then open the non-binding enquiry in WhatsApp or email, or copy it as text.",
       fields: [
         { name: "destination", label: "Destination or use case", placeholder: "Choose a use case", required: true },
         { name: "product", label: "Product", placeholder: "Choose a product", required: true },
         { name: "shape", label: "Shape", placeholder: "Choose a shape", required: true },
         { name: "size", label: "Size", placeholder: "Choose a size", required: true },
         { name: "quantity", label: "Quantity", placeholder: "For example, 2", required: true },
-        { name: "businessName", label: "Business", placeholder: "Your business name", required: true, autoComplete: "organization" },
-        { name: "contactPerson", label: "Contact person", placeholder: "First and last name", required: true, autoComplete: "name" },
+        { name: "businessName", label: "Business (optional)", placeholder: "Your business name", required: false, autoComplete: "organization" },
+        { name: "contactPerson", label: "Contact person (optional)", placeholder: "First and last name", required: false, autoComplete: "name" },
         { name: "setup", label: "Destination page", placeholder: "Choose destination status", required: true },
         { name: "destinationUrl", label: "Destination link", placeholder: "https://…", required: false, autoComplete: "url" },
         { name: "note", label: "Design, colour or note (optional)", placeholder: "Logo, brand colours or other wishes", required: false },
@@ -407,11 +354,11 @@ export const en = {
         count === 1
           ? "One field still needs to be completed or corrected."
           : `${count} fields still need to be completed or corrected.`,
-      quantityError: "Please enter a valid quantity of at least 1.",
+      quantityError: "Please enter a whole quantity from 1 to 999. Request larger quantities in the message.",
       urlError: "Please enter a valid HTTPS link; use a Google link for reviews.",
       confirmTitle: "Please check your details",
       nonBindingNotice: "This is a no-obligation inquiry. It only becomes binding after I personally confirm it.",
-      privacyNotice: "Your details are not stored by this website; they are only inserted into the WhatsApp message.",
+      privacyNotice: "Your details stay in this browser tab until you choose how to pass them on. They are not stored here. Leaving or reloading the page clears them.",
       messageIntro: "Hi Silvan, I would like to make a no-obligation inquiry about an NFC & QR solution.",
     },
     faq: {
@@ -567,7 +514,7 @@ export const en = {
   work: {
     eyebrow: "Work",
     title: "Digital concepts with a clear purpose.",
-    intro: "Selected design concepts show how strategy, content, and development can work together.",
+    intro: "Four example websites you can explore yourself. Self-initiated concepts for fictional businesses, from design through to implementation.",
     conceptLabel: "Concept project",
     projectInfoLabel: "Project information",
     categoryLabel: "Category",
@@ -653,7 +600,7 @@ export const en = {
     intro:
       "Provider identification under Art. 3 para. 1 lit. s of the Swiss Federal Act against Unfair Competition (UCA).",
     updatedLabel: "Last updated",
-    updated: "August 2026",
+    updated: "7 September 2026",
     sections: [
       {
         title: "Responsible for this website",
@@ -712,7 +659,7 @@ export const en = {
     intro:
       "This statement describes which personal data is processed when you visit this website, under the revised Swiss Federal Act on Data Protection (revFADP).",
     updatedLabel: "Last updated",
-    updated: "August 2026",
+    updated: "7 September 2026",
     sections: [
       {
         title: "Responsible person",
@@ -729,11 +676,7 @@ export const en = {
       },
       {
         title: "Audience measurement without cookies",
-        body: [
-          "This website uses Vercel Analytics to count which pages are opened. No cookies are set and no persistent identifiers are stored. No profiling takes place, you are not recognised across visits, and nothing is followed across other websites.",
-          "What is collected: the page opened, the referring address, approximate origin at country level, and device type and browser. From this a daily-rotating, non-reversible value is derived whose only purpose is to stop repeat views within one session being counted twice. That value is not stored and allows no conclusion about you personally.",
-          "No advertising services are embedded, and no data is passed to third parties for advertising. Because no cookies are set and no personal data is processed to recognise you, this measurement requires no consent.",
-        ],
+        body: measurementCopy.en,
       },
       {
         title: "Server log files",
@@ -755,11 +698,15 @@ export const en = {
         ],
       },
       {
-        title: "Review card inquiry",
+        title: "NFC & QR enquiries",
         body: [
-          "On the \"Google Reviews\" page you can enter the details of an inquiry. Those entries are assembled into a WhatsApp message inside your browser only. They are not transmitted to this website and are not stored here.",
-          "Only when you send the prepared message in WhatsApp do the details reach WhatsApp and myself. WhatsApp's own privacy terms then apply in addition.",
+          "On the NFC & QR page you can enter the details of an enquiry. Its summary is assembled only in the memory of your browser tab and is not sent to this website. Model and category links contain only public product identifiers, never personal enquiry details.",
+          "Opening the prepared WhatsApp link passes the enquiry text to WhatsApp as part of the URL. It is sent to me only when you send the message there. WhatsApp's privacy terms also apply. The email alternative passes the text to your mail app; Copy enquiry writes it to your local clipboard.",
         ],
+      },
+      {
+        title: "Optional 3D product views",
+        body: ["Only after you choose View in 3D does your browser load software and model data from cdn.spline.design and prod.spline.design, services provided by Spline. The external provider then receives technical connection data such as your IP address and browser information. Without this click, product images are served by this website and no Spline connection is established. You can make an enquiry without opening a 3D view."],
       },
       {
         title: "Getting in touch",
@@ -809,7 +756,7 @@ export const en = {
     reviews: { title: "NFC & QR Solutions for Businesses | from CHF 49", description: "NFC cards and stands for Google reviews, digital menus, bookings, and custom destinations. Programming and setup included." },
     presence: { title: "Google Business Profile Setup for Swiss Businesses", description: "Google Business Profile setup and optimisation, consistent business details, and better local visibility. For Swiss SMEs from CHF 249." },
     automation: { title: "Automating Recurring Work for Swiss SMEs | SILVAN", description: "Automate recurring emails, reports and internal workflows without a heavy software rollout. For Swiss SMEs, scoped on request." },
-    work: { title: "Work: Website Design Concepts | SILVAN Digital Studio", description: "Four self-initiated design concepts: a brand site, an online shop, a studio site and retail. They show how I approach structure, copy and visual design." },
+    work: { title: "Work: Website Design Concepts | SILVAN Digital Studio", description: "Four explorable demo websites for trades, a café, a salon and a business group. Actual screenshots and insights into structure and visual design." },
     about: { title: "Silvan Hahn, Independent Web Developer near Zurich", description: "I'm Silvan Hahn, an independent web developer in Boppelsen, canton Zurich. You work directly with the person who plans, designs and builds your project." },
     contact: { title: "Contact: Web Design Enquiry, Canton Zurich | SILVAN", description: "Talk your project through directly with Silvan Hahn by email, WhatsApp, phone or LinkedIn. Based in Boppelsen ZH. Enquiries are non-binding." },
     hello: { title: "Hi, I'm Silvan | SILVAN Digital Studio", description: "A direct route to websites, Google reviews, online presence, work, and contact." },

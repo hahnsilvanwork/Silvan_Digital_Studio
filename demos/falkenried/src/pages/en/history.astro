@@ -1,0 +1,118 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+import Timeline from "../../components/Timeline.astro";
+import ContactPerson from "../../components/ContactPerson.astro";
+import { routes } from "../../i18n/nav";
+import { organizationSchema } from "../../lib/schema";
+import heroImage from "../../assets/images/bmw/workshop-lift.jpg";
+import { people } from "../../data/company";
+
+const lang = "en";
+---
+
+<BaseLayout
+  lang={lang}
+  route="geschichte"
+  title="History & Team | Falkenried Gruppe since 1969"
+  description="The history of Falkenried Gruppe: from a local workshop in 1969 to a modern family business with three pillars in the Zürcher Unterland."
+  jsonLd={organizationSchema(lang)}
+>
+  <Hero
+    variant="full"
+    eyebrow="SINCE 1969"
+    title={`Tradition Meets <span class="italic font-light">Swiss Engineering.</span>`}
+    subtitle="Five decades of workshop precision, landscape architecture, and property management – told through people and milestones."
+    image={heroImage}
+    imageAlt="Classic BMW, a symbol of our heritage since 1969"
+    primaryCta={{ label: "Get in Touch", href: routes.kontakt[lang] }}
+    secondaryCta={{ label: "View Timeline", href: "#timeline" }}
+  />
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <h2 class="label-caps text-[var(--color-primary)] mb-6 block text-center">Our Foundational Values</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+        <div class="border-l-2 border-[var(--color-primary)] pl-6">
+          <h3 class="font-semibold mb-2">Personal</h3>
+          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+            We believe in direct relationships. Every client is looked after by a dedicated contact who
+            understands their specific needs and long-term goals.
+          </p>
+        </div>
+        <div class="border-l-2 border-[var(--color-primary)] pl-6">
+          <h3 class="font-semibold mb-2">Reliable</h3>
+          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+            Swiss precision isn't a slogan for us – it's an operating standard, from mechanical repairs to
+            property upkeep, we deliver excellence.
+          </p>
+        </div>
+        <div class="border-l-2 border-[var(--color-primary)] pl-6">
+          <h3 class="font-semibold mb-2">Regional</h3>
+          <p class="text-sm text-[var(--color-ink-muted)] leading-relaxed">
+            Deeply rooted in the Swiss landscape, we leverage our local network to offer exclusive
+            opportunities and responsive service.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="timeline" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
+    <div class="max-w-3xl mx-auto px-6 lg:px-16">
+      <div class="text-center mb-20">
+        <span class="label-caps text-[var(--color-primary)] mb-4 block">The Journey of Falkenried Gruppe</span>
+        <h2 class="font-display text-3xl font-semibold italic font-light">Grown since 1969.</h2>
+      </div>
+      <Timeline
+        entries={[
+          { year: "1969", title: "Foundation", description: "Emil Falkenried opens the first workshop in Zürcher Unterland, laying the foundation for over five decades of expertise." },
+          { year: "1985", title: "BMW Partnership", description: "Appointment as an official vehicle service and strategic expansion of the workshop infrastructure." },
+          { year: "2000", title: "Expansion", description: "Integration of the landscaping division and the build-up of property management as a third pillar." },
+          { year: "Today", title: "Second Generation", description: "A modern family business with over 55 years of experience and deep local roots in the Zürcher Unterland." },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <div class="text-center mb-16">
+        <span class="label-caps text-[var(--color-primary)] mb-4 block">The People Behind It</span>
+        <h2 class="font-display text-3xl font-semibold">Our Team by Division</h2>
+      </div>
+
+      <div class="mb-16">
+        <p class="label-caps text-[var(--color-bmw-text)] mb-6">Autowerkstatt & Service</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl">
+          <ContactPerson name={people["jonas-lindberg"].name} roles={people["jonas-lindberg"].roles[lang]} accentVar="--color-bmw-text" />
+        </div>
+      </div>
+
+      <div class="mb-16">
+        <p class="label-caps text-[var(--color-garden)] mb-6">Landscaping & Maintenance</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl">
+          <ContactPerson name={people["lukas-falkenried"].name} roles={people["lukas-falkenried"].roles[lang]} accentVar="--color-garden" />
+        </div>
+      </div>
+
+      <div>
+        <p class="label-caps text-[var(--color-realestate)] mb-6">Real Estate & Management</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl">
+          <ContactPerson name={people["mara-linden"].name} roles={people["mara-linden"].roles[lang]} accentVar="--color-realestate" />
+          <ContactPerson name={people["nora-feldmann"].name} roles={people["nora-feldmann"].roles[lang]} accentVar="--color-realestate" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-inverse-surface)] text-white text-center">
+    <div class="max-w-2xl mx-auto px-6 lg:px-16">
+      <h2 class="font-display text-3xl font-semibold mb-6">Get to Know Us Personally</h2>
+      <p class="text-white/70 mb-10 leading-relaxed">
+        Whether it's the workshop, the garden, or a property – we look forward to meeting you.
+      </p>
+      <a href={routes.kontakt[lang]} class="btn-primary">Get in Touch</a>
+    </div>
+  </section>
+</BaseLayout>

@@ -159,21 +159,17 @@
 }
 
 @media (min-width: 64rem) {
-  /* The source images are only 512px wide, so each track stays capped at 32rem.
-     The list itself spans the normal content container and space-between pins
-     the left and right project columns to its opposite edges. */
   .previewList {
-    grid-template-columns: repeat(2, minmax(0, 32rem));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     justify-content: space-between;
     column-gap: var(--space-lg);
     row-gap: var(--space-lg);
   }
 
-  /* Offsetting every second preview keeps the index editorial rather than
-     catalogue-like, without breaking the reading order. Half the row gap: a
-     full one on top of the row gap left the second column a screen adrift. */
+  /* A subtle extra half-rem makes the alternating columns more deliberate
+     without changing the reading order or the single-column mobile layout. */
   .previewList > :nth-child(even) {
-    margin-block-start: var(--space-md);
+    margin-block-start: calc(var(--space-md) + 0.5rem);
   }
 
   .detailBody {

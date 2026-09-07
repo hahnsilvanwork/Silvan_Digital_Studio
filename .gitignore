@@ -1,27 +1,34 @@
+# Dependencies and generated output (main website and independent demos).
+node_modules/
+.next/
+.astro/
+out/
+dist/
+/public/demos/
+*.tsbuildinfo
+next-env.d.ts
+
+# Local configuration and credentials. Only documented examples are shared.
+.env*
+!.env.example
+.vercel/
+.idea/
+.vscode/
+.DS_Store
+*.log
+
+# Local workspaces, source archives and verification evidence.
 .worktrees/
 .superpowers/
-.next/
-node_modules/
-.env*.local
-playwright-report/
-test-results/
-coverage/
-artifacts/
-*.tsbuildinfo
 .scratch/
-.idea/
+artifacts/
+test-results/
+playwright-report/
+coverage/
+.tmp-*
+/Demo Website/
 
-# Original photography. The site serves derived, EXIF-stripped assets committed
-# under public/images/; the full-resolution sources stay local. They are far
-# larger than anything served and carry camera and location metadata.
+# Private source photographs and product originals; derived web assets are shared.
 /*.jpg
 /*.jpeg
-
-# Full-resolution NFC product sources stay local. The site serves the
-# metadata-stripped WebP derivatives committed under public/images/products/.
 /assets/nfc-products/source/*.png
-
-# Throwaway scripts used to drive a browser or probe the running build during an
-# audit. They are written to the repo root so Node resolves the project's own
-# dependencies, and they are never part of the site.
-.tmp-*

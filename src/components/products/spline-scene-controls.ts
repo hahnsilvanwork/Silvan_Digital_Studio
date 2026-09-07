@@ -27,6 +27,7 @@ const ROTATE_LEFT_GAIN = 6.2;
 const CAMERA_SETTLE_MS = 600;
 
 interface SplineOrbitControls {
+  touches?: (number | null)[];
   spherical?: { theta: number };
   autoRotate: boolean;
   autoRotateSpeed: number;
@@ -107,6 +108,9 @@ export function presentScene(
     const centre = controls.spherical?.theta ?? null;
 
     controls.hoverRotatePanMode = 0;
+    // Viewer 2.0.16 maps touch counts to actions: ROTATE=0. Its default
+    // leaves one finger unassigned; keep the existing multi-touch actions.
+    if (controls.touches) controls.touches[0] = 0;
     controls.autoRotate = true;
     controls.autoRotateClockwise = true;
     controls.autoRotateSpeed = SPEED_FOR_ONE_REVOLUTION / secondsPerRevolution;

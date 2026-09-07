@@ -1,0 +1,82 @@
+---
+interface Group {
+  key: string;
+  label: string;
+  items: { question: string; answer: string }[];
+}
+
+interface Props {
+  groups: Group[];
+}
+
+const { groups } = Astro.props;
+---
+
+<div class="faq-tabs">
+  <div role="tablist" aria-label="FAQ" class="grid grid-cols-1 justify-center gap-3 bg-[var(--color-surface-container)] rounded-xl p-2 mb-12 md:grid-cols-3">
+    {groups.map((group, i) => (
+      <button
+        role="tab"
+        type="button"
+        id={`tab-${group.key}`}
+        aria-controls={`panel-${group.key}`}
+        aria-selected={i === 0 ? "true" : "false"}
+        tabindex={i === 0 ? 0 : -1}
+        data-tab={group.key}
+        class="tab-btn w-full text-center px-6 py-3 rounded-lg font-semibold text-sm transition-colors aria-selected:bg-[var(--color-primary)] aria-selected:text-white text-[var(--color-ink-muted)]"
+      >
+        {group.label}
+      </button>
+    ))}
+  </div>
+
+  {groups.map((group, i) => (
+    <div
+      role="tabpanel"
+      id={`panel-${group.key}`}
+      aria-labelledby={`tab-${group.key}`}
+      data-panel={group.key}
+      class="tab-panel divide-y divide-[var(--color-outline-variant)]/40"
+      hidden={i !== 0}
+    >
+      {group.items.map((item) => (
+        <details class="group py-6">
+          <summary class="flex justify-between items-center gap-4 cursor-pointer list-none font-semibold">
+            <span>{item.question}</span>
+            <svg class="shrink-0 transition-transform group-open:rotate-180" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </summary>
+          <p class="pt-4 text-[var(--color-ink)]/65 leading-relaxed">{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll(".faq-tabs").forEach((wrapper) => {
+    const tabs = wrapper.querySelectorAll<HTMLButtonElement>(".tab-btn");
+    const panels = wrapper.querySelectorAll<HTMLElement>(".tab-panel");
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("keydown", (event) => {
+        let next = index;
+        if (event.key === "ArrowRight" || event.key === "ArrowDown") next = (index + 1) % tabs.length;
+        else if (event.key === "ArrowLeft" || event.key === "ArrowUp") next = (index - 1 + tabs.length) % tabs.length;
+        else if (event.key === "Home") next = 0;
+        else if (event.key === "End") next = tabs.length - 1;
+        else return;
+        event.preventDefault(); tabs[next].click(); tabs[next].focus();
+      });
+      tab.addEventListener("click", () => {
+        tabs.forEach((t) => { t.setAttribute("aria-selected", "false"); t.tabIndex = -1; });
+        tab.setAttribute("aria-selected", "true");
+        tab.tabIndex = 0;
+        const target = tab.dataset.tab;
+        panels.forEach((panel) => {
+          panel.hidden = panel.dataset.panel !== target;
+        });
+      });
+    });
+  });
+</script>

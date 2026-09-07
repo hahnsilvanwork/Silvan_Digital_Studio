@@ -103,7 +103,7 @@ describe("legal pages", () => {
       // either direction, since removing it should update the text too.
       const shipsVercelAnalytics =
         packageJson.dependencies?.["@vercel/analytics"] !== undefined &&
-        document.includes("<Analytics />");
+        document.includes("<PrivacySafeTelemetry />");
 
       expect(text.includes("Vercel Analytics")).toBe(shipsVercelAnalytics);
     },

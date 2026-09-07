@@ -1,0 +1,161 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import PropertyFilter from "../components/PropertyFilter.astro";
+import PropertyCard from "../components/PropertyCard.astro";
+import ProcessSteps from "../components/ProcessSteps.astro";
+import ContactPerson from "../components/ContactPerson.astro";
+import ContactForm from "../components/ContactForm.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import { routes } from "../i18n/nav";
+import { realEstateSchema } from "../lib/schema";
+import { people } from "../data/company";
+import heroImage from "../assets/images/immobilien/apartment-living-1.jpg";
+import apartmentImg from "../assets/images/immobilien/apartment-living-2.jpg";
+import officeImg from "../assets/images/immobilien/office-glass.jpg";
+import parkingImg from "../assets/images/immobilien/parking-garage.jpg";
+
+const lang = "de";
+const accent = "--color-realestate" as const;
+---
+
+<BaseLayout
+  lang={lang}
+  route="immobilien"
+  title="Immobilien | Mietwohnungen & Gewerbeflächen – Falkenried Gruppe"
+  description="Falkenried Gruppe vermietet und verwaltet ausschliesslich eigene Immobilien im Zürcher Unterland: Wohnungen, Gewerbeflächen und Parkplätze."
+  jsonLd={realEstateSchema(lang)}
+>
+  <Hero
+    variant="full"
+    eyebrow="REAL ESTATE PORTFOLIO"
+    title={`Zeitlose Räume <span class="italic font-light">für Generationen.</span>`}
+    subtitle="Seit über 50 Jahren verwalten und entwickeln wir Immobilien mit Fokus auf Qualität, Beständigkeit und Diskretion. Wir vermieten ausschliesslich Objekte aus eigenem Bestand."
+    image={heroImage}
+    imageAlt="Modernes Wohninterieur mit grossen Fenstern"
+    primaryCta={{ label: "Objekte ansehen", href: "#objekte" }}
+    secondaryCta={{ label: "Mietprozess", href: "#mietprozess" }}
+  />
+
+  <section id="objekte" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <div class="mb-10">
+        <span class="label-caps mb-4 block" style={`color: var(${accent})`}>Aktuelle Mietobjekte</span>
+        <h2 class="font-display text-3xl font-semibold">Sorgfältig gepflegte Wohn- und Gewerberäume</h2>
+      </div>
+      <PropertyFilter
+        gridId="property-grid"
+        filters={[
+          { key: "all", label: "Alle" },
+          { key: "wohnungen", label: "Wohnungen" },
+          { key: "gewerbe", label: "Gewerbe" },
+          { key: "parkplatz", label: "Parkplatz" },
+        ]}
+      />
+      <div id="property-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <PropertyCard
+          image={apartmentImg}
+          imageAlt="Wohnung im Chlupf Zürcher Unterland"
+          status="Auf Anfrage"
+          statusTone="neutral"
+          category="wohnungen"
+          title="Wohnung, Zürcher Unterland Chlupf"
+          address="Zürcher Unterland, Zürcher Unterland"
+          price="Preis auf Anfrage"
+          priceLabel="Monatsmiete"
+          detailsLabel="Details anfragen"
+        />
+        <PropertyCard
+          image={officeImg}
+          imageAlt="Gewerbefläche Steinbruggstrasse Zürcher Unterland"
+          status="Auf Anfrage"
+          statusTone="neutral"
+          category="gewerbe"
+          title="Gewerbefläche, Steinbruggstrasse"
+          address="Zürcher Unterland, beim Bahnhof Schöfflisdorf-Zürcher Unterland"
+          price="Preis auf Anfrage"
+          priceLabel="Monatsmiete"
+          detailsLabel="Details anfragen"
+        />
+        <PropertyCard
+          image={parkingImg}
+          imageAlt="Einstellhallenplatz Zürcher Unterland"
+          status="Auf Anfrage"
+          statusTone="neutral"
+          category="parkplatz"
+          title="Einstellhallenplatz"
+          address="Zürcher Unterland Chlupf"
+          price="Preis auf Anfrage"
+          priceLabel="Monatsmiete"
+          detailsLabel="Details anfragen"
+        />
+      </div>
+      <p class="text-sm text-[var(--color-ink-muted)] mt-8">
+        Aktuelle Verfügbarkeit ändert sich laufend. Kontaktieren Sie uns für die aktuellste Übersicht freier Objekte.
+      </p>
+    </div>
+  </section>
+
+  <section id="mietprozess" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
+      <div class="text-center mb-16">
+        <span class="label-caps" style={`color: var(${accent})`}>Wissenswertes zum Mietprozess</span>
+        <h2 class="font-display text-3xl font-semibold mt-4">Gut zu wissen</h2>
+      </div>
+      <ProcessSteps
+        steps={[
+          { number: "1", title: "Besichtigung", description: "Vereinbaren Sie einen Termin für eine private Besichtigung – wir nehmen uns Zeit für alle Details." },
+          { number: "2", title: "Bewerbung", description: "Reichen Sie das Anmeldedossier inkl. aktuellem Betreibungsauszug ein – diskret und unkompliziert." },
+          { number: "3", title: "Vertragsabschluss", description: "Nach positivem Bescheid erstellen wir den Mietvertrag, die Schlüsselübergabe erfolgt persönlich." },
+        ]}
+      />
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-4">
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Ihre Ansprechperson</span>
+        <div class="space-y-4">
+          <ContactPerson name={people["mara-linden"].name} roles={people["mara-linden"].roles[lang]} accentVar={accent} />
+          <ContactPerson name={people["nora-feldmann"].name} roles={people["nora-feldmann"].roles[lang]} accentVar={accent} />
+        </div>
+        <p class="text-sm text-[var(--color-ink-muted)] mt-6 leading-relaxed">
+          Kontaktieren Sie uns direkt oder nutzen Sie das Formular für Ihre spezifische Objektanfrage.
+        </p>
+      </div>
+      <div class="lg:col-span-8">
+        <ContactForm
+          lang={lang}
+          area="real-estate"
+          source="/immobilien/"
+          subject="Neue Anfrage – Immobilien"
+          submitLabel="Anfrage senden"
+          successMessage="Danke für Ihre Anfrage! Wir melden uns in Kürze."
+          errorMessage="Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder rufen Sie uns an."
+          fields={[
+            { type: "text", name: "name", label: "Vorname & Name", placeholder: "Max Mustermann" },
+            { type: "email", name: "email", label: "E-Mail Adresse", placeholder: "max@beispiel.ch" },
+            { type: "select", name: "objekt", label: "Interesse an Objekt", options: ["Wohnung", "Gewerbe", "Parkplatz", "Noch unsicher"] },
+            { type: "textarea", name: "message", label: "Ihre Nachricht", placeholder: "Wie können wir Ihnen helfen?" },
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
+    <div class="max-w-3xl mx-auto px-6 lg:px-16">
+      <h2 class="font-display text-2xl font-semibold mb-10 text-center">Häufige Fragen</h2>
+      <FaqAccordion
+        items={[
+          { question: "Sind Haustiere in Ihren Wohnungen erlaubt?", answer: "Grundsätzlich sind Haustiere nach vorheriger Absprache willkommen. Wir prüfen dies im Einzelfall unter Berücksichtigung des Hauses und des spezifischen Objekts." },
+          { question: "Wie hoch ist die Mietkaution?", answer: "In der Regel wird eine Kaution von zwei bis drei Monatsmieten verlangt, hinterlegt auf einem Sperrkonto oder via Kautionsversicherung." },
+        ]}
+      />
+      <div class="text-center mt-10">
+        <a href={routes.faq[lang]} class="label-caps" style={`color: var(${accent})`}>Alle Fragen ansehen →</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

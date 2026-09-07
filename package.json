@@ -4,16 +4,25 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": "^20.9.0 || >=22.0.0"
+    "node": ">=22.12.0"
   },
   "scripts": {
+    "prebuild": "npm run demos:build && npm run demos:sync",
+    "demos:build": "node scripts/build-demos.mjs",
+    "demos:install": "node scripts/build-demos.mjs --install --install-only",
+    "check:availability": "node scripts/check-availability.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "demos:sync": "node scripts/sync-demos.mjs",
+    "demos:screenshots": "node scripts/capture-demo-projects.mjs",
+    "demos:prepare-vercel": "node scripts/prepare-vercel-demos.mjs",
+    "demos:serve-standalone": "node scripts/serve-vercel-demos.mjs",
+    "demos:verify-standalone": "node scripts/verify-standalone-demos.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

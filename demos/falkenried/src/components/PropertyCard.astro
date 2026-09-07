@@ -1,0 +1,57 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  image: ImageMetadata;
+  imageAlt: string;
+  status: string;
+  statusTone?: "free" | "reserved" | "rented" | "neutral";
+  category: string; // data attribute value used for filtering, e.g. "wohnungen"
+  title: string;
+  address: string;
+  price: string;
+  priceLabel: string;
+  detailsLabel: string;
+}
+
+const {
+  image,
+  imageAlt,
+  status,
+  statusTone = "free",
+  category,
+  title,
+  address,
+  price,
+  priceLabel,
+  detailsLabel,
+} = Astro.props;
+
+const toneClasses: Record<string, string> = {
+  free: "bg-[var(--color-garden)] text-white",
+  reserved: "bg-[var(--color-heritage-gold)] text-[var(--color-ink)]",
+  rented: "bg-[var(--color-ink)]/60 text-white",
+  neutral: "bg-[var(--color-primary)] text-white",
+};
+---
+
+<article class="card overflow-hidden" data-category={category}>
+  <div class="relative aspect-[4/3]">
+    <Image src={image} alt={imageAlt} class="w-full h-full object-cover" widths={[400, 800]} sizes="(min-width: 1024px) 30vw, 90vw" />
+    <span class={`absolute top-4 left-4 text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full ${toneClasses[statusTone]}`}>
+      {status}
+    </span>
+  </div>
+  <div class="p-6">
+    <h3 class="font-display text-lg font-semibold mb-1">{title}</h3>
+    <p class="text-sm text-[var(--color-ink-muted)] mb-4">{address}</p>
+    <div class="flex items-center justify-between border-t border-[var(--color-outline-variant)]/40 pt-4">
+      <div>
+        <p class="label-caps text-[var(--color-ink-muted)] mb-1">{priceLabel}</p>
+        <p class="font-semibold text-[var(--color-primary)]">{price}</p>
+      </div>
+      <span class="label-caps text-[var(--color-primary)]">{detailsLabel}</span>
+    </div>
+  </div>
+</article>

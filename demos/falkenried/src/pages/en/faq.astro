@@ -1,0 +1,82 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import FaqTabs from "../../components/FaqTabs.astro";
+import { routes, common } from "../../i18n/nav";
+import { organizationSchema, faqSchema } from "../../lib/schema";
+import { bmwFaqs } from "../../data/bmw";
+
+const lang = "en";
+const c = common[lang];
+
+const groups = [
+  {
+    key: "bmw",
+    label: "Autowerkstatt",
+    items: [
+      ...bmwFaqs.map((item) => ({ question: item.question.en, answer: item.answer.en })),
+      { question: "Which BMW models do you service?", answer: "We service and repair all current and older BMW models – from compact cars to SUVs. As an official service partner we have the right diagnostic tools for every series." },
+      { question: "Does my BMW factory warranty stay valid after a service?", answer: "Yes. We work exclusively to manufacturer specifications with genuine parts – your factory warranty remains fully intact." },
+      { question: "Do you offer a replacement vehicle during workshop visits?", answer: "Let us know when booking your appointment – we're happy to arrange a solution, subject to availability." },
+      { question: "How often should my BMW's oil be changed?", answer: "This depends on the model and driving style. We generally recommend following your vehicle's BMW service interval and contacting us directly if unsure." },
+      { question: "Do you also run the fuel station and car wash?", answer: "Yes, our 24/7 self-service fuel station (diesel, petrol, 2 EV charging stations) and textile car wash are open to all customers." },
+    ],
+  },
+  {
+    key: "gartenbau",
+    label: "Landscaping",
+    items: [
+      { question: "Which area do you serve for landscaping?", answer: "We mainly work in the Zürcher Unterland, especially in Zürcher Unterland, Schöfflisdorf, Dielsdorf, and the surrounding area." },
+      { question: "What's the best time for a redesign?", answer: "Spring and autumn are ideal for planting work. We handle consultation and planning year-round." },
+      { question: "Do you offer maintenance-only contracts?", answer: "Yes, we offer flexible maintenance contracts for lawns, hedges, and beds – seasonal or year-round." },
+      { question: "Do you take on larger redesign projects?", answer: "From a new seating area to an expansive park, we support projects of every size from planning through ongoing care." },
+    ],
+  },
+  {
+    key: "immobilien",
+    label: "Real Estate",
+    items: [
+      { question: "Do you also rent out third-party properties?", answer: "No, we deliberately focus on managing and renting only our own properties, so we can guarantee the highest service quality." },
+      { question: "Are pets allowed in your apartments?", answer: "Pets are generally welcome by prior arrangement. We review this on a case-by-case basis." },
+      { question: "How much is the security deposit?", answer: "Typically two to three months' rent, held in a blocked account or via a deposit insurance." },
+      { question: "Do you also sell properties?", answer: "We currently focus entirely on rental and management. Feel free to reach out anyway if you're interested." },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  route="faq"
+  title="Frequently Asked Questions | Falkenried Gruppe"
+  description="Answers about Autowerkstatt, Landscaping, and Real Estate at Falkenried Gruppe – Swiss quality and transparency since 1969."
+  jsonLd={[organizationSchema(lang), faqSchema(groups.flatMap((g) => g.items))]}
+>
+  <section class="pt-40 pb-20 bg-[var(--color-surface)] text-center">
+    <div class="max-w-2xl mx-auto px-6 lg:px-16">
+      <h1 class="font-display text-4xl font-bold mb-6">Frequently Asked Questions</h1>
+      <p class="text-[var(--color-ink-muted)] leading-relaxed">
+        Find precise answers about our Autowerkstatt, Landscaping, and Real Estate services. We stand for
+        Swiss quality and transparency.
+      </p>
+    </div>
+  </section>
+
+  <section class="pb-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
+    <div class="max-w-3xl mx-auto px-6 lg:px-16">
+      <FaqTabs groups={groups} />
+    </div>
+  </section>
+
+  <section class="py-20 bg-[var(--color-surface-low)]">
+    <div class="max-w-2xl mx-auto px-6 lg:px-16 text-center">
+      <h2 class="font-display text-2xl font-semibold mb-4">Still Have Questions?</h2>
+      <p class="text-[var(--color-ink-muted)] mb-8 leading-relaxed">
+        Our team is happy to provide personal advice. Contact us with no obligation.
+      </p>
+      <div class="flex flex-wrap justify-center gap-6">
+        <a href={routes.kontakt[lang]} class="btn-primary">Contact Us</a>
+        <a href={c.phoneHref} class="btn-secondary">Call Now</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

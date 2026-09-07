@@ -2,6 +2,7 @@
 
 import {
   useId,
+  useEffect,
   useRef,
   useState,
   type FormEvent,
@@ -10,8 +11,10 @@ import {
 
 import type { Locale, ReviewInquiryFieldName } from "../../content/types";
 import { getContent } from "../../lib/locales";
+import { inquiryCopy } from "../../content/inquiry-copy";
 import {
   EMPTY_REVIEW_INQUIRY,
+  INQUIRY_LIMITS,
   requiredInquiryFields,
   validateReviewInquiry,
   visibleInquiryFields,
@@ -19,8 +22,11 @@ import {
   type ReviewInquiryErrors,
   type ReviewInquiryValues,
 } from "../../lib/validation";
-import { buildReviewInquiryUrl } from "../../lib/whatsapp";
+import { buildReviewInquiryUrl, buildReviewInquiryEmail, buildReviewInquiryMessage, inquiryDisplayValue } from "../../lib/whatsapp";
 import styles from "./review-inquiry.module.css";
+import { getInquiryPreset } from "../../lib/inquiry-selection";
+import { useCatalogueSelection, setCatalogueSelection } from "./use-catalogue-selection";
+import { trackInquiryEvent } from "../../lib/telemetry-client";
 
 interface ReviewInquiryConfiguratorProps {
   readonly locale: Locale;
@@ -31,6 +37,7 @@ export function ReviewInquiryConfigurator({
 }: ReviewInquiryConfiguratorProps) {
   const content = getContent(locale);
   const { inquiry } = content.reviews;
+  const copy = inquiryCopy[locale];
   const fieldPrefix = useId();
   const formRef = useRef<HTMLFormElement>(null);
   const confirmRef = useRef<HTMLHeadingElement>(null);
@@ -40,6 +47,35 @@ export function ReviewInquiryConfigurator({
   );
   const [errors, setErrors] = useState<ReviewInquiryErrors>({});
   const [inquiryUrl, setInquiryUrl] = useState<string | null>(null);
+  const [copyStatus, setCopyStatus] = useState<"" | "copied" | "failed">("");
+  const selection = useCatalogueSelection();
+  const model = content.reviews.catalog.find((product) => product.id === selection.modelId);
+  const modelTitle = model?.title;
+
+  useEffect(() => {
+    const preset = getInquiryPreset(selection.modelId);
+    const frame = window.requestAnimationFrame(() => {
+      if (preset) setValues((current) => ({ ...current, ...preset, quantity: current.quantity || "1" }));
+      setInquiryUrl(null);
+      setErrors({});
+      setCopyStatus("");
+      if (preset && window.location.hash === "#inquiry") formRef.current?.querySelector<HTMLElement>("[name=destination]")?.focus({preventScroll:true});
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [selection.modelId, selection.category]);
+
+  useEffect(() => {
+    let frame = 0;
+    const reopen = (event: Event) => {
+      setInquiryUrl(null);
+      setCopyStatus("");
+      frame = window.requestAnimationFrame(() => {
+        if ((event as CustomEvent<{focusInquiry?: boolean}>).detail?.focusInquiry && window.location.hash === "#inquiry") formRef.current?.querySelector<HTMLElement>("[name=destination]")?.focus({preventScroll:true});
+      });
+    };
+    window.addEventListener("silvan:catalogue-selection", reopen);
+    return () => { window.removeEventListener("silvan:catalogue-selection", reopen); window.cancelAnimationFrame(frame); };
+  }, []);
 
   const errorCount = Object.keys(errors).length;
   const visibleFields = new Set(visibleInquiryFields(values));
@@ -57,11 +93,15 @@ export function ReviewInquiryConfigurator({
   const messageFor = (kind: ReviewInquiryErrorKind) => {
     if (kind === "quantity") return inquiry.quantityError;
     if (kind === "url") return inquiry.urlError;
+    if (kind === "length") return copy.lengthError;
     return inquiry.requiredError;
   };
 
   const update = (name: ReviewInquiryFieldName, value: string) => {
+    if (model && ["destination", "product", "shape"].includes(name)) setCatalogueSelection(model.category);
     setValues((current) => ({ ...current, [name]: value }));
+    setErrors({});
+    setCopyStatus("");
   };
 
   const submit = () => {
@@ -69,7 +109,7 @@ export function ReviewInquiryConfigurator({
     setErrors(nextErrors);
 
     const firstInvalid = inquiry.fields.find(
-      (field) => nextErrors[field.name] !== undefined,
+      (field) => visibleFields.has(field.name) && nextErrors[field.name] !== undefined,
     );
 
     if (firstInvalid) {
@@ -82,7 +122,8 @@ export function ReviewInquiryConfigurator({
       return;
     }
 
-    setInquiryUrl(buildReviewInquiryUrl(values, locale));
+    setInquiryUrl(buildReviewInquiryUrl(values, locale, modelTitle));
+    trackInquiryEvent("inquiry_reviewed");
     window.requestAnimationFrame(() => confirmRef.current?.focus());
   };
 
@@ -115,7 +156,7 @@ export function ReviewInquiryConfigurator({
 
   if (inquiryUrl) {
     return (
-      <div className={styles.confirm}>
+      <div className={styles.confirm} data-inquiry-summary>
         {/* What is about to be sent, restated. The message itself leaves for
             WhatsApp and cannot be corrected afterwards, so the last screen
             before that has to show it rather than hide it behind "edit".
@@ -127,6 +168,7 @@ export function ReviewInquiryConfigurator({
           {inquiry.confirmTitle}
         </h3>
         <dl className={styles.summary}>
+          {modelTitle ? <div className={styles.summaryRow}><dt className={styles.summaryLabel}>{copy.model}</dt><dd className={styles.summaryValue}>{modelTitle}</dd></div> : null}
           {inquiry.fields
             .filter(
               (field) =>
@@ -136,21 +178,36 @@ export function ReviewInquiryConfigurator({
             .map((field) => (
               <div className={styles.summaryRow} key={field.name}>
                 <dt className={styles.summaryLabel}>{field.label}</dt>
-                <dd className={styles.summaryValue}>{values[field.name]}</dd>
+                <dd className={styles.summaryValue}>{inquiryDisplayValue(values, field.name, locale)}</dd>
               </div>
             ))}
         </dl>
+        {values.product === "standard-pair" ? <p className={styles.privacy}>{copy.bundleHint}</p> : null}
         <p className={styles.confirmNotice}>{inquiry.nonBindingNotice}</p>
+        <p className={styles.privacy}>{copy.transfer}</p>
         <a
           className={styles.confirmLink}
           data-touch-target
-          href={inquiryUrl}
+          href={buildReviewInquiryUrl(values, locale, modelTitle)}
+          onClick={() => trackInquiryEvent("inquiry_whatsapp_opened")}
           rel="noopener noreferrer"
           target="_blank"
         >
           {inquiry.submitLabel}
           <span className="visually-hidden">{content.a11y.externalLink}</span>
         </a>
+        <div className={styles.alternatives}>
+          <a className={styles.editButton} data-touch-target href={buildReviewInquiryEmail(values, locale, modelTitle)} onClick={() => trackInquiryEvent("inquiry_email_opened")}>{copy.email}</a>
+          <button className={styles.editButton} data-touch-target type="button" onClick={async () => {
+            try {
+              await navigator.clipboard.writeText(buildReviewInquiryMessage(values, locale, modelTitle));
+              setCopyStatus("copied");
+              trackInquiryEvent("inquiry_copied");
+            } catch { setCopyStatus("failed"); }
+          }}>{copy.copy}</button>
+        </div>
+        <p role="status" aria-live="polite">{copyStatus === "copied" ? copy.copied : copyStatus === "failed" ? copy.copyFailed : ""}</p>
+        {copyStatus === "failed" ? <label className={styles.field}>{copy.text}<textarea className={styles.control} readOnly rows={8} value={buildReviewInquiryMessage(values, locale, modelTitle)} onFocus={(event) => event.target.select()} /></label> : null}
         <button
           className={styles.editButton}
           data-touch-target
@@ -182,6 +239,7 @@ export function ReviewInquiryConfigurator({
       ref={formRef}
     >
       <p className={styles.formIntro}>{inquiry.intro}</p>
+      {modelTitle ? <p className={styles.privacy} role="status"><strong>{modelTitle}</strong><br />{copy.selected}</p> : null}
 
       {/* Submitting an empty form marks up to eight fields at once. Focus goes
           to the first, so a screen reader announces that one and nothing about
@@ -198,7 +256,7 @@ export function ReviewInquiryConfigurator({
           const options = optionsFor(field.name);
 
           return (
-            <p className={styles.field} key={field.name}>
+            <div className={`${styles.field} ${field.name === "note" || field.name === "destinationUrl" ? styles.fieldWide : ""}`} key={field.name}>
               {/* The optional field names itself as optional in the copy, so
                   no separate marker is needed here. */}
               <label className={styles.label} htmlFor={fieldId}>
@@ -225,17 +283,20 @@ export function ReviewInquiryConfigurator({
                 </select>
               ) : field.name === "note" ? (
                 <textarea
+                  aria-describedby={error ? errorId : `${fieldId}-hint`}
+                  aria-invalid={error ? true : undefined}
                   className={styles.control}
                   id={fieldId}
                   name={field.name}
                   onChange={(event) => update(field.name, event.target.value)}
                   placeholder={field.placeholder}
                   rows={3}
+                  maxLength={INQUIRY_LIMITS.note}
                   value={values[field.name]}
                 />
               ) : (
                 <input
-                  aria-describedby={error ? errorId : undefined}
+                  aria-describedby={error ? errorId : INQUIRY_LIMITS[field.name] ? `${fieldId}-hint` : undefined}
                   aria-invalid={error ? true : undefined}
                   aria-required={requiredFields.has(field.name) || undefined}
                   autoComplete={field.autoComplete}
@@ -243,6 +304,8 @@ export function ReviewInquiryConfigurator({
                   id={fieldId}
                   inputMode={field.name === "quantity" ? "numeric" : undefined}
                   name={field.name}
+                  maxLength={INQUIRY_LIMITS[field.name]}
+                  spellCheck={field.name === "destinationUrl" ? false : undefined}
                   onChange={(event) => update(field.name, event.target.value)}
                   placeholder={field.placeholder}
                   type={field.name === "destinationUrl" ? "url" : "text"}
@@ -250,12 +313,18 @@ export function ReviewInquiryConfigurator({
                 />
               )}
 
+              <div className={styles.fieldMessages}>
+              {INQUIRY_LIMITS[field.name] ? <span className={styles.hint} id={`${fieldId}-hint`}>
+                {field.name === "quantity" ? (values.product === "standard-pair" ? copy.bundleHint : copy.quantityHint) : `${values[field.name].length}/${INQUIRY_LIMITS[field.name]} ${copy.characters}`}
+              </span> : null}
+
               {error ? (
                 <span className={styles.error} id={errorId}>
                   {messageFor(error)}
                 </span>
               ) : null}
-            </p>
+              </div>
+            </div>
           );
         })}
       </div>
@@ -268,7 +337,7 @@ export function ReviewInquiryConfigurator({
         onClick={submit}
         type="button"
       >
-        {inquiry.submitLabel}
+        {copy.review}
       </button>
     </form>
   );

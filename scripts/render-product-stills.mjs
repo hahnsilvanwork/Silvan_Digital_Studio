@@ -7,9 +7,9 @@
  * With no arguments every product in src/content/de.ts is re-rendered.
  */
 import { readFileSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { basename, resolve } from "node:path";
 
-import { chromium } from "playwright";
+import { chromium } from "@playwright/test";
 
 // Large enough for a 3x phone (352 CSS px) and a 2x laptop hero without
 // upscaling, which is what made the still look softer than the live scene.
@@ -26,12 +26,12 @@ const ROTATE_LEFT_GAIN = 6.2;
 function readProducts() {
   const source = readFileSync(resolve("src/content/de.ts"), "utf8");
   const products = [];
-  const entry =
-    /id:\s*"([\w-]+)",\s*(?:[^}]*?)sceneUrl:\s*\n?\s*"([^"]+scene\.splinecode)"/g;
+  const entry = /scene:\s*\{\s*url:\s*"([^"]+scene\.splinecode)",\s*fallbackImage:\s*"([^"]+)"/g;
 
-  for (const [, id, sceneUrl] of source.matchAll(entry)) {
-    products.push({ id, sceneUrl });
+  for (const [, sceneUrl, fallbackImage] of source.matchAll(entry)) {
+    products.push({ id: basename(fallbackImage, ".webp"), sceneUrl });
   }
+  if (!products.length) throw new Error("No catalogue scenes found; check the source format before rendering.");
 
   return products;
 }
@@ -49,6 +49,7 @@ async function renderStill(browser, { id, sceneUrl }) {
 
   await page.waitForFunction(
     () => Boolean(document.querySelector("#v")?._spline?._controls?.orbitControls),
+    undefined,
     { timeout: 120_000 },
   );
   await page.evaluate(

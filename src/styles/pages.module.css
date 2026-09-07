@@ -94,75 +94,20 @@
   color: var(--color-on-dark);
 }
 
-/* The supplied concept exports are 512x279. The frame takes exactly that ratio
-   and stops at their intrinsic width, so the asset is never upscaled and never
-   floats inside an empty box. Replace the assets with wider ones and raise the
-   32rem cap together -- see public/images/projects/README.md. */
 .projectMedia {
-  --project-media-object-position: 50% 50%;
-
   position: relative;
-  display: grid;
-  place-items: center;
-  inline-size: min(100%, 32rem);
-  aspect-ratio: 512 / 279;
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 1440 / 1000;
   overflow: clip;
   border: var(--hairline) solid var(--color-line);
   border-radius: var(--radius-media);
-  background: var(--color-line);
+  background: var(--color-stone);
 }
-
-/* The four concepts were shot under different light -- cool concrete, flat
-   white, warm wood twice -- so at full saturation they read as four unrelated
-   stock photos rather than as one series. A shared grade pulls them together
-   and takes the eye off the desk props and back onto the screens. Replacing
-   these with real client work is the actual fix; this makes the placeholders
-   cohere until then. */
-.projectMedia > :is(img, picture) {
-  filter: saturate(0.55) contrast(1.06);
-}
-
-/* The frame already carries the asset's own aspect ratio and stops at its
-   intrinsic width, so filling it is exact rather than an upscale. Sizing to the
-   decoded width instead left a visible border, because the optimizer re-encodes
-   at a slightly different pixel size than the source. */
-.projectMedia > :is(img, picture) {
+.projectMedia > img {
   inline-size: 100%;
-  max-inline-size: min(100%, 32rem);
-  block-size: 100%;
-  max-block-size: 100%;
-}
-
-.projectMedia > img,
-.projectMedia > picture > img {
   block-size: auto;
   object-fit: contain;
-  object-position: var(--project-media-object-position);
-}
-
-.projectMedia > picture > img {
-  inline-size: 100%;
-}
-
-/* One hook per project so a concept can be nudged inside its frame without a
-   new crop. All four sit at the centre: the nudges that used to be here were
-   tuned for the previous asset assignment, and the pictures have since moved to
-   the projects whose copy actually describes them. Re-tune per project only
-   after looking at the frame it now holds. */
-.projectMedia[data-project="archa"] {
-  --project-media-object-position: 50% 50%;
-}
-
-.projectMedia[data-project="lumen"] {
-  --project-media-object-position: 50% 50%;
-}
-
-.projectMedia[data-project="architech-studio"] {
-  --project-media-object-position: 50% 50%;
-}
-
-.projectMedia[data-project="vanguard-apparel"] {
-  --project-media-object-position: 50% 50%;
 }
 
 @media (min-width: 64rem) {
@@ -257,34 +202,6 @@
   margin: 0;
 }
 
-/* The orientation line on a service page. Sized down from the lead so it reads
-   as a note beside the offer, not as a second introduction competing with it. */
-.studioNote {
-  display: grid;
-  gap: var(--space-2xs);
-  padding-block-start: var(--space-sm);
-  color: var(--color-ink-muted);
-  font-size: var(--text-body);
-}
-
-.studioNote p {
-  max-inline-size: 52ch;
-  margin: 0;
-}
-
-.studioNoteLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  color: var(--color-ink);
-}
-
-.studioNoteLinks a {
-  display: inline-flex;
-  align-items: center;
-  min-block-size: 2.75rem;
-}
-
 .serviceHeading, .serviceSummary {
   display: grid;
   gap: var(--space-sm);
@@ -296,7 +213,36 @@
 .serviceVisual { display: grid; gap: 0.75rem; margin-block-start: 1rem; text-decoration: none; }
 .serviceVisual img { inline-size: 100%; block-size: auto; }
 .serviceVisual span { color: var(--color-ink-muted); font-size: 0.8125rem; }
-.serviceHeader .studioNote { padding-block-start: 0; }
+.serviceActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2xs) var(--space-sm);
+  margin-block-start: var(--space-xs);
+}
+
+.serviceActions > :first-child {
+  grid-column: 1 / -1;
+  padding-block: 0.75rem;
+}
+
+.serviceSecondaryAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 3.25rem;
+  padding-block: 0.5rem;
+  border-block-end: var(--hairline) solid var(--color-line);
+  color: var(--color-ink);
+  font-size: var(--text-action);
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+}
+
+.serviceSecondaryAction:hover,
+.serviceSecondaryAction:focus-visible {
+  border-block-end-color: var(--color-ink);
+}
 .serviceHeader .pageTitle { max-inline-size: 16ch; font-size: clamp(2.5rem, 5vw, 4.75rem); line-height: 1.02; }
 
 .contactBand {
@@ -472,36 +418,6 @@
   font-size: var(--text-item);
   letter-spacing: var(--tracking-item);
   text-decoration: none;
-}
-
-/* Review products --------------------------------------------------------- */
-
-/* Two square product shots stacked full-width ran to roughly 720px on a phone
-   and pushed every price below the fold. Side by side they read as one pair --
-   card and stand -- and the block costs a quarter of the height. */
-.productShowcase {
-  display: grid;
-  gap: var(--space-xs);
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
-}
-
-.productSpline {
-  min-inline-size: 0;
-}
-
-/* Both shots are photographed on near-white, so without a frame they dissolve
-   into the paper and read as unfinished assets rather than as product images. */
-.productImage {
-  display: block;
-  overflow: clip;
-  border: var(--hairline) solid var(--color-line);
-  border-radius: var(--radius-media);
-  background: var(--color-paper-raised);
-}
-
-.productImage img {
-  inline-size: 100%;
-  block-size: auto;
 }
 
 @media (min-width: 64rem) {

@@ -14,12 +14,12 @@ test.describe("language switching", () => {
   });
 
   test("keeps the project slug on a detail page", async ({ page }) => {
-    await page.goto("/work/architech-studio");
+    await page.goto("/work/steiner-handwerk");
     await page.getByRole("link", { name: "Englisch" }).click();
 
-    await expect(page).toHaveURL(/\/en\/work\/architech-studio$/);
+    await expect(page).toHaveURL(/\/en\/work\/steiner-handwerk$/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-      "ArchiTech Studio",
+      "Steiner Handwerk",
     );
   });
 
