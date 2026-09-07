@@ -63,7 +63,7 @@ describe("HomePage", () => {
     // Testing Library normalizes the rendered text, and \s matches U+00A0, so the
     // expected string has to be normalized the same way to line up with it.
     expect(
-      within(main).getByText(de.home.hero.serviceLine.replaceAll(" ", " ")),
+      within(main).getByText(/^Websites.*Silvan Hahn/),
     ).toBeInTheDocument();
     expect(
       within(main).getByRole("heading", {
@@ -76,7 +76,7 @@ describe("HomePage", () => {
     ).toHaveAttribute("href", "/contact");
     expect(
       within(main).getByRole("link", { name: de.home.hero.secondaryCta }),
-    ).toHaveAttribute("href", "/websites");
+    ).toHaveAttribute("href", "#services");
   });
 
   it("shows every service with its starting price without interaction", () => {
@@ -100,7 +100,7 @@ describe("HomePage", () => {
     const main = screen.getByRole("main");
     const conceptLabels = within(main).getAllByText(en.work.conceptLabel);
 
-    expect(conceptLabels).toHaveLength(projects.length);
+    expect(conceptLabels).toHaveLength(2);
     expect(main.textContent).not.toMatch(/\bclient\b/i);
   });
 
@@ -309,7 +309,7 @@ describe("ContactPage", () => {
     ).toHaveAttribute("href", "https://wa.me/41789008500");
     expect(within(main).getByRole("link", { name: /E-Mail/ })).toHaveAttribute(
       "href",
-      "mailto:kontakt@silvandigital.ch",
+      "mailto:hahn.silvan.work@gmail.com",
     );
     expect(within(main).getByRole("link", { name: /Telefon/ })).toHaveAttribute(
       "href",

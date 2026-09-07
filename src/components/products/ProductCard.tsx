@@ -55,8 +55,11 @@ export function ProductCard({
             onClick={(event) => onView3D(product, event.currentTarget)}
             type="button"
           >
-            {view3dLabel}
-            <span aria-hidden="true"> ↗</span>
+            <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" focusable="false">
+              <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+              <path d="m4 7.5 8 4.5 8-4.5M12 12v9M8 5.25l8 4.5" />
+            </svg>
+            <span>{view3dLabel}</span>
           </button>
         ) : (
           <p className={styles.comingSoon}>{comingSoonLabel}</p>

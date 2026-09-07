@@ -12,20 +12,26 @@
   border-block-start: var(--hairline) solid var(--color-line);
 }
 
-.directoryItem:last-child {
-  border-block-end: var(--hairline) solid var(--color-line);
+.directory {
+  display: grid;
+  gap: 0;
 }
 
 .directoryLink {
   display: grid;
-  gap: var(--space-2xs);
+  gap: 0.65rem;
   align-items: baseline;
-  padding-block: var(--space-sm);
+  block-size: 100%;
+  padding: 1.75rem 2rem 1.75rem 0;
   text-decoration: none;
 }
 
+.directoryLink::after {
+  inset-inline-end: var(--space-xs);
+}
+
 .directoryTitle {
-  font-size: var(--text-item);
+  font-size: clamp(1.375rem, 2.2vw, 2rem);
   letter-spacing: var(--tracking-item);
   line-height: 1.02;
 }
@@ -41,16 +47,15 @@
    the smallest and quietest thing in a row it should be anchoring. */
 .directoryPrice {
   color: var(--color-ink);
-  font-size: var(--text-price);
+  font-size: 1rem;
   font-weight: 500;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   font-variant-numeric: tabular-nums;
-  text-transform: uppercase;
+  text-transform: none;
   white-space: nowrap;
 }
 
-/* auto-fit keeps one, three or four tiers all looking deliberate without a
-   per-page column count. */
+/* Four offers form two balanced pairs rather than an orphaned fourth card. */
 .tiers {
   display: grid;
   gap: var(--space-md);
@@ -61,8 +66,9 @@
   display: grid;
   gap: var(--space-xs);
   align-content: start;
-  padding-block-start: var(--space-sm);
+  padding: var(--space-md);
   border-block-start: var(--hairline) solid var(--color-line);
+  background: var(--color-paper-raised);
 }
 
 .tierName {
@@ -71,12 +77,10 @@
   letter-spacing: var(--tracking-item);
 }
 
-/* The one tier that is called out. It takes the accent rule and a label rather
-   than a filled card, because the accent is reserved for actions and a filled
-   box here would outweigh the primary button further down the page. */
+/* Weight and a neutral surface distinguish the recommended tier. */
 .tierRecommended {
-  border-block-start-width: 0.1875rem;
   border-block-start-color: var(--color-accent);
+  background: var(--color-stone);
 }
 
 /* Reserved on every tier of a list that calls one out, so an empty badge still
@@ -89,6 +93,20 @@
   letter-spacing: 0.16em;
   line-height: 1.2;
   text-transform: uppercase;
+}
+
+.tierBadge:empty { display: none; }
+
+@media (min-width: 48rem) {
+  .tierBadge:empty { display: block; }
+  .tiers:has(> :nth-child(4):last-child) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .tier:only-child {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--space-lg);
+  }
+  .tier:only-child .tierFeatures { grid-column: 2; grid-row: 1 / span 3; }
 }
 
 .tierDescription {
@@ -113,7 +131,7 @@
 .tierFeature::before {
   position: absolute;
   inset-inline-start: 0;
-  content: "—";
+  content: "•";
 }
 
 .process {
@@ -154,8 +172,7 @@
   }
 
   .directoryLink {
-    grid-template-columns: minmax(0, 1fr) auto;
-    column-gap: var(--space-md);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .directoryTitle {
@@ -167,34 +184,34 @@
   }
 
   .directoryPrice {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    align-self: center;
+    grid-column: 1;
+    align-self: end;
+  }
+
+  .directory {
+    grid-template-columns: minmax(0, 1fr);
   }
 
 }
 
 @media (min-width: 64rem) {
   .directoryLink {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 5fr) minmax(0, 2fr);
-    padding-block: var(--space-md);
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .directoryDescription {
-    grid-column: 2;
-    grid-row: 1;
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .directoryPrice {
-    grid-column: 3;
-    grid-row: 1;
-    justify-self: end;
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
   }
 }
 
-/* FAQ ---------------------------------------------------------------------
-   A description list, not an accordion. Every answer is rendered, so the same
-   text serves the visitor, the crawler and the FAQPage markup on the page. */
+/* Native FAQ disclosures keep the initial section easy to scan. */
 
 .faq {
   display: grid;
@@ -203,9 +220,6 @@
 }
 
 .faqItem {
-  display: grid;
-  gap: var(--space-2xs);
-  padding-block: var(--space-sm);
   border-block-start: var(--hairline) solid var(--color-line);
 }
 
@@ -214,27 +228,27 @@
 }
 
 .faqQuestion {
-  font-size: var(--text-subitem);
+  position: relative;
+  padding: 1.5rem 2.5rem 1.5rem 0;
+  min-block-size: var(--control-target-min);
+  cursor: pointer;
+  list-style: none;
+  font-size: clamp(1.125rem, 1.8vw, 1.5rem);
   font-weight: 500;
   letter-spacing: var(--tracking-item);
-  line-height: 1.15;
+  line-height: 1.3;
 }
+.faqQuestion::-webkit-details-marker { display: none; }
+.faqQuestion::after { content: ""; position: absolute; inset-inline-end: 0.5rem; inset-block-start: 1.8rem; inline-size: 0.5rem; block-size: 0.5rem; border-inline-end: 1.5px solid currentColor; border-block-end: 1.5px solid currentColor; transform: rotate(45deg); }
+.faqItem[open] .faqQuestion::after { transform: rotate(225deg); }
 
 .faqAnswer {
   max-inline-size: 44rem;
   margin: 0;
+  padding-block-end: 1.5rem;
   color: var(--color-ink-muted);
 }
 
-@media (min-width: 64rem) {
-  /* The question holds a column of its own so a long answer never pushes it
-     out of the reader's eye line. */
-  .faqItem {
-    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-    gap: var(--grid-gap);
-    padding-block: var(--space-md);
-  }
-}
 
 /* The follow-on link on an answer that points at another service. */
 .faqLink {

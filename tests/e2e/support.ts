@@ -1,7 +1,7 @@
 import type { Page } from "@playwright/test";
 
 /** The drawer replaces the inline navigation below this width. */
-export const NAV_BREAKPOINT_PX = 1024;
+export const NAV_BREAKPOINT_PX = 1152;
 
 export function isDrawerViewport(page: Page): boolean {
   const viewport = page.viewportSize();
@@ -43,7 +43,7 @@ export async function activeElement(page: Page) {
 }
 
 export const CONTACT = {
-  email: "kontakt@silvandigital.ch",
+  email: "hahn.silvan.work@gmail.com",
   phoneHref: "tel:+41789008500",
   phoneDisplay: "+41 78 900 85 00",
   // The visible label, not the wa.me path segment.

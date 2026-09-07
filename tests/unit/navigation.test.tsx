@@ -382,7 +382,7 @@ describe("Footer", () => {
 
     expect(
       screen.getByRole("link", { name: new RegExp(de.contact.emailLabel) }),
-    ).toHaveAttribute("href", "mailto:kontakt@silvandigital.ch");
+    ).toHaveAttribute("href", "mailto:hahn.silvan.work@gmail.com");
     expect(
       screen.getByRole("link", { name: new RegExp(de.contact.phoneLabel) }),
     ).toHaveAttribute("href", "tel:+41789008500");

@@ -1,0 +1,22 @@
+# SILVAN / Photographic studio portfolio
+
+Direction: a photographic contact sheet and Swiss editorial portfolio. Work and people carry the identity; typography and spacing organise it. User rejected the pastel card system and electric blue; replace them throughout.
+
+Home is a Persuade surface: clear offer with a large, honestly labelled concept image in the first viewport; a concise service directory; selected work; physical NFC products; the actual developer; contact. The cultural references are Swiss studio portfolios, architecture monographs and carefully edited photographic contact sheets. The selected system is the fourth of the grounded candidates considered (Swiss poster, architecture monograph, product catalogue, photographic contact sheet, studio journal, typographic index, exhibition guide). Instrument displays, marbling and underwater worlds were rejected as unrelated to the business; retain their discipline of consistent states, one material family and a legible sequence without borrowing their motifs.
+
+Palette: existing warm white #f9f8f6, graphite #1a1a1a, warm stone #e9e5df, restrained muted text #676561. Dark sections reverse the ink/paper tokens. No saturated blue, pastel category coding, gradient text or coloured bullet points.
+
+Typography: existing self-hosted Archivo. Display up to 6rem, -0.035em tracking, editorial sentence case. Main labels and control text remain readable. Uppercase reserved for small genuine metadata.
+
+Shapes: open rows and editorial columns. Buttons use a small 4px corner, product cards preserve functional grouping. Avoid ornamental boxes and decorative icons.
+
+Media: new 1536x1024 architecture-concept mockup generated from the existing concept, displayed with its concept label; actual portrait and existing product photography. Keep original 512px project images within their native size. No stock office pictures, invented clients or altered portrait.
+
+Responsive: phone order is headline, concept image, concise explanation, actions. Two-column hero and asymmetric studio section on wide screens. Service rows stack content at 320px. 44px minimum controls. Real links and optional 3D retained.
+
+References inspected: https://www.awwwards.com/sites/twks ; https://twks.ch/en ; https://www.awwwards.com/sites/studio-merge ; https://www.studio-merge.com/ ; https://www.awwwards.com/sites/little-plains . Borrow the use of meaningful project imagery and deliberate hierarchy, not their branding.
+# Service-page refinement
+
+September 7 mobile simplification: homepage introduction occupies at least the available viewport and grows naturally when needed. Two selected concept projects appear on the homepage, using 1536px editorial assets; the full project directory remains on Work. Mobile product photography comes before product copy. Header uses an icon-only, 44px menu trigger with an accessible name. Native FAQ disclosures reduce initial reading density while preserving all answers and keyboard operation. Website service introduction includes the labelled Archa visualization. Avoid repeating the developer biography on each service.
+
+Service introductions use a 7:5 desktop split with the explanation, action and developer introduction grouped together. One rule closes the introduction. Four website packages form two pairs; a single offer uses two columns internally on desktop. Benefits and use cases use restrained lists. Warm stone closes service pages around the contact action. The dedicated contact page places actual destinations beside its introduction on desktop and underneath on mobile.

@@ -3,6 +3,10 @@
   display: grid;
   gap: var(--space-sm);
   max-inline-size: 46rem;
+  padding: var(--space-sm);
+  border: var(--hairline) solid var(--color-line);
+  border-radius: 0.75rem;
+  background: var(--color-paper-raised);
 }
 
 .formIntro,
@@ -79,6 +83,8 @@
 }
 
 .control {
+  min-inline-size: 0;
+  inline-size: 100%;
   min-block-size: var(--control-target-min);
   padding: var(--space-2xs) var(--space-xs);
   border: var(--hairline) solid var(--color-line);

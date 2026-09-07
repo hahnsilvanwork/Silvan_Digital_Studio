@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 
 import { ContactActions } from "../../components/contact/ContactActions";
@@ -37,16 +38,22 @@ export function ServicePage({
   return (
     <SiteShell currentPath={localizePath(route, locale)} locale={locale}>
       <div className={pageStyles.page}>
-        <section className={`${layoutStyles.container} ${pageStyles.pageHeader}`}>
-          <p className={pageStyles.heroLabel} data-reveal="rise">
-            {service.eyebrow}
-          </p>
+        <section className={`${layoutStyles.container} ${pageStyles.pageHeader} ${pageStyles.serviceHeader}`}>
+          <div className={pageStyles.serviceHeading}>
           <SplitText
             as="h1"
             className={pageStyles.pageTitle}
             startIndex={sequence.titleStartIndex}
             text={service.title}
           />
+          {route === "/websites" ? (
+            <Link className={pageStyles.serviceVisual} href={localizePath("/work/archa", locale)}>
+              <Image src="/images/editorial/architecture-concept.webp" width={1536} height={1024} sizes="(min-width: 64rem) 48vw, 100vw" priority alt={locale === "de" ? "Archa: Website-Konzept für ein Architekturbüro" : "Archa: website concept for an architecture practice"} />
+              <span>Archa / {content.work.conceptLabel}</span>
+            </Link>
+          ) : null}
+          </div>
+          <div className={pageStyles.serviceSummary}>
           <p
             className={pageStyles.editorialTight}
             data-reveal="rise"
@@ -63,15 +70,7 @@ export function ServicePage({
               {service.ctaLabel}
             </ButtonLink>
           </div>
-        </section>
-
-        {/* A visitor arriving from a search lands here, not on the home page,
-            and this page never said who is behind it: the name and the location
-            sat in the footer, six screens down on a phone. One line, reusing
-            the about page's own opening sentence so there is nothing new to
-            keep true. */}
-        <div className={`${layoutStyles.container} ${pageStyles.studioNote}`}>
-          <p data-reveal="rise">{content.about.intro}</p>
+        <div className={pageStyles.studioNote}>
           <p className={pageStyles.studioNoteLinks} data-reveal="rise">
             <Link className="hoverUnderline" href={localizePath("/about", locale)}>
               {content.about.eyebrow}
@@ -81,6 +80,8 @@ export function ServicePage({
             </Link>
           </p>
         </div>
+          </div>
+        </section>
 
         <section className={`${layoutStyles.container} ${pageStyles.section}`}>
           <SectionHeading
@@ -127,7 +128,8 @@ export function ServicePage({
           </div>
         </section>
 
-        <section className={`${layoutStyles.container} ${pageStyles.section}`}>
+        <section className={pageStyles.contactBand}>
+          <div className={`${layoutStyles.container} ${pageStyles.contactLayout}`}>
           <SectionHeading
             eyebrow={content.contact.eyebrow}
             intro={content.contact.intro}
@@ -135,6 +137,7 @@ export function ServicePage({
           />
           <div className={pageStyles.sectionBody}>
             <ContactActions locale={locale} />
+          </div>
           </div>
         </section>
       </div>

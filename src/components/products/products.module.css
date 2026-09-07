@@ -218,6 +218,7 @@
 }
 
 .catalogGrid {
+  position: relative;
   display: grid;
   grid-auto-columns: minmax(16rem, calc(100% - 2rem));
   grid-auto-flow: column;
@@ -238,6 +239,7 @@
   overflow: clip;
   border: var(--hairline) solid var(--color-line);
   background: var(--color-paper-raised);
+  border-radius: 0.75rem;
 }
 
 .catalogRailControls,
@@ -313,6 +315,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-xs);
+  flex-wrap: wrap;
 }
 
 .catalogCardHeading h3 {
@@ -335,7 +338,7 @@
   gap: 0.25rem;
   margin: 0;
   padding-inline-start: 1.15rem;
-  font-size: var(--text-label);
+  font-size: 0.9375rem;
 }
 
 .view3dButton,
@@ -345,8 +348,24 @@
 }
 
 .view3dButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  inline-size: 100%;
   padding: var(--space-2xs) var(--space-sm);
-  border-color: var(--color-ink);
+  border-color: var(--color-line);
+  background: var(--color-paper);
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.view3dButton svg {
+  flex: none;
+}
+
+.view3dButton span {
+  min-inline-size: 0;
 }
 
 .comingSoon {

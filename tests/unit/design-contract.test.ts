@@ -309,7 +309,7 @@ describe("SILVAN responsive design contract", () => {
   it("defines the approved palette and fluid responsive foundations", () => {
     expect(stylesheetSource).toContain("#f9f8f6");
     expect(stylesheetSource).toContain("#1a1a1a");
-    expect(stylesheetSource).toContain("#0047ff");
+    expect(stylesheetSource).toContain("#1a1a1a");
     expect(stylesheetSource).toContain("clamp(");
     expect(stylesheetSource).toMatch(/100(?:dvh|svh)/);
     expect(stylesheetSource).toMatch(/env\(safe-area-inset-(?:top|right|bottom|left)\)/);
@@ -343,7 +343,7 @@ describe("SILVAN responsive design contract", () => {
     expect([paper, ink, paperFocus, darkFocus]).toEqual([
       "#f9f8f6",
       "#1a1a1a",
-      "#0047ff",
+      "#1a1a1a",
       "#f9f8f6",
     ]);
     expect(contrastRatio(paperFocus, paper)).toBeGreaterThanOrEqual(3);

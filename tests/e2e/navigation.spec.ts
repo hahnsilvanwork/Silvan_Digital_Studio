@@ -9,7 +9,7 @@ test.describe("global navigation", () => {
     const current = page.locator('[aria-current="page"]');
 
     await expect(current).toHaveCount(1);
-    await expect(current).toHaveText("Google Reviews");
+    await expect(current).toHaveText("NFC & QR");
   });
 
   test("the wordmark returns to the home page", async ({ page }) => {
@@ -190,7 +190,7 @@ test.describe("mobile drawer", () => {
     await page.getByRole("button", { name: "Menü öffnen" }).click();
     await page
       .getByRole("dialog", { name: "Menü" })
-      .getByRole("link", { name: "Google Reviews" })
+      .getByRole("link", { name: "NFC & QR", exact: true })
       .click();
 
     await expect(page).toHaveURL(/\/reviews$/);

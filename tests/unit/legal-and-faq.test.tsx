@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { FaqSchema } from "../../src/components/seo/FaqSchema";
@@ -134,7 +134,7 @@ describe("service page FAQs", () => {
     FAQ_PAGES.flatMap(([name, Page, select]) =>
       LOCALES.map((locale) => [`${name} (${locale})`, Page, select, locale] as const),
     ),
-  )("renders every %s question and answer as plain text", (_label, Page, select, locale) => {
+  )("renders every %s question with an accessible answer disclosure", (_label, Page, select, locale) => {
     const faq = select(locale);
 
     render(<Page locale={locale} />);
@@ -151,6 +151,8 @@ describe("service page FAQs", () => {
       // allowed to hide behind a disclosure control -- that is what makes the
       // FAQPage markup below legitimate.
       expect(within(main).getByText(item.question)).toBeVisible();
+      expect(within(main).getByText(item.answer)).not.toBeVisible();
+      fireEvent.click(within(main).getByText(item.question));
       expect(within(main).getByText(item.answer)).toBeVisible();
     }
   });

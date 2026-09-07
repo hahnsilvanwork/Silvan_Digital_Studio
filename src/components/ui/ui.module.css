@@ -8,13 +8,13 @@
   min-block-size: max(var(--control-target-min), 3.25rem);
   padding-inline: var(--space-md);
   border: var(--hairline) solid currentColor;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-media);
   font-size: var(--text-action);
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
   text-align: center;
   text-decoration: none;
-  text-transform: uppercase;
+  text-transform: none;
   transition-property: transform, opacity;
   transition-duration: var(--duration-fast);
   transition-timing-function: var(--ease-out);

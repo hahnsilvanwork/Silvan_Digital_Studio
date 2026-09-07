@@ -40,14 +40,14 @@ export const en = {
   },
   home: {
     hero: {
-      serviceLine: "Websites · Google Reviews · Online Presence · Automation",
+      serviceLine: "Websites and digital solutions for Swiss businesses",
       headline: "More customers. Less busywork.",
       supporting:
-        "I build digital solutions for small businesses in Switzerland that help people find you and take recurring work off your plate.",
+        "I'm Silvan Hahn. I build websites, help people find your business online and simplify recurring tasks. You work directly with me, from the first idea to launch.",
       primaryCta: "Discuss a project",
       secondaryCta: "Explore services",
     },
-    servicesTitle: "Digital solutions for your business",
+    servicesTitle: "What would you like to improve?",
     services: [
       {
         title: "Websites",
@@ -77,7 +77,7 @@ export const en = {
     workTitle: "Selected work",
     studioTitle: "Work directly with the developer",
     studioCopy:
-      "SILVAN is Silvan Hahn's independent digital studio in Boppelsen, canton Zurich. I design and build websites for small and medium businesses across Switzerland – advice, design and delivery from one person.",
+      "I'm Silvan Hahn, an independent web developer in Boppelsen near Zurich. You work directly with the person who plans, designs and builds your website.",
     testimonialsTitle: "What clients say",
     // Stays empty until a real, named and approved client quote exists. The
     // section renders only once this array has entries -- an invented
@@ -148,7 +148,7 @@ export const en = {
         {
           question: "What is included in the price?",
           answer:
-            "Concept, design, build, and launch within the scope of the chosen tier. Domain and hosting are not part of the price – we clarify which option makes sense for you in conversation.",
+            "Concept, design, build, and launch within the scope of the chosen tier. Domain and hosting are not part of the price. We clarify which option makes sense for you in conversation.",
         },
         {
           question: "How does a project run?",
@@ -163,7 +163,7 @@ export const en = {
         {
           question: "Who do I work with?",
           answer:
-            "Directly with me. There is no handover between sales, design, and development – the person who plans your project also builds it.",
+            "Directly with me. There is no handover between sales, design, and development. The person who plans your project also builds it.",
         },
       ],
     },
@@ -172,7 +172,7 @@ export const en = {
     eyebrow: "NFC & QR Solutions",
     title: "One tap. Exactly the right action.",
     intro:
-      "Google reviews, digital menus, and tailored solutions for booking, reservations, and more — programmed and ready to use.",
+      "With an NFC card or a QR stand your customers reach reviews, menus or bookings directly. They simply hold up their phone or scan the QR code.",
     priceLabel: "Design levels including setup",
     products: [
       {
@@ -204,11 +204,11 @@ export const en = {
         features: ["Custom design", "Any digital destination", "Design service included"],
       },
     ],
-    quantityDiscount: "A quantity discount applies to larger orders. I give you the price for your quantity when I reply to your enquiry – before anything is binding.",
+    quantityDiscount: "A quantity discount applies to larger orders. I give you the price for your quantity when I reply to your enquiry, before anything is binding.",
     processTitle: "Three simple steps",
     process: [
       { id: "tap", label: "TAP", title: "Tap", description: "The customer taps the NFC card or stand with their phone." },
-      { id: "open", label: "OPEN", title: "Open", description: "The saved destination opens directly – no app and no searching." },
+      { id: "open", label: "OPEN", title: "Open", description: "The saved destination opens directly, no app and no searching." },
       { id: "act", label: "ACT", title: "Act", description: "The guest reviews, reads the menu, books or saves your contact details." },
     ],
     ctaLabel: "Make a no-obligation inquiry",
@@ -420,7 +420,7 @@ export const en = {
         {
           question: "How does an NFC & QR solution work?",
           answer:
-            "Your guest taps the card with their phone or scans its QR code. The configured destination opens directly – no search, extra app, or link to type out.",
+            "Your guest taps the card with their phone or scans its QR code. The configured destination opens directly, no search, extra app, or link to type out.",
         },
         {
           question: "Does it work with every phone?",
@@ -430,7 +430,7 @@ export const en = {
         {
           question: "Can I buy or influence reviews with this?",
           answer:
-            "No, and that is deliberate. The card only shortens the path to the review page. What your customer writes there is entirely their decision – anything else breaches Google's policies and damages your profile more than it helps.",
+            "No, and that is deliberate. The card only shortens the path to the review page. What your customer writes there is entirely their decision. Anything else breaches Google's policies and damages your profile more than it helps.",
         },
         {
           question: "Which destinations can the card open?",
@@ -549,7 +549,7 @@ export const en = {
         {
           question: "Why is there no price on this page?",
           answer:
-            "Because the effort depends entirely on your existing process. I assess feasibility, risks, and the expected benefit first – only then can an honest price be named.",
+            "Because the effort depends entirely on your existing process. I assess feasibility, risks, and the expected benefit first. Only then can an honest price be named.",
         },
         {
           question: "What if an automation is not worth it?",
@@ -594,7 +594,7 @@ export const en = {
     ],
     standardsTitle: "What I take as given",
     standards: [
-      "Every page is delivered as finished HTML and is there immediately – including on a slow connection.",
+      "Every page is delivered as finished HTML and is there immediately, including on a slow connection.",
       "Operable by keyboard and screen reader, with verified colour contrast.",
       "Designed for the narrow screen rather than adapted to it afterwards.",
       "Automatically tested, so a later change cannot quietly break what already worked.",
@@ -613,7 +613,7 @@ export const en = {
     whatsappLabel: "WhatsApp",
     linkedInLabel: "LinkedIn",
     details: {
-      email: "kontakt@silvandigital.ch",
+      email: "hahn.silvan.work@gmail.com",
       // International format: the English pages are the ones a caller outside
       // Switzerland reads, and "078..." cannot be dialled from abroad.
       phoneDisplay: "+41 78 900 85 00",
@@ -667,7 +667,7 @@ export const en = {
       {
         title: "Contact",
         body: [
-          "Email: kontakt@silvandigital.ch",
+          "Email: hahn.silvan.work@gmail.com",
           "Phone: +41 78 900 85 00",
           "Every contact route is also listed on the contact page.",
         ],
@@ -718,7 +718,7 @@ export const en = {
         title: "Responsible person",
         body: [
           "Silvan Hahn, Regensbergstrasse 23, 8113 Boppelsen, Switzerland",
-          "Email: kontakt@silvandigital.ch",
+          "Email: hahn.silvan.work@gmail.com",
         ],
       },
       {
@@ -765,7 +765,7 @@ export const en = {
         title: "Getting in touch",
         body: [
           "If you contact me by email, phone, WhatsApp, or LinkedIn, your details are used to handle your request and kept for as long as that and any statutory retention obligations require.",
-          "WhatsApp and LinkedIn are third-party services. If you use those routes, data is also processed by the respective provider – WhatsApp by Meta Platforms Ireland Ltd., LinkedIn by LinkedIn Ireland Unlimited Company.",
+          "WhatsApp and LinkedIn are third-party services. If you use those routes, data is also processed by the respective provider: WhatsApp by Meta Platforms Ireland Ltd., LinkedIn by LinkedIn Ireland Unlimited Company.",
         ],
       },
       {
@@ -804,16 +804,16 @@ export const en = {
   // Keyword first, brand last -- see the note on the German dictionary. British
   // spelling, matching the rest of the English copy.
   seo: {
-    home: { title: "Web Design for Small Businesses near Zurich | SILVAN", description: "Websites, Google reviews, local visibility and automation for Swiss SMEs. Built directly by an independent developer in Boppelsen ZH – websites from CHF 300." },
-    websites: { title: "Business Websites for Swiss SMEs – from CHF 300", description: "Fast, mobile-first business websites for Swiss SMEs, from a CHF 300 one-pager through to a custom build. Fixed price tiers, delivered by the developer." },
+    home: { title: "Web Design for Small Businesses near Zurich | SILVAN", description: "Websites, Google reviews, local visibility and automation for Swiss SMEs. Built directly by an independent developer in Boppelsen ZH, websites from CHF 300." },
+    websites: { title: "Business Websites for Swiss SMEs, from CHF 300", description: "Fast, mobile-first business websites for Swiss SMEs, from a CHF 300 one-pager through to a custom build. Fixed price tiers, delivered by the developer." },
     reviews: { title: "NFC & QR Solutions for Businesses | from CHF 49", description: "NFC cards and stands for Google reviews, digital menus, bookings, and custom destinations. Programming and setup included." },
     presence: { title: "Google Business Profile Setup for Swiss Businesses", description: "Google Business Profile setup and optimisation, consistent business details, and better local visibility. For Swiss SMEs from CHF 249." },
     automation: { title: "Automating Recurring Work for Swiss SMEs | SILVAN", description: "Automate recurring emails, reports and internal workflows without a heavy software rollout. For Swiss SMEs, scoped on request." },
-    work: { title: "Work: Website Design Concepts | SILVAN Digital Studio", description: "Four self-initiated design concepts – brand site, online shop, studio site and retail – showing how I approach structure, copy and visual design." },
-    about: { title: "Silvan Hahn – Independent Web Developer near Zurich", description: "I'm Silvan Hahn, an independent web developer in Boppelsen, canton Zurich. You work directly with the person who plans, designs and builds your project." },
-    contact: { title: "Contact – Web Design Enquiry, Canton Zurich | SILVAN", description: "Talk your project through directly with Silvan Hahn by email, WhatsApp, phone or LinkedIn. Based in Boppelsen ZH. Enquiries are non-binding." },
+    work: { title: "Work: Website Design Concepts | SILVAN Digital Studio", description: "Four self-initiated design concepts: a brand site, an online shop, a studio site and retail. They show how I approach structure, copy and visual design." },
+    about: { title: "Silvan Hahn, Independent Web Developer near Zurich", description: "I'm Silvan Hahn, an independent web developer in Boppelsen, canton Zurich. You work directly with the person who plans, designs and builds your project." },
+    contact: { title: "Contact: Web Design Enquiry, Canton Zurich | SILVAN", description: "Talk your project through directly with Silvan Hahn by email, WhatsApp, phone or LinkedIn. Based in Boppelsen ZH. Enquiries are non-binding." },
     hello: { title: "Hi, I'm Silvan | SILVAN Digital Studio", description: "A direct route to websites, Google reviews, online presence, work, and contact." },
     imprint: { title: "Imprint | SILVAN Digital Studio", description: "Responsible for this website: Silvan Hahn, Boppelsen. Legal form, contact details, and copyright." },
-    privacy: { title: "Privacy | SILVAN Digital Studio", description: "No cookies, no profiling, no recognition across visits – only a cookieless page-view count. Privacy statement under the revised Swiss FADP." },
+    privacy: { title: "Privacy | SILVAN Digital Studio", description: "No cookies, no profiling, no recognition across visits. Only a cookieless page-view count. Privacy statement under the revised Swiss FADP." },
   },
 } as const satisfies SiteContent;

@@ -10,7 +10,7 @@ export const OG_CONTENT_TYPE = "image/png";
 const PAPER = "#f9f8f6";
 const INK = "#1a1a1a";
 const MUTED = "#676561";
-const ACCENT = "#0047ff";
+const ACCENT = "#1a1a1a";
 
 /**
  * The share card. Rendered from the same palette and the same approved headline

@@ -110,6 +110,7 @@ export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
   return (
     <>
       <button
+        aria-label={content.navigation.openMenuLabel}
         aria-controls={dialogId}
         aria-expanded={open}
         aria-haspopup="dialog"
@@ -120,11 +121,6 @@ export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
         type="button"
       >
         <span aria-hidden="true" className={styles.menuTriggerIcon} />
-        {/* The icon carries the meaning in the bar; the words stay in the
-            accessible name so the control is still announced properly. */}
-        <span className={styles.menuTriggerLabel}>
-          {content.navigation.openMenuLabel}
-        </span>
       </button>
 
       {open ? (

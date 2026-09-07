@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { projects } from "../../src/content/projects";
 import {
   DEFAULT_LOCALE,
   SUPPORTED_LOCALES,
@@ -23,6 +24,29 @@ void returnedTier;
 void returnedStep;
 void returnedCtaPath;
 void returnedNavigationPath;
+
+const DASH = /[\u2010-\u2015\u2212]/;
+
+/** "CHF 300–699" and "CHF 49.–" are Swiss notation, not prose dashes. */
+function withoutPriceNotation(value: string): string {
+  return value.replace(/(\d)\u2013(?=\d)/g, "$1").replace(/(\d\.)\u2013/g, "$1");
+}
+
+function collectStrings(value: unknown): readonly string[] {
+  if (typeof value === "string") {
+    return [value];
+  }
+
+  if (Array.isArray(value)) {
+    return value.flatMap(collectStrings);
+  }
+
+  if (value && typeof value === "object") {
+    return Object.values(value).flatMap(collectStrings);
+  }
+
+  return [];
+}
 
 function structuralShape(value: unknown): unknown {
   if (Array.isArray(value)) {
@@ -84,27 +108,24 @@ describe("locale content", () => {
     {
       locale: "de" as const,
       hero: {
-        serviceLine: "Websites · Google Reviews · Online-Präsenz · Automation",
+        serviceLine: "Websites und digitale Lösungen für Schweizer KMU",
         headline: "Mehr Kunden. Weniger Aufwand.",
         supporting:
-          "Ich entwickle digitale Lösungen für KMU in der Schweiz, die Ihr Unternehmen sichtbar machen und wiederkehrende Arbeit reduzieren.",
+          "Ich bin Silvan Hahn. Ich entwickle Websites, mache Ihr Unternehmen online sichtbar und vereinfache wiederkehrende Aufgaben. Direkt mit Ihnen, von der Idee bis zum Start.",
       },
     },
     {
       locale: "en" as const,
       hero: {
-        serviceLine: "Websites · Google Reviews · Online Presence · Automation",
+        serviceLine: "Websites and digital solutions for Swiss businesses",
         headline: "More customers. Less busywork.",
         supporting:
-          "I build digital solutions for small businesses in Switzerland that help people find you and take recurring work off your plate.",
+          "I'm Silvan Hahn. I build websites, help people find your business online and simplify recurring tasks. You work directly with me, from the first idea to launch.",
       },
     },
   ])("preserves the approved $locale hero copy", ({ locale, hero }) => {
     const actual = getContent(locale).home.hero;
 
-    // The service line binds each separator to the word before it with U+00A0,
-    // so a wrapped line can never begin with a stray middle dot. The approved
-    // wording is what this guard protects, not the class of the space.
     expect({
       ...actual,
       serviceLine: actual.serviceLine.replaceAll(" ", " "),
@@ -147,12 +168,37 @@ describe("locale content", () => {
   );
 
   it.each(["de" as const, "en" as const])(
-    "keeps the %s service line from wrapping onto a separator",
+    "keeps the %s introduction free of decorative separators",
     (locale) => {
       const { serviceLine } = getContent(locale).home.hero;
 
-      expect(serviceLine).not.toMatch(/ ·/);
-      expect(serviceLine.match(/ ·/g)).toHaveLength(3);
+      expect(serviceLine).not.toMatch(/[·—–]/);
+    },
+  );
+
+  it.each(["de" as const, "en" as const])(
+    "writes %s prose without em or en dashes",
+    (locale) => {
+      // Long dashes in running text are what makes the copy read as machine
+      // written, so a sentence breaks with a full stop or a colon instead.
+      // The only dashes left are Swiss price notation: a range between digits
+      // and the ".–" that stands in for the missing rappen.
+      const offenders = collectStrings(getContent(locale)).filter((value) =>
+        DASH.test(withoutPriceNotation(value)),
+      );
+
+      expect(offenders).toEqual([]);
+    },
+  );
+
+  it.each(["de" as const, "en" as const])(
+    "writes the %s project copy without em or en dashes",
+    (locale) => {
+      const offenders = projects
+        .flatMap((project) => collectStrings(project.copy[locale]))
+        .filter((value) => DASH.test(withoutPriceNotation(value)));
+
+      expect(offenders).toEqual([]);
     },
   );
 
@@ -219,7 +265,7 @@ describe("locale content", () => {
       expect(content.reviews.quantityDiscount).toMatch(quantityDiscount);
       expect(content.presence.startingPrice).toBe(presencePrice);
       expect(content.contact.details).toEqual({
-        email: "kontakt@silvandigital.ch",
+        email: "hahn.silvan.work@gmail.com",
         phoneDisplay: "+41 78 900 85 00",
         phoneHref: "tel:+41789008500",
         whatsappNumber: "+41 78 900 85 00",
@@ -268,7 +314,7 @@ describe("locale content", () => {
     }).toThrow(TypeError);
     expect(getContent("de")).toBe(content);
     expect(getContent("de").contact.details.email).toBe(
-      "kontakt@silvandigital.ch",
+      "hahn.silvan.work@gmail.com",
     );
   });
 });

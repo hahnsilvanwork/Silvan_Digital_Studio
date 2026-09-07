@@ -40,14 +40,14 @@ export const de = {
   },
   home: {
     hero: {
-      serviceLine: "Websites · Google Reviews · Online-Präsenz · Automation",
+      serviceLine: "Websites und digitale Lösungen für Schweizer KMU",
       headline: "Mehr Kunden. Weniger Aufwand.",
       supporting:
-        "Ich entwickle digitale Lösungen für KMU in der Schweiz, die Ihr Unternehmen sichtbar machen und wiederkehrende Arbeit reduzieren.",
+        "Ich bin Silvan Hahn. Ich entwickle Websites, mache Ihr Unternehmen online sichtbar und vereinfache wiederkehrende Aufgaben. Direkt mit Ihnen, von der Idee bis zum Start.",
       primaryCta: "Projekt besprechen",
       secondaryCta: "Leistungen ansehen",
     },
-    servicesTitle: "Digitale Lösungen für Ihr Unternehmen",
+    servicesTitle: "Was möchten Sie verbessern?",
     services: [
       {
         title: "Websites",
@@ -77,7 +77,7 @@ export const de = {
     workTitle: "Ausgewählte Arbeiten",
     studioTitle: "Direkt mit dem Entwickler arbeiten",
     studioCopy:
-      "SILVAN ist das unabhängige Digital Studio von Silvan Hahn in Boppelsen im Kanton Zürich. Ich gestalte und entwickle Websites für kleine und mittlere Unternehmen in der ganzen Schweiz – Sie erhalten Beratung, Design und Umsetzung aus einer Hand.",
+      "Ich bin Silvan Hahn, unabhängiger Webentwickler aus Boppelsen bei Zürich. Sie sprechen direkt mit der Person, die Ihre Website plant, gestaltet und entwickelt.",
     testimonialsTitle: "Was Kunden sagen",
     // Bleibt leer, bis eine echte, namentlich freigegebene Kundenstimme
     // vorliegt. Die Sektion rendert erst, wenn dieses Array Einträge hat --
@@ -94,14 +94,14 @@ export const de = {
     priceTiers: [
       {
         id: "simple",
-        name: "Simple Info Website",
+        name: "Kompakter Webauftritt",
         price: "CHF 300–699",
         description: "Für einen fokussierten ersten Auftritt mit den wichtigsten Informationen.",
         features: ["Eine kompakte Seite", "Mobil optimiert", "Direkte Kontaktwege"],
       },
       {
         id: "standard",
-        name: "Standard Business Website",
+        name: "Business-Website",
         price: "CHF 700–1'999",
         recommended: true,
         description: "Für Unternehmen, die Leistungen, Vertrauen und Kontakt klar strukturieren möchten.",
@@ -109,14 +109,14 @@ export const de = {
       },
       {
         id: "premium",
-        name: "Premium Large Website",
+        name: "Umfangreiche Website",
         price: "CHF 2'000–4'999",
         description: "Für umfangreiche Inhalte, anspruchsvolle Gestaltung und besondere Funktionen.",
         features: ["Erweiterte Seitenstruktur", "Hochwertige Interaktionen", "Flexible Inhaltsmodule"],
       },
       {
         id: "custom",
-        name: "Custom Large Project",
+        name: "Individuelles Projekt",
         price: "ab CHF 5'000",
         description: "Für individuelle digitale Projekte mit gemeinsam definiertem Umfang.",
         features: ["Massgeschneidertes Konzept", "Technische Planung", "Projektbezogene Umsetzung"],
@@ -148,7 +148,7 @@ export const de = {
         {
           question: "Was ist im Preis enthalten?",
           answer:
-            "Konzept, Gestaltung, Umsetzung und die Veröffentlichung im Umfang der gewählten Stufe. Domain und Hosting sind nicht Teil des Preises – welche Variante für Sie sinnvoll ist, klären wir im Gespräch.",
+            "Konzept, Gestaltung, Umsetzung und die Veröffentlichung im Umfang der gewählten Stufe. Domain und Hosting sind nicht Teil des Preises. Welche Variante für Sie sinnvoll ist, klären wir im Gespräch.",
         },
         {
           question: "Wie läuft ein Projekt ab?",
@@ -163,7 +163,7 @@ export const de = {
         {
           question: "Mit wem arbeite ich zusammen?",
           answer:
-            "Direkt mit mir. Es gibt keine Übergabe zwischen Verkauf, Design und Entwicklung – die Person, die Ihr Projekt plant, setzt es auch um.",
+            "Direkt mit mir. Es gibt keine Übergabe zwischen Verkauf, Design und Entwicklung. Die Person, die Ihr Projekt plant, setzt es auch um.",
         },
       ],
     },
@@ -172,7 +172,7 @@ export const de = {
     eyebrow: "NFC & QR Lösungen",
     title: "Ein Tap. Genau die richtige Aktion.",
     intro:
-      "Google-Bewertungen, digitale Menüs und individuelle Lösungen für Booking, Reservation und mehr – programmiert und sofort einsatzbereit.",
+      "Mit einer NFC-Karte oder einem QR-Aufsteller gelangen Ihre Kunden direkt zu Bewertungen, Speisekarten oder Buchungen. Einfach das Handy hinhalten oder den QR-Code scannen.",
     priceLabel: "Designstufen inklusive Einrichtung",
     products: [
       {
@@ -204,11 +204,11 @@ export const de = {
         features: ["Freie Gestaltung", "Freies digitales Ziel", "Designservice inklusive"],
       },
     ],
-    quantityDiscount: "Für grössere Mengen gibt es einen Mengenrabatt. Den Preis für Ihre Menge nenne ich Ihnen in meiner Antwort auf Ihre Anfrage – vor jeder Verbindlichkeit.",
+    quantityDiscount: "Für grössere Mengen gibt es einen Mengenrabatt. Den Preis für Ihre Menge nenne ich Ihnen in meiner Antwort auf Ihre Anfrage. Erst danach entscheiden Sie.",
     processTitle: "Drei einfache Schritte",
     process: [
       { id: "tap", label: "TAP", title: "Berühren", description: "Der Kunde berührt die NFC-Karte oder den Aufsteller mit dem Smartphone." },
-      { id: "open", label: "OPEN", title: "Öffnen", description: "Das hinterlegte Ziel öffnet sich direkt – ohne App und ohne Suchen." },
+      { id: "open", label: "OPEN", title: "Öffnen", description: "Das hinterlegte Ziel öffnet sich direkt, ohne App und ohne Suchen." },
       { id: "act", label: "ACT", title: "Handeln", description: "Der Gast bewertet, liest das Menü, reserviert oder speichert Ihre Kontaktdaten." },
     ],
     ctaLabel: "Unverbindlich anfragen",
@@ -457,7 +457,7 @@ export const de = {
         {
           question: "Wie funktioniert eine NFC & QR Lösung?",
           answer:
-            "Ihr Gast hält das Smartphone an die Karte oder scannt den QR-Code. Das hinterlegte Ziel öffnet sich direkt – ohne Suche, zusätzliche App oder abgetippten Link.",
+            "Ihr Gast hält das Smartphone an die Karte oder scannt den QR-Code. Das hinterlegte Ziel öffnet sich direkt, ohne Suche, zusätzliche App oder abgetippten Link.",
         },
         {
           question: "Funktioniert das mit jedem Smartphone?",
@@ -467,7 +467,7 @@ export const de = {
         {
           question: "Kann ich damit Bewertungen kaufen oder beeinflussen?",
           answer:
-            "Nein, und das ist beabsichtigt. Die Karte verkürzt nur den Weg zur Bewertungsseite. Was Ihr Kunde dort schreibt, entscheidet er selbst – alles andere verstösst gegen die Richtlinien von Google und schadet Ihrem Profil mehr, als es nützt.",
+            "Nein, und das ist beabsichtigt. Die Karte verkürzt nur den Weg zur Bewertungsseite. Was Ihr Kunde dort schreibt, entscheidet er selbst. Alles andere verstösst gegen die Richtlinien von Google und schadet Ihrem Profil mehr, als es nützt.",
         },
         {
           question: "Welche Ziele kann die Karte öffnen?",
@@ -586,7 +586,7 @@ export const de = {
         {
           question: "Warum steht kein Preis auf dieser Seite?",
           answer:
-            "Weil der Aufwand vollständig von Ihrem bestehenden Prozess abhängt. Ich beurteile zuerst Machbarkeit, Risiken und den erwartbaren Nutzen – erst danach lässt sich ein ehrlicher Preis nennen.",
+            "Weil der Aufwand vollständig von Ihrem bestehenden Prozess abhängt. Ich beurteile zuerst Machbarkeit, Risiken und den erwartbaren Nutzen. Erst danach lässt sich ein ehrlicher Preis nennen.",
         },
         {
           question: "Was passiert, wenn sich eine Automation nicht lohnt?",
@@ -635,7 +635,7 @@ export const de = {
     // nicht an einem gelieferten Projekt nachmessen könnte.
     standardsTitle: "Was ich voraussetze",
     standards: [
-      "Jede Seite wird als fertiges HTML ausgeliefert und ist sofort da – auch bei langsamer Verbindung.",
+      "Jede Seite wird als fertiges HTML ausgeliefert und ist sofort da, auch bei langsamer Verbindung.",
       "Bedienbar mit Tastatur und Screenreader, mit geprüften Farbkontrasten.",
       "Für den schmalen Bildschirm entworfen, nicht nachträglich dafür angepasst.",
       "Automatisch getestet, damit eine spätere Änderung nichts Bestehendes still zerstört.",
@@ -654,7 +654,7 @@ export const de = {
     whatsappLabel: "WhatsApp",
     linkedInLabel: "LinkedIn",
     details: {
-      email: "kontakt@silvandigital.ch",
+      email: "hahn.silvan.work@gmail.com",
       // One canonical, international format everywhere: it matches the tel:
       // href and the telephone in the structured data, and a business listing
       // is matched against citations as a string.
@@ -709,7 +709,7 @@ export const de = {
       {
         title: "Kontakt",
         body: [
-          "E-Mail: kontakt@silvandigital.ch",
+          "E-Mail: hahn.silvan.work@gmail.com",
           "Telefon: +41 78 900 85 00",
           "Sämtliche Kontaktwege sind auch auf der Kontaktseite aufgeführt.",
         ],
@@ -760,7 +760,7 @@ export const de = {
         title: "Verantwortliche Person",
         body: [
           "Silvan Hahn, Regensbergstrasse 23, 8113 Boppelsen, Schweiz",
-          "E-Mail: kontakt@silvandigital.ch",
+          "E-Mail: hahn.silvan.work@gmail.com",
         ],
       },
       {
@@ -807,7 +807,7 @@ export const de = {
         title: "Kontaktaufnahme",
         body: [
           "Wenn Sie mich per E-Mail, Telefon, WhatsApp oder LinkedIn kontaktieren, werden Ihre Angaben zur Bearbeitung Ihres Anliegens verwendet und so lange aufbewahrt, wie es dafür und für allfällige gesetzliche Aufbewahrungspflichten nötig ist.",
-          "WhatsApp und LinkedIn sind Dienste Dritter. Wenn Sie diese Wege nutzen, werden Daten auch durch die jeweiligen Anbieter bearbeitet – WhatsApp durch Meta Platforms Ireland Ltd., LinkedIn durch LinkedIn Ireland Unlimited Company.",
+          "WhatsApp und LinkedIn sind Dienste Dritter. Wenn Sie diese Wege nutzen, werden Daten auch durch die jeweiligen Anbieter bearbeitet: WhatsApp durch Meta Platforms Ireland Ltd., LinkedIn durch LinkedIn Ireland Unlimited Company.",
         ],
       },
       {
@@ -852,16 +852,16 @@ export const de = {
   // the tiers, the location matches the imprint, and nothing promises delivery
   // terms or turnaround that the site does not state.
   seo: {
-    home: { title: "Webdesign für KMU im Kanton Zürich | SILVAN", description: "Websites, Google-Bewertungen, lokale Sichtbarkeit und Automation für Schweizer KMU. Direkt vom Entwickler aus Boppelsen ZH – Websites ab CHF 300." },
-    websites: { title: "Website erstellen lassen – Kanton Zürich | ab CHF 300", description: "Schnelle, mobil gestaltete Business-Websites für Schweizer KMU – von der kompakten Info-Seite ab CHF 300 bis zum individuellen Projekt. Feste Preisstufen." },
+    home: { title: "Webdesign für KMU im Kanton Zürich | SILVAN", description: "Websites, Google-Bewertungen, lokale Sichtbarkeit und Automation für Schweizer KMU. Direkt vom Entwickler aus Boppelsen ZH, Websites ab CHF 300." },
+    websites: { title: "Website erstellen lassen, Kanton Zürich | ab CHF 300", description: "Schnelle, mobil gestaltete Business-Websites für Schweizer KMU, von der kompakten Info-Seite ab CHF 300 bis zum individuellen Projekt. Feste Preisstufen." },
     reviews: { title: "NFC & QR Lösungen für Unternehmen | ab CHF 49", description: "NFC-Karten und Aufsteller für Google-Bewertungen, digitale Menüs, Buchungen und individuelle Ziele. Programmierung und Einrichtung inklusive." },
-    presence: { title: "Google Unternehmensprofil einrichten – Kanton Zürich", description: "Google-Unternehmensprofil einrichten oder optimieren, Geschäftsdaten konsistent halten, lokal leichter gefunden werden. Für Schweizer KMU ab CHF 249." },
-    automation: { title: "Abläufe automatisieren für KMU | SILVAN Digital Studio", description: "Wiederkehrende E-Mails, Berichte und interne Abläufe automatisieren – ohne grosse Software-Einführung. Für Schweizer KMU, Umfang auf Anfrage." },
-    work: { title: "Arbeiten: Website-Konzepte aus der Schweiz | SILVAN", description: "Vier eigeninitiierte Gestaltungskonzepte – Markenauftritt, Online-Shop, Studio-Website und Handel – die zeigen, wie ich Struktur, Text und Gestaltung angehe." },
-    about: { title: "Silvan Hahn – Webentwickler im Kanton Zürich", description: "Ich bin Silvan Hahn, unabhängiger Webentwickler in Boppelsen ZH. Sie arbeiten direkt mit der Person, die Ihr Projekt plant, gestaltet und umsetzt." },
-    contact: { title: "Kontakt – Webdesign-Anfrage Kanton Zürich | SILVAN", description: "Besprechen Sie Ihr Vorhaben direkt mit Silvan Hahn – per E-Mail, WhatsApp, Telefon oder LinkedIn. Standort Boppelsen ZH. Anfragen sind unverbindlich." },
+    presence: { title: "Google Unternehmensprofil einrichten im Kanton Zürich", description: "Google-Unternehmensprofil einrichten oder optimieren, Geschäftsdaten konsistent halten, lokal leichter gefunden werden. Für Schweizer KMU ab CHF 249." },
+    automation: { title: "Abläufe automatisieren für KMU | SILVAN Digital Studio", description: "Wiederkehrende E-Mails, Berichte und interne Abläufe automatisieren, ohne grosse Software-Einführung. Für Schweizer KMU, Umfang auf Anfrage." },
+    work: { title: "Arbeiten: Website-Konzepte aus der Schweiz | SILVAN", description: "Vier eigene Konzepte für Markenauftritte, Shops und Studios. Sie zeigen, wie ich Struktur, Text und Gestaltung angehe." },
+    about: { title: "Silvan Hahn, Webentwickler im Kanton Zürich", description: "Ich bin Silvan Hahn, unabhängiger Webentwickler in Boppelsen ZH. Sie arbeiten direkt mit der Person, die Ihr Projekt plant, gestaltet und umsetzt." },
+    contact: { title: "Kontakt: Webdesign-Anfrage Kanton Zürich | SILVAN", description: "Besprechen Sie Ihr Vorhaben direkt mit Silvan Hahn, per E-Mail, WhatsApp, Telefon oder LinkedIn. Standort Boppelsen ZH. Anfragen sind unverbindlich." },
     hello: { title: "Hallo, ich bin Silvan | SILVAN Digital Studio", description: "Der direkte Einstieg zu Websites, Google-Bewertungen, Online-Präsenz, Arbeiten und Kontakt." },
     imprint: { title: "Impressum | SILVAN Digital Studio", description: "Verantwortlich für diese Website: Silvan Hahn, Boppelsen. Angaben zu Rechtsform, Kontakt und Urheberrecht." },
-    privacy: { title: "Datenschutz | SILVAN Digital Studio", description: "Keine Cookies, keine Profilbildung, kein Wiedererkennen über Besuche hinweg – nur eine cookielose Reichweitenmessung. Datenschutzerklärung nach revDSG." },
+    privacy: { title: "Datenschutz | SILVAN Digital Studio", description: "Keine Cookies, keine Profilbildung, kein Wiedererkennen über Besuche hinweg. Nur eine cookielose Reichweitenmessung. Datenschutzerklärung nach revDSG." },
   },
 } as const satisfies SiteContent;

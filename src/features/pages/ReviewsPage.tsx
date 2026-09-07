@@ -61,6 +61,9 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
                 }
               >
                 <ButtonLink href="#inquiry">{reviews.ctaLabel}</ButtonLink>
+                <ButtonLink href="#products" variant="secondary">
+                  {locale === "de" ? "Modelle ansehen" : "Explore models"}
+                </ButtonLink>
               </div>
             </div>
 
@@ -76,6 +79,7 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
 
         <section
           className={`${layoutStyles.container} ${pageStyles.section} ${pageStyles.sectionLead}`}
+          id="products"
         >
             <SectionHeading
               eyebrow={reviews.eyebrow}
@@ -158,13 +162,15 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
           </div>
         </section>
 
-        <section className={`${layoutStyles.container} ${pageStyles.section}`}>
+        <section className={pageStyles.contactBand}>
+          <div className={`${layoutStyles.container} ${pageStyles.contactLayout}`}>
           <SectionHeading
             eyebrow={content.contact.eyebrow}
             title={content.contact.title}
           />
           <div className={pageStyles.sectionBody}>
             <ContactActions locale={locale} />
+          </div>
           </div>
         </section>
       </div>

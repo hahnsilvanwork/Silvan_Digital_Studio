@@ -55,11 +55,15 @@
   padding-block: var(--space-xl);
 }
 
+.section + .section {
+  border-block-start: var(--hairline) solid var(--color-line);
+}
+
 /* A section that follows the page header directly does not need top padding of
    its own: the header already ends in a full --space-lg. Carrying both put the
    first price of the review products 16px below a 390x844 fold. */
 .sectionLead {
-  padding-block-start: 0;
+  padding-block-start: var(--space-md);
 }
 
 .sectionLead .sectionBody {
@@ -170,85 +174,11 @@
 /* The dark band is deliberately left at --space-xl: it always carries a heading
    and a short list, so the widest step turned it into a mostly empty bar. */
 @media (min-width: 80rem) {
-  .section {
-    padding-block: var(--space-2xl);
-  }
+  .section { padding-block: var(--space-xl); }
 }
 
 /* Declared after every svh rule so the dynamic-viewport value wins wherever it
    is supported and mobile browser chrome cannot crop the first screen. */
-@supports (min-height: 100dvh) {
-  .page {
-    min-block-size: 100dvh;
-  }
-
-  .hero {
-    min-block-size: calc(100dvh - var(--header-block-size));
-  }
-}
-
-/* Page scaffolding -------------------------------------------------------- */
-
-.pageHeader {
-  display: grid;
-  gap: var(--space-sm);
-  padding-block: var(--space-xl) var(--space-lg);
-}
-
-.reviewsHero {
-  align-items: center;
-}
-
-.reviewsHeroCopy {
-  display: grid;
-  gap: var(--space-sm);
-  min-inline-size: 0;
-}
-
-.reviewsHeroProduct {
-  inline-size: min(100%, 20rem);
-  justify-self: center;
-  margin-block-start: var(--space-sm);
-}
-
-.pageTitle {
-  max-inline-size: 18ch;
-  font-size: var(--text-title);
-  letter-spacing: var(--tracking-title);
-  line-height: 0.96;
-}
-
-.editorialTight {
-  max-inline-size: 44rem;
-  color: var(--color-ink-muted);
-  font-size: var(--text-lead);
-  line-height: 1.4;
-  letter-spacing: var(--tracking-text);
-}
-
-.sectionBody {
-  display: grid;
-  gap: var(--space-md);
-  margin-block-start: var(--space-lg);
-}
-
-.sectionActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-}
-
-.sectionLabel {
-  font-size: var(--text-label);
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.note {
-  color: var(--color-ink-muted);
-  font-size: var(--text-body);
-}
 
 .useCaseGrid {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
@@ -260,6 +190,7 @@
 .useCase {
   display: grid;
   gap: var(--space-xs);
+  align-content: start;
   padding-block: var(--space-sm);
   border-block-start: var(--hairline) solid var(--color-line);
 }
@@ -284,7 +215,8 @@
 
 .benefitList {
   display: grid;
-  gap: var(--space-xs);
+  gap: var(--space-sm) var(--space-lg);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
   margin: 0;
   padding: 0;
   list-style: none;
@@ -294,8 +226,7 @@
   position: relative;
   padding-block: var(--space-2xs);
   padding-inline-start: 1.6em;
-  border-block-start: var(--hairline) solid var(--color-line);
-  font-size: var(--text-lead);
+  font-size: var(--text-body);
   letter-spacing: var(--tracking-text);
 }
 
@@ -303,7 +234,7 @@
   position: absolute;
   inset-inline-start: 0;
   color: var(--color-accent);
-  content: "—";
+  content: "•";
 }
 
 /* About ------------------------------------------------------------------- */
@@ -331,8 +262,7 @@
 .studioNote {
   display: grid;
   gap: var(--space-2xs);
-  padding-block: var(--space-md);
-  border-block-start: var(--hairline) solid var(--color-line);
+  padding-block-start: var(--space-sm);
   color: var(--color-ink-muted);
   font-size: var(--text-body);
 }
@@ -347,6 +277,70 @@
   flex-wrap: wrap;
   gap: var(--space-sm);
   color: var(--color-ink);
+}
+
+.studioNoteLinks a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 2.75rem;
+}
+
+.serviceHeading, .serviceSummary {
+  display: grid;
+  gap: var(--space-sm);
+  align-content: start;
+  min-inline-size: 0;
+}
+
+.serviceHeader { gap: var(--space-lg); min-block-size: calc(85svh - var(--header-block-size)); align-content: center; }
+.serviceVisual { display: grid; gap: 0.75rem; margin-block-start: 1rem; text-decoration: none; }
+.serviceVisual img { inline-size: 100%; block-size: auto; }
+.serviceVisual span { color: var(--color-ink-muted); font-size: 0.8125rem; }
+.serviceHeader .studioNote { padding-block-start: 0; }
+.serviceHeader .pageTitle { max-inline-size: 16ch; font-size: clamp(2.5rem, 5vw, 4.75rem); line-height: 1.02; }
+
+.contactBand {
+  padding-block: var(--space-xl);
+  background: var(--color-stone);
+}
+
+.contactLayout { display: grid; gap: var(--space-lg); }
+.contactLayout .sectionBody { margin-block-start: 0; }
+
+.contactPageLayout .pageHeader { border-block-end: 0; align-content: start; }
+.contactPageLayout .section { padding-block-start: 0; }
+
+@media (min-width: 64rem) {
+  .contactPageLayout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-content: start;
+    column-gap: var(--space-lg);
+    padding-inline: max(var(--page-gutter), calc((100% - var(--container-max)) / 2));
+    padding-block: var(--space-xl);
+  }
+  .contactPageLayout > section {
+    inline-size: 100%;
+    padding-block: 0;
+  }
+  .contactPageLayout .pageTitle {
+    font-size: clamp(3.5rem, 5.5vw, 5.5rem);
+  }
+}
+
+@media (min-width: 64rem) {
+  .serviceHeader {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: center;
+  }
+  .serviceHeader .pageTitle {
+    font-size: clamp(3.5rem, 5.5vw, 5.5rem);
+    max-inline-size: 16ch;
+  }
+  .contactLayout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: start;
+  }
 }
 
 .portrait {
@@ -596,4 +590,80 @@
     /* A clause split across two sheets is hard to cite. */
     break-inside: avoid;
   }
+}
+
+@supports (min-height: 100dvh) {
+  .page {
+    min-block-size: 100dvh;
+  }
+
+  .hero {
+    min-block-size: calc(100dvh - var(--header-block-size));
+  }
+  .serviceHeader { min-block-size: calc(85dvh - var(--header-block-size)); }
+}
+
+/* Page scaffolding -------------------------------------------------------- */
+
+.pageHeader {
+  display: grid;
+  gap: var(--space-sm);
+  padding-block: var(--space-xl) var(--space-lg);
+  border-block-end: var(--hairline) solid var(--color-line);
+  margin-block-end: 0;
+}
+
+.reviewsHero {
+  align-items: center;
+}
+
+.reviewsHeroCopy {
+  display: grid;
+  gap: var(--space-sm);
+  min-inline-size: 0;
+}
+
+.reviewsHeroProduct {
+  inline-size: min(100%, 20rem);
+  justify-self: center;
+  margin-block-start: var(--space-sm);
+}
+
+.pageTitle {
+  max-inline-size: 18ch;
+  font-size: var(--text-title);
+  letter-spacing: var(--tracking-title);
+  line-height: 0.96;
+}
+
+.editorialTight {
+  max-inline-size: 44rem;
+  color: var(--color-ink-muted);
+  font-size: var(--text-lead);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-text);
+}
+
+.sectionBody {
+  display: grid;
+  gap: var(--space-md);
+  margin-block-start: var(--space-lg);
+}
+
+.sectionActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.sectionLabel {
+  font-size: var(--text-label);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.note {
+  color: var(--color-ink-muted);
+  font-size: var(--text-body);
 }

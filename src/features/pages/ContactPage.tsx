@@ -24,7 +24,7 @@ export function ContactPage({ locale }: ContactPageProps) {
 
   return (
     <SiteShell currentPath={localizePath("/contact", locale)} locale={locale}>
-      <div className={pageStyles.page}>
+      <div className={`${pageStyles.page} ${pageStyles.contactPageLayout}`}>
         <section className={`${layoutStyles.container} ${pageStyles.pageHeader}`}>
           <p className={pageStyles.heroLabel} data-reveal="rise">
             {content.contact.eyebrow}
