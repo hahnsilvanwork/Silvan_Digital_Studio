@@ -426,7 +426,7 @@
 
 @media (min-width: 64rem) {
   .reviewsHero {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 7fr) minmax(18rem, 5fr);
     gap: var(--space-xl);
   }
 
@@ -578,6 +578,10 @@
   max-inline-size: 36rem;
   min-inline-size: 0;
   justify-self: center;
+}
+
+@media (min-width: 80rem) {
+  .reviewsHero { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (min-width: 64rem) {

@@ -36,11 +36,17 @@
 .sceneLabel > span { color: #625f57; font-size: 2.2cqw; line-height: 1.35; letter-spacing: -.015em; }
 .caption { padding-top: .7rem; color: var(--color-ink-muted); font-size: .6875rem; line-height: 1.4; letter-spacing: 0; }
 @media (min-width: 64rem) {
-  /* Fit the complete figure to the adjacent copy, preserving the film ratio. */
+  /* The copy defines the shared height. Keep the film proportional at the top
+     and the controls on the same bottom row as the adjacent action links. */
   .film {
-    width: min(100%, calc((100cqh - .7rem - 44px) * 1.04));
+    width: min(100%, calc((100cqh - .7rem - max(var(--control-target-min), 3.25rem)) * 1.04));
+    height: 100cqh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     margin-inline-start: auto;
   }
+  .stage { flex-shrink: 0; }
 }
 .film[data-running="false"] *, .film[data-running="false"] *::before, .film[data-running="false"] *::after { animation-play-state: paused; }
 .film[data-static="true"] .scene { animation: none; opacity: 0; }.film[data-static="true"] .scene[data-index="0"] { opacity: 1; }
@@ -72,3 +78,8 @@
 .motionControl { min-height: 44px; padding: 0.5rem 0.75rem; border: 1px solid currentColor; border-radius: 4px; color: inherit; background: transparent; font: inherit; font-size: 0.875rem; cursor: pointer; flex-shrink: 0; }
 .motionControl:hover { background: var(--color-stone, #e9e5df); color: #1a1a1a; }
 .caption { display: grid; grid-template-columns: minmax(0, 1fr) auto; min-height: calc(44px + .7rem); align-items: center; gap: 0.75rem; }
+
+@media (min-width: 64rem) {
+  .caption { min-height: calc(max(var(--control-target-min), 3.25rem) + .7rem); }
+  .motionControl { min-height: max(var(--control-target-min), 3.25rem); }
+}
