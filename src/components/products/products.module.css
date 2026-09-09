@@ -559,14 +559,6 @@
   outline-offset: -4px;
 }
 
-.familyGuide { padding-block: var(--space-sm); border-block-start: var(--hairline) solid var(--color-line); }
-.familyGuide h3 { margin-block-end: 1rem; font-size: var(--text-item); }
-.familyGuide p { max-width: 70ch; margin-block-start: 1rem; }
-.familyChoices { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.familyChoices button { min-height: 44px; padding: 0.625rem 0.875rem; border: 1px solid var(--color-line); border-radius: 4px; font: inherit; background: transparent; color: var(--color-ink); cursor: pointer; }
-.familyChoices button:hover { background: var(--color-stone, #e9e5df); }
-.familyChoices button[aria-pressed="true"] { background: var(--color-ink); color: var(--color-paper); }
-.variantHint { color: var(--color-ink-muted); font-size: var(--text-label); }
 
 .deliveryFacts { border-block-start: 1px solid var(--color-line); padding-block: 0.75rem; }
 .deliveryFacts summary { min-height: 44px; align-content: center; cursor: pointer; }

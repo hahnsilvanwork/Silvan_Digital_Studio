@@ -7,7 +7,6 @@ import type {
   Locale,
   ProductCategory,
 } from "../../content/types";
-import { getInquiryPreset } from "../../lib/inquiry-selection";
 import { Product3DDialog, type Product3DLabels } from "./Product3DDialog";
 import { ProductCard } from "./ProductCard";
 import styles from "./products.module.css";
@@ -47,16 +46,7 @@ export function ProductCatalog({
   const selection = useCatalogueSelection();
   const activeCategory = categories.find((category) => category.id === selection.category)?.id ?? categories[0]?.id ?? "reviews";
   const de = locale === "de";
-  const families = [
-    { id: "all", label: de ? "Alle Produkttypen" : "All product types", guidance: de ? "Flache Karte, Aufsteller oder Chip: Wählen Sie nach dem Ort, an dem Gäste den Link öffnen sollen." : "Flat card, stand or chip: choose for the place where guests will open your link." },
-    { id: "card", label: de ? "Flache Karte" : "Flat card", guidance: de ? "Für die Übergabe an Gäste oder eine flache Präsentation. Vergleichen Sie unten Form, Farbe und Personalisierung." : "For handing to guests or presenting flat. Compare shape, colour and personalisation below." },
-    { id: "stand", label: de ? "Aufsteller" : "Stand", guidance: de ? "Für einen sichtbaren Platz auf Tresen oder Empfang. Prüfen Sie unten die verfügbaren Varianten." : "For a visible spot on a counter or reception desk. Compare the available variants below." },
-    { id: "chip", label: de ? "Klebe-Chip" : "Adhesive chip", guidance: de ? "Für einen vorhandenen Aufsteller oder ein eigenes Objekt. Ob Untergrund und Befestigung passen, klären wir vor der Bestellung." : "For an existing stand or your own object. We confirm surface and attachment suitability before ordering." },
-  ];
-  const familyOf = (product: NfcProduct) => { const preset = getInquiryPreset(product.id); return preset?.product === "nfc-chip" ? "chip" : preset?.product === "standard-stand" ? "stand" : "card"; };
-  const [familySelection, setFamilySelection] = useState({ category: activeCategory, family: "all" });
-  const family = familySelection.category === activeCategory ? familySelection.family : "all";
-  const railKey = `${activeCategory}:${family}`;
+  const railKey = activeCategory;
   const [selectedProduct, setSelectedProduct] = useState<NfcProduct | null>(
     null,
   );
@@ -75,7 +65,7 @@ export function ProductCatalog({
   }, [selectedProduct]);
 
   const visibleProducts = products.filter(
-    product => product.category === activeCategory && (family === "all" || familyOf(product) === family),
+    product => product.category === activeCategory,
   );
   const activeCategoryLabel =
     categories.find(({ id }) => id === activeCategory)?.label ?? "";
@@ -137,16 +127,7 @@ export function ProductCatalog({
         })}
       </div>
 
-      <section className={styles.familyGuide} aria-labelledby={`${railId}-family`}>
-        <h3 id={`${railId}-family`}>{de ? "Welcher Produkttyp passt zum Einsatzort?" : "Which product type suits the location?"}</h3>
-        <div className={styles.familyChoices} role="group" aria-labelledby={`${railId}-family`}>
-          {families.filter(item => item.id === "all" || products.some(product => product.category === activeCategory && familyOf(product) === item.id)).map(item => <button type="button" key={item.id} aria-pressed={family === item.id} data-touch-target onClick={() => setFamilySelection({category: activeCategory, family: item.id})}>{item.label}</button>)}
-        </div>
-        <p>{families.find(item => item.id === family)?.guidance}</p>
-        <p className={styles.variantHint}>{de ? "Danach: Variante ansehen und mit „Dieses Modell anfragen“ übernehmen. Masse und Lieferdetails bestätigen wir in der Offerte." : "Next: compare variants and choose ‘Enquire about this model’. Dimensions and delivery details are confirmed in the quote."}</p>
-      </section>
-
-      <details className={styles.deliveryFacts}>
+<details className={styles.deliveryFacts}>
         <summary>{de ? "Verfügbarkeit, Lieferung und Betreuung" : "Availability, delivery and support"}</summary>
         <p>{de ? "Standardprodukte ohne Personalisierung sind bei mir vor Ort an Lager. Logo-, personalisierte und individuelle Produkte erhalten Sie nach Absprache innerhalb von 3–5 Wochen fertig konfiguriert und einsatzbereit." : "Standard products without personalisation are stocked at my location. Logo, personalised and custom products arrive configured and ready to use within 3–5 weeks after agreement."}</p>
         <p>{de ? "Google-Bewertungskarten benötigen keine laufende Betreuung durch mich. Besondere Wünsche oder spätere Anpassungen vereinbaren wir separat." : "Google review cards require no ongoing support from me. Special requests or later changes are agreed separately."}</p>

@@ -73,8 +73,8 @@ export function NfcMotionHero({ locale }: { readonly locale: Locale }) {
       </div>
       <figcaption className={styles.caption}>
         <span>{de ? "Produktbeispiele mit fiktiven Profilen." : "Product examples with fictional profiles."}</span>
-      {!reduced ? <button type="button" className={styles.motionControl} data-touch-target aria-pressed={paused} onClick={() => setPaused(current => !current)}>
-          {paused ? (de ? "Animation fortsetzen" : "Resume animation") : (de ? "Animation pausieren" : "Pause animation")}
+      {!reduced ? <button type="button" className={styles.motionControl} data-touch-target aria-pressed={paused} aria-label={paused ? (de ? "Animation fortsetzen" : "Resume animation") : (de ? "Animation pausieren" : "Pause animation")} onClick={() => setPaused(current => !current)}>
+          {paused ? (de ? "Weiter" : "Resume") : "Pause"}
         </button> : null}
       </figcaption>
     </figure>

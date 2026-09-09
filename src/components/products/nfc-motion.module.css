@@ -38,7 +38,7 @@
 @media (min-width: 64rem) {
   /* Fit the complete figure to the adjacent copy, preserving the film ratio. */
   .film {
-    width: min(100%, calc((100cqh - .7rem - .9625rem) * 1.04));
+    width: min(100%, calc((100cqh - .7rem - 44px) * 1.04));
     margin-inline-start: auto;
   }
 }
@@ -71,4 +71,4 @@
 
 .motionControl { min-height: 44px; padding: 0.5rem 0.75rem; border: 1px solid currentColor; border-radius: 4px; color: inherit; background: transparent; font: inherit; font-size: 0.875rem; cursor: pointer; flex-shrink: 0; }
 .motionControl:hover { background: var(--color-stone, #e9e5df); color: #1a1a1a; }
-.caption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.caption { display: grid; grid-template-columns: minmax(0, 1fr) auto; min-height: calc(44px + .7rem); align-items: center; gap: 0.75rem; }

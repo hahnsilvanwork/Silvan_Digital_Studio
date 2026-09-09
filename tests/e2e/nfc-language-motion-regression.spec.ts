@@ -56,15 +56,12 @@ test('blocked session storage keeps the draft when language change is cancelled'
  await page.getByRole('link',{name:'Englisch',exact:true}).click();await expect(page.locator('html')).toHaveAttribute('lang','de');await expect(page.locator('[name=businessName]')).toHaveValue('Keep these details');
 });
 for (const width of [390,1280]) {
- test(`application and family controls retain every variant at ${width}px`,async({page})=>{
+ test(`direct category selection retains every variant at ${width}px`,async({page})=>{
   await page.setViewportSize({width,height:900});await page.goto('/en/reviews?category=reviews&model=review-round-black#products');
   const cards=page.locator('[data-product-card]');await expect(cards).toHaveCount(9);
-  const stand=page.getByRole('button',{name:'Stand',exact:true});await stand.focus();await page.keyboard.press('Enter');await expect(stand).toHaveAttribute('aria-pressed','true');await expect(cards).toHaveCount(2);for (const card of await cards.all()) await expect(card).toContainText('Stand');
-  expect(new URL(page.url()).searchParams.get('model')).toBe('review-round-black');
-  await page.getByRole('button',{name:'Flat card',exact:true}).click();await expect(cards).toHaveCount(7);
-  await page.getByRole('button',{name:'All product types',exact:true}).click();await expect(cards).toHaveCount(9);
+  await expect(page.getByRole("button",{name:"All product types",exact:true})).toHaveCount(0);
   const category=page.locator('select[id$="-category"]');if(await category.isVisible()) await category.selectOption('chips');else await page.getByRole('button',{name:/^NFC chip.*1 product/}).click();
-  await expect(page.getByRole('button',{name:'Adhesive chip',exact:true})).toBeVisible();await expect(cards).toHaveCount(1);await expect(cards).toContainText('CHF 15');
+  await expect(page.getByRole('button',{name:'Adhesive chip',exact:true})).toHaveCount(0);await expect(cards).toHaveCount(1);await expect(cards).toContainText('CHF 15');
   expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(width+1);
  });
 }
