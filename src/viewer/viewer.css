@@ -1,0 +1,4 @@
+:root { color-scheme: light; --duration-medium: 250ms; --ease-out: ease-out; }
+html, body, #viewer { margin: 0; width: 100%; height: 100%; overflow: hidden; background: transparent; }
+#viewer > figure { margin: 0; width: 100%; height: 100%; aspect-ratio: auto; }
+#viewer spline-viewer { touch-action: none; }

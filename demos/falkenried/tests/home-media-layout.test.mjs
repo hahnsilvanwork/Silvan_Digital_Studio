@@ -18,20 +18,31 @@ test("home media uses a local image without external video requests", async () =
   assert.doesNotMatch(source, /youtube|<iframe|fetch\(/);
   assert.match(source, /<Image/);
   assert.match(source, /<figcaption>/);
-  assert.match(source, /href="\/geschichte\/"/);
+  assert.match(source, /href=\{routes\.geschichte\[lang\]\}/);
 });
 
-test("both homepages contain all three original customer testimonials in a three-column layout", async () => {
-  for (const path of ["src/pages/index.astro", "src/pages/en/index.astro"]) {
-    const source = await readSource(path);
-    assert.match(source, /H\. B\. aus Nassenwil/);
-    assert.match(source, /J\. W\. aus Bachs/);
-    assert.match(source, /C\. H\. aus Schleinikon/);
-    assert.match(source, /Professionell, freundlich, zuverlässig/);
-    assert.match(source, /Top Beratung/);
-    assert.match(source, /Sehr nette und kompetente Mitarbeiter/);
+test("both homepages label localized testimonials as fictional examples", async () => {
+  const de = await readSource("src/pages/index.astro");
+  const en = await readSource("src/pages/en/index.astro");
+  for (const source of [de, en]) {
+    assert.equal((source.match(/<Testimonial /g) ?? []).length, 3);
     assert.match(source, /md:grid-cols-3/);
+    assert.doesNotMatch(source, /Original customer quote/);
   }
+  assert.match(de, /BEISPIELSTIMMEN · DEMO/);
+  assert.match(de, /H\. B\. aus Nassenwil/);
+  assert.match(de, /Professionell, freundlich, zuverlässig/);
+  assert.match(de, /Top Beratung/);
+  assert.match(de, /Sehr nette und kompetente Mitarbeiter/);
+  assert.match(en, /EXAMPLE TESTIMONIALS · DEMO/);
+  assert.match(en, /H\. B\. from Nassenwil/);
+  assert.match(en, /J\. W\. from Bachs/);
+  assert.match(en, /C\. H\. from Schleinikon/);
+  assert.match(en, /Professional, friendly and reliable/);
+  assert.match(en, /Helpful advice with the customer in mind/);
+  assert.match(en, /Friendly, knowledgeable staff/);
+  assert.match(de, /<VideoPreview lang="de"/);
+  assert.match(en, /<VideoPreview lang="en"/);
 });
 
 test("FAQ tabs are equal-width and centered", async () => {

@@ -115,6 +115,7 @@ export interface FaqContent {
 export interface LegalSection {
   readonly title: string;
   readonly body: readonly string[];
+  readonly links?: readonly { readonly label: string; readonly href: string }[];
 }
 
 export interface LegalContent {
@@ -226,15 +227,19 @@ export interface InquiryOption {
   readonly label: string;
 }
 
-export type ProductCategory = "reviews" | "menu" | "custom";
+export type ProductCategory = "reviews" | "tripadvisor" | "social" | "contact" | "menu" | "custom" | "chips";
 
 export interface ProductScene {
+  readonly format?: "glb";
   readonly url: string;
   readonly fallbackImage: string;
   readonly ariaLabel: string;
 }
 
 export interface NfcProduct {
+  readonly personalized?: boolean;
+  readonly platform?: string;
+  readonly kind?: "card" | "square" | "round" | "stand";
   readonly id: string;
   readonly category: ProductCategory;
   readonly title: string;

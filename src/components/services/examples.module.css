@@ -1,0 +1,51 @@
+.example, .presence { margin: 0; min-inline-size: 0; }
+.disclaimer { max-inline-size: 70ch; color: var(--color-ink-muted); font-size: .9375rem; margin-block-end: 1.5rem; }
+.workbench, .comparison { display: grid; grid-template-columns: minmax(0,1fr); background: var(--color-stone); }
+.input, .output, .before, .after { padding: clamp(1rem,3vw,3rem); min-inline-size: 0; }
+.input h3, .output h3, .comparison h3 { font-size: clamp(1.25rem,2.3vw,1.875rem); font-weight: 500; letter-spacing: -.02em; margin: 0 0 1.5rem; }
+.output, .after { background: var(--color-paper-raised); border: 1px solid var(--color-line); }
+.tasks, .reportList { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+.tasks li, .reportList li { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1rem; border-block-start: 1px solid var(--color-line); }
+.tasks li > div, .reportList li > span { min-inline-size: 0; }
+.tasks label { font-weight: 500; }
+.tasks small, .reportList small, .hours small { display: block; font-size: .875rem; color: var(--color-ink-muted); margin-block-start: .25rem; }
+.tasks select { background: var(--color-paper-raised); color: var(--color-ink); border: 1px solid var(--color-ink-muted); border-radius: 4px; padding: .6rem .4rem; min-block-size: 44px; max-inline-size: 45%; font: inherit; font-size: .9375rem; }
+.check { display: flex; align-items: center; gap: .75rem; min-block-size: 44px; font-size: .9375rem; margin-block-end: 1.25rem; cursor: pointer; }
+.check input { width: 20px; height: 20px; flex: 0 0 20px; accent-color: var(--color-ink); }
+.primary, .secondary { font: inherit; font-weight: 500; min-block-size: 48px; padding: .85rem 1.25rem; border-radius: 4px; cursor: pointer; }
+.primary { background: var(--color-ink); color: var(--color-paper); border: 1px solid var(--color-ink); }
+.secondary { background: transparent; color: var(--color-ink); border: 1px solid var(--color-ink); }
+.secondary:disabled { color: var(--color-ink-muted); border-color: var(--color-line); cursor: default; }
+.primary:hover { background: var(--color-ink-muted); }
+.secondary:hover:not(:disabled) { background: var(--color-stone); }
+.reportTop { border-block-end: 1px solid var(--color-line); padding-block-end: 1rem; }
+.reportTop h3 { margin-block-end: .5rem; }
+.reportTop > span { color: var(--color-ink-muted); font-size: .875rem; }
+.reportSummary { font-size: clamp(1.5rem,3vw,2rem); letter-spacing: -.02em; padding-block: 1.5rem; font-variant-numeric: tabular-nums; }
+.reportSummary span { color: var(--color-ink-muted); }
+.reportList strong { font-size: .875rem; font-weight: 500; }
+.empty { min-block-size: 14rem; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--color-ink-muted); }
+.empty > span { font-size: 3rem; }
+.feedback { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 2rem; align-items: center; padding-block: 1rem; }
+.feedback p { flex: 1 1 22rem; font-size: .9375rem; }
+.reset { border: none; background: none; color: var(--color-ink); text-decoration: underline; text-underline-offset: .2em; min-block-size: 44px; padding: .5rem 0; cursor: pointer; font: inherit; font-size: .9375rem; }
+.businessName { font-size: .9375rem; color: var(--color-ink-muted); margin-block-end: 1.75rem; }
+.hours { margin: 0; }
+.hours > div { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-block: 1.25rem; border-block-start: 1px solid var(--color-line); }
+.hours dt { font-size: 1rem; }
+.hours dd { margin: 0; white-space: nowrap; font-size: clamp(1.5rem,3vw,2.25rem); font-variant-numeric: tabular-nums; letter-spacing: -.025em; }
+.hours dd span { font-size: .875rem; letter-spacing: 0; }
+.hours dd.serviceValue { white-space: normal; text-align: end; font-size: 1rem; letter-spacing: 0; }
+.verdict { margin-block-start: 1.5rem; font-weight: 500; }
+.presence figcaption { padding-block-start: 1rem; max-inline-size: 70ch; font-size: .9375rem; }
+.disclosure { border-block: 1px solid var(--color-line); padding-block: .25rem; }
+.disclosure + .disclosure { border-block-start: 0; }
+.disclosure summary { min-block-size: 52px; padding: 1rem 2rem 1rem 0; cursor: pointer; font-weight: 500; }
+.disclosure > div { padding-block: 0 1.5rem; }
+.disclosure p { max-inline-size: 70ch; margin-block-end: 1rem; color: var(--color-ink-muted); }
+.tableRegion { overflow-x: auto; margin-block: 1rem; }
+.tableRegion table { border-collapse: collapse; inline-size: 100%; min-inline-size: 48rem; font-size: .9375rem; }
+.tableRegion th, .tableRegion td { text-align: start; vertical-align: top; padding: 1rem; border-block-end: 1px solid var(--color-line); max-inline-size: 15rem; }
+.tableRegion th { font-weight: 500; background: var(--color-stone); }
+@media (min-width: 56rem) { .workbench, .comparison { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+

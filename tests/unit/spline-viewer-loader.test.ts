@@ -16,6 +16,9 @@ describe("loadSplineViewer", () => {
     expect(scripts).toHaveLength(1);
     expect(script.type).toBe("module");
     expect(script.src).toBe(SPLINE_VIEWER_SCRIPT_URL);
+    expect(script.integrity).toMatch(/^sha384-[A-Za-z0-9+/]+=*$/);
+    expect(script.crossOrigin).toBe("anonymous");
+    expect(script.referrerPolicy).toBe("no-referrer");
     expect(first).toBe(second);
 
     if (!customElements.get("spline-viewer")) {

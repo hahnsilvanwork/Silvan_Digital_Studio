@@ -30,6 +30,13 @@ function mediaQuery(matches: boolean): MediaQueryList {
 }
 
 describe("ProductHero", () => {
+  it("exposes only the currently displayed image to assistive technology", () => {
+    render(<ProductHero {...heroProps} />);
+    expect(screen.getAllByRole("img")).toHaveLength(1);
+    fireEvent.click(screen.getByRole("button", { name: "Shown image 2: Second product" }));
+    expect(screen.getAllByRole("img")).toHaveLength(1);
+    expect(screen.getByRole("img")).toHaveAttribute("alt", "Second product");
+  });
   beforeEach(() => {
     vi.useFakeTimers();
     vi.stubGlobal("matchMedia", vi.fn(() => mediaQuery(false)));
@@ -68,10 +75,7 @@ describe("ProductHero", () => {
       "data-fit",
       "cover",
     );
-    expect(screen.getByRole("img", { name: "Second product" })).toHaveAttribute(
-      "data-fit",
-      "contain",
-    );
+    expect(document.querySelector('img[alt="Second product"]')).toHaveAttribute("data-fit", "contain");
   });
 
   it("pauses while the document is hidden and resumes when visible", () => {

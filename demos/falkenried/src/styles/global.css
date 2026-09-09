@@ -161,7 +161,7 @@
 .image-hero :focus-visible{outline:3px solid #fff;outline-offset:5px}
 .portal-hero{padding-top:76px}.portal-hero p{line-height:1.7}.service-card>h3,.service-card>.label-caps{padding-right:54px}
 .section-navigation a{min-height:44px;display:inline-flex;align-items:center}.btn-primary,.btn-secondary{min-height:48px;line-height:1.4;text-align:center}
-#mobile-menu{max-height:calc(100dvh - 80px);overflow-y:auto}#mobile-menu li>a{display:flex;min-height:44px;align-items:center}#mobile-menu ul{gap:8px}
+#mobile-menu{max-height:calc(100dvh - 84px);overflow-y:auto;overscroll-behavior:contain}#mobile-menu li>a{display:flex;min-height:44px;align-items:center}#mobile-menu ul{gap:8px}
 @media(max-width:639px){.image-hero{padding-top:148px;min-height:620px}.image-hero .btn-primary,.image-hero .btn-secondary{width:100%}.image-hero h1{font-size:clamp(36px,9.2vw,44px)}.portal-hero{padding-top:78px}.portal-hero>div.relative{padding-top:54px;padding-bottom:54px}.service-card{padding:24px}.service-card>h3{font-size:23px}.hero-image-note{max-width:190px;line-height:1.7}.hero-seal{width:100px;height:100px;right:20px}.hero-copy h1{letter-spacing:-.035em}.section-navigation>div{padding-left:16px;padding-right:16px}}
 
 /* The closing invitation uses a reversed button, visibly distinct from its surface. */

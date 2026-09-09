@@ -1,4 +1,6 @@
-import { measurementCopy } from "./measurement-copy";
+import { productTierSummary } from "../lib/product-pricing";
+import { mergePhotoProducts } from "./photo-products";
+import { imprintContent, privacyContent } from "./legal-content";
 import type { SiteContent } from "./types";
 
 export const de = {
@@ -37,7 +39,7 @@ export const de = {
     getInTouch: "Kontakt aufnehmen",
     from: "ab",
     onRequest: "Auf Anfrage",
-    recommended: "Am häufigsten gewählt",
+    recommended: "Für mehrseitige Websites",
   },
   home: {
     hero: {
@@ -59,7 +61,7 @@ export const de = {
       {
         title: "NFC & QR Lösungen",
         description: "Karten und Aufsteller für Bewertungen, Menüs, Buchungen und individuelle Ziele.",
-        price: "ab CHF 49",
+        price: "Chips ab CHF 15 · Karten ab CHF 49",
         href: "/reviews",
       },
       {
@@ -90,14 +92,14 @@ export const de = {
     eyebrow: "Websites",
     title: "Eine Website, die Ihr Unternehmen klar verkauft.",
     intro:
-      "Von der kompakten Informationsseite bis zum individuellen grossen Auftritt: Sie erhalten eine schnelle, zugängliche und leicht pflegbare Website.",
-    priceLabel: "CHF 300–5'000+",
+      "Von einer kompakten Seite mit Kontaktinformationen bis zum individuellen grossen Auftritt: Wir planen Ihre Website nach Ihren Inhalten, Funktionen und der späteren Pflege.",
+    priceLabel: "Preisrahmen · CHF 300–5'000+",
     priceTiers: [
       {
         id: "simple",
         name: "Kompakter Webauftritt",
         price: "CHF 300–699",
-        description: "Für einen fokussierten ersten Auftritt mit den wichtigsten Informationen.",
+        description: "Wenn Ihr Angebot und Ihre Kontaktdaten auf einer einzigen Seite Platz finden.",
         features: ["Eine kompakte Seite", "Mobil optimiert", "Direkte Kontaktwege"],
       },
       {
@@ -105,29 +107,29 @@ export const de = {
         name: "Business-Website",
         price: "CHF 700–1'999",
         recommended: true,
-        description: "Für Unternehmen, die Leistungen, Vertrauen und Kontakt klar strukturieren möchten.",
-        features: ["Mehrere Inhaltsseiten", "Individuelles Layout", "Grundlegende Suchmaschinen-Basis"],
+        description: "Wenn Kunden Ihre Leistungen, Ihr Unternehmen und den Kontakt auf eigenen Seiten finden sollen.",
+        features: ["Mehrere Inhaltsseiten", "Individuelles Layout", "Grundlagen für Suchmaschinen"],
       },
       {
         id: "premium",
         name: "Umfangreiche Website",
         price: "CHF 2'000–4'999",
-        description: "Für umfangreiche Inhalte, anspruchsvolle Gestaltung und besondere Funktionen.",
-        features: ["Erweiterte Seitenstruktur", "Hochwertige Interaktionen", "Flexible Inhaltsmodule"],
+        description: "Wenn viele Inhalte in Bereiche gegliedert werden und Gestaltung sowie Interaktionen mehr Planung brauchen.",
+        features: ["Seitenstruktur für mehrere Bereiche", "Individuell gestaltete Interaktionen", "Flexible Bausteine für Seiteninhalte"],
       },
       {
         id: "custom",
         name: "Individuelles Projekt",
         price: "ab CHF 5'000",
-        description: "Für individuelle digitale Projekte mit gemeinsam definiertem Umfang.",
+        description: "Wenn besondere Anforderungen zuerst ein eigenes Konzept und eine technische Planung brauchen.",
         features: ["Massgeschneidertes Konzept", "Technische Planung", "Projektbezogene Umsetzung"],
       },
     ],
-    benefitsTitle: "Was Sie erhalten",
+    benefitsTitle: "Welcher Umfang passt zu Ihnen?",
     benefits: [
       "Eine klare Struktur für Kunden und Suchmaschinen",
       "Ein responsives Erlebnis auf jedem Bildschirm",
-      "Wartbaren Code ohne unnötige technische Last",
+      "Eine technische Grundlage für nachvollziehbare spätere Anpassungen",
     ],
     processTitle: "So entsteht Ihre Website",
     process: [
@@ -150,6 +152,11 @@ export const de = {
           question: "Was ist im Preis enthalten?",
           answer:
             "Konzept, Gestaltung, Umsetzung und die Veröffentlichung im Umfang der gewählten Stufe. Domain und Hosting sind nicht Teil des Preises. Welche Variante für Sie sinnvoll ist, klären wir im Gespräch.",
+        },
+        {
+          question: "Kann ich Texte und Bilder selbst ändern?",
+          answer:
+            "Das hängt von der vereinbarten Bearbeitungslösung ab. Ein Content-Management-System (CMS) ist nicht automatisch Teil einer Preisstufe. Vor Projektbeginn klären wir, was Sie selbst bearbeiten möchten, wie häufig Änderungen nötig sind und wer sie übernimmt. Die Offerte hält die Lösung, eine allfällige Einführung sowie Kosten für Einrichtung, Pflege und Wartung fest.",
         },
         {
           question: "Wie läuft ein Projekt ab?",
@@ -177,39 +184,39 @@ export const de = {
     priceLabel: "Designstufen inklusive Einrichtung",
     products: [
       {
-        id: "standard-card",
-        name: "Standard Card oder Standard Stand",
-        price: "CHF 49.–",
-        description: "Eine Standard Card im fixen Design oder ein sichtbarer Standard-Aufsteller.",
-        features: ["Ohne Personalisierung", "NFC und QR", "Programmierung inklusive"],
+        id: "nfc-chip",
+        name: "NFC-Sticker",
+        price: "CHF 15.–",
+        description: "Ein Klebechip für den vereinbarten digitalen Link.",
+        features: [productTierSummary("nfc-chip", "de"), "Zum Aufkleben", "Programmierung inklusive"],
       },
       {
-        id: "standard-pair",
-        name: "Zwei Standard Cards",
-        price: "CHF 80.–",
-        description: "Zwei Standard Cards für mehrere Kontaktpunkte.",
-        features: ["Freie Formwahl", "Beide Grössen möglich", "Einrichtung inklusive"],
+        id: "standard-card",
+        name: "Standard Card",
+        price: "CHF 49.–",
+        description: "Eine Standard Card im fixen Design.",
+        features: [productTierSummary("standard-card", "de"), "Ohne Personalisierung · NFC und QR", "Programmierung inklusive"],
       },
       {
         id: "personalized-card",
         name: "Personalized Card",
         price: "CHF 69.–",
         description: "Ein bestehendes Design mit Ihrem Logo oder Firmennamen.",
-        features: ["Rund oder quadratisch", "Beide Grössen", "Logo und Firmenname"],
+        features: [productTierSummary("personalized-card", "de"), "Form und Grösse modellabhängig", "Logo und Firmenname"],
       },
       {
         id: "fully-custom-card",
         name: "Fully Customized Card",
         price: "CHF 99.–",
         description: "Ein komplett eigenes Design passend zu Ihrer Firmen-CI.",
-        features: ["Freie Gestaltung", "Freies digitales Ziel", "Designservice inklusive"],
+        features: [productTierSummary("fully-custom-card", "de"), "Freie Gestaltung und digitales Ziel", "Designservice inklusive"],
       },
     ],
-    quantityDiscount: "Für grössere Mengen gibt es einen Mengenrabatt. Den Preis für Ihre Menge nenne ich Ihnen in meiner Antwort auf Ihre Anfrage. Erst danach entscheiden Sie.",
+    quantityDiscount: "Über 10 Stück: zusätzliche Mengenrabatte nach Absprache.",
     processTitle: "Drei einfache Schritte",
     process: [
       { id: "tap", label: "TAP", title: "Berühren", description: "Der Kunde berührt die NFC-Karte oder den Aufsteller mit dem Smartphone." },
-      { id: "open", label: "OPEN", title: "Öffnen", description: "Das hinterlegte Ziel öffnet sich direkt, ohne App und ohne Suchen." },
+      { id: "open", label: "OPEN", title: "Öffnen", description: "Ein NFC-fähiges Smartphone öffnet den hinterlegten Link ohne zusätzliche NFC-App. Für die Zielaktion gelten die Voraussetzungen des jeweiligen Dienstes." },
       { id: "act", label: "ACT", title: "Handeln", description: "Der Gast bewertet, liest das Menü, reserviert oder speichert Ihre Kontaktdaten." },
     ],
     ctaLabel: "Unverbindlich anfragen",
@@ -233,6 +240,10 @@ export const de = {
     heroResumeLabel: "Bildwechsel fortsetzen",
     categories: [
       { id: "reviews", label: "Google Reviews" },
+      { id: "tripadvisor", label: "Tripadvisor" },
+      { id: "social", label: "Social Media" },
+      { id: "contact", label: "WhatsApp" },
+      { id: "chips", label: "NFC-Chips" },
       { id: "menu", label: "Menü" },
       { id: "custom", label: "Individuell" },
     ],
@@ -244,8 +255,8 @@ export const de = {
     nextProductLabel: "Nächstes Produkt",
     productPositionLabel: "Produkt",
     productPositionOfLabel: "von",
-    forms: ["Rund", "Quadratisch"],
-    sizes: ["80 × 80 mm", "100 × 100 mm"],
+    forms: ["Rund", "Quadratisch", "Rechteckig"],
+    sizes: ["80 × 80 mm", "100 × 100 mm", "Weitere Formate nach Absprache"],
     view3dLabel: "In 3D ansehen",
     comingSoonLabel: "3D-Modell folgt",
     close3dLabel: "3D-Ansicht schliessen",
@@ -253,7 +264,7 @@ export const de = {
     error3dLabel: "Das 3D-Modell konnte nicht geladen werden.",
     retry3dLabel: "Erneut versuchen",
     interact3dLabel: "Mit einem Finger oder der Maus drehen",
-    catalog: [
+    catalog: mergePhotoProducts("de", [
       {
         id: "review-round-black",
         category: "reviews",
@@ -339,7 +350,7 @@ export const de = {
         image: { src: "/images/products/catalog/booking-custom-blue.webp", alt: "Blaue individuell gestaltete NFC-Booking-Karte" },
         details: ["Rund oder quadratisch", "80 × 80 oder 100 × 100 mm", "Freies Design und digitales Ziel"],
       },
-    ],
+    ]),
     useCasesTitle: "Ein Produkt, viele Möglichkeiten",
     useCases: [
       { title: "Google Reviews", description: "Öffnet Ihre Bewertungsseite direkt." },
@@ -350,36 +361,43 @@ export const de = {
     ],
     inquiry: {
       title: "NFC & QR Lösung anfragen",
-      intro: "Wählen Sie Ihre Lösung. Danach können Sie die unverbindliche Anfrage per WhatsApp oder E-Mail öffnen oder als Text kopieren.",
+      intro: "Produkt und Anwendung wählen, Menge angeben und Grundkosten sehen. Form und Grösse sind Wünsche; Details bestätigen wir in der Offerte. Danach wählen Sie den Kontaktweg.",
       fields: [
         { name: "destination", label: "Ziel oder Anwendung", placeholder: "Anwendung wählen", required: true },
         { name: "product", label: "Produkt", placeholder: "Produkt wählen", required: true },
         { name: "shape", label: "Form", placeholder: "Form wählen", required: true },
         { name: "size", label: "Grösse", placeholder: "Grösse wählen", required: true },
         { name: "quantity", label: "Menge", placeholder: "Zum Beispiel 2", required: true },
-        { name: "businessName", label: "Unternehmen (optional)", placeholder: "Name Ihres Unternehmens", required: false, autoComplete: "organization" },
-        { name: "contactPerson", label: "Kontaktperson (optional)", placeholder: "Vor- und Nachname", required: false, autoComplete: "name" },
         { name: "setup", label: "Zielseite", placeholder: "Stand der Zielseite wählen", required: true },
         { name: "destinationUrl", label: "Link zur Zielseite", placeholder: "https://…", required: false, autoComplete: "url" },
+        { name: "businessName", label: "Unternehmen (optional)", placeholder: "Name Ihres Unternehmens", required: false, autoComplete: "organization" },
+        { name: "contactPerson", label: "Kontaktperson (optional)", placeholder: "Vor- und Nachname", required: false, autoComplete: "name" },
         { name: "note", label: "Design, Farbe oder Nachricht (optional)", placeholder: "Logo, CI-Farben oder weitere Wünsche", required: false },
       ],
       destinationOptions: [
         { value: "reviews", label: "Google Reviews" },
+        { value: "tripadvisor", label: "Tripadvisor" },
+        { value: "instagram", label: "Instagram" },
+        { value: "tiktok", label: "TikTok" },
+        { value: "facebook", label: "Facebook" },
+        { value: "youtube", label: "YouTube" },
+        { value: "whatsapp", label: "WhatsApp" },
         { value: "menu", label: "Digitales Menü" },
         { value: "booking", label: "Booking & Reservation" },
+        { value: "airbnb", label: "Airbnb" },
         { value: "wifi", label: "Gäste-WLAN" },
         { value: "contact", label: "Digitale Visitenkarte" },
         { value: "other", label: "Anderes Ziel" },
       ],
       productOptions: [
+        { value: "nfc-chip", label: "NFC-Sticker · 1 Stück CHF 15.–" },
         { value: "standard-card", label: "Standard Card · CHF 49.–" },
-        { value: "standard-pair", label: "Zwei Standard Cards · CHF 80.–" },
         { value: "standard-stand", label: "Standard Stand · CHF 49.–" },
         { value: "personalized-card", label: "Personalized Card · CHF 69.–" },
         { value: "fully-custom-card", label: "Fully Customized Card · CHF 99.–" },
       ],
-      shapeOptions: [{ value: "round", label: "Rund" }, { value: "square", label: "Quadratisch" }],
-      sizeOptions: [{ value: "80", label: "80 × 80 mm" }, { value: "100", label: "100 × 100 mm" }],
+      shapeOptions: [{ value: "round", label: "Rund" }, { value: "square", label: "Quadratisch" }, { value: "rectangle", label: "Rechteckig" }],
+      sizeOptions: [{ value: "80", label: "80 × 80 mm" }, { value: "100", label: "100 × 100 mm" }, { value: "confirm", label: "Grösse nach Absprache" }],
       setupOptions: [
         { value: "ready", label: "Link ist vorhanden" },
         { value: "needs-setup", label: "Ziel muss noch eingerichtet werden" },
@@ -394,8 +412,8 @@ export const de = {
       quantityError: "Bitte geben Sie eine ganze Menge von 1 bis 999 ein. Grössere Mengen können Sie in der Nachricht anfragen.",
       urlError: "Bitte geben Sie einen gültigen HTTPS-Link ein; für Reviews einen Google-Link.",
       confirmTitle: "Bitte prüfen Sie Ihre Angaben",
-      nonBindingNotice: "Dies ist eine unverbindliche Anfrage. Sie wird erst nach meiner persönlichen Bestätigung verbindlich.",
-      privacyNotice: "Ihre Angaben bleiben bis zur gewählten Übergabe in diesem Browser-Tab. Sie werden hier nicht gespeichert. Beim Verlassen oder Neuladen gehen sie verloren.",
+      nonBindingNotice: "Diese Anfrage ist unverbindlich. Ein Auftrag entsteht erst, wenn beide Seiten die Offerte mit Leistungsumfang und Gesamtpreis angenommen haben.",
+      privacyNotice: "Ihre Angaben bleiben in diesem Browser-Tab. Beim Sprachwechsel wird die Anfrage für höchstens zwei Minuten zwischengespeichert und nach der Übernahme gelöscht. Ohne Ihre gewählte Übergabe wird nichts an uns gesendet.",
       messageIntro: "Hallo Silvan, ich möchte unverbindlich eine NFC & QR Lösung anfragen.",
     },
     faq: {
@@ -404,12 +422,12 @@ export const de = {
         {
           question: "Wie funktioniert eine NFC & QR Lösung?",
           answer:
-            "Ihr Gast hält das Smartphone an die Karte oder scannt den QR-Code. Das hinterlegte Ziel öffnet sich direkt, ohne Suche, zusätzliche App oder abgetippten Link.",
+            "Ihr Gast hält ein geeignetes Smartphone an die Karte, den Aufsteller oder den NFC-Chip. Ein vorhandener QR-Code lässt sich alternativ scannen. Zum Öffnen des NFC-Links ist keine zusätzliche NFC-App nötig; der Zieldienst kann eine Anmeldung oder eine eigene App voraussetzen.",
         },
         {
           question: "Funktioniert das mit jedem Smartphone?",
           answer:
-            "Aktuelle iPhones und Android-Geräte lesen NFC-Tags ohne zusätzliche App. Für ältere Geräte lässt sich zusätzlich ein QR-Code auf der Karte nutzen.",
+            "Das Smartphone muss NFC-Links lesen können; je nach Gerät muss NFC aktiviert sein. Ein vorhandener QR-Code bietet eine Alternative. Der einzelne Klebechip hat keinen aufgedruckten QR-Code. Für verlinkte Websites ist eine Internetverbindung nötig.",
         },
         {
           question: "Kann ich damit Bewertungen kaufen oder beeinflussen?",
@@ -425,21 +443,21 @@ export const de = {
         {
           question: "Welche Designs und Grössen sind möglich?",
           answer:
-            "Standard und personalisierte Karten sind rund oder quadratisch in 80 × 80 mm oder 100 × 100 mm möglich. Bei Personalized ergänze ich Logo oder Firmenname; Fully Customized wird komplett in Ihrer Firmen-CI gestaltet.",
+            "Der Katalog enthält runde, quadratische und rechteckige Karten sowie Aufsteller und Klebechips. Form und Grösse hängen vom Modell ab. Wo keine Masse bestätigt sind, steht «Grösse nach Absprache». Die Anfrageoptionen 80 × 80 mm und 100 × 100 mm sind Grössenwünsche für passende Karten, keine Zusage für jedes Modell. Bei Personalized ergänze ich Logo oder Firmenname; Fully Customized wird komplett in Ihrer Firmen-CI gestaltet.",
         },
         {
           question: "Was kostet es und was ist inbegriffen?",
           answer:
-            "Eine Standard Card oder ein Standard Stand kostet CHF 49, zwei Standard Cards CHF 80, Personalized CHF 69 und Fully Customized CHF 99. Programmierung und Einrichtung sind enthalten; für grössere Mengen gibt es einen Mengenrabatt.",
+            "Standard Card: 1 Stück CHF 49, 2 zusammen CHF 80, jedes weitere CHF 20. NFC-Sticker: 1 Stück CHF 15, 2 zusammen CHF 25, jeder weitere CHF 5. Personalized Card: 1 Stück CHF 69, 2 zusammen CHF 100, jede weitere CHF 25. Fully Customized Card: 1 Stück CHF 99, 2 zusammen CHF 150, jede weitere CHF 30. Ein Standard Stand kostet CHF 49; mehrere Aufsteller nach Absprache. Über 10 Stück gibt es weitere Rabatte nach Absprache. Programmierung und Einrichtung des vereinbarten Links sind enthalten. Versand und zusätzliche Leistungen werden separat in der Offerte ausgewiesen.",
         },
       ],
     },
   },
   presence: {
     eyebrow: "Online-Präsenz",
-    title: "Damit Ihr Unternehmen dort stimmt, wo Kunden suchen.",
+    title: "Klare Angaben auf Google und Maps.",
     intro:
-      "Ich richte Ihr Google-Unternehmensprofil ein oder optimiere es und sorge für konsistente, verständliche Geschäftsinformationen.",
+      "Ich prüfe, erstelle oder überarbeite Ihr Google-Unternehmensprofil: Öffnungszeiten, Kontaktwege und Leistungen, mit Ihnen abgestimmt.",
     priceLabel: "ab CHF 249",
     startingPrice: "ab CHF 249",
     priceTiers: [
@@ -447,22 +465,22 @@ export const de = {
         id: "profile",
         name: "Google Business Profile Basis",
         price: "ab CHF 249",
-        description: "Ein sauber eingerichtetes Profil als Grundlage für Ihre lokale Sichtbarkeit.",
-        features: ["Profilprüfung oder Einrichtung", "Konsistente Geschäftsdaten", "Klare Leistungsinformationen"],
+        description: "Prüfung, Einrichtung oder Überarbeitung Ihres Google-Profils. Profile, Standorte und genaue Leistungen legt die Offerte fest; laufende Pflege wird separat vereinbart.",
+        features: ["Profilprüfung oder Einrichtung", "Abgleich Ihrer Geschäftsdaten", "Leistungsangaben und Übergabeübersicht"],
       },
     ],
     benefitsTitle: "Für einen verlässlichen lokalen Auftritt",
     benefits: [
-      "Ihr Unternehmen ist mit korrekten Angaben auffindbar",
-      "Öffnungszeiten und Kontaktwege sind konsistent",
-      "Kunden verstehen schneller, was Sie anbieten",
+      "Widersprüche bei Öffnungszeiten und Kontaktwegen erkennen",
+      "Leistungen mit Ihren tatsächlichen Angeboten abgleichen",
+      "Umgesetzte Änderungen und offene Punkte nachvollziehen",
     ],
     processTitle: "So gehen wir vor",
     process: [
-      { id: "audit", label: "01", title: "Prüfen", description: "Ich prüfe den aktuellen Auftritt und erkennbare Lücken." },
-      { id: "align", label: "02", title: "Abgleichen", description: "Wir klären Leistungen, Zielgebiet und korrekte Geschäftsdaten." },
-      { id: "optimize", label: "03", title: "Optimieren", description: "Profil und Informationen werden nachvollziehbar verbessert." },
-      { id: "handover", label: "04", title: "Übergeben", description: "Sie erhalten einen klaren Überblick und die nächsten sinnvollen Schritte." },
+      { id: "audit", label: "01", title: "Profil prüfen", description: "Wir prüfen vorhandene Angaben, Inhaberschaft und Zugang und legen den Umfang in der Offerte fest." },
+      { id: "align", label: "02", title: "Daten bestätigen", description: "Sie bestätigen Öffnungszeiten, Kontaktwege und Leistungen. Einen nötigen Bestätigungsprozess bei Google begleiten wir gemeinsam." },
+      { id: "optimize", label: "03", title: "Angaben bearbeiten", description: "Nach Ihrer Freigabe bearbeite ich die vereinbarten Profilangaben über den eingerichteten Zugriff." },
+      { id: "handover", label: "04", title: "Stand übergeben", description: "Sie erhalten eine Übersicht der Änderungen, noch offener Prüfungen und nächster Schritte. Wir klären den weiteren Zugriff und die künftige Pflege." },
     ],
     ctaLabel: "Online-Präsenz besprechen",
     ctaHref: "/contact",
@@ -477,17 +495,17 @@ export const de = {
         {
           question: "Ich habe schon ein Profil. Bringt das trotzdem etwas?",
           answer:
-            "Meistens ja. Ich prüfe den bestehenden Eintrag auf fehlende oder widersprüchliche Angaben, ergänze Leistungen und Zielgebiet und sorge dafür, dass Ihre Geschäftsdaten überall gleich lauten.",
+            "Eine Prüfung kann fehlende oder widersprüchliche Angaben sichtbar machen. Wir gleichen das Google-Profil mit Ihren bestätigten Geschäftsdaten ab. Änderungen an weiteren Plattformen oder Standorten sind nur enthalten, wenn sie in der Offerte vereinbart sind.",
         },
         {
           question: "Garantiert das ein besseres Ranking bei Google?",
           answer:
-            "Nein. Niemand kann eine Position bei Google garantieren, und wer das verspricht, sollte Sie misstrauisch machen. Ein vollständiges, konsistentes Profil ist die Grundlage, auf der lokale Sichtbarkeit überhaupt entstehen kann.",
+            "Nein. Ich verspreche weder eine Position bei Google noch zusätzliche Anfragen. Ziel sind nachvollziehbare, mit Ihnen abgestimmte Geschäftsinformationen.",
         },
         {
           question: "Was erhalte ich am Ende?",
           answer:
-            "Ein eingerichtetes oder überarbeitetes Profil, konsistente Geschäftsdaten und einen verständlichen Überblick über den Stand und die nächsten sinnvollen Schritte.",
+            "Die vereinbarten Profilarbeiten und eine Übersicht der Änderungen, offenen Punkte und nächsten Schritte. Ausstehende Google-Bestätigungen werden als offen ausgewiesen. Laufende Pflege ist nur bei separater Vereinbarung enthalten; die Inhaberschaft bleibt bei Ihnen.",
         },
       ],
     },
@@ -520,7 +538,7 @@ export const de = {
       { id: "implement", label: "03", title: "Umsetzen", description: "Die passende Lösung wird schrittweise eingerichtet und getestet." },
       { id: "handover", label: "04", title: "Übergeben", description: "Sie erhalten eine verständliche Einführung und Dokumentation." },
     ],
-    ctaLabel: "Ablauf unverbindlich prüfen",
+    ctaLabel: "Ablauf unverbindlich besprechen",
     ctaHref: "/contact",
     faq: {
       title: "Häufige Fragen zur Automation",
@@ -528,12 +546,12 @@ export const de = {
         {
           question: "Welche Aufgaben lassen sich automatisieren?",
           answer:
-            "Alles, was regelmässig nach denselben Regeln abläuft: wiederkehrende E-Mails und Benachrichtigungen, regelmässige Berichte und Datenaufbereitung, Informationsübergaben zwischen Systemen und wiederholbare interne Workflows.",
+            "Geeignet sind wiederkehrende Aufgaben mit klaren Regeln, etwa Berichte, Benachrichtigungen oder Informationsübergaben. Ob eine Umsetzung möglich und sinnvoll ist, hängt von Datenqualität, verfügbaren Schnittstellen, Zugriffsrechten und Ausnahmen im Ablauf ab.",
         },
         {
           question: "Warum steht kein Preis auf dieser Seite?",
           answer:
-            "Weil der Aufwand vollständig von Ihrem bestehenden Prozess abhängt. Ich beurteile zuerst Machbarkeit, Risiken und den erwartbaren Nutzen. Erst danach lässt sich ein ehrlicher Preis nennen.",
+            "Der Aufwand hängt von Ihrem Prozess und den beteiligten Systemen ab. Die erste Anfrage ist unverbindlich. Umfang und Preis einer vertieften Analyse werden vor deren Beauftragung vereinbart; die Umsetzung und mögliche laufende Kosten werden in der jeweiligen Offerte festgehalten.",
         },
         {
           question: "Was passiert, wenn sich eine Automation nicht lohnt?",
@@ -543,7 +561,7 @@ export const de = {
         {
           question: "Was passiert nach der Umsetzung?",
           answer:
-            "Sie erhalten eine verständliche Einführung und eine Dokumentation, damit der Ablauf nachvollziehbar bleibt und nicht von einer einzelnen Person abhängt.",
+            "Sie erhalten eine verständliche Einführung und Dokumentation. Wer den Ablauf betreut, wer bei Fehlern benachrichtigt wird und welche Wartung vorgesehen ist, wird vereinbart. Laufende Betreuung sowie nötige externe Abos oder Nutzungsgebühren sind vom konkreten Angebot abhängig und nicht pauschal enthalten.",
         },
       ],
     },
@@ -580,12 +598,12 @@ export const de = {
     // selbst und kann an ihr überprüft werden. Formulierung gerne
     // anpassen -- aber keine Behauptung aufnehmen, die ein Besucher
     // nicht an einem gelieferten Projekt nachmessen könnte.
-    standardsTitle: "Was ich voraussetze",
+    standardsTitle: "Worauf Sie sich verlassen können",
     standards: [
-      "Jede Seite wird als fertiges HTML ausgeliefert und ist sofort da, auch bei langsamer Verbindung.",
-      "Bedienbar mit Tastatur und Screenreader, mit geprüften Farbkontrasten.",
+      "Ihre Besucher sollen schnell zu den wichtigen Inhalten kommen. Dafür prüfe ich Ladezeiten und halte die Seiten technisch schlank.",
+      "Ihre Website soll auch mit der Tastatur gut bedienbar sein. Klare Struktur, lesbare Kontraste und verständliche Hinweise gehören zu meinen Prüfungen.",
       "Für den schmalen Bildschirm entworfen, nicht nachträglich dafür angepasst.",
-      "Automatisch getestet, damit eine spätere Änderung nichts Bestehendes still zerstört.",
+      "Bei späteren Änderungen prüfe ich die wichtigen Abläufe erneut. Automatisierte Tests helfen, Fehler früh zu erkennen.",
     ],
     portraitAlt: "Silvan Hahn, Porträtaufnahme in einem Innenraum",
     portraitCaption: "Silvan Hahn, unabhängiger Webentwickler",
@@ -636,154 +654,8 @@ export const de = {
     ],
     directContactTitle: "Direkt erreichen",
   },
-  imprint: {
-    eyebrow: "Impressum",
-    title: "Wer hinter dieser Website steht.",
-    intro:
-      "Angaben gemäss Art. 3 Abs. 1 lit. s des Bundesgesetzes gegen den unlauteren Wettbewerb (UWG).",
-    updatedLabel: "Stand",
-    updated: "7. September 2026",
-    sections: [
-      {
-        title: "Verantwortlich für diese Website",
-        body: [
-          "Silvan Hahn",
-          "Regensbergstrasse 23",
-          "8113 Boppelsen",
-          "Schweiz",
-        ],
-      },
-      {
-        title: "Kontakt",
-        body: [
-          "E-Mail: hahn.silvan.work@gmail.com",
-          "Telefon: +41 78 900 85 00",
-          "Sämtliche Kontaktwege sind auch auf der Kontaktseite aufgeführt.",
-        ],
-      },
-      {
-        title: "Rechtsform und Mehrwertsteuer",
-        body: [
-          "SILVAN Digital Studio ist die Geschäftsbezeichnung der Einzelunternehmung von Silvan Hahn. Es besteht kein Eintrag im Handelsregister.",
-          "Es besteht keine Mehrwertsteuerpflicht. Auf Rechnungen wird deshalb keine Mehrwertsteuer ausgewiesen, und die auf dieser Website genannten Preise sind Endpreise.",
-        ],
-      },
-      {
-        title: "Zu den gezeigten Arbeiten",
-        body: [
-          "Die unter «Arbeiten» gezeigten Projekte sind eigeninitiierte Gestaltungskonzepte und werden auf jeder Ansicht als «Konzeptprojekt» gekennzeichnet. Sie stellen keine abgeschlossenen Kundenaufträge dar, und es werden weder Auftraggeber noch erzielte Ergebnisse behauptet.",
-        ],
-      },
-      {
-        title: "Haftung für Inhalte",
-        body: [
-          "Die Inhalte dieser Website werden mit Sorgfalt erstellt. Für ihre Richtigkeit, Vollständigkeit und Aktualität wird jedoch keine Gewähr übernommen. Preisangaben sind Richtwerte und werden erst mit einer schriftlichen Bestätigung verbindlich.",
-          "Anfragen über diese Website sind unverbindlich. Ein Vertrag kommt erst durch eine ausdrückliche Bestätigung zustande.",
-        ],
-      },
-      {
-        title: "Haftung für Links",
-        body: [
-          "Diese Website verweist auf externe Websites Dritter, auf deren Inhalte kein Einfluss besteht. Für diese Inhalte ist ausschliesslich der jeweilige Anbieter verantwortlich.",
-        ],
-      },
-      {
-        title: "Urheberrecht",
-        body: [
-          "Die auf dieser Website veröffentlichten Inhalte, Gestaltungen und Bilder unterliegen dem schweizerischen Urheberrecht. Eine Vervielfältigung oder Verwendung ausserhalb der gesetzlich zulässigen Fälle bedarf der vorherigen schriftlichen Zustimmung.",
-        ],
-      },
-    ],
-  },
-  privacy: {
-    eyebrow: "Datenschutz",
-    title: "Welche Daten diese Website bearbeitet.",
-    intro:
-      "Diese Erklärung beschreibt, welche Personendaten beim Besuch dieser Website bearbeitet werden, nach dem revidierten Schweizer Datenschutzgesetz (revDSG).",
-    updatedLabel: "Stand",
-    updated: "7. September 2026",
-    sections: [
-      {
-        title: "Verantwortliche Person",
-        body: [
-          "Silvan Hahn, Regensbergstrasse 23, 8113 Boppelsen, Schweiz",
-          "E-Mail: hahn.silvan.work@gmail.com",
-        ],
-      },
-      {
-        title: "Grundsatz",
-        body: [
-          "Diese Website ist so gebaut, dass sie so wenig Personendaten wie möglich bearbeitet. Sie enthält kein Kontaktformular, das an einen Server sendet, keine Benutzerkonten und keine Kommentarfunktion.",
-        ],
-      },
-      {
-        title: "Reichweitenmessung ohne Cookies",
-        body: measurementCopy.de,
-      },
-      {
-        title: "Server-Logdateien",
-        body: [
-          "Beim Abruf dieser Website werden durch den Hosting-Anbieter technisch notwendige Daten verarbeitet: IP-Adresse, Datum und Uhrzeit des Zugriffs, die aufgerufene Adresse, der verweisende Link sowie Angaben zu Browser und Betriebssystem.",
-          "Diese Bearbeitung ist für den sicheren und stabilen Betrieb der Website erforderlich. Die Daten werden nicht mit anderen Datenquellen zusammengeführt und nicht zur Identifikation einzelner Personen verwendet.",
-        ],
-      },
-      {
-        title: "Hosting",
-        body: [
-          "Diese Website wird bei Vercel Inc. gehostet. Dabei können Daten auch auf Servern ausserhalb der Schweiz bearbeitet werden. Der Anbieter ist vertraglich zur Einhaltung eines angemessenen Datenschutzniveaus verpflichtet.",
-        ],
-      },
-      {
-        title: "Schriften",
-        body: [
-          "Die verwendete Schrift wird beim Erstellen der Website heruntergeladen und von dieser Website selbst ausgeliefert. Ihr Browser stellt dafür keine Verbindung zu einem externen Schriftenanbieter her, und es werden keine Daten an Dritte übermittelt.",
-        ],
-      },
-      {
-        title: "Anfragen für NFC & QR Lösungen",
-        body: [
-          "Auf der Seite «NFC & QR» können Sie die Eckdaten einer Anfrage erfassen. Die Zusammenfassung wird nur im Arbeitsspeicher Ihres Browser-Tabs erstellt und nicht an diese Website gesendet. Modell- und Kategorienlinks enthalten ausschliesslich öffentliche Produktkennungen, keine persönlichen Anfrageangaben.",
-          "Beim Öffnen des vorbereiteten WhatsApp-Links wird der Anfragetext als Teil der URL an WhatsApp übergeben. Erst wenn Sie die Nachricht dort absenden, wird sie auch an mich geschickt. Es gelten zusätzlich die Datenschutzbestimmungen von WhatsApp. Die E-Mail-Alternative übergibt den Text an Ihr Mailprogramm; «Anfrage kopieren» schreibt ihn in Ihre lokale Zwischenablage.",
-        ],
-      },
-      {
-        title: "Optionale 3D-Produktansichten",
-        body: ["Erst wenn Sie «In 3D ansehen» wählen, lädt Ihr Browser Software und Modelldaten von cdn.spline.design und prod.spline.design, Diensten von Spline. Dabei erhält der externe Anbieter technisch notwendige Verbindungsdaten wie Ihre IP-Adresse und Browserangaben. Ohne diesen Klick bleiben die Produktbilder lokal auf dieser Website; es wird keine Spline-Verbindung aufgebaut. Die Produktanfrage funktioniert auch ohne die 3D-Ansicht."],
-      },
-      {
-        title: "Kontaktaufnahme",
-        body: [
-          "Wenn Sie mich per E-Mail, Telefon, WhatsApp oder LinkedIn kontaktieren, werden Ihre Angaben zur Bearbeitung Ihres Anliegens verwendet und so lange aufbewahrt, wie es dafür und für allfällige gesetzliche Aufbewahrungspflichten nötig ist.",
-          "WhatsApp und LinkedIn sind Dienste Dritter. Wenn Sie diese Wege nutzen, werden Daten auch durch die jeweiligen Anbieter bearbeitet: WhatsApp durch Meta Platforms Ireland Ltd., LinkedIn durch LinkedIn Ireland Unlimited Company.",
-        ],
-      },
-      {
-        title: "Externe Links",
-        body: [
-          "Diese Website verlinkt auf externe Angebote, etwa auf LinkedIn oder auf Google-Unternehmensprofile. Für die Datenbearbeitung auf diesen Websites ist der jeweilige Anbieter verantwortlich.",
-        ],
-      },
-      {
-        title: "Ihre Rechte",
-        body: [
-          "Sie haben das Recht auf Auskunft über die zu Ihrer Person bearbeiteten Daten sowie auf deren Berichtigung, Löschung oder Herausgabe. Sie können einer Bearbeitung widersprechen und eine erteilte Einwilligung jederzeit widerrufen.",
-          "Wenden Sie sich dafür an die oben genannte Adresse. Sie haben zudem das Recht, sich beim Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) zu beschweren.",
-        ],
-      },
-      {
-        title: "Datensicherheit",
-        body: [
-          "Diese Website wird ausschliesslich verschlüsselt über HTTPS ausgeliefert. Damit sind die zwischen Ihrem Browser und dem Server übertragenen Daten gegen Mitlesen geschützt.",
-        ],
-      },
-      {
-        title: "Änderungen",
-        body: [
-          "Diese Datenschutzerklärung kann angepasst werden, wenn sich die Website oder die rechtlichen Anforderungen ändern. Massgebend ist die jeweils auf dieser Seite veröffentlichte Fassung.",
-        ],
-      },
-    ],
-  },
+  imprint: imprintContent.de,
+  privacy: privacyContent.de,
   notFound: {
     eyebrow: "404",
     title: "Diese Seite wurde nicht gefunden.",
@@ -800,8 +672,8 @@ export const de = {
   // terms or turnaround that the site does not state.
   seo: {
     home: { title: "Webdesign für KMU im Kanton Zürich | SILVAN", description: "Websites, Google-Bewertungen, lokale Sichtbarkeit und Automation für Schweizer KMU. Direkt vom Entwickler aus Boppelsen ZH, Websites ab CHF 300." },
-    websites: { title: "Website erstellen lassen, Kanton Zürich | ab CHF 300", description: "Schnelle, mobil gestaltete Business-Websites für Schweizer KMU, von der kompakten Info-Seite ab CHF 300 bis zum individuellen Projekt. Feste Preisstufen." },
-    reviews: { title: "NFC & QR Lösungen für Unternehmen | ab CHF 49", description: "NFC-Karten und Aufsteller für Google-Bewertungen, digitale Menüs, Buchungen und individuelle Ziele. Programmierung und Einrichtung inklusive." },
+    websites: { title: "Website erstellen lassen, Kanton Zürich | ab CHF 300", description: "Schnelle, mobil gestaltete Websites für Schweizer KMU ab CHF 300. Preisrahmen zur Orientierung, genauer Umfang und Preis in der schriftlichen Offerte." },
+    reviews: { title: "NFC & QR Lösungen für Unternehmen | SILVAN", description: "NFC-Karten und Aufsteller ab CHF 49, Klebechips ab CHF 15. Für Bewertungen, Menüs und Buchungen. Programmierung und Einrichtung des Links inklusive." },
     presence: { title: "Google Unternehmensprofil einrichten im Kanton Zürich", description: "Google-Unternehmensprofil einrichten oder optimieren, Geschäftsdaten konsistent halten, lokal leichter gefunden werden. Für Schweizer KMU ab CHF 249." },
     automation: { title: "Abläufe automatisieren für KMU | SILVAN Digital Studio", description: "Wiederkehrende E-Mails, Berichte und interne Abläufe automatisieren, ohne grosse Software-Einführung. Für Schweizer KMU, Umfang auf Anfrage." },
     work: { title: "Arbeiten: Website-Konzepte aus der Schweiz | SILVAN", description: "Vier erkundbare Demo-Websites für Handwerk, Café, Salon und eine Unternehmensgruppe. Mit echten Screenshots und Einblicken in Struktur und Gestaltung." },
@@ -809,6 +681,6 @@ export const de = {
     contact: { title: "Kontakt: Webdesign-Anfrage Kanton Zürich | SILVAN", description: "Besprechen Sie Ihr Vorhaben direkt mit Silvan Hahn, per E-Mail, WhatsApp, Telefon oder LinkedIn. Standort Boppelsen ZH. Anfragen sind unverbindlich." },
     hello: { title: "Hallo, ich bin Silvan | SILVAN Digital Studio", description: "Der direkte Einstieg zu Websites, Google-Bewertungen, Online-Präsenz, Arbeiten und Kontakt." },
     imprint: { title: "Impressum | SILVAN Digital Studio", description: "Verantwortlich für diese Website: Silvan Hahn, Boppelsen. Angaben zu Rechtsform, Kontakt und Urheberrecht." },
-    privacy: { title: "Datenschutz | SILVAN Digital Studio", description: "Keine Cookies, keine Profilbildung, kein Wiedererkennen über Besuche hinweg. Nur eine cookielose Reichweitenmessung. Datenschutzerklärung nach revDSG." },
+    privacy: { title: "Datenschutz | SILVAN Digital Studio", description: "Datenschutz zu Website, Demos, Hosting, Kontaktaufnahme und optionaler cookieloser Reichweitenmessung. Verantwortlich: Silvan Hahn, Boppelsen, Schweiz." },
   },
 } as const satisfies SiteContent;

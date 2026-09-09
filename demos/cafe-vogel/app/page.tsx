@@ -1,25 +1,19 @@
 import Link from "next/link";
 
-const menu = [
-  { name: "Café Crème", desc: "Hausgeröstete Arabica-Bohnen", price: "4.50" },
-  { name: "Cappuccino", desc: "Doppelter Espresso, aufgeschäumte Milch", price: "5.00" },
-  { name: "Buttergebäck", desc: "Täglich frisch, butterig & zart", price: "2.80" },
-  { name: "Linzer Torte", desc: "Nach Hausrezept seit 1987", price: "6.50" },
-  { name: "Sauerteigbrot", desc: "Aus dem Steinofen, halber Laib", price: "5.80" },
-  { name: "Frühstückskorb", desc: "Für zwei Personen, mit Saisonfrüchten", price: "28.00" },
-];
+import { featuredMenu as menu } from "./data/menu";
+import { openingHours } from "./data/hours";
 
 export default function Home() {
   return (
     <>
       <section className="cafe-hero">
         <div className="hero-copy">
-          <p className="eyebrow">Konditorei & Café · Zürich · Seit 1987</p>
+          <p className="eyebrow">Café & Konditorei · Zürich · Fiktives Konzept</p>
           <h1>Ein bisschen<br />Zeit. <em>Ein Stück<br />Glück.</em></h1>
           <p className="hero-description">Noch warme Gipfeli. Der Duft von frisch gemahlenem Kaffee. Und ein Lieblingsplatz, an dem der Morgen etwas länger bleiben darf.</p>
           <div className="hero-actions">
             <Link href="/speisekarte" className="cafe-button">Unsere Speisekarte <span aria-hidden="true">✦</span></Link>
-            <Link href="/kontakt" className="cafe-text-link">Tisch reservieren <span aria-hidden="true">✦</span></Link>
+            <Link href="/kontakt" className="cafe-text-link">Reservierungsdemo <span aria-hidden="true">✦</span></Link>
           </div>
           <div className="hero-note"><span aria-hidden="true">✦</span><p>Von Hand gemacht.<br /><strong>Mit Liebe serviert.</strong></p></div>
         </div>
@@ -83,7 +77,7 @@ export default function Home() {
           <div className="relative">
             <div className="border-2 border-[#1A1208] p-2">
               <div className="aspect-[4/3] bg-[#E5D7BF] overflow-hidden">
-                <img src="/demos/cafe/cafe-interior.jpg" loading="lazy" alt="Konditorei Vogel innen" className="w-full h-full object-cover" />
+                <img src="/demos/cafe/cafe-interior.jpg" loading="lazy" alt="Café & Konditorei Vogel innen" className="w-full h-full object-cover" />
               </div>
             </div>
             {/* Kleines Etikett */}
@@ -106,7 +100,7 @@ export default function Home() {
             </h2>
 
             <p className="text-base text-[#1A1208]/70 leading-relaxed mb-4" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-              Was 1987 als kleine Backstube in Zürich begann, ist heute eine Institution. Familie Vogel steht täglich um 4 Uhr morgens auf — damit Sie um 7 Uhr frisches Brot und duftende Gipfeli geniessen können.
+              Was 1987 als kleine Backstube in Zürich begann, ist heute eine Institution. Familie Vogel steht täglich um 4 Uhr morgens auf — damit Sie zur Öffnung frisches Brot und duftende Gipfeli geniessen können.
             </p>
             <p className="text-base text-[#1A1208]/70 leading-relaxed mb-8" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
               Keine Convenience-Produkte. Kein Tiefkühlteig. Nur echte Zutaten, echtes Handwerk, echte Leidenschaft.
@@ -136,12 +130,7 @@ export default function Home() {
                     <h3 className="text-2xl font-black text-[#1A1208]" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>Öffnungszeiten</h3>
                   </div>
                   <ul className="space-y-0">
-                    {[
-                      { day: "Montag – Freitag", time: "07:00 – 18:00" },
-                      { day: "Samstag", time: "08:00 – 17:00" },
-                      { day: "Sonntag", time: "08:00 – 16:00" },
-                      { day: "Feiertage", time: "09:00 – 14:00" },
-                    ].map(({ day, time }) => (
+                    {openingHours.map(({ day, time }) => (
                       <li key={day} className="flex justify-between items-center py-3 border-b border-[#1A1208]/15 last:border-0">
                         <span className="text-sm text-[#1A1208]/80" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>{day}</span>
                         <span className="text-sm font-bold text-[#1A1208]" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>{time}</span>
@@ -157,7 +146,7 @@ export default function Home() {
                     <h3 className="text-2xl font-black text-[#1A1208]" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>Standort</h3>
                   </div>
                   <address className="not-italic text-sm text-[#1A1208]/80 text-center space-y-1 leading-relaxed mb-6" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-                    <p className="font-bold text-[#1A1208] text-base">Konditorei Vogel</p>
+                    <p className="font-bold text-[#1A1208] text-base">Café & Konditorei Vogel</p>
                     <p>Beispielgasse 12</p>
                     <p>Zürich · fiktiver Standort</p>
                     <p className="mt-4">
@@ -173,7 +162,7 @@ export default function Home() {
                       className="inline-block border border-[#1A1208] text-[#1A1208] text-xs tracking-[0.2em] uppercase px-6 py-3 hover:bg-[#1A1208] hover:text-[#F2E8D5] transition-colors duration-200"
                       style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
                     >
-                      Tisch reservieren
+                      Reservierungsdemo
                     </Link>
                   </div>
                 </div>
@@ -186,6 +175,7 @@ export default function Home() {
       {/* ───── ZITAT ───── */}
       <section className="py-14 bg-[#F2E8D5] text-center px-6">
         <div className="max-w-2xl mx-auto">
+          <p className="text-sm text-[#755031] mb-6">Fiktive Beispielstimme · Keine echte Kundenbewertung</p>
           <span className="text-5xl text-[#755031]/30 leading-none" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>"</span>
           <p className="text-xl md:text-2xl font-bold italic text-[#1A1208] leading-relaxed -mt-4" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
             Seit 35 Jahren kaufe ich mein Brot nirgendwo anders. Das ist einfach das Beste, was Zürich zu bieten hat.

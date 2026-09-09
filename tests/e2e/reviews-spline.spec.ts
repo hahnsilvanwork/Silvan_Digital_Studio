@@ -1,45 +1,8 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+import { readFileSync } from "node:fs";
 
-const RUNTIME =
-  "https://cdn.spline.design/@splinetool/viewer@2.0.16/build/spline-viewer.js";
-
-async function stubSpline(page: Page) {
-  await page.route(RUNTIME, (route) =>
-    route.fulfill({
-      contentType: "application/javascript",
-      body: `if (!customElements.get("spline-viewer")) {
-        customElements.define("spline-viewer", class extends HTMLElement {
-          connectedCallback() {
-            this._stopped = false;
-            this._spline = {
-              play: () => { this._stopped = false; },
-              stop: () => { this._stopped = true; },
-              setBackgroundColor: () => {},
-              _controls: { orbitControls: {
-                autoRotate: false, autoRotateSpeed: 2,
-                autoRotateClockwise: true, hoverRotatePanMode: 1,
-                touches: [null, 3, 1],
-                rotateLeft: () => {}, spherical: { theta: 0 }
-              } }
-            };
-            requestAnimationFrame(() => {
-              const box = this.getBoundingClientRect();
-              if (box.width === 0 || box.height === 0) {
-                console.error("GPUValidationError: texture size is empty");
-              }
-            });
-            setTimeout(() => this.dispatchEvent(new CustomEvent("load-complete")), 50);
-          }
-          disconnectedCallback() {
-            if (!this._stopped) {
-              console.error("GPUValidationError: renderer disconnected before stop");
-            }
-          }
-        });
-      }`,
-    }),
-  );
-}
+const importedProducts = JSON.parse(readFileSync(new URL("../../src/content/nfc-import.json", import.meta.url), "utf8")) as { category: string }[];
+const googleCount = importedProducts.filter(({ category }) => category === "reviews").length;
 
 test.describe("image-first NFC product catalogue", () => {
   test("opens at the true top of the page", async ({ page }) => {
@@ -49,22 +12,20 @@ test.describe("image-first NFC product catalogue", () => {
     expect(await page.evaluate(() => window.scrollY)).toBe(0);
   });
 
-  test.beforeEach(async ({ page }) => stubSpline(page));
-
   for (const width of [320, 390, 768, 1024, 1280, 1536]) {
     test(`fits the viewport and keeps prices visible at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto("/reviews");
 
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
-      await expect(page.locator("spline-viewer")).toHaveCount(0);
+      await expect(page.locator("[data-local-product-stage]")).toHaveCount(0);
       await expect(page.locator('[data-product-hero] img')).toHaveCount(3);
       await expect(
         page.locator('[data-product-hero] img[data-fit="contain"]'),
       ).toHaveCSS("object-fit", "contain");
       await expect(page.getByText("CHF 49.–", { exact: true }).first()).toBeVisible();
 
-      for (const control of await page.getByRole("button", { name: /Google Reviews|Menü|Individuell/ }).all()) {
+      for (const control of await page.getByRole("button", { name: /Google Reviews|Tripadvisor|Social Media|WhatsApp.*Kontakt|Menü|Individuell/ }).all()) {
         // Firefox reports a 44 CSS-pixel box as 43.9999 at some scale factors.
         const box = await control.boundingBox();
         expect(box?.height).toBeGreaterThanOrEqual(43.9);
@@ -75,6 +36,9 @@ test.describe("image-first NFC product catalogue", () => {
       const rail = page.locator("[data-product-rail]");
       const railControls = page.locator("[data-product-rail-controls]");
       if (width < 704) {
+        const categorySelect=page.locator('select[id$="-category"]');
+        await expect(categorySelect).toBeVisible();
+        expect((await categorySelect.boundingBox())!.height).toBeGreaterThanOrEqual(44);
         await expect(railControls).toBeVisible();
         expect(
           await rail.evaluate((node) => node.scrollWidth > node.clientWidth),
@@ -83,7 +47,7 @@ test.describe("image-first NFC product catalogue", () => {
           expect((await button.boundingBox())?.height).toBeGreaterThanOrEqual(43.9);
         }
         await railControls.getByRole("button", { name: "Nächstes Produkt" }).click();
-        await expect(railControls.getByText("Produkt 2 von 5")).toBeVisible();
+        await expect(railControls.getByText(`Produkt 2 von ${googleCount}`)).toBeVisible();
       } else {
         await expect(railControls).toBeHidden();
         const cards = await rail.locator("[data-product-card]").all();
@@ -97,24 +61,25 @@ test.describe("image-first NFC product catalogue", () => {
 
   test("loads one 3D scene only after a deliberate click and removes it on close", async ({ page }) => {
     let runtimeRequests = 0;
+    let modelRequests = 0;
     page.on("request", (request) => {
-      if (request.url() === RUNTIME) runtimeRequests += 1;
+      if (/spline\.design/.test(request.url())) runtimeRequests += 1;
+      if (request.url().endsWith(".glb")) modelRequests += 1;
     });
     await page.goto("/reviews");
     expect(runtimeRequests).toBe(0);
+    expect(modelRequests).toBe(0);
 
     const trigger = page.getByRole("button", { name: "In 3D ansehen" }).first();
     await trigger.click();
     const dialog = page.locator('[data-product-3d-dialog]');
     await expect(dialog).toBeVisible();
-    await expect(dialog.locator("spline-viewer")).toHaveCount(1);
-    await expect.poll(() => runtimeRequests).toBe(1);
-    const viewer = dialog.locator("spline-viewer");
-    await expect(viewer).toHaveCSS("touch-action", "none");
-    await expect.poll(() => viewer.evaluate((element) => {
-      const runtime = element as HTMLElement & { _spline?: { _controls: { orbitControls: { touches: (number | null)[] } } } };
-      return runtime._spline?._controls.orbitControls.touches;
-    })).toEqual([0, 3, 1]);
+    const stage = dialog.locator('[data-local-product-stage][data-model-ready="true"]');
+    await expect(stage).toBeVisible();
+    await expect(stage.locator("canvas")).toHaveCount(1);
+    expect(modelRequests).toBe(1);
+    expect(runtimeRequests).toBe(0);
+    await expect(stage).toHaveCSS("touch-action", "none");
 
     const box = await dialog.boundingBox();
     const viewport = page.viewportSize();
@@ -122,7 +87,7 @@ test.describe("image-first NFC product catalogue", () => {
 
     await dialog.getByRole("button", { name: "3D-Ansicht schliessen" }).click();
     await expect(dialog).toHaveCount(0);
-    await expect(page.locator("spline-viewer")).toHaveCount(0);
+    await expect(page.locator("[data-local-product-stage]")).toHaveCount(0);
     await expect(trigger).toBeFocused();
   });
 
@@ -137,7 +102,7 @@ test.describe("image-first NFC product catalogue", () => {
 
       const dialog = page.locator('[data-product-3d-dialog]');
       const stage = dialog.locator('[data-product-3d-stage]');
-      await expect(dialog.locator("spline-viewer")).toHaveCount(1);
+      await expect(dialog.locator('[data-local-product-stage][data-model-ready="true"] canvas')).toBeVisible();
       const geometry = await dialog.evaluate((node) => {
         const box = node.getBoundingClientRect();
         return {
@@ -168,8 +133,8 @@ test.describe("image-first NFC product catalogue", () => {
     const trigger = page.getByRole("button", { name: "In 3D ansehen" }).first();
     for (let attempt = 0; attempt < 3; attempt += 1) {
       await trigger.click();
-      await expect(page.locator("spline-viewer")).toHaveCount(1);
-      await expect(page.locator('[data-spline-state="ready"]')).toHaveCount(1);
+      await expect(page.locator("[data-local-product-stage]")).toHaveCount(1);
+      await expect(page.locator('[data-local-product-stage][data-model-ready="true"] canvas')).toBeVisible();
       await page.mouse.click(2, 2);
       await expect(page.locator('[data-product-3d-dialog]')).toHaveCount(0);
     }
@@ -177,11 +142,14 @@ test.describe("image-first NFC product catalogue", () => {
     expect(gpuErrors).toEqual([]);
   });
 
-  test("shows exactly three menu placeholders", async ({ page }) => {
+  test("shows four menu models with 3D views", async ({ page }) => {
     await page.goto("/reviews");
-    await page.getByRole("button", { name: "Menü 3 Produkte", exact: true }).click();
-    await expect(page.getByText("3D-Modell folgt")).toHaveCount(3);
-    await expect(page.locator("spline-viewer")).toHaveCount(0);
+    const categorySelect=page.locator('select[id$="-category"]');
+    if(await categorySelect.isVisible()) await categorySelect.selectOption('menu');
+    else await page.getByRole("button", { name: "Menü 4 Produkte", exact: true }).click();
+    await expect(page.getByText("3D-Modell folgt")).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "In 3D ansehen" })).toHaveCount(4);
+    await expect(page.locator("[data-local-product-stage]")).toHaveCount(0);
   });
 
   test("keeps the first hero image still under reduced motion", async ({ page }) => {

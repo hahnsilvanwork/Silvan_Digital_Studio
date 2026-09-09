@@ -62,6 +62,7 @@ export function ProductHero({
         {images.map((image, index) => (
           <Image
             alt={image.alt}
+            aria-hidden={index !== activeIndex}
             className={styles.heroImage}
             data-active={index === activeIndex}
             data-fit={image.fit ?? "cover"}

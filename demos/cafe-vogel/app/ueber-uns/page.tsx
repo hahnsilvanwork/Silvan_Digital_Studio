@@ -1,12 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 const milestones = [
-  { year: "1987", text: "Elisabeth und Hans Vogel eröffnen die erste Backstube an der Beispielgasse 12 — mit zwei Ofen und einem Rezeptbuch." },
+  { year: "1987", text: "Elisabeth und Hans Vogel eröffnen die erste Backstube an der Beispielgasse 12 — mit zwei Öfen und einem Rezeptbuch." },
   { year: "1995", text: "Der erste Lehrling tritt ein. Die Konditorei wird für ihre Linzer Torte in der Zürcher Zeitung erwähnt." },
   { year: "2008", text: "Sohn Michael Vogel übernimmt die Backstube nach seiner Ausbildung in Wien und Paris." },
   { year: "2015", text: "Erweiterung des Cafés: 30 neue Sitzplätze im Innenhof. Specialty Coffee kommt ins Programm." },
   { year: "2024", text: "Über 300 Stammkunden täglich. Die Tradition geht weiter — täglich ab 04:00 Uhr morgens." },
 ];
+
+export const metadata: Metadata = { title: "Unsere Geschichte", description: "Die fiktive Geschichte der Familie Vogel: zwei Generationen, eine Backstube und die Freude am Konditorhandwerk." };
 
 export default function UeberUns() {
   return (
@@ -17,7 +20,7 @@ export default function UeberUns() {
           <div className="border-2 border-[#F2E8D5]/20 p-1">
             <div className="border border-[#F2E8D5]/10 px-8 md:px-16 py-12 text-center">
               <p className="text-[#755031] text-[11px] tracking-[0.4em] uppercase mb-3" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-                ✦ Seit Generationen ✦
+                ✦ Zwei Generationen · Eine fiktive Geschichte ✦
               </p>
               <h1 className="text-4xl md:text-6xl font-black text-[#F2E8D5] mb-3" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
                 Über uns
@@ -51,7 +54,7 @@ export default function UeberUns() {
           <div>
             <h2 className="text-2xl md:text-3xl font-black text-[#F2E8D5] mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
               Eine Backstube.<br/>
-              <span className="italic text-[#755031]">Drei Generationen.</span>
+              <span className="italic text-[#755031]">Zwei Generationen.</span>
             </h2>
             <div className="space-y-4 text-base text-[#F2E8D5]/65 leading-relaxed" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
               <p>
@@ -110,7 +113,7 @@ export default function UeberUns() {
           </div>
           <div className="grid md:grid-cols-3 gap-0 border border-[#1A1208]/20">
             {[
-              { title: "Kein Kompromiss", text: "Wir verwenden ausschliesslich frische, regionale Zutaten. Kein Tiefkühlteig, keine Convenience-Produkte." },
+              { title: "Kein Kompromiss", text: "Wir verwenden frische Zutaten und bevorzugen regionale Produkte, wo es möglich ist. Kein Tiefkühlteig, keine Convenience-Produkte." },
               { title: "Täglich neu", text: "Jeden Morgen ab 04:00 Uhr. Was übrig bleibt, wird gespendet — nie von gestern auf heute." },
               { title: "Handwerk zuerst", text: "Jede Torte, jedes Brot entsteht per Hand. Maschinen helfen, aber ersetzen keine Erfahrung." },
             ].map(({ title, text }, i) => (
@@ -134,7 +137,7 @@ export default function UeberUns() {
           className="border border-[#1A1208] text-[#1A1208] text-xs tracking-[0.2em] uppercase px-8 py-3 hover:bg-[#1A1208] hover:text-[#F2E8D5] transition-colors duration-200 inline-block"
           style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
         >
-          Tisch reservieren
+          Reservierungsdemo
         </Link>
       </section>
     </>

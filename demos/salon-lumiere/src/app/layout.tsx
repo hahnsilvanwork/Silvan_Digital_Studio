@@ -5,9 +5,9 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
-  title: "Salon Lumière – Haarsalon in Zürich",
+  title: "Salon Lumière – Fiktives Salonkonzept",
   description:
-    "Ihr exklusiver Haarsalon im Herzen Zürichs. Schnitte, Färbungen und Strähnen für Damen und Herren.",
+    "Fiktives Salonkonzept mit beispielhaften Leistungen und einer lokalen Demo-Terminanfrage ohne Versand.",
 };
 
 export default function RootLayout({

@@ -2,10 +2,19 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 
-test("garden portal has verified service data and bilingual pages", async () => {
+test("garden portal has localized planning guidance and bilingual pages", async () => {
   const data = await readFile(new URL("../src/data/garden.ts", import.meta.url), "utf8");
   for (const id of ["design", "maintenance", "containers-transport"]) assert.match(data, new RegExp(`id: [\"']${id}[\"']`));
-  assert.match(data, /2026-08-24/);
+  assert.doesNotMatch(data, /verifiedOn/);
+  const notes = [...data.matchAll(/planningNote: \{ de: "([^"]+)", en: "([^"]+)" \}/g)];
+  assert.equal(notes.length, 3, "each garden service needs guidance in both languages");
+  for (const [, de, en] of notes) {
+    assert.ok(de.length > 80 && en.length > 80, "guidance must explain the project information needed");
+    assert.notEqual(de, en);
+  }
+  const portal = await readFile(new URL("../src/components/GardenPortalPage.astro", import.meta.url), "utf8");
+  assert.match(portal, /service\.planningNote\[lang\]/);
+  assert.doesNotMatch(portal, /Gärten, die wir gestaltet haben|Gardens we have shaped/);
   const pages = [
     "gartenbau/gartengestaltung", "gartenbau/gartenunterhalt", "gartenbau/mulden-transporte", "gartenbau/referenzen", "gartenbau/tipps",
     "en/gartenbau/garden-design", "en/gartenbau/garden-maintenance", "en/gartenbau/containers-transport", "en/gartenbau/references", "en/gartenbau/tips",

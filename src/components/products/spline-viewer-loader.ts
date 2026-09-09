@@ -48,6 +48,10 @@ export function loadSplineViewer(): Promise<void> {
       script.id = SPLINE_VIEWER_SCRIPT_ID;
       script.type = "module";
       script.src = SPLINE_VIEWER_SCRIPT_URL;
+      // Recalculate only after reviewing a runtime upgrade. A CDN change fails closed.
+      script.integrity = "sha384-JfS7DSZIcVVmtS40LHQ+PZrjTjkcccoeqnCNNQWmlwpEaUKrj4hmJ1hiwvJo0yJo";
+      script.crossOrigin = "anonymous";
+      script.referrerPolicy = "no-referrer";
       script.async = true;
       document.head.append(script);
     }

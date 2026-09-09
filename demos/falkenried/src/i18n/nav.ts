@@ -42,7 +42,7 @@ export const nav = {
     langSwitch: "EN",
   },
   en: {
-    bmw: "Autowerkstatt",
+    bmw: "Auto Workshop",
     gartenbau: "Landscaping",
     immobilien: "Real Estate",
     geschichte: "History",
@@ -88,10 +88,10 @@ export const common = {
   },
   en: {
     address: "Musterweg 12, 8165 Zürcher Unterland",
-    phone: "Telefon auf Anfrage",
+    phone: "Phone number on request",
     phoneHref: "#demo-hinweis",
     email: "info@falkenried.example",
-    emailHref: "/kontakt/#allgemeine-anfrage",
+    emailHref: "/en/contact/#general-inquiry",
   },
 } as const;
 

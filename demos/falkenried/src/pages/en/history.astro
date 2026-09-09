@@ -22,9 +22,9 @@ const lang = "en";
     variant="full"
     eyebrow="SINCE 1969"
     title={`Tradition Meets <span class="italic font-light">Swiss Engineering.</span>`}
-    subtitle="Five decades of workshop precision, landscape architecture, and property management – told through people and milestones."
+    subtitle="This fictional timeline begins with a workshop in 1969. Landscaping and property management join the example business in 2000."
     image={heroImage}
-    imageAlt="Classic BMW, a symbol of our heritage since 1969"
+    imageAlt="Vehicle on a lift illustrating the workshop story"
     primaryCta={{ label: "Get in Touch", href: routes.kontakt[lang] }}
     secondaryCta={{ label: "View Timeline", href: "#timeline" }}
   />
@@ -61,13 +61,13 @@ const lang = "en";
   <section id="timeline" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
     <div class="max-w-3xl mx-auto px-6 lg:px-16">
       <div class="text-center mb-20">
-        <span class="label-caps text-[var(--color-primary)] mb-4 block">The Journey of Falkenried Gruppe</span>
+        <span class="label-caps text-[var(--color-primary)] mb-4 block">Fictional company timeline</span>
         <h2 class="font-display text-3xl font-semibold italic font-light">Grown since 1969.</h2>
       </div>
       <Timeline
         entries={[
           { year: "1969", title: "Foundation", description: "Emil Falkenried opens the first workshop in Zürcher Unterland, laying the foundation for over five decades of expertise." },
-          { year: "1985", title: "BMW Partnership", description: "Appointment as an official vehicle service and strategic expansion of the workshop infrastructure." },
+          { year: "1985", title: "Workshop Expansion", description: "Expansion of the workshop with additional work bays for maintenance and repairs." },
           { year: "2000", title: "Expansion", description: "Integration of the landscaping division and the build-up of property management as a third pillar." },
           { year: "Today", title: "Second Generation", description: "A modern family business with over 55 years of experience and deep local roots in the Zürcher Unterland." },
         ]}
@@ -83,7 +83,7 @@ const lang = "en";
       </div>
 
       <div class="mb-16">
-        <p class="label-caps text-[var(--color-bmw-text)] mb-6">Autowerkstatt & Service</p>
+        <p class="label-caps text-[var(--color-bmw-text)] mb-6">Auto Workshop & Service</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl">
           <ContactPerson name={people["jonas-lindberg"].name} roles={people["jonas-lindberg"].roles[lang]} accentVar="--color-bmw-text" />
         </div>

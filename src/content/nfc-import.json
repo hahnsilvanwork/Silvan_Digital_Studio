@@ -1,0 +1,1258 @@
+[
+  {
+    "id": "nfc-001-google",
+    "number": "001",
+    "platform": "google",
+    "kind": "card",
+    "color": "white",
+    "category": "reviews",
+    "front": {
+      "file": "001-whitecard google review-front.png",
+      "quad": [
+        [
+          16,
+          13
+        ],
+        [
+          322,
+          13
+        ],
+        [
+          322,
+          498
+        ],
+        [
+          16,
+          498
+        ]
+      ]
+    },
+    "back": {
+      "file": "001-whitecard google review-back.png",
+      "quad": [
+        [
+          10,
+          15
+        ],
+        [
+          316,
+          15
+        ],
+        [
+          316,
+          498
+        ],
+        [
+          10,
+          498
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      54,
+      85.6,
+      0.8
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-001-google.glb",
+    "imageUrl": "/images/products/nfc/nfc-001-google.png"
+  },
+  {
+    "id": "review-square-blue",
+    "number": "002",
+    "platform": "google",
+    "kind": "square",
+    "color": "blue",
+    "category": "reviews",
+    "front": {
+      "file": "002-Google review card blue white square front.png",
+      "quad": [
+        [
+          43,
+          29
+        ],
+        [
+          558,
+          29
+        ],
+        [
+          558,
+          550
+        ],
+        [
+          43,
+          550
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/review-square-blue.glb",
+    "imageUrl": "/images/products/nfc/review-square-blue.png"
+  },
+  {
+    "id": "review-stand-white",
+    "number": "003",
+    "platform": "google",
+    "kind": "stand",
+    "color": "white",
+    "category": "reviews",
+    "front": {
+      "file": "003 white stand google review front side.png",
+      "quad": [
+        [
+          125,
+          39
+        ],
+        [
+          430,
+          39
+        ],
+        [
+          492,
+          560
+        ],
+        [
+          184,
+          596
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      76,
+      127.5,
+      50
+    ],
+    "dimensionsConfirmed": true,
+    "personalized": false,
+    "packageId": "standard-stand",
+    "modelUrl": "/models/nfc/review-stand-white.glb",
+    "imageUrl": "/images/products/nfc/review-stand-white.png"
+  },
+  {
+    "id": "review-round-black",
+    "number": "004",
+    "platform": "google",
+    "kind": "round",
+    "color": "black",
+    "category": "reviews",
+    "front": {
+      "file": "004 google review circle black front.png",
+      "quad": [
+        [
+          18,
+          36
+        ],
+        [
+          331,
+          36
+        ],
+        [
+          331,
+          370
+        ],
+        [
+          18,
+          370
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/review-round-black.glb",
+    "imageUrl": "/images/products/nfc/review-round-black.png"
+  },
+  {
+    "id": "review-round-white",
+    "number": "005",
+    "platform": "google",
+    "kind": "round",
+    "color": "white",
+    "category": "reviews",
+    "front": {
+      "file": "005 google review white circle front.png",
+      "quad": [
+        [
+          20,
+          24
+        ],
+        [
+          637,
+          24
+        ],
+        [
+          637,
+          637
+        ],
+        [
+          20,
+          637
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/review-round-white.glb",
+    "imageUrl": "/images/products/nfc/review-round-white.png"
+  },
+  {
+    "id": "nfc-006-google",
+    "number": "006",
+    "platform": "google",
+    "kind": "stand",
+    "color": "black",
+    "category": "reviews",
+    "front": {
+      "file": "006 google review black stand front side.png",
+      "quad": [
+        [
+          53,
+          48
+        ],
+        [
+          327,
+          39
+        ],
+        [
+          380,
+          511
+        ],
+        [
+          106,
+          576
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      76,
+      127.5,
+      50
+    ],
+    "dimensionsConfirmed": true,
+    "personalized": false,
+    "packageId": "standard-stand",
+    "modelUrl": "/models/nfc/nfc-006-google.glb",
+    "imageUrl": "/images/products/nfc/nfc-006-google.png"
+  },
+  {
+    "id": "nfc-007-instagram",
+    "number": "007",
+    "platform": "instagram",
+    "kind": "stand",
+    "color": "gradient",
+    "category": "social",
+    "front": {
+      "file": "007 instagram review stand front side.png",
+      "quad": [
+        [
+          46,
+          30
+        ],
+        [
+          332,
+          19
+        ],
+        [
+          384,
+          509
+        ],
+        [
+          127,
+          594
+        ]
+      ]
+    },
+    "back": {
+      "file": "007 instagram review stand front other side.png",
+      "quad": [
+        [
+          139,
+          49
+        ],
+        [
+          431,
+          68
+        ],
+        [
+          351,
+          634
+        ],
+        [
+          68,
+          567
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      76,
+      127.5,
+      50
+    ],
+    "dimensionsConfirmed": true,
+    "personalized": false,
+    "packageId": "standard-stand",
+    "modelUrl": "/models/nfc/nfc-007-instagram.glb",
+    "imageUrl": "/images/products/nfc/nfc-007-instagram.png"
+  },
+  {
+    "id": "nfc-008-tiktok",
+    "number": "008",
+    "platform": "tiktok",
+    "kind": "stand",
+    "color": "black",
+    "category": "social",
+    "front": {
+      "file": "008 review stand black tik tok front side.png",
+      "quad": [
+        [
+          33,
+          33
+        ],
+        [
+          295,
+          24
+        ],
+        [
+          357,
+          476
+        ],
+        [
+          108,
+          552
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      76,
+      127.5,
+      50
+    ],
+    "dimensionsConfirmed": true,
+    "personalized": false,
+    "packageId": "standard-stand",
+    "modelUrl": "/models/nfc/nfc-008-tiktok.glb",
+    "imageUrl": "/images/products/nfc/nfc-008-tiktok.png"
+  },
+  {
+    "id": "nfc-010-whatsapp",
+    "number": "010",
+    "platform": "whatsapp",
+    "kind": "stand",
+    "color": "green",
+    "category": "contact",
+    "front": {
+      "file": "010 contact whatsapp green front side stand.png",
+      "quad": [
+        [
+          127,
+          54
+        ],
+        [
+          424,
+          67
+        ],
+        [
+          342,
+          622
+        ],
+        [
+          57,
+          554
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      76,
+      127.5,
+      50
+    ],
+    "dimensionsConfirmed": true,
+    "personalized": false,
+    "packageId": "standard-stand",
+    "modelUrl": "/models/nfc/nfc-010-whatsapp.glb",
+    "imageUrl": "/images/products/nfc/nfc-010-whatsapp.png"
+  },
+  {
+    "id": "nfc-011-youtube",
+    "number": "011",
+    "platform": "youtube",
+    "kind": "stand",
+    "color": "black",
+    "category": "social",
+    "front": {
+      "file": "011 youtube stand black front side.png",
+      "quad": [
+        [
+          179,
+          31
+        ],
+        [
+          554,
+          43
+        ],
+        [
+          436,
+          738
+        ],
+        [
+          71,
+          653
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      76,
+      127.5,
+      50
+    ],
+    "dimensionsConfirmed": true,
+    "personalized": false,
+    "packageId": "standard-stand",
+    "modelUrl": "/models/nfc/nfc-011-youtube.glb",
+    "imageUrl": "/images/products/nfc/nfc-011-youtube.png"
+  },
+  {
+    "id": "nfc-013-tiktok",
+    "number": "013",
+    "platform": "tiktok",
+    "kind": "card",
+    "color": "black",
+    "category": "social",
+    "front": {
+      "file": "013 tik tok card front black.png",
+      "quad": [
+        [
+          75,
+          35
+        ],
+        [
+          404,
+          35
+        ],
+        [
+          423,
+          509
+        ],
+        [
+          43,
+          509
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      54,
+      85.6,
+      0.8
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-013-tiktok.glb",
+    "imageUrl": "/images/products/nfc/nfc-013-tiktok.png"
+  },
+  {
+    "id": "nfc-014-instagram",
+    "number": "014",
+    "platform": "instagram",
+    "kind": "card",
+    "color": "gradient",
+    "category": "social",
+    "front": {
+      "file": "014 instagram card front.png",
+      "quad": [
+        [
+          58,
+          47
+        ],
+        [
+          390,
+          44
+        ],
+        [
+          415,
+          534
+        ],
+        [
+          33,
+          537
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      54,
+      85.6,
+      0.8
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-014-instagram.glb",
+    "imageUrl": "/images/products/nfc/nfc-014-instagram.png"
+  },
+  {
+    "id": "nfc-015-whatsapp",
+    "number": "015",
+    "platform": "whatsapp",
+    "kind": "card",
+    "color": "green",
+    "category": "contact",
+    "front": {
+      "file": "015 whatsapp card front.png",
+      "quad": [
+        [
+          38,
+          37
+        ],
+        [
+          372,
+          34
+        ],
+        [
+          391,
+          527
+        ],
+        [
+          11,
+          529
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      54,
+      85.6,
+      0.8
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-015-whatsapp.glb",
+    "imageUrl": "/images/products/nfc/nfc-015-whatsapp.png"
+  },
+  {
+    "id": "nfc-016-youtube",
+    "number": "016",
+    "platform": "youtube",
+    "kind": "card",
+    "color": "black",
+    "category": "social",
+    "front": {
+      "file": "016 youtube card front.png",
+      "quad": [
+        [
+          83,
+          45
+        ],
+        [
+          404,
+          43
+        ],
+        [
+          422,
+          511
+        ],
+        [
+          61,
+          511
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      54,
+      85.6,
+      0.8
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-016-youtube.glb",
+    "imageUrl": "/images/products/nfc/nfc-016-youtube.png"
+  },
+  {
+    "id": "nfc-017-tripadvisor",
+    "number": "017",
+    "platform": "tripadvisor",
+    "kind": "card",
+    "color": "white",
+    "category": "tripadvisor",
+    "front": {
+      "file": "017 tripadvisor card front.png",
+      "quad": [
+        [
+          54,
+          47
+        ],
+        [
+          385,
+          46
+        ],
+        [
+          409,
+          524
+        ],
+        [
+          25,
+          525
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      54,
+      85.6,
+      0.8
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-017-tripadvisor.glb",
+    "imageUrl": "/images/products/nfc/nfc-017-tripadvisor.png"
+  },
+  {
+    "id": "nfc-018-google",
+    "number": "018",
+    "platform": "google",
+    "kind": "square",
+    "color": "black",
+    "category": "reviews",
+    "front": {
+      "file": "018 google review square card front back black.png",
+      "quad": [
+        [
+          175,
+          94
+        ],
+        [
+          698,
+          94
+        ],
+        [
+          698,
+          607
+        ],
+        [
+          175,
+          607
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-018-google.glb",
+    "imageUrl": "/images/products/nfc/nfc-018-google.png"
+  },
+  {
+    "id": "nfc-019-google",
+    "number": "019",
+    "platform": "google",
+    "kind": "square",
+    "color": "white",
+    "category": "reviews",
+    "front": {
+      "file": "019 google review sqare cards white front back .png",
+      "quad": [
+        [
+          172,
+          109
+        ],
+        [
+          692,
+          109
+        ],
+        [
+          692,
+          628
+        ],
+        [
+          172,
+          628
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-019-google.glb",
+    "imageUrl": "/images/products/nfc/nfc-019-google.png"
+  },
+  {
+    "id": "nfc-020-facebook",
+    "number": "020",
+    "platform": "facebook",
+    "kind": "square",
+    "color": "blue",
+    "category": "social",
+    "front": {
+      "file": "020 facebook square card front back.png",
+      "quad": [
+        [
+          174,
+          95
+        ],
+        [
+          697,
+          95
+        ],
+        [
+          697,
+          608
+        ],
+        [
+          174,
+          608
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-020-facebook.glb",
+    "imageUrl": "/images/products/nfc/nfc-020-facebook.png"
+  },
+  {
+    "id": "nfc-021-instagram",
+    "number": "021",
+    "platform": "instagram",
+    "kind": "square",
+    "color": "gradient",
+    "category": "social",
+    "front": {
+      "file": "021 instagram square card front back.png",
+      "quad": [
+        [
+          170,
+          97
+        ],
+        [
+          693,
+          97
+        ],
+        [
+          693,
+          611
+        ],
+        [
+          170,
+          611
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-021-instagram.glb",
+    "imageUrl": "/images/products/nfc/nfc-021-instagram.png"
+  },
+  {
+    "id": "nfc-022-tiktok",
+    "number": "022",
+    "platform": "tiktok",
+    "kind": "square",
+    "color": "black",
+    "category": "social",
+    "front": {
+      "file": "022 tiktoksquare card front back.png",
+      "quad": [
+        [
+          173,
+          99
+        ],
+        [
+          695,
+          99
+        ],
+        [
+          695,
+          611
+        ],
+        [
+          173,
+          611
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-022-tiktok.glb",
+    "imageUrl": "/images/products/nfc/nfc-022-tiktok.png"
+  },
+  {
+    "id": "nfc-022-whatsapp",
+    "number": "009",
+    "platform": "whatsapp",
+    "kind": "square",
+    "color": "green",
+    "category": "contact",
+    "front": {
+      "file": "009 whatsapp square card front back.png",
+      "quad": [
+        [
+          167,
+          95
+        ],
+        [
+          688,
+          95
+        ],
+        [
+          688,
+          607
+        ],
+        [
+          167,
+          607
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-022-whatsapp.glb",
+    "imageUrl": "/images/products/nfc/nfc-022-whatsapp.png"
+  },
+  {
+    "id": "nfc-023-tripadvisor",
+    "number": "023",
+    "platform": "tripadvisor",
+    "kind": "square",
+    "color": "green",
+    "category": "tripadvisor",
+    "front": {
+      "file": "023 tripadvisorsquare card front back.png",
+      "quad": [
+        [
+          165,
+          92
+        ],
+        [
+          686,
+          92
+        ],
+        [
+          686,
+          603
+        ],
+        [
+          165,
+          603
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-023-tripadvisor.glb",
+    "imageUrl": "/images/products/nfc/nfc-023-tripadvisor.png"
+  },
+  {
+    "id": "nfc-024-menu",
+    "number": "024",
+    "platform": "menu",
+    "kind": "card",
+    "color": "black",
+    "category": "menu",
+    "front": {
+      "file": "024 black menu card front.png",
+      "quad": [
+        [
+          68,
+          43
+        ],
+        [
+          405,
+          41
+        ],
+        [
+          426,
+          542
+        ],
+        [
+          39,
+          545
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      54,
+      85.6,
+      0.8
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/nfc-024-menu.glb",
+    "imageUrl": "/images/products/nfc/nfc-024-menu.png"
+  },
+  {
+    "id": "menu-round-black",
+    "number": "025",
+    "platform": "menu",
+    "kind": "round",
+    "color": "black",
+    "category": "menu",
+    "front": {
+      "file": "025 black menu circle front.png",
+      "quad": [
+        [
+          16,
+          26
+        ],
+        [
+          342,
+          26
+        ],
+        [
+          342,
+          350
+        ],
+        [
+          16,
+          350
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "modelUrl": "/models/nfc/menu-round-black.glb",
+    "imageUrl": "/images/products/nfc/menu-round-black.png"
+  },
+  {
+    "id": "menu-square-black",
+    "number": "026",
+    "platform": "menu",
+    "kind": "square",
+    "color": "black",
+    "category": "menu",
+    "front": {
+      "file": "026 black menu square front.png",
+      "quad": [
+        [
+          40,
+          39
+        ],
+        [
+          302,
+          39
+        ],
+        [
+          302,
+          307
+        ],
+        [
+          40,
+          307
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "standard-card",
+    "cornerRadiusMm": 10,
+    "modelUrl": "/models/nfc/menu-square-black.glb",
+    "imageUrl": "/images/products/nfc/menu-square-black.png"
+  },
+  {
+    "id": "menu-personalized-white",
+    "number": "027",
+    "platform": "menu",
+    "kind": "round",
+    "color": "white",
+    "category": "menu",
+    "front": {
+      "file": "027 fully customiced white circle front.png",
+      "quad": [
+        [
+          24,
+          19
+        ],
+        [
+          374,
+          19
+        ],
+        [
+          374,
+          378
+        ],
+        [
+          24,
+          378
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": true,
+    "packageId": "fully-custom-card",
+    "modelUrl": "/models/nfc/menu-personalized-white.glb",
+    "imageUrl": "/images/products/nfc/menu-personalized-white.png"
+  },
+  {
+    "id": "booking-custom-blue",
+    "number": "028",
+    "platform": "booking",
+    "kind": "square",
+    "color": "blue",
+    "category": "custom",
+    "front": {
+      "file": "028 individual customiced blue square blue booking front.png",
+      "quad": [
+        [
+          27,
+          23
+        ],
+        [
+          370,
+          23
+        ],
+        [
+          370,
+          374
+        ],
+        [
+          27,
+          374
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": true,
+    "packageId": "fully-custom-card",
+    "bodyColor": "#10243b",
+    "cornerRadiusMm": 8,
+    "modelUrl": "/models/nfc/booking-custom-blue.glb",
+    "imageUrl": "/images/products/nfc/booking-custom-blue.png"
+  },
+  {
+    "id": "review-personalized-black",
+    "number": "029",
+    "platform": "google",
+    "kind": "round",
+    "color": "black",
+    "category": "reviews",
+    "front": {
+      "file": "029 customiced google review circle black front.png",
+      "quad": [
+        [
+          31,
+          19
+        ],
+        [
+          367,
+          19
+        ],
+        [
+          367,
+          353
+        ],
+        [
+          31,
+          353
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": true,
+    "packageId": "personalized-card",
+    "modelUrl": "/models/nfc/review-personalized-black.glb",
+    "imageUrl": "/images/products/nfc/review-personalized-black.png"
+  },
+  {
+    "id": "nfc-030-chip",
+    "number": "030",
+    "platform": "chip",
+    "kind": "round",
+    "color": "silver",
+    "category": "chips",
+    "front": {
+      "file": "030 nfc chip front and side.png",
+      "quad": [
+        [
+          382,
+          78
+        ],
+        [
+          713,
+          78
+        ],
+        [
+          713,
+          417
+        ],
+        [
+          382,
+          417
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      30,
+      30,
+      0.3
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "nfc-chip",
+    "bodyColor": "#c9c9c4",
+    "modelUrl": "/models/nfc/nfc-030-chip.glb",
+    "imageUrl": "/images/products/nfc/nfc-030-chip.png"
+  },
+  {
+    "id": "nfc-031-airbnb",
+    "number": "031",
+    "platform": "airbnb",
+    "kind": "square",
+    "color": "white",
+    "category": "custom",
+    "front": {
+      "file": "031 airbnb square front fully customiced front .png",
+      "quad": [
+        [
+          168,
+          156
+        ],
+        [
+          921,
+          156
+        ],
+        [
+          921,
+          909
+        ],
+        [
+          168,
+          909
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": true,
+    "packageId": "fully-custom-card",
+    "cornerRadiusMm": 4.5,
+    "modelUrl": "/models/nfc/nfc-031-airbnb.glb",
+    "imageUrl": "/images/products/nfc/nfc-031-airbnb.png"
+  },
+  {
+    "id": "nfc-032-airbnb",
+    "number": "032",
+    "platform": "airbnb",
+    "kind": "round",
+    "color": "white",
+    "category": "custom",
+    "front": {
+      "file": "032 airbnb circle front fully customiced front .png",
+      "quad": [
+        [
+          146,
+          113
+        ],
+        [
+          937,
+          113
+        ],
+        [
+          937,
+          913
+        ],
+        [
+          146,
+          913
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      80,
+      80,
+      2
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": true,
+    "packageId": "fully-custom-card",
+    "modelUrl": "/models/nfc/nfc-032-airbnb.glb",
+    "imageUrl": "/images/products/nfc/nfc-032-airbnb.png"
+  }
+]

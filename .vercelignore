@@ -5,6 +5,7 @@ demos/**/.astro/
 demos/**/out/
 demos/**/dist/
 public/demos/
+public/3d/
 .github/
 docs/
 .scratch/
@@ -12,7 +13,8 @@ docs/
 .superpowers/
 .idea/
 artifacts/
-assets/
+/assets/
+NFC Cards/
 stitch_silvan_digital_studio/
 test-results/
 playwright-report/

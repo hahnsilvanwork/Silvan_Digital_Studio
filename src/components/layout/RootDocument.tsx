@@ -5,17 +5,19 @@ import type { Locale } from "../../content/types";
 import { PersonSchema } from "../seo/PersonSchema";
 import { MOTION_FLAG_SCRIPT } from "../motion/motion-flag";
 import { rootFontVariables } from "../../app/fonts";
+import { errorPageCsp } from '../../lib/error-page-csp';
 
 interface RootDocumentProps {
   readonly locale: Locale;
   readonly children: ReactNode;
+  readonly nonce?: string;
 }
 
 /**
  * The shared HTML document. German and English each have their own root layout
  * so `<html lang>` actually matches the language of the page.
  */
-export function RootDocument({ locale, children }: RootDocumentProps) {
+export function RootDocument({ locale, children, nonce }: RootDocumentProps) {
   return (
     // The font variables must be declared on :root itself. globals.css builds
     // --font-sans from --font-geist-sans on :root, and a custom property
@@ -29,13 +31,17 @@ export function RootDocument({ locale, children }: RootDocumentProps) {
       lang={locale}
       suppressHydrationWarning
     >
+      {/* A complete App Router document needs the policy before body scripts. */}
+      {/* eslint-disable-next-line @next/next/no-head-element -- next/head is for the Pages Router. */}
+      {nonce ? <head><meta data-nonce-csp="true" httpEquiv="Content-Security-Policy" content={errorPageCsp(nonce)} /></head> : null}
       <body>
         <script
           dangerouslySetInnerHTML={{ __html: MOTION_FLAG_SCRIPT }}
           // Must run before the first paint, so it cannot be deferred.
           id="silvan-motion-flag"
+          nonce={nonce}
         />
-        <PersonSchema locale={locale} />
+        <PersonSchema locale={locale} nonce={nonce} />
         {children}
         <PrivacySafeTelemetry />
       </body>

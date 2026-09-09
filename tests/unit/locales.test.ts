@@ -240,14 +240,14 @@ describe("locale content", () => {
         websitePrices,
       );
       expect(content.reviews.products.map(({ price }) => price)).toEqual([
+        "CHF 15.–",
         "CHF 49.–",
-        "CHF 80.–",
         "CHF 69.–",
         "CHF 99.–",
       ]);
       expect(content.reviews.products.map(({ id }) => id)).toEqual([
+        "nfc-chip",
         "standard-card",
-        "standard-pair",
         "personalized-card",
         "fully-custom-card",
       ]);
@@ -272,10 +272,10 @@ describe("locale content", () => {
         { name: "shape", required: true },
         { name: "size", required: true },
         { name: "quantity", required: true },
-        { name: "businessName", required: false },
-        { name: "contactPerson", required: false },
         { name: "setup", required: true },
         { name: "destinationUrl", required: false },
+        { name: "businessName", required: false },
+        { name: "contactPerson", required: false },
         { name: "note", required: false },
       ]);
       expect(content.reviews.inquiry.requiredError).not.toBe("");

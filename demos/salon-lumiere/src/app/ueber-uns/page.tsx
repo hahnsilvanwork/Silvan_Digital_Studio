@@ -1,24 +1,25 @@
+import Link from "next/link";
+import type { Metadata } from "next";
+export const metadata: Metadata = { title: "Unser Team | Salon Lumière – Demo", description: "Drei fiktive Teamprofile und die Geschichte des Salonkonzepts. Personen und Werdegänge sind illustrative Beispiele." };
+
 const team = [
   {
     name: "Sophie Maurer",
     role: "Inhaberin & Chefstylistin",
     bio: "Sophie gründete Salon Lumière 2010 nach Stationen in Paris und London. Mit ihrer Leidenschaft für Präzisionsschnitte und moderne Colorationstechniken hat sie den Salon zu einem der angesehensten Häuser Zürichs geformt.",
     speciality: "Balayage, Präzisionsschnitte",
-    image: "/demos/salon/team-sophie.jpg",
   },
   {
     name: "Lukas Bernhard",
     role: "Senior Colourist",
     bio: "Lukas ist seit 2015 Teil des Teams und hat sich auf komplexe Farbkompositionen spezialisiert. Seine Arbeit wurde in mehreren Schweizer Modemagazinen vorgestellt.",
     speciality: "Colorationen, Balayage",
-    image: null,
   },
   {
     name: "Elena Costa",
     role: "Stylistin",
     bio: "Elena bringt mediterranes Flair und eine Begeisterung für natürliche Looks mit. Sie ist bekannt für ihre einfühlsame Beratung und ihr Gespür für den individuellen Stil jeder Kundin.",
     speciality: "Damenschnitte, Stylings",
-    image: null,
   },
 ];
 
@@ -29,7 +30,7 @@ const values = [
   },
   {
     title: "Kontinuierliche Weiterbildung",
-    text: "Unser Team besucht regelmäßig internationale Trainings und Seminare – damit Sie immer von den neuesten Techniken profitieren.",
+    text: "Unser Team besucht regelmässig internationale Trainings und Seminare – damit Sie immer von den neuesten Techniken profitieren.",
   },
   {
     title: "Nachhaltige Produkte",
@@ -57,7 +58,7 @@ export default function UeberUns() {
         <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-start">
           <div>
             <h2 className="font-display text-2xl md:text-3xl text-charcoal font-semibold mb-6">
-              Eine Geschichte voller Leidenschaft
+              Eine fiktive Salongeschichte
             </h2>
             <div className="space-y-4 text-muted text-base leading-relaxed font-body">
               <p>
@@ -78,22 +79,10 @@ export default function UeberUns() {
             </div>
           </div>
 
-          {/* Owner photo */}
-          <div className="relative">
-            <div className="aspect-[3/4] bg-cream-dark overflow-hidden">
-              <div role="img" aria-label="Sophie Maurer im Salon"
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: "url('/demos/salon/team-sophie.jpg')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center top",
-                }}
-              />
-            </div>
-            <div className="absolute -bottom-4 -left-4 bg-gold px-6 py-4">
-              <p className="font-display text-3xl font-semibold text-charcoal">15+</p>
-              <p className="text-xs text-charcoal font-body tracking-wide">Jahre Erfahrung</p>
-            </div>
+          <div className="relative aspect-[3/4] bg-cream-dark flex flex-col items-center justify-center gap-6 p-8 text-center">
+            <span aria-hidden="true" className="font-display text-8xl text-gold">SM</span>
+            <p className="font-display text-2xl text-charcoal">Sophie Maurer</p>
+            <p className="text-sm text-muted">Fiktive Gründerin im Designkonzept. Alle Teamprofile und Werdegänge sind erfunden.</p>
           </div>
         </div>
       </section>
@@ -106,27 +95,16 @@ export default function UeberUns() {
               Das Team
             </p>
             <h2 className="font-display text-3xl md:text-4xl text-charcoal font-semibold">
-              Lernen Sie uns kennen
+              Drei Profile im Salonkonzept
             </h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {team.map(({ name, role, bio, speciality, image }) => (
+            {team.map(({ name, role, bio, speciality }) => (
               <div key={name} className="bg-cream overflow-hidden group">
                 {/* Photo */}
                 <div className="aspect-[4/3] bg-charcoal/10 relative overflow-hidden">
-                  {image ? (
-                    <div
-                      className="absolute inset-0 group-hover:scale-105 transition-transform duration-500"
-                      style={{
-                        backgroundImage: `url('${image}')`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center top",
-                      }}
-                    />
-                  ) : (
-                    <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center text-gold font-display text-6xl tracking-widest">{name.split(" ").map(part => part[0]).join("")}</div>
-                  )}
+                  <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center text-gold font-display text-6xl tracking-widest">{name.split(" ").map(part => part[0]).join("")}</div>
                 </div>
 
                 <div className="p-6">
@@ -171,6 +149,7 @@ export default function UeberUns() {
             </div>
           ))}
         </div>
+        <div className="text-center mt-12"><Link href="/kontakt" className="salon-button">Demo-Anfrage ausprobieren</Link></div>
       </section>
     </>
   );

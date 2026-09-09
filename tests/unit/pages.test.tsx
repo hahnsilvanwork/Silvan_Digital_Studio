@@ -126,7 +126,7 @@ describe("Service pages", () => {
     const main = screen.getByRole("main");
 
     for (const tier of de.websites.priceTiers) {
-      expect(within(main).getByText(tier.name)).toBeVisible();
+      expect(within(main).getByRole("heading", { name: tier.name })).toBeVisible();
       expect(within(main).getAllByText(tier.price).length).toBeGreaterThan(0);
     }
   });
@@ -163,14 +163,14 @@ describe("Service pages", () => {
 });
 
 describe("ReviewsPage", () => {
-  it("keeps the CTA before the image-only hero and does not mount 3D", () => {
+  it("keeps the CTA before the local motion hero and does not mount 3D", () => {
     render(<ReviewsPage locale="de" />);
 
     const main = screen.getByRole("main");
-    const cta = within(main).getByRole("link", {
+    const cta = within(main).getAllByRole("link", {
       name: de.reviews.ctaLabel,
-    });
-    const heroImage = within(main).getByAltText(de.reviews.heroImages[0].alt);
+    })[0];
+    const heroImage = main.querySelector("[data-nfc-motion]")!;
 
     expect(
       cta.compareDocumentPosition(heroImage) &
@@ -178,8 +178,8 @@ describe("ReviewsPage", () => {
     ).toBeTruthy();
     expect(main.querySelector("spline-viewer")).toBeNull();
     expect(main.querySelector("[data-product-3d-dialog]")).toBeNull();
-    expect(within(main).getAllByAltText(de.reviews.heroImages[1].alt)).toHaveLength(1);
-    expect(within(main).getAllByAltText(de.reviews.heroImages[2].alt)).toHaveLength(1);
+    expect(heroImage).toHaveTextContent("Produktbeispiele mit fiktiven Profilen.");
+    expect(heroImage.querySelectorAll('img[src*="products%2Fmain"], img[src*="products/main"]')).toHaveLength(5);
   });
 
   it("places every product price before the process section", () => {
@@ -221,7 +221,7 @@ describe("ReviewsPage", () => {
     const main = screen.getByRole("main");
     for (const category of de.reviews.categories) {
       expect(
-        within(main).getByRole("button", {
+          within(within(main).getByRole('combobox', {name:de.reviews.categoryPrompt})).getByRole("option", {
           name: new RegExp(`^${category.label}`),
         }),
       ).toBeVisible();
@@ -301,6 +301,16 @@ describe("AboutPage", () => {
 });
 
 describe("ContactPage", () => {
+  it.each(["de", "en"] as const)("carries the public service reason into the %s contact link", (locale) => {
+    const content = getContent(locale);
+    const pages = [[WebsitesPage, "websites"], [PresencePage, "presence"], [AutomationPage, "automation"]] as const;
+    for (const [Page, reason] of pages) {
+      const { unmount } = render(<Page locale={locale} />);
+      expect(within(screen.getByRole("main")).getByRole("link", { name: content[reason].ctaLabel })).toHaveAttribute("href", `${locale === "en" ? "/en" : ""}/contact?service=${reason}`);
+      unmount();
+    }
+  });
+
   it("exposes the four direct destinations and contains no form", () => {
     render(<ContactPage locale="de" />);
 
@@ -334,7 +344,7 @@ describe("HelloPage", () => {
     for (const link of de.hello.links) {
       expect(
         within(main).getByRole("link", {
-          name: new RegExp(link.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+          name: link.label,
         }),
       ).toHaveAttribute("href", link.href);
     }

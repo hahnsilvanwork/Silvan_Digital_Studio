@@ -1,0 +1,14 @@
+.header { padding-block: clamp(2rem, 5vw, 4rem) 1.5rem; }
+.title { max-inline-size: 18ch; margin-block: 0.4rem 1rem; font-size: clamp(2.1rem, 5vw, 4rem); font-weight: 500; line-height: 1.06; letter-spacing: -0.04em; }
+.body { padding-block: 0 3rem; display: grid; gap: 2rem; }
+.reason { display: grid; gap: 0.75rem; margin-block-end: 1.5rem; }
+.reason label { font-weight: 600; }
+.reason select { inline-size: 100%; min-block-size: 3rem; padding: 0.65rem; border: 1px solid var(--color-line); border-radius: 0; background: var(--color-paper); color: inherit; font: inherit; }
+.prompt, .notice { margin: 0; line-height: 1.55; max-inline-size: 65ch; }
+.notice { color: var(--color-ink-muted); font-size: 0.9rem; }
+.save { display: inline-flex; align-items: center; min-block-size: 3rem; margin-block: 0 1rem; text-underline-offset: 0.25em; }
+.panel { min-inline-size: 0; }
+.next { margin-block-start: 1.5rem; max-inline-size: 60ch; }
+.next h2 { font-size: 1.1rem; }
+.next p { line-height: 1.6; }
+@media (min-width: 56rem) { .body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4rem; } }

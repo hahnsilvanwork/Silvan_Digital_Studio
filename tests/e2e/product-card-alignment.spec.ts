@@ -1,4 +1,6 @@
 import {expect,test} from '@playwright/test';
+import { readFileSync } from 'node:fs';
+const products: {category: string}[] = JSON.parse(readFileSync('src/content/nfc-import.json', 'utf8'));
 
 for(const locale of ['de','en'])for(const width of [390,900,1440]){
   test(`aligns product content and actions at ${width}px in ${locale}`,async({page})=>{
@@ -7,7 +9,7 @@ for(const locale of ['de','en'])for(const width of [390,900,1440]){
     for(const category of ['reviews','menu']){
       await page.goto(`${locale==='en'?'/en':''}/reviews?category=${category}`);
       const cards=page.locator('[data-product-card]');
-      await expect(cards).toHaveCount(category==='menu'?3:5);
+      await expect(cards).toHaveCount(products.filter(product => product.category === category).length);
       await page.evaluate(()=>document.fonts.ready);
       const positions=await cards.evaluateAll(nodes=>nodes.map(card=>{
         const top=card.getBoundingClientRect().top;

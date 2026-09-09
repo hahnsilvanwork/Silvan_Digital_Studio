@@ -15,8 +15,8 @@ const lang = "en";
 <BaseLayout
   lang={lang}
   route="home"
-  title="Falkenried Gruppe | Autowerkstatt, Landscaping & Real Estate in Zürcher Unterland"
-  description="Falkenried Gruppe in Zürcher Unterland: your vehicle service specialist, landscaping specialist, and real estate expert for 55 years. Personal advice in the Zürcher Unterland."
+  title="Falkenried Gruppe | Vehicle Service, Landscaping & Real Estate in Zürcher Unterland"
+  description="A fictional company profile covering vehicle service, landscaping and real estate in the Zürcher Unterland. The example Falkenried story begins in 1969."
   jsonLd={organizationSchema(lang)}
 >
   <section class="falkenried-hero">
@@ -31,8 +31,8 @@ const lang = "en";
         <DivisionCard
           index="01 / MOBILITY"
           accentVar="--color-bmw-text"
-          title="Autowerkstatt"
-          description="Certified service, sales, and expertise straight from the BMW partner."
+          title="Vehicle Service"
+          description="Vehicle maintenance, repairs and personal advice for everyday motoring."
           href={routes.bmw[lang]}
         />
         <DivisionCard
@@ -59,18 +59,18 @@ const lang = "en";
         <span class="label-caps text-[var(--color-primary)] mb-4 block">MEET FALKENRIED GRUPPE</span>
         <h2 class="font-display text-3xl lg:text-4xl font-semibold">Personal. Versatile. Since 1969.</h2>
       </div>
-      <VideoPreview title="Preview of the Falkenried Gruppe company video" playLabel="Play company video" externalLabel="Watch video on YouTube" />
+      <VideoPreview lang="en" />
 
       <div class="mt-20">
         <div class="mb-12 text-center">
-          <span class="label-caps text-[var(--color-primary)] mb-4 block">CUSTOMER TESTIMONIALS</span>
-          <h2 class="font-display text-3xl font-semibold">What our customers say</h2>
-          <p class="mt-3 text-sm text-[var(--color-ink-muted)]">Original customer quotes in German</p>
+          <span class="label-caps text-[var(--color-primary)] mb-4 block">EXAMPLE TESTIMONIALS · DEMO</span>
+          <h2 class="font-display text-3xl font-semibold">What good service could feel like</h2>
+          <p class="mt-3 text-sm text-[var(--color-ink-muted)]">Fictional examples illustrating the testimonial layout.</p>
         </div>
         <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
-          <Testimonial quote="Professionell, freundlich, zuverlässig. Die Anliegen werden ernst genommen und Lösungen gefunden." name="H. B. aus Nassenwil" role="Original customer quote in German" />
-          <Testimonial quote="Top Beratung – der Kunde im Vordergrund, einfach übersichtlich." name="J. W. aus Bachs" role="Original customer quote in German" />
-          <Testimonial quote="Sehr nette und kompetente Mitarbeiter, fühle mich sehr wohl und komme gerne. Sehr kundenorientiert, super – weiter so." name="C. H. aus Schleinikon" role="Original customer quote in German" />
+          <Testimonial quote="Professional, friendly and reliable. Concerns are taken seriously and solutions are found." name="H. B. from Nassenwil" role="Example testimonial" />
+          <Testimonial quote="Helpful advice with the customer in mind, clearly explained." name="J. W. from Bachs" role="Example testimonial" />
+          <Testimonial quote="Friendly, knowledgeable staff who make me feel welcome. I would happily come back." name="C. H. from Schleinikon" role="Example testimonial" />
         </div>
       </div>
     </div>
@@ -92,7 +92,7 @@ const lang = "en";
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 text-center">
       <h2 class="font-display text-3xl lg:text-4xl font-semibold mb-6">Ready for the next step?</h2>
       <p class="contact-invitation-copy max-w-xl mx-auto mb-10 leading-relaxed">
-        Whether it's a workshop appointment, a garden project, or a rental inquiry – our team gets back to you within 24 hours.
+        Try a workshop, garden or rental inquiry in the demo form. Your entries are not sent and you will not receive a reply.
       </p>
       <a href={routes.kontakt[lang]} class="btn-primary">Open contact form</a>
     </div>

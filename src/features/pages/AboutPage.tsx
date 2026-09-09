@@ -3,8 +3,8 @@ import type { CSSProperties } from "react";
 
 import { ContactActions } from "../../components/contact/ContactActions";
 import { SiteShell } from "../../components/layout/SiteShell";
-import { revealSequence } from "../../components/motion/reveal-sequence";
-import { SplitText } from "../../components/motion/SplitText";
+import { ButtonLink } from "../../components/ui/ButtonLink";
+import { studioCopy } from "../../content/studio-copy";
 import { SectionHeading } from "../../components/ui/SectionHeading";
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
@@ -12,6 +12,7 @@ import { PORTRAIT } from "../../lib/portrait";
 import { localizePath } from "../../lib/routes";
 import layoutStyles from "../../styles/layout.module.css";
 import pageStyles from "../../styles/pages.module.css";
+import styles from "../../styles/about.module.css";
 
 interface AboutPageProps {
   readonly locale: Locale;
@@ -19,47 +20,27 @@ interface AboutPageProps {
 
 export function AboutPage({ locale }: AboutPageProps) {
   const content = getContent(locale);
-  const sequence = revealSequence(content.about.title);
+  const copy = studioCopy[locale];
 
   return (
     <SiteShell currentPath={localizePath("/about", locale)} locale={locale}>
       <div className={pageStyles.page}>
-        <section className={`${layoutStyles.container} ${pageStyles.pageHeader}`}>
-          <p className={pageStyles.heroLabel} data-reveal="rise">
-            {content.about.eyebrow}
-          </p>
-          <SplitText
-            as="h1"
-            className={pageStyles.pageTitle}
-            startIndex={sequence.titleStartIndex}
-            text={content.about.title}
-          />
-          <p
-            className={pageStyles.editorialTight}
-            data-reveal="rise"
-            style={{ "--reveal-index": sequence.introIndex } as CSSProperties}
-          >
-            {content.about.intro}
-          </p>
-        </section>
-
-        <section
-          className={`${layoutStyles.container} ${pageStyles.section} ${pageStyles.aboutLayout}`}
-        >
+        <section className={`${layoutStyles.container} ${styles.intro}`}>
+          <div className={styles.introCopy}>
+            <p className={pageStyles.heroLabel}>{content.about.eyebrow}</p>
+            <h1 className={styles.title}>{content.about.title}</h1>
+            <p className={styles.lead}>{content.about.intro}</p>
+          </div>
           {/* The approved photograph, not a generated likeness. The frame keeps
               the asset's own 4:5 crop, so the image fills it without an upscale
               at any column width. */}
-          <figure
-            className={pageStyles.portrait}
-            data-reveal="scale"
-            data-reveal-priority=""
-          >
+          <figure className={styles.portrait}>
             <Image
               alt={content.about.portraitAlt}
               className={pageStyles.portraitImage}
               height={PORTRAIT.height}
               priority
-              sizes="(min-width: 64rem) 30vw, 100vw"
+              sizes="(min-width: 48rem) 320px, 90vw"
               src={PORTRAIT.src}
               width={PORTRAIT.width}
             />
@@ -67,19 +48,17 @@ export function AboutPage({ locale }: AboutPageProps) {
               {content.about.portraitCaption}
             </figcaption>
           </figure>
+        </section>
+        <section className={`${layoutStyles.container} ${styles.body}`} aria-label={content.about.eyebrow}>
+          {content.about.body.map((paragraph) => (
+            <p className={pageStyles.aboutParagraph} key={paragraph}>{paragraph}</p>
+          ))}
+        </section>
 
-          <div className={pageStyles.aboutBody}>
-            {content.about.body.map((paragraph, index) => (
-              <p
-                className={pageStyles.aboutParagraph}
-                data-reveal="rise"
-                key={paragraph}
-                style={{ "--reveal-index": index } as CSSProperties}
-              >
-                {paragraph}
-              </p>
-            ))}
-          </div>
+        <section className={`${layoutStyles.container} ${styles.proof}`}>
+          <h2>{copy.proofTitle}</h2>
+          <p>{copy.proof}</p>
+          <ButtonLink href={`${localizePath("/reviews", locale)}?category=reviews&model=review-round-black#inquiry`}>{copy.proofLink}</ButtonLink>
         </section>
 
         <section className={`${layoutStyles.container} ${pageStyles.section}`}>

@@ -19,7 +19,7 @@ test.describe("language switching", () => {
 
     await expect(page).toHaveURL(/\/en\/work\/steiner-handwerk$/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-      "Steiner Handwerk",
+      "Steiner Bau",
     );
   });
 

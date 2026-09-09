@@ -11,7 +11,7 @@ const c = common[lang];
 const groups = [
   {
     key: "bmw",
-    label: "Autowerkstatt",
+    label: "Auto Workshop",
     items: [
       ...bmwFaqs.map((item) => ({ question: item.question.en, answer: item.answer.en })),
       { question: "Which BMW models do you service?", answer: "We service and repair all current and older BMW models – from compact cars to SUVs. As an official service partner we have the right diagnostic tools for every series." },
@@ -48,14 +48,14 @@ const groups = [
   lang={lang}
   route="faq"
   title="Frequently Asked Questions | Falkenried Gruppe"
-  description="Answers about Autowerkstatt, Landscaping, and Real Estate at Falkenried Gruppe – Swiss quality and transparency since 1969."
+  description="Answers about Auto Workshop, Landscaping, and Real Estate at Falkenried Gruppe – Swiss quality and transparency since 1969."
   jsonLd={[organizationSchema(lang), faqSchema(groups.flatMap((g) => g.items))]}
 >
   <section class="pt-40 pb-20 bg-[var(--color-surface)] text-center">
     <div class="max-w-2xl mx-auto px-6 lg:px-16">
       <h1 class="font-display text-4xl font-bold mb-6">Frequently Asked Questions</h1>
       <p class="text-[var(--color-ink-muted)] leading-relaxed">
-        Find precise answers about our Autowerkstatt, Landscaping, and Real Estate services. We stand for
+        Find precise answers about our Auto Workshop, Landscaping, and Real Estate services. We stand for
         Swiss quality and transparency.
       </p>
     </div>
@@ -75,7 +75,7 @@ const groups = [
       </p>
       <div class="flex flex-wrap justify-center gap-6">
         <a href={routes.kontakt[lang]} class="btn-primary">Contact Us</a>
-        <a href={c.phoneHref} class="btn-secondary">Call Now</a>
+        <a href={c.phoneHref} class="btn-secondary">Read demo notice</a>
       </div>
     </div>
   </section>

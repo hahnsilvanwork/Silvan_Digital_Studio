@@ -46,6 +46,12 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Keep the address readable as a whole on narrow contact panels. The clamp
+   still permits wrapping when a visitor enlarges their preferred font size. */
+.emailValue {
+  font-size: clamp(1rem, 6.3cqi, var(--text-item));
+}
+
 @container (min-width: 44rem) {
   .actionLink {
     grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);

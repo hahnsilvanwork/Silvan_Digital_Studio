@@ -14,11 +14,13 @@
 
 .directory {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0;
 }
 
 .directoryLink {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.65rem;
   align-items: baseline;
   block-size: 100%;
@@ -52,7 +54,7 @@
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
   text-transform: none;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 /* Four offers form two balanced pairs rather than an orphaned fourth card. */
@@ -64,6 +66,8 @@
 
 .tier {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-inline-size: 0;
   gap: var(--space-xs);
   align-content: start;
   padding: var(--space-md);
@@ -215,6 +219,7 @@
 
 .faq {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   margin: 0;
   padding: 0;
 }
@@ -228,6 +233,7 @@
 }
 
 .faqQuestion {
+  overflow-wrap: anywhere;
   position: relative;
   padding: 1.5rem 2.5rem 1.5rem 0;
   min-block-size: var(--control-target-min);
@@ -238,11 +244,16 @@
   letter-spacing: var(--tracking-item);
   line-height: 1.3;
 }
+
+.tierExample { margin-block-start: .75rem; font-size: .9375rem; line-height: 1.5; max-inline-size: 50ch; }
+.tierAction { display: inline-flex; align-items: center; justify-content: space-between; gap: .5rem; min-block-size: var(--control-target-min); margin-block-start: .5rem; padding-block: .5rem; border-block-end: 1px solid var(--color-ink); font-weight: 500; font-size: 1rem; text-decoration: none; }
+.tierAction:hover { text-decoration: underline; text-underline-offset: .25em; }
 .faqQuestion::-webkit-details-marker { display: none; }
 .faqQuestion::after { content: ""; position: absolute; inset-inline-end: 0.5rem; inset-block-start: 1.8rem; inline-size: 0.5rem; block-size: 0.5rem; border-inline-end: 1.5px solid currentColor; border-block-end: 1.5px solid currentColor; transform: rotate(45deg); }
 .faqItem[open] .faqQuestion::after { transform: rotate(225deg); }
 
 .faqAnswer {
+  overflow-wrap: anywhere;
   max-inline-size: 44rem;
   margin: 0;
   padding-block-end: 1.5rem;
@@ -252,7 +263,9 @@
 
 /* The follow-on link on an answer that points at another service. */
 .faqLink {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--control-target-min);
   color: var(--color-accent);
   text-decoration: none;
 }

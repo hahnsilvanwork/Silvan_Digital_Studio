@@ -27,7 +27,7 @@
 ::selection { background: #B8965A; color: #1C1C1C; }
 :focus-visible { outline: 2px solid #87662f; outline-offset: 5px; }
 h1,h2,h3 { text-wrap: balance; }
-input, textarea { font-size: 16px !important; caret-color: #87662f; }
+input, select, textarea { font-size: 16px !important; caret-color: #87662f; }
 input::placeholder, textarea::placeholder { color: #726c61 !important; }
 .salon-skip { position: fixed; top: -6rem; left: 1rem; z-index: 100; padding: 1rem; background: #F5F0E8; }
 .salon-skip:focus { top: 1rem; }
@@ -59,7 +59,7 @@ html { scroll-padding-top: 100px; }
 .bg-charcoal .text-gold, .group:hover .text-gold { color: #d4af78; }
 .hover\:text-gold:hover { color: #80602e; }
 .group:hover .group-hover\:text-gold { color: #d4af78; }
-input:focus-visible,textarea:focus-visible { outline: 2px solid #87662f; outline-offset: 3px; }
+input:focus-visible,select:focus-visible,textarea:focus-visible { outline: 2px solid #87662f; outline-offset: 3px; }
 
 @font-face {
   font-family: 'DM Sans';
@@ -135,6 +135,6 @@ input:focus-visible,textarea:focus-visible { outline: 2px solid #87662f; outline
 button, a { -webkit-tap-highlight-color: transparent; }
 button { cursor: pointer; }
 header nav a { min-height: 44px; display: inline-flex; align-items: center; }
-input,textarea { border-color: #8c8272 !important; }
+input,select,textarea { border-color: #8c8272 !important; }
 .salon-button:active, button[type=submit]:active { transform: translateY(1px); }
 .salon-text-link { min-height: 44px; display: inline-flex; align-items: center; }

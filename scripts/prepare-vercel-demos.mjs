@@ -2,6 +2,8 @@ import { mkdir, readdir, readFile, writeFile, copyFile, access } from 'node:fs/p
 import path from 'node:path';
 import { demos as sources, publicationFiles, removeStaleFiles } from './sync-demos.mjs';
 
+import { hardenHtml } from './static-csp.mjs';
+
 const portfolio = 'https://silvandigital.ch';
 const staging = path.resolve('.scratch/vercel-demos');
 const selected = process.argv.slice(2);
@@ -25,6 +27,7 @@ for (const [slug, source] of Object.entries(sources)) {
         content = content.replaceAll(`${prefix}/`, '/').replaceAll(prefix, '');
         // Only explicit portfolio links leave this independently hosted demo.
         content = content.replaceAll('"/work/', `"${portfolio}/work/`).replaceAll('\\"/work/', `\\"${portfolio}/work/`);
+        if (entry.name.endsWith('.html')) content = hardenHtml(content);
         await writeFile(to, content);
       } else await copyFile(from, to);
     }
@@ -40,6 +43,10 @@ for (const [slug, source] of Object.entries(sources)) {
     headers: [{ source: '/(.*)', headers: [
       { key: 'X-Robots-Tag', value: 'noindex, nofollow' },
       { key: 'X-Content-Type-Options', value: 'nosniff' },
+      { key: 'X-Frame-Options', value: 'DENY' },
+      { key: 'Referrer-Policy', value: 'no-referrer' },
+      { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=()' },
+      { key: 'Content-Security-Policy', value: "base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'none'" },
     ] }],
   }, null, 2));
   await removeStaleFiles(destination, [...files, 'vercel.json']);

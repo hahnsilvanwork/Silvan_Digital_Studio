@@ -1,0 +1,12 @@
+import { describe, expect, it } from 'vitest';
+import { consumeInquiryDraft, saveInquiryDraft, DRAFT_KEY, DRAFT_TTL } from '../../src/lib/inquiry-draft';
+import { EMPTY_REVIEW_INQUIRY } from '../../src/lib/validation';
+const draft = { values: { ...EMPTY_REVIEW_INQUIRY, quantity: '3', businessName: 'Private company', note: 'Private note' }, preview: false, adjustingSelection: true };
+function storage() { const data = new Map<string,string>(); return { getItem: (key:string) => data.get(key) ?? null, setItem: (key:string,value:string) => { data.set(key,value); }, removeItem: (key:string) => { data.delete(key); } }; }
+describe('explicit language draft handoff', () => {
+ it('preserves all fields and consumes once only at the target', () => { const s=storage(); expect(saveInquiryDraft(s, '/en/reviews?model=review-round-black', draft, 100)).toBe(true); expect(consumeInquiryDraft(s, '/en/reviews?model=review-round-black', 110)).toEqual(draft); expect(s.getItem(DRAFT_KEY)).toBeNull(); expect(consumeInquiryDraft(s, '/en/reviews?model=review-round-black', 120)).toBeNull(); });
+ it('deletes expired, wrong-target and future data', () => { for(const [path,time] of [['/reviews',110],['/en/reviews',100+DRAFT_TTL+1],['/en/reviews',90]] as const) { const s=storage(); saveInquiryDraft(s,'/en/reviews',draft,100); expect(consumeInquiryDraft(s,path,time)).toBeNull(); expect(s.getItem(DRAFT_KEY)).toBeNull(); } });
+ it('rejects malformed/versioned/oversized data and still deletes it', () => { for(const raw of ['{', JSON.stringify({version:99}), JSON.stringify({version:1,target:'/en/reviews',createdAt:100,...draft,values:{...draft.values,note:'x'.repeat(601)}})]) { const s=storage(); s.setItem(DRAFT_KEY,raw); expect(consumeInquiryDraft(s,'/en/reviews',110)).toBeNull(); expect(s.getItem(DRAFT_KEY)).toBeNull(); } });
+ it('rejects unknown option values while keeping incomplete valid drafts', () => { const s=storage(); expect(saveInquiryDraft(s,'/en/reviews',{...draft,values:{...draft.values,setup:'unknown'}})).toBe(false); expect(saveInquiryDraft(s,'/en/reviews',draft)).toBe(true); });
+ it('reports blocked storage and refuses restoration if deletion fails', () => { const s=storage(); expect(saveInquiryDraft({...s,setItem:()=>{throw Error();}},'/en/reviews',draft)).toBe(false); saveInquiryDraft(s,'/en/reviews',draft); expect(consumeInquiryDraft({...s,removeItem:()=>{throw Error();}},'/en/reviews')).toBeNull(); });
+});

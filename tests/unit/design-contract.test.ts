@@ -464,14 +464,14 @@ describe("SILVAN responsive design contract", () => {
         /calc\(100(?:svh|dvh) - var\(--header-block-size\)\)/,
       );
     }
-    // The header must derive its height from the same token, or the hero would
-    // subtract a value the header does not actually occupy.
+    // The shared token is a minimum: enlarged text must be able to wrap the
+    // header, with the measured anchor offset tracking its actual height.
     expect(
       readFileSync(
         resolve(process.cwd(), "src/components/layout/navigation.module.css"),
         "utf8",
       ),
-    ).toMatch(/\n\s*block-size: var\(--header-block-size\);/);
+    ).toMatch(/\n\s*min-block-size: var\(--header-block-size\);/);
   });
 
   it("uses only transform and opacity for reusable motion", () => {
@@ -490,6 +490,9 @@ describe("SILVAN responsive design contract", () => {
       root.walkAtRules((atRule) => {
         if (!atRule.name.endsWith("keyframes")) return;
         atRule.walkDecls((declaration) => {
+          // A per-keyframe easing descriptor controls the interpolation;
+          // it is not an animated style property and does not trigger layout.
+          if (declaration.prop === "animation-timing-function") return;
           keyframeProperties.push(declaration.prop);
         });
       });
@@ -504,7 +507,11 @@ describe("SILVAN responsive design contract", () => {
     ).toEqual([]);
     expect(transitionedProperties).not.toContain("all");
     expect(willChangeDeclarations).toEqual([]);
-    expect(stylesheetSource).not.toMatch(/animation(?:-[^:]+)?:[^;]*\binfinite\b/);
+    // The explicitly requested NFC film loops; shared UI motion remains finite.
+    const uiMotionSource = stylesheets
+      .filter(({ path }) => !path.endsWith("nfc-motion.module.css"))
+      .map(({ root }) => root.toString()).join("\n");
+    expect(uiMotionSource).not.toMatch(/animation(?:-[^:]+)?:[^;]*\binfinite\b/);
   });
 
   it.each(assets)(

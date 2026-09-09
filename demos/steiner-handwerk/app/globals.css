@@ -35,3 +35,8 @@ footer>a:last-child{padding:12px 0;min-height:44px}
 @media(max-height:750px) and (min-width:801px){.sidebar{overflow-y:auto;padding-top:24px}.navigation{margin-top:32px;gap:0}.sidebar-bottom{padding-top:25px}.sidebar-bottom>p{font-size:17px;margin:12px 0}.portfolio-link{margin:16px 0 8px}}
 @media(max-width:800px){.menu-button{min-height:44px;min-width:78px}.hero-top{font-size:10px}.hero-bottom>span{font-size:10px;max-width:210px}.hero-bottom>a{font-size:10px;min-height:44px}.promise-strip{font-size:12px}.services small{font-size:11px}.process p{font-size:14px}.hero-content{padding-bottom:36px}}
 @media(max-width:480px){.hero-top>span:first-child{max-width:155px}.hero-bottom{gap:15px}.hero-bottom>span{max-width:180px;font-size:9px}.hero-bottom>a{gap:8px;font-size:9px}.promise-strip{font-size:11px;gap:18px}.section-heading>p,.services p,.about-section p:not(.eyebrow),.contact-section>div>p:not(.eyebrow){font-size:15px}.service-number{min-width:20px}.services article{gap:10px}.services h3{font-size:28px}}
+
+.project-description{font-size:14px;line-height:1.7;max-width:62ch;margin-top:16px;color:#4c5944}
+
+/* Keep every menu destination reachable on short mobile viewports. */
+@media(max-width:800px){.navigation{max-height:calc(100dvh - 72px);overflow-y:auto;overscroll-behavior:contain}}

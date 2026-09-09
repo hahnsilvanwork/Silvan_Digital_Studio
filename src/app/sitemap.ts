@@ -28,7 +28,12 @@ const ROUTES: readonly InternalPath[] = [
  * Bump this when the published copy of the site actually changes. It is the
  * date every entry reports, so it has to mean something.
  */
-const CONTENT_REVISION = "2026-09-07";
+const CONTENT_REVISIONS: Readonly<Record<string, string>> = {
+  '/': '2026-09-08', '/websites': '2026-09-09', '/reviews': '2026-09-09',
+  '/presence': '2026-09-09', '/automation': '2026-09-09', '/work': '2026-09-09',
+  '/about': '2026-09-09', '/contact': '2026-09-09', '/privacy': '2026-09-09',
+  '/imprint': '2026-09-07',
+};
 
 /** The service pages are what a visitor is meant to land on from a search. */
 const PRIORITY: Partial<Record<string, number>> = {
@@ -50,7 +55,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // `new Date()` every deployment -- including one that only changed a
   // stylesheet -- told crawlers that all 26 URLs had changed, which trains them
   // to stop trusting the field.
-  const lastModified = new Date(CONTENT_REVISION);
   const paths: InternalPath[] = [
     ...ROUTES,
     ...projects.map((project) => createProjectPath(project.slug)),
@@ -59,7 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return paths.flatMap((route) =>
     SUPPORTED_LOCALES.map((locale) => ({
       url: new URL(localizePath(route, locale), base).toString(),
-      lastModified,
+      lastModified: new Date(CONTENT_REVISIONS[route] ?? (route.startsWith('/work/') ? '2026-09-09' : '2026-09-07')),
       changeFrequency: "monthly" as const,
       priority: PRIORITY[route] ?? 0.5,
       // Both languages are listed for every entry, so a crawler is told which

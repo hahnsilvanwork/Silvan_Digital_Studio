@@ -5,6 +5,8 @@ import { describe, expect, it } from "vitest";
 
 import { getContent } from "../../src/lib/locales";
 
+import { photoImports } from "../../src/content/photo-products";
+
 const locales = ["de", "en"] as const;
 const expectedHeroImages = [
   "/images/products/catalog/review-round-black.webp",
@@ -25,8 +27,8 @@ describe("NFC and QR product catalogue", () => {
     );
     expect(content.reviews.products.map(({ id, price }) => [id, price])).toEqual(
       [
+        ["nfc-chip", "CHF 15.–"],
         ["standard-card", "CHF 49.–"],
-        ["standard-pair", "CHF 80.–"],
         ["personalized-card", "CHF 69.–"],
         ["fully-custom-card", "CHF 99.–"],
       ],
@@ -66,28 +68,29 @@ describe("NFC and QR product catalogue", () => {
     expect(unique(catalog.map(({ id }) => id))).toBe(catalog.length);
     expect(unique(catalog.map(({ image }) => image.src))).toBe(catalog.length);
     expect(unique(sceneUrls)).toBe(sceneUrls.length);
-    expect(sceneUrls).toHaveLength(4);
+    expect(sceneUrls).toHaveLength(photoImports.length);
     for (const sceneUrl of sceneUrls) {
       expect(sceneUrl).toMatch(
-        /^https:\/\/prod\.spline\.design\/[\w-]+\/scene\.splinecode$/,
+        /^\/models\/nfc\/[\w-]+\.glb$/,
       );
     }
   });
 
-  it.each(locales)("reserves exactly three menu 3D placeholders for %s", (locale) => {
+  it.each(locales)("provides all four photographed menu models in %s", (locale) => {
     const menu = getContent(locale).reviews.catalog.filter(
       ({ category }) => category === "menu",
     );
 
-    expect(menu).toHaveLength(3);
-    expect(menu.every(({ scene }) => scene === undefined)).toBe(true);
+    expect(menu).toHaveLength(4);
+    expect(menu.every(({ scene }) => scene?.format === 'glb')).toBe(true);
   });
 
   it.each(locales)("offers both card forms and sizes at one price for %s", (locale) => {
     const { catalog, forms, sizes } = getContent(locale).reviews;
 
-    expect(forms).toHaveLength(2);
-    expect(sizes).toEqual(["80 × 80 mm", "100 × 100 mm"]);
+    expect(forms).toHaveLength(3);
+    expect(sizes).toEqual(expect.arrayContaining(["80 × 80 mm", "100 × 100 mm"]));
+    expect(sizes).toHaveLength(3);
     expect(catalog.find(({ id }) => id === "review-stand-white")?.details)
       .not.toContain(expect.stringMatching(/80|100/));
   });

@@ -1,4 +1,4 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
@@ -55,10 +55,10 @@ describe("NFC inquiry validation", () => {
     );
   });
 
-  it("offers the five approved product packages in both languages", () => {
+  it("offers the approved product packages including the adhesive chip in both languages", () => {
     for (const locale of ["de", "en"] as const) {
       expect(getContent(locale).reviews.inquiry.productOptions.map(({ value }) => value)).toEqual(
-        ["standard-card", "standard-pair", "standard-stand", "personalized-card", "fully-custom-card"],
+        ["nfc-chip", "standard-card", "standard-stand", "personalized-card", "fully-custom-card"],
       );
     }
   });
@@ -115,7 +115,7 @@ describe("WhatsApp message", () => {
     expect(message).toContain("Google Reviews");
     expect(message).toContain("Personalized Card · CHF 69.–");
     expect(message).toContain("Rund");
-    expect(message).toContain("100 × 100 mm");
+    expect(message).toContain("Ø 100 mm");
     expect(message).toContain(de.reviews.quantityDiscount);
     expect(message.trimEnd().endsWith(de.reviews.inquiry.nonBindingNotice)).toBe(true);
   });
@@ -130,6 +130,70 @@ describe("WhatsApp message", () => {
 });
 
 describe("ReviewInquiryConfigurator", () => {
+  it.each(["de", "en"] as const)("preserves native select keyboard events without validating the %s form", async (locale) => {
+    render(<ReviewInquiryConfigurator locale={locale} />);
+    await act(() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())));
+
+    for (const control of screen.getAllByRole("combobox")) {
+      control.focus();
+      for (const key of ["Enter", " ", "ArrowDown", "ArrowUp"]) {
+        expect(fireEvent.keyDown(control, { key })).toBe(true);
+        expect(control).toHaveFocus();
+        expect(control).not.toHaveAttribute("aria-invalid");
+      }
+    }
+    expect(screen.queryByText(getContent(locale).reviews.inquiry.requiredError)).toBeNull();
+    expect(screen.queryByRole("link")).toBeNull();
+  });
+
+  it("validates Enter in a text input without a native form submission", async () => {
+    render(<ReviewInquiryConfigurator locale="de" />);
+    await act(() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())));
+    const initialUrl = window.location.href;
+    const control = screen.getByLabelText(labelFor("quantity"));
+    control.focus();
+    expect(fireEvent.keyDown(control, { key: "Enter" })).toBe(false);
+    expect(screen.getAllByText(de.reviews.inquiry.requiredError)).toHaveLength(6);
+    expect(screen.getByLabelText(labelFor("destination"))).toHaveFocus();
+    expect(window.location.href).toBe(initialUrl);
+  });
+
+  it("keeps Enter for multiline text and active text composition", async () => {
+    const user = userEvent.setup();
+    render(<ReviewInquiryConfigurator locale="de" />);
+    await act(() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())));
+    const note = screen.getByLabelText(labelFor("note"));
+    await user.type(note, "First{Enter}Second");
+    expect(note).toHaveValue("First\nSecond");
+    const name = screen.getByLabelText(labelFor("businessName"));
+    expect(fireEvent.keyDown(name, { key: "Enter", isComposing: true })).toBe(true);
+    expect(screen.queryByText(de.reviews.inquiry.requiredError)).toBeNull();
+  });
+
+  it("reviews valid input with Enter and supports keyboard activation of the review button", async () => {
+    const user = userEvent.setup();
+    render(<ReviewInquiryConfigurator locale="de" />);
+    await fillForm(user, { ...complete, product: "standard-stand", setup: "needs-setup", businessName: "", contactPerson: "", note: "" });
+    const initialUrl = window.location.href;
+    const setup = screen.getByLabelText(labelFor("setup"));
+    setup.focus();
+    expect(fireEvent.keyDown(setup, { key: "Enter" })).toBe(true);
+    expect(screen.queryByRole("heading", { name: de.reviews.inquiry.confirmTitle })).toBeNull();
+    screen.getByLabelText(labelFor("quantity")).focus();
+    await user.keyboard("{Enter}");
+    expect(screen.getByRole("heading", { name: de.reviews.inquiry.confirmTitle })).toBeVisible();
+    expect(window.location.href).toBe(initialUrl);
+
+    for (const key of ["{Enter}", " "]) {
+      await user.click(screen.getByRole("button", { name: de.reviews.inquiry.editLabel }));
+      await act(() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())));
+      screen.getByRole("button", { name: inquiryCopy.de.review }).focus();
+      await user.keyboard(key);
+      expect(screen.getByRole("heading", { name: de.reviews.inquiry.confirmTitle })).toBeVisible();
+      expect(window.location.href).toBe(initialUrl);
+    }
+  });
+
   it("renders destination and product first, with conditional card controls", async () => {
     const user = userEvent.setup();
     render(<ReviewInquiryConfigurator locale="de" />);
@@ -168,7 +232,7 @@ describe("ReviewInquiryConfigurator", () => {
     expect(message).toContain("Ristorante Bellavista");
     expect(link).toHaveAttribute("target", "_blank");
     expect(link.getAttribute("rel")).toContain("noopener");
-    expect(screen.getByText("100 × 100 mm")).toBeVisible();
+    expect(screen.getByText("Ø 100 mm")).toBeVisible();
     expect(screen.queryByText("personalized-card")).toBeNull();
     const email = screen.getByRole("link", { name: inquiryCopy.de.email });
     expect(decodeURIComponent(email.getAttribute("href")!)).toContain("Ristorante Bellavista");

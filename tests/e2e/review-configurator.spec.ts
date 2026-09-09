@@ -57,7 +57,7 @@ test.describe("NFC solution configurator", () => {
     await expect(link).toBeVisible();
     await expect(page.getByRole("heading", { name: "Bitte prüfen Sie Ihre Angaben" })).toBeFocused();
     const message = decodeURIComponent((await link.getAttribute("href")) ?? "");
-    for (const expected of ["Digitales Menü", "Personalized Card", "Rund", "100 × 100 mm", "Beispiel AG", "https://beispiel.ch/menu", "Mengenrabatt"]) {
+    for (const expected of ["Digitales Menü", "Personalized Card", "Rund", "Ø 100 mm", "Beispiel AG", "https://beispiel.ch/menu", "Mengenrabatt"]) {
       expect(message).toContain(expected);
     }
 

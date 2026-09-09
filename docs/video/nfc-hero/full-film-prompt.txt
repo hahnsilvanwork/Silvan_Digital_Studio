@@ -1,0 +1,42 @@
+Create ONE complete 15-second premium product film for the SILVAN Digital Studio NFC/QR website hero. Landscape 16:9. Silent. The story is physical menu card -> smartphone detects NFC -> visible tap opens the menu -> FIVE synchronized card-and-screen examples from a LOCKED IDENTICAL CAMERA ANGLE -> settle back on the menu and demonstrate its usefulness -> return to the opening. This is an editorial comparison of DIFFERENT cards and their respective destinations, not one physical card automatically opening five services.
+
+DESIGN WORLD
+Warm ivory photographic studio cyclorama, approximately #f9f8f6, with a quiet warm-stone floor. Restrained Swiss editorial art direction. Real supplied products: black circular MENU card, black circular Google review card, rectangular pink Instagram card, blue square Facebook card, red/white circular Airbnb card. Preserve each actual silhouette and printed design. The white adhesive backing sheet behind the Facebook card in its source photo is packaging, not an additional product to display. Soft large-source side light, finely graduated contact shadow, believable surface texture, no chrome transformation. A refined neutral black smartphone, no visible manufacturer logo. Each product stays rigid. Card changes are clean editorial replacement cuts, never liquid shape morphs or spinning transitions.
+
+COMPOSITION
+Maintain a clean, evenly lit, low-contrast empty region across approximately the left 42 percent for webpage text that will be placed outside this film. All essential action occurs in the right 58 percent, comfortably inset from the top, right and bottom. Opening card remains fully visible, including its edge. The phone and main card should also be understandable within a portrait crop centred on the action. Do not fill the negative space with floating words, logos or new props.
+
+MOTION LANGUAGE
+Subtle eased dolly and controlled object movement. One point of attention at a time. No constant spinning, handheld shake, whip pans, dramatic lens flare, impossible morphing, exploding typography or random floating interfaces. Shadows follow objects consistently. Never use a bright exposure flash to change scenes. Preserve spatial continuity between the card, the nearby phone and the notification. No hands except one anatomically correct fingertip briefly entering for the notification tap; do not place a giant hand across the product. The sequence should work muted and be legible to a first-time nontechnical visitor.
+
+0.0–1.5 SECONDS — DISCOVER
+Begin already on the fully visible matte black circular MENU card, upright on the warm studio surface, positioned in the right half. Camera makes a very small elegant dolly forward. Light reveals the actual print and surface without altering them. Maintain the quiet left region.
+
+1.5–3.0 SECONDS — DETECT
+A black smartphone enters smoothly from the lower-right, its upper edge approaching the menu card at plausible NFC proximity, display oriented toward the viewer. It settles. Give one subtle localized contact accent, without suggesting a physical light feature on the card. A simple notification appears on the phone with the exact short label "Menü öffnen". The menu must NOT open before this notification has been tapped. Do not show QR-camera scanning in this NFC example.
+
+3.0–3.5 SECONDS — OPEN AND LOCK
+One fingertip enters briefly, taps the notification once, and withdraws naturally. The screen transitions to a restrained illustrative digital cafe menu. The camera settles and LOCKS. No camera movement, focal-length change, phone movement, lighting shift or reframing during the next six seconds. No cursor floating in midair, no payment confirmation, no app installation.
+
+3.5–9.5 SECONDS — SAME ANGLE, FIVE USE CASES
+Phone pose, screen quadrilateral, product centre, contact plane, apparent product scale, camera, background and lighting stay registered throughout. At each cut the physical card and its corresponding screen change TOGETHER ON THE SAME FRAME. No old screen lingering behind a new card, no melting logos and no exposure flash. Actual card silhouettes may differ because these are different physical products. Keep products consistently framed around their centres rather than warping them into one shape. Each example gets 1.2 seconds, substantially still: enough to recognize the use case, not to read paragraphs.
+
+3.5–4.7: supplied black circular MENU card + illustrative cafe menu on phone, short heading "Menü", visible coffee and pastry imagery.
+4.7–5.9: supplied Google review card + neutral Google review-entry example on phone, heading "Bewertung schreiben", EMPTY unselected rating stars. No selected five-star rating, review count, completed review or customer result. Printed stars on the physical card remain part of its actual artwork.
+5.9–7.1: supplied Instagram card + illustrative Instagram profile/feed structure, recognizable identity and small image grid. No invented account names, follower counts, claims or completed follow action.
+7.1–8.3: supplied Facebook card + illustrative Facebook business-page structure, recognizable identity, cover image and a simple contact action. No metrics, fabricated testimonials or automatic follow action.
+8.3–9.5: supplied Airbnb card + illustrative Airbnb trip/stay page with a restrained accommodation image. No prices, fake confirmed reservation, eligibility promise or invented rating result. Do not imply tapping the card bypasses the service's sign-in or review rules.
+
+All screens are illustrative examples, not pixel-exact reproductions of existing accounts. Prefer a simple recognizable screen over illegible pseudo-text. The website will explain separately that these are examples of different cards and destinations.
+
+9.5–13.0 SECONDS — SETTLE ON ONE USEFUL RESULT
+At 9.5 seconds match-cut BOTH card and phone back to the original MENU example in exactly the same registered pose. Resume only a tiny controlled camera drift after the cut. Hold the menu readable for 3.5 seconds with exact heading "Menü", categories "Kaffee" and "Patisserie", a small coffee photograph and pastry image. A short gentle screen scroll may reveal the second category, then settle. No new scene or additional app switch. This slower beat lets viewers understand what they just saw: a useful destination reached from a physical product. No prices or long paragraphs. Physical MENU card remains plainly visible.
+
+13.0–15.0 SECONDS — RETURN
+Phone leaves naturally along its arrival path. Return the MENU card, camera framing, lighting and shadow to the opening composition. Decelerate into a quiet final hold of approximately 0.6 seconds. Last frame should match the first in product position, scale, light and empty space, enabling an unobtrusive repeating website loop. No fade to black or white, no end slate, no animated brand lockup.
+
+SOUND
+Completely silent: no speech, music, ambience or effects. The intended delivery is a muted website background.
+
+REFERENCE RULES
+Use all five supplied original product photographs as identity references for their corresponding physical products. Preserve visible artwork, proportions, colors and wording; do not reinterpret logos or QR patterns. Do not invent missing product references. The earlier six-panel storyboard predates the five-use-case montage and MUST NOT control this revised sequence. No promotional text overlays anywhere outside the described phone interface. A website-level label explaining that these are different example destinations will be added outside the film.

@@ -164,7 +164,7 @@ export const bmwFaqs = [
   },
   {
     question: { de: "Kann ich online einen Servicetermin buchen?", en: "Can I book a service appointment online?" },
-    answer: { de: "Ja. Der externe BMW-Onlineterminplaner zeigt die verfügbaren Anliegen und Termine.", en: "Yes. The external BMW appointment planner shows available services and dates." },
+    answer: { de: "In dieser Demo können Sie eine Serviceanfrage im lokalen Kontaktformular ausprobieren. Es werden keine Termine angezeigt, reserviert oder übermittelt.", en: "This demo lets you try a service enquiry in the local contact form. No appointments are shown, reserved or transmitted." },
   },
   {
     question: { de: "Kann ich rund um die Uhr tanken und laden?", en: "Can I refuel and charge around the clock?" },

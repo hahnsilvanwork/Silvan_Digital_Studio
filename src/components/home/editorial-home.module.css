@@ -1,5 +1,10 @@
 .home { background: var(--color-paper); }
-.hero { display: grid; align-content: center; gap: 1.5rem; min-block-size: calc(100svh - var(--header-block-size)); padding-block: clamp(2rem, 5vw, 5rem); }
+.home section > *, .heroCopy > *, .actions > * { min-inline-size: 0; }
+.actions > *, .caption a { max-inline-size: 100%; overflow-wrap: anywhere; }
+.textLink, .caption a { flex-wrap: wrap; }
+.selectedProject { grid-template-columns: minmax(0, 1fr); }
+.projectHeading > h3 { min-inline-size: 0; }
+.hero { display: grid; align-content: center; gap: 1.5rem; padding-block: clamp(1.5rem, 4vw, 3.5rem); }
 .title { max-inline-size: 12ch; font-size: clamp(3.25rem, 6.8vw, 6rem); line-height: 0.98; letter-spacing: -0.035em; font-weight: 500; }
 .heroFigure { min-inline-size: 0; }
 .heroImageLink { display: block; overflow: clip; background: var(--color-stone); }
@@ -12,8 +17,9 @@
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; margin-block-start: 0.5rem; }
 .textLink { display: inline-flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-block-size: 2.75rem; text-decoration: none; font-size: 1rem; border-block-end: 1px solid currentColor; justify-self: start; }
 .arrow { display: inline-block; flex: none; inline-size: 0.5rem; block-size: 0.5rem; border-block-start: 1.5px solid currentColor; border-inline-end: 1.5px solid currentColor; transform: rotate(45deg); }
-.services { display: grid; align-content: center; gap: 2.5rem; padding-block: clamp(4.5rem, 8vw, 8rem); border-block-start: 1px solid var(--color-line); }
+.services { display: grid; align-content: center; gap: 2.5rem; padding-block: clamp(3rem, 5vw, 5rem); border-block-start: 1px solid var(--color-line); }
 .sectionIntro { display: grid; gap: 1rem; align-content: start; }
+.services > * { min-inline-size: 0; }
 .sectionIntro h2, .sectionTop h2, .studio h2, .productBand h2 { font-size: clamp(2rem, 3.5vw, 3.5rem); line-height: 1.06; letter-spacing: -0.03em; }
 .sectionIntro p, .sectionTop p { color: var(--color-ink-muted); max-inline-size: 34ch; }
 .work { padding-block: clamp(3.5rem, 7vw, 7rem); background: var(--color-stone); }
@@ -45,7 +51,6 @@
   .heroCopy > p { font-size: 1rem; max-inline-size: 35ch; }
   .heroCopy .actions { gap: 0.75rem 1.25rem; }
   .heroCopy .textLink { font-size: 0.875rem; }
-  .services { min-block-size: calc(100svh - var(--header-block-size)); }
   .productBand { padding-block: 4.5rem; }
   .productLayout { gap: 2rem; }
   .productImage { grid-row: 1; }

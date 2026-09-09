@@ -1,0 +1,116 @@
+# Medien- und Lizenznachweisregister
+
+Stand: 7. September 2026. Automatisches Inventar versionierter Medien; kein Beleg einer Lizenz oder einer Rechtsverletzung. Geprueft werden muss auch die konkrete kommerzielle Nutzung, Bearbeitung und Weitergabe an Kunden. Generierte Screenshots koennen Rechte an abgebildeten Inhalten enthalten.
+
+Je Datei private Beleg-ID, Urheber/Quelle, Lizenzversion, Erwerbsdatum, Nutzungsumfang, allfaellige Marken-/Personenfreigaben und Pruefer ergaenzen. Die Hashwerte dienen nur der eindeutigen Zuordnung. Spline-Szenen und durch next/font geladene Schriften sind ausserhalb dieses Dateiinventars separat zu belegen.
+
+| Datei | SHA-256 | Nachweisstatus |
+|---|---|---|
+| demos/cafe-vogel/public/cafe-interior.jpg | e5cf6fa568bf98c93d53132891c3cf1a6b0a4203a2bceb0fe1a03c51a6ccde4a | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/file.svg | 2b67812c325c199a02536cdbeea0c593a72f707d323b72ee3e08dbab06753bd4 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/fonts/cafe-font-1.woff2 | 9d2ca86044b885d085059c7e3bed21d6e31456a81a47761e7ade8cd390ebe71d | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/fonts/cafe-font-2.woff2 | 934aa932b4bc1a75d883f7c3d4d5bbc8278e5e7fcc96d5440bbffd61050cf958 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/fonts/cafe-font-3.woff2 | 45fad23db0ff6cc8f2ce5a6f9802d499e8ab737c039a7944a6f2f617d224af14 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/fonts/cafe-font-4.woff2 | 6021680663c58b344d8404c289c755aadc662a02189ffe4f5ca79378f9e97840 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/fonts/cafe-font-5.woff2 | 954e20ee10ae685d0a5a6e6ee380165ea9c8eb329c0e22a58739496714f66991 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/fonts/cafe-font-6.woff2 | 1609a54fa3ad1abc8d0037132f73700333241ea0b65672079998e352f151dea7 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/fonts/cafe-font-7.woff2 | adefc53e7b3d483f1fa5e85edd82b7689ca79db25a1f6786bd7949cdcfeec601 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/fonts/cafe-font-8.woff2 | c549b1064828d22e398c5d9bdce9267aa130569b177c67d550daaf1e8c636288 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/globe.svg | b614b9bf183925957661ac851498fe1d8029fd43a62fbfed86f9e2624a57e7cf | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/hero-cafe.jpg | cfe2ffb0b5007bf8430fdc94a542e3682c99b5b73f7c369d6ce77e01d31343b9 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/next.svg | 55995dfad6ecb4945a1e856ddca03c5e16aa5bf13fd21b4df6a74ae79357bcfc | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/team-foto.jpg | 2b7937a122de10017688a52cfc6727997a9a4626c5608683b27d8e34179095cf | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/vercel.svg | f081337b2fee635b455b63275406a3e7f39d6a014e25ad90dab5a67e62a12ac4 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/cafe-vogel/public/window.svg | 644768c4aaeb4767bce293344eeb0c125fb804a94d801440424072202d85e3a1 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/public/favicon.svg | 365a16d2426adeae7a699a57685ac42da05e5af28a918a5b86a8e2d52996076f | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/public/images/og-default.jpg | a5e26db84378a57cd595afa6ac6ad7d7894ab3fce008098733bc604c700fa679 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/bmw/subpages/accessories.jpg | 44506fd1e6ea61311a422a2e8f9cff07747664b25da00c698112e4d3d95caa5d | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/bmw/subpages/occasions.jpg | 004136f81ebffa42e7a9a0c75c7f240a0453fea0d9d31985c94377c66f9798a2 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/bmw/subpages/service-station.jpg | 68bcb876628dc6ea28d5d8943494d0390d123eccde5ffa0425e437b3c069e218 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/bmw/subpages/service.jpg | fffc6d4e7a95c5ea6260a969790f12540d4028ce049c66c0dab088a29310ac6a | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/bmw/workshop-detail.jpg | b9f972b20a8de103bcb3716de2ec2bdcd3e213e70498d4a5568110831374d81f | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/bmw/workshop-hero.jpg | 153115d3be0e8c5d8f705ff247878a6ffb85b39db74ae76bb7d350c18ec7ece8 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/bmw/workshop-lift.jpg | 7a2f5c1e12d20fd903a945b222d3fb9a0357e14b90ec92b072da68e12aa6fd07 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/brand/falkenried-logo.png | d8722f0107b64fef2713a61ddcbee155b32f5acef4cd4bf6d05676f0e4693884 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/garden-aerial.jpg | 267084386a105ec18c748b386a9f0ec02157389f5842883b82422b41470da2fb | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/garden-path.jpg | 4dce70954a211363eeef3ea8984edbff4d5cb1b04b90890acf22cb2799223758 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/hedge-work.jpg | df057fb4c4a0d52f93171ab9792548c3ba4cd54524875e4d710792c2788e15b7 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/references/gartengestaltung.jpg | 05f0cc48f9d25c8f97281092d72c80ea633e98e48771dfc4221a3434bca98e6c | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/references/hochbeet.jpg | 7af07274cff4e59dda600d0a4e0f70097880988e75db1b7b4d475143e55b2ad1 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/references/spielplatz.jpg | b4baa6c7115e613a007010adb07edbdd59c30c0ff79ad8a426a0785eb4f624d2 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/references/stahlblech-quarzit.jpg | 73d872c920d87c31b35e9408f7bf8c7bd17898c8f689cafdfe4de05eed85e534 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/references/trockenmauer.jpg | df9f4655541c0b362bdf701dc71516c76737772897dc8590229e802634594c16 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/references/wasserspiel.jpg | 0014d3883769d3223f614a37dd1d2d41aecc65f55e9f136e1b5e8eeb7a1dab32 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/subpages/design.jpg | 66adebb6005445a802d371e550f8b3e87f003c02e47c56a5c843774c7dc27a53 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/subpages/maintenance.jpg | 8af6b9ba784bd1ba9f3b2b27ed54bfdd2ec76c4fdd53bdc57a50b524a020bb2f | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/subpages/references.jpg | 0014d3883769d3223f614a37dd1d2d41aecc65f55e9f136e1b5e8eeb7a1dab32 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/subpages/tips.jpg | 9b986eb16430f42a31cf0cc4ba33e1386972375859a621841748edca4880a903 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/garden/subpages/transport.jpg | cbe2c297c2caabd7294885ffe8ad9acae29937b8846eb0b5583f0d5d2a372b5f | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/home/company-video-preview.jpg | f2438d26aa45d757e4f4b490f2467c9354e80d0f8d0fcb8a74f63a74f37d62d9 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/home/falkenried-standort.jpg | 795f11fe7f32b495a9ce842cbfe298f9145e54d1e8d210dd06cde2760b786745 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/immobilien/apartment-living-1.jpg | fad765ca6bb0ad33d92d945896b0e07946ae0ce46b6a53784cccf78d32b5540d | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/immobilien/apartment-living-2.jpg | 44471bbeca16aae7ad2f698db2b200974f3f8fc02be340553372a53466032373 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/immobilien/office-glass.jpg | 245323873796d503cd784ae65cf3eb2fc0cc55dcbc550148a2f9d664bb6bca7b | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/immobilien/parking-garage.jpg | 13b1c4caeb5eb39fedbba879fd96e846c016e9c6864aff89ca163cd45ea55a99 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/team/portrait-man-1.jpg | 5c29752349e382e8c59d7e981dd0cb4add3f37fa0f68bb5f13708c6ab986e0f1 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/team/portrait-man-2.jpg | fa088360bb5c961428f48d2b9f159d4466adb8e47918012019dfa652df6626e7 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/team/portrait-woman-1.jpg | 581c1167f2e30db054077ce725bfcc1c64a50f61c1ebe7dc321ce710977da01c | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/falkenried/src/assets/images/team/portrait-woman-2.jpg | 174bb6a11244899830047c7155dcb2edd34c62c65e0b56f3b034d92894f28fa1 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/coloring.jpg | e5a1cd10dd10930bcf350948ec4d05e8cfb256a5815519a688bd611d990f7b57 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/fonts/salon-font-1.woff2 | 1e943db6ea127d08309dccae4b15b2a827ef9d2cf2ef9a4df81bcb1800567d72 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/fonts/salon-font-10.woff2 | adefc53e7b3d483f1fa5e85edd82b7689ca79db25a1f6786bd7949cdcfeec601 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/fonts/salon-font-2.woff2 | b0ae3e89a7d3ef2b1838bb4b1ceb0b17cc3435af061eee809d76aa623ff116e9 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/fonts/salon-font-3.woff2 | 376427b5322148d8de1e03f263bcca4935a2d60ba71d9f94f4947ab664c711ae | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/fonts/salon-font-4.woff2 | b79a2ea7a38f33fd96a282fadb9ce97626bb0724a44d21075859f0e50239993a | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/fonts/salon-font-5.woff2 | 6021680663c58b344d8404c289c755aadc662a02189ffe4f5ca79378f9e97840 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/fonts/salon-font-6.woff2 | ef1515fa19156794b36e5f362c677f78837c38ccdd6fa1fa76d1dd918ea7abbe | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/fonts/salon-font-7.woff2 | 1609a54fa3ad1abc8d0037132f73700333241ea0b65672079998e352f151dea7 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/fonts/salon-font-8.woff2 | b60ffb0ee2b4e09d71d67ff3ea16d6a23cf2e0cf637c5f4e36fff2e3b1465252 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/fonts/salon-font-9.woff2 | 8ab6a1db2d7caeb46c742371da500d0f3de1dc6ec6bea2aef0106f678d7a1f8d | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/hero-bg.jpg | e867263555199fa1264b69d2333bb5804b048ac3764df3c33ad7f2c72d3bfd4b | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/salon-interior.jpg | 24cef46cb98b9dc921a7a0472b28ac52e2a924cd8d0cbcc5bc291ca8fd0738ea | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/scissors.jpg | 57228e2b77899b1465197778541bdf19cc3009d60b3ee45295dcc7b2f0a12981 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/salon-lumiere/public/team-sophie.jpg | d2e0cc89a2d87c054da4fa6339e66b89519825f5167b0cdd0ec4c4755e65ecde | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/file.svg | 2b67812c325c199a02536cdbeea0c593a72f707d323b72ee3e08dbab06753bd4 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/font-0.woff2 | a35caa4687f434d66453c1fe423d7074cfa9fd7ab80c19b0780f3862887d2fc9 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/font-1.woff2 | 91c841fdfa8e7b94ffedbb983a363947ba6ed720f3bbf0c71d48b618053655bc | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/font-2.woff2 | c15439e7a03af5714282ec1780ff7b0214ec6a7db96300b54928dbcd2569ca0c | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/font-3.woff2 | 74103fd6d41bc32c63aa2e6eb3db619ddb80ce9ca1b1420d5548a23b8ee5d154 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/font-4.woff2 | 0d85af813fc3ed87db0c6265515689b2eef5cbaf7aab17922528dfc95a2cd73f | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/font-5.woff2 | 7dde307fa887fc65ff5830cfada77a7decc5dae8d3c816c9d39ba3f1af1c4ed7 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/font-6.woff2 | 73bc9e17231e9073780d3c81574c7253cecd5645c93544df1a935054b39a364f | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/globe.svg | b614b9bf183925957661ac851498fe1d8029fd43a62fbfed86f9e2624a57e7cf | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/hero-handwerk.webp | fc891abded22b93841f3c2e832416252a819d15802e89b937fb8fec449704b75 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/next.svg | 55995dfad6ecb4945a1e856ddca03c5e16aa5bf13fd21b4df6a74ae79357bcfc | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/proj-1.webp | a0be895556d9d305543b3a305c6cd1c7845baf4de34da8cfb38f6a5dbc38d851 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/proj-2.webp | 34c6d8497d4ff4d9985525da4ed66924f8bd8fc386a01fabb906278627cf7a9c | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/proj-3.webp | fc8477966befeec16a9b66b51ee47492060c7c3aadca633eb94a694cc96b9b58 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/proj-4.webp | 582d97d591e3587521a15467c6f1ac32937f0de2fd9497d21634d867556e21fe | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/team.webp | b1c56f918b13d56e7e19f6f8af692e966c262a71a89cb0df6f9b8d4872804c8b | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/vercel.svg | f081337b2fee635b455b63275406a3e7f39d6a014e25ad90dab5a67e62a12ac4 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| demos/steiner-handwerk/public/window.svg | 644768c4aaeb4767bce293344eeb0c125fb804a94d801440424072202d85e3a1 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/portrait/portrait.webp | 206991294a8f80e237a198cce7cd2045a6b2ed9f38fd10f96c20741377635f31 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/card-stand-white.webp | 93105f51d676c527adbd8c420bfbec73fc53a1fdffa2ba557b0d52f27276b02e | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/catalog/all-products.webp | 53a60229dfa25ab10af5579668b6c30c7c033a74e53eba10d82d669ef4a03068 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/catalog/booking-custom-blue.webp | b346c96b6b226ac65dc1e9759d9f08b89df3e91791c48a9f69c81c96f7482954 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/catalog/menu-personalized-white.webp | 298219dbf6dc907dbd560331464b940b1acdd07c3ab169423014fab9229dc263 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/catalog/menu-round-black.webp | 0795cf61edb916e1d8e355ff0e0a35a03efeead0d7212afccc1193aba287ff06 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/catalog/menu-square-black.webp | 67614cb38f76b5494880e71e687625485361ab5552b7d01108128e18bbf35c50 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/catalog/review-personalized-black.webp | 321254dee9a2b1b7f253a848a2d2079e5e410b8144d423da776fb0dee7570e80 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/catalog/review-round-black.webp | 63af8236ec407fcf4f2d97272f927630285ea0e011558eeda1538d54c33f6f42 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/catalog/review-round-white.webp | 72ad1be1084d35ee76a7ef24e59b80b00e9e287cdd092e470d4682311fc6074b | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/catalog/review-square-blue.webp | bad2b3578e9d844299007b8e00b45db4df2a6028c57714fc19ab6b9cf63c6dff | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/catalog/review-stand-white.webp | d63750616cba96d8656694ed0a651cdf69e462609ce1eb86351455eac1be5335 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/round-nfc-black.webp | 1d46ad9cd84beafbdbdfe4a9f1f43c6b9549bc01b73b5a5ac7e6297c8553e7f0 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/round-nfc-white.webp | bfc0cf80b365199e6083ddccbccdee10d4445697df69c58eb80a7a4923d50a63 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/products/stand-blue.webp | d46a70c182b4c906a0282b8f84240e1c2bc2da93cdba319005ee3d7a267b8f89 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/projects/cafe-vogel-retina-en.webp | 3119975b139c5224b53ec7fb5eb487294f21a9795cc6732e74fae897ceeb0b17 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/projects/cafe-vogel-retina.webp | 5f8346db701d03c07e9b63d0a35efda0658aa1f1166b4628a39e95e57ecf4bee | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/projects/falkenried-retina-en.webp | ae125cf35523753ecd625a9837863ac730e136ca271ed5731acfc6af6f0bdf11 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/projects/falkenried-retina.webp | 71f517b09c429fa19f7ed2dc1aa064382f6c2bd4d91e955b50f58131be053421 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/projects/salon-lumiere-retina-en.webp | 2b9dfce0252599a9e4758826e2aca904b35cc7b7cd915b0c2fd1b56d3a78d3a7 | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/projects/salon-lumiere-retina.webp | 20a9a7d3322f09437499012c48ba680a2edda0beaab96918bfec4398ccd4db4a | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/projects/steiner-handwerk-retina-en.webp | cbf17158b84b173adfd6bbea78751c2eac08a3ad0739edd976f70afa65ffbffa | Offen: Quelle/Lizenz/Beleg zuordnen |
+| public/images/projects/steiner-handwerk-retina.webp | d920845b22637264292ec8e15c92e7f7185a2a690b3e46c94a178d2c0aae30f5 | Offen: Quelle/Lizenz/Beleg zuordnen |
+
+Erfasst: 106 Dateien. Reproduzierbar mit node scripts/inventory-assets.mjs.

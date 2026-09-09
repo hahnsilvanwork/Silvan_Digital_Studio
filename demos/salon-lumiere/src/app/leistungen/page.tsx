@@ -1,99 +1,9 @@
 import Link from "next/link";
 
-const services = [
-  {
-    category: "Herren",
-    items: [
-      {
-        name: "Herrenschnitt",
-        description: "Klassischer Schnitt inkl. Waschen, Schneiden und Föhnen.",
-        price: "CHF 45",
-        duration: "45 min",
-      },
-      {
-        name: "Bart trimmen",
-        description: "Formgebung und Pflege des Bartes nach Ihren Wünschen.",
-        price: "CHF 20",
-        duration: "20 min",
-      },
-      {
-        name: "Schnitt & Bart",
-        description: "Kombination aus Herrenschnitt und Barttrimmen.",
-        price: "CHF 60",
-        duration: "60 min",
-      },
-    ],
-  },
-  {
-    category: "Damen",
-    items: [
-      {
-        name: "Damenschnitt",
-        description: "Waschen, schneiden und föhnen – maßgeschneidert auf Ihre Haarlänge.",
-        price: "ab CHF 85",
-        duration: "60–90 min",
-      },
-      {
-        name: "Föhnfrisur",
-        description: "Professionelles Föhnen und Stylen für jeden Anlass.",
-        price: "ab CHF 45",
-        duration: "30–45 min",
-      },
-      {
-        name: "Hochsteckfrisur",
-        description: "Elegante Aufsteckfrisuren für Hochzeiten und besondere Anlässe.",
-        price: "ab CHF 95",
-        duration: "60–90 min",
-      },
-    ],
-  },
-  {
-    category: "Farbe & Technik",
-    items: [
-      {
-        name: "Volltonfarbe",
-        description: "Einfärbung in Ihrer Wunschfarbe – für ein gleichmäßiges, strahlendes Ergebnis.",
-        price: "ab CHF 120",
-        duration: "90–120 min",
-      },
-      {
-        name: "Balayage / Ombré",
-        description: "Natürlich wirkende Farbverläufe für ein modernes, sonnenverwöhntes Finish.",
-        price: "ab CHF 160",
-        duration: "120–150 min",
-      },
-      {
-        name: "Strähnen",
-        description: "Klassische oder moderne Strähnen für mehr Tiefe und Dimension.",
-        price: "ab CHF 140",
-        duration: "90–150 min",
-      },
-      {
-        name: "Toning & Glossing",
-        description: "Farbauffrischung und Glanzbehandlung für strahlendes Haar.",
-        price: "ab CHF 60",
-        duration: "45 min",
-      },
-    ],
-  },
-  {
-    category: "Pflege & Behandlung",
-    items: [
-      {
-        name: "Intensive Pflegekur",
-        description: "Tiefenwirksame Behandlung für trockenes und strapaziertes Haar.",
-        price: "ab CHF 35",
-        duration: "20 min",
-      },
-      {
-        name: "Keratin-Behandlung",
-        description: "Langanhaltende Glättung und Pflege für widerspenstiges Haar.",
-        price: "ab CHF 180",
-        duration: "120–150 min",
-      },
-    ],
-  },
-];
+import type { Metadata } from "next";
+import { services } from "@/content/services";
+
+export const metadata: Metadata = { title: "Leistungen & Richtpreise | Salon Lumière – Demo", description: "Zwölf beispielhafte Salonleistungen mit Richtpreisen und Dauer. Leistung wählen und eine Terminanfrage ohne Versand ausprobieren." };
 
 export default function Leistungen() {
   return (
@@ -116,6 +26,7 @@ export default function Leistungen() {
 
       {/* Services */}
       <section className="max-w-6xl mx-auto px-6 py-16 md:py-24">
+        <p className="mb-10 text-sm text-muted font-body">Richtpreise im fiktiven Salon: Die Beträge und Zeitangaben dienen als Orientierung. Haarlänge, Haarstruktur und Aufwand würden den Preis bestimmen.</p>
         <div className="space-y-16 md:space-y-24">
           {services.map(({ category, items }) => (
             <div key={category}>
@@ -127,9 +38,10 @@ export default function Leistungen() {
               </div>
 
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {items.map(({ name, description, price, duration }) => (
+                {items.map(({ id, name, description, price, duration }) => (
                   <div
-                    key={name}
+                    key={id}
+                    id={id}
                     className="border border-cream-dark bg-cream p-6 md:p-8 flex flex-col gap-4 hover:border-gold/50 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group cursor-default"
                   >
                     <div>
@@ -141,9 +53,10 @@ export default function Leistungen() {
                       </p>
                     </div>
                     <div className="flex items-center justify-between mt-auto pt-4 border-t border-cream-dark">
-                      <span className="text-gold font-body font-semibold text-sm">{price}</span>
+                      <span className="text-gold font-body font-semibold text-sm">Richtpreis {price}</span>
                       <span className="text-muted text-xs font-body">{duration}</span>
                     </div>
+                    <Link href={`/kontakt?service=${id}#demo-form`} className="salon-text-link" aria-label={`${name}: Demo-Anfrage ausprobieren`}>Leistung anfragen ↗</Link>
                   </div>
                 ))}
               </div>
@@ -153,8 +66,7 @@ export default function Leistungen() {
 
         {/* Note */}
         <p className="mt-12 text-sm text-muted font-body italic border-l-2 border-gold/40 pl-4">
-          Alle Preise sind unverbindlich. Der endgültige Preis wird nach Beratung und
-          Beurteilung Ihrer Haarstruktur festgelegt.
+          Alle Angaben sind beispielhafte Richtpreise. In einem realen Salon würde der endgültige Preis nach Beratung vor der Behandlung vereinbart.
         </p>
       </section>
 
@@ -165,13 +77,13 @@ export default function Leistungen() {
             Interesse geweckt?
           </h2>
           <p className="text-muted text-base mb-8 font-body">
-            Buchen Sie jetzt Ihren persönlichen Beratungstermin.
+            Probieren Sie eine unverbindliche Terminanfrage mit Ihrer Wunschleistung aus.
           </p>
           <Link
             href="/kontakt"
             className="inline-block px-10 py-4 bg-charcoal text-cream text-sm font-medium tracking-wide hover:bg-charcoal-light transition-colors duration-200"
           >
-            Termin buchen
+            Demo-Anfrage ausprobieren
           </Link>
         </div>
       </section>

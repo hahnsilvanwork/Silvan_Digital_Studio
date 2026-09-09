@@ -16,14 +16,24 @@ export default function Navbar() {
   const pathname = usePathname().replace(/\/$/, "") || "/";
 
   useEffect(() => { setOpen(false); }, [pathname]);
+  useEffect(() => {
+    if (!open) return;
+    const close = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      document.querySelector<HTMLButtonElement>('[aria-controls="mobile-navigation"]')?.focus();
+    };
+    window.addEventListener("keydown", close);
+    return () => window.removeEventListener("keydown", close);
+  }, [open]);
 
   return (
-    <header onKeyDown={(event) => { if (event.key === "Escape") { setOpen(false); document.querySelector<HTMLButtonElement>('[aria-controls="mobile-navigation"]')?.focus(); } }} className="fixed top-0 left-0 right-0 z-50 bg-[#F2E8D5]/97 backdrop-blur-sm border-b border-[#1A1208]/20">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#F2E8D5]/97 backdrop-blur-sm border-b border-[#1A1208]/20">
       <nav aria-label="Hauptnavigation" className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
         {/* Logo */}
         <Link href="/" className="flex flex-col items-start leading-none gap-0.5">
           <span style={{ fontFamily: "'Playfair Display', Georgia, serif" }} className="text-lg font-black text-[#1A1208] tracking-tight">
-            Konditorei
+            Café & Konditorei
           </span>
           <span className="text-[11px] text-[#755031] tracking-[0.25em] uppercase font-medium" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
             ✦ Vogel ✦ Zürich ✦
@@ -54,13 +64,13 @@ export default function Navbar() {
               className="border border-[#1A1208] text-[#1A1208] text-xs tracking-[0.15em] uppercase px-5 py-2 hover:bg-[#1A1208] hover:text-[#F2E8D5] transition-colors duration-200"
               style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
             >
-              Tisch reservieren
+              Reservierungsdemo
             </Link>
           </li>
         </ul>
 
         {/* Mobile hamburger */}
-        <button onClick={() => setOpen(!open)} className="md:hidden p-2 -mr-2" aria-label={open ? "Menü schliessen" : "Menü öffnen"} aria-expanded={open} aria-controls="mobile-navigation">
+        <button onClick={() => setOpen(!open)} className="md:hidden min-h-11 min-w-11 p-3 -mr-2" aria-label={open ? "Menü schliessen" : "Menü öffnen"} aria-expanded={open} aria-controls="mobile-navigation">
           <span className="block w-5 relative h-4">
             {[
               open ? "top-2 rotate-45" : "top-0",
@@ -74,7 +84,7 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile menu */}
-      <div id="mobile-navigation" hidden={!open} onKeyDown={(event) => { if (event.key === "Escape") { setOpen(false); document.querySelector<HTMLButtonElement>('[aria-controls="mobile-navigation"]')?.focus(); } }} className={`md:hidden overflow-hidden transition-all duration-300 bg-[#F2E8D5] border-t border-[#1A1208]/10 ${open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
+      <div id="mobile-navigation" hidden={!open} className={`md:hidden overflow-y-auto overscroll-contain transition-all duration-300 bg-[#F2E8D5] border-t border-[#1A1208]/10 ${open ? "max-h-[calc(100dvh-81px)] opacity-100" : "max-h-0 opacity-0"}`}>
         <ul className="px-6 py-4 flex flex-col gap-1">
           {links.map(({ href, label }) => (
             <li key={href}>
@@ -96,7 +106,7 @@ export default function Navbar() {
               className="block text-center py-3 border border-[#1A1208] text-[#1A1208] text-sm tracking-[0.1em] uppercase hover:bg-[#1A1208] hover:text-[#F2E8D5] transition-colors duration-200"
               style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
             >
-              Tisch reservieren
+              Reservierungsdemo
             </Link>
           </li>
         </ul>

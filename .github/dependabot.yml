@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+  - package-ecosystem: npm
+    directories:
+      - /
+      - /demos/falkenried
+      - /demos/cafe-vogel
+      - /demos/steiner-handwerk
+      - /demos/salon-lumiere
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      development-patches:
+        dependency-type: development
+        update-types:
+          - patch

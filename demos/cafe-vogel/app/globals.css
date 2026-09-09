@@ -49,7 +49,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 100px; }
 .demo-location { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #e5d7bf; padding: 20px; }
 .demo-location > span { font-size: 40px; }
 .demo-form-note { padding: 16px; background: #e5d7bf; color: #4a3c28; font-size: 15px; line-height: 1.5; border-left: 2px solid #8b6040; }
-input, select, textarea { min-width: 0; }
+input, select, textarea { min-width: 0; font-size: 16px !important; }
 main > section:first-child:not(.cafe-hero) { padding-top: 100px; }
 footer { overflow-wrap: anywhere; }
 @media (max-width: 767px) {
@@ -64,7 +64,6 @@ footer { overflow-wrap: anywhere; }
  .photo-caption { padding-inline: 22px; font-size: 12px; }
  .cafe-ribbon { font-size: 10px; gap: 10px; flex-wrap: wrap; letter-spacing: .1em; }
  .cafe-ribbon span:last-child, .cafe-ribbon span:nth-child(4) { display: none; }
- input, select, textarea { font-size: 16px !important; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
 
@@ -137,3 +136,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px
 .cafe-text-link { min-height: 44px; display: inline-flex; align-items: center; }
 .cafe-button:active, button[type=submit]:active { transform: translateY(1px); }
 @media(max-width: 767px) { main p.text-sm { font-size: 16px; line-height: 1.65; } }
+
+/* Give the holiday option a comfortable touch target without enlarging text fields. */
+label:has(#holiday){min-height:44px}
+#holiday{width:20px;height:20px;flex-shrink:0}

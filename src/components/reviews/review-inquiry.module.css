@@ -15,6 +15,17 @@
   gap: 0.75rem 1.5rem;
 }
 
+.modelSelection { display: grid; gap: 1rem; padding: 1rem; border: var(--hairline) solid var(--color-line); min-inline-size: 0; }
+.modelHeading { display: flex; align-items: center; gap: 1rem; }
+.modelHeading > div { min-inline-size: 0; }
+.modelImage { flex: 0 0 5rem; inline-size: 5rem; block-size: 5rem; object-fit: contain; }
+.modelTitle { margin: 0; font-size: var(--text-body); font-weight: 500; overflow-wrap: anywhere; }
+.modelPrice { margin-block: 0.3rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.modelFacts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); gap: 0.75rem 1rem; margin: 0; }
+.modelDetails > summary { cursor: pointer; padding-block: 0.75rem; min-block-size: 2.75rem; font-size: 1rem; }
+.modelDetails[open] > summary { margin-block-end: 0.5rem; }
+.modelDetails > p { margin-block-start: 0.75rem; }
+
 .hint {
   color: var(--color-ink-muted);
   font-size: 0.875rem;
@@ -207,6 +218,9 @@ textarea.control {
   justify-self: start;
 }
 
+.submit,
+.confirmLink { inline-size: 100%; }
+
 @media (min-width: 48rem) {
   .fields {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -224,4 +238,59 @@ textarea.control {
   .fieldWide {
     grid-column: 1 / -1;
   }
+}
+.suggestions {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--space-sm);
+  padding-block: var(--space-sm);
+  border-block: var(--hairline) solid var(--color-line);
+  min-inline-size: 0;
+}
+
+.suggestionList {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.suggestionButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0.5rem;
+  border: var(--hairline) solid var(--color-line);
+  background: var(--color-paper-raised);
+  color: var(--color-ink);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.suggestionButton:hover { border-color: var(--color-ink); }
+.suggestionButton > span { min-inline-size: 0; }
+.suggestionImage { inline-size: 72px; block-size: 72px; flex-shrink: 0; object-fit: contain; }
+.suggestionTitle { display: block; font-size: var(--text-action); overflow-wrap: anywhere; }
+
+@media (min-width: 48rem) {
+  .submit,
+  .confirmLink { inline-size: auto; }
+  .suggestionList { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.estimate {
+  padding-block: var(--space-sm);
+  border-block: var(--hairline) solid var(--color-line);
+  display: grid;
+  gap: 0.5rem;
+}
+.estimateAmount {
+  margin: 0;
+  font-size: var(--text-subitem);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
 }

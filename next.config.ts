@@ -13,12 +13,20 @@ const nextConfig: NextConfig = {
         { key: "Referrer-Policy", value: "strict-origin" },
         { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()" },
         { key: "X-Frame-Options", value: "DENY" },
-        { key: "Content-Security-Policy", value: "base-uri 'self'; object-src 'none'; frame-ancestors 'none'" },
-        // Trial in browser consoles. Inline Next payloads need per-build hashes
-        // before script-src can be enforced while retaining static rendering.
-        { key: "Content-Security-Policy-Report-Only", value: "default-src 'self'; script-src 'self' https://cdn.spline.design https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https://prod.spline.design https://*.spline.design https://vitals.vercel-insights.com; worker-src 'self' blob:; frame-src 'none'; object-src 'none'; base-uri 'self'" },
+        { key: "Content-Security-Policy", value: "base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'none'; script-src-attr 'none'" },
+        // postbuild adds an enforced per-document meta CSP with exact inline hashes.
         ...(process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production"
           ? [{ key: "X-Robots-Tag", value: "noindex, nofollow" }] : []),
+      ],
+    }, {
+      source: "/3d/:path*",
+      headers: [
+        // The viewer is sandboxed to an opaque origin and cannot access the site.
+        { key: "Access-Control-Allow-Origin", value: "*" },
+        { key: "X-Frame-Options", value: "SAMEORIGIN" },
+        { key: "Content-Security-Policy", value: "sandbox allow-scripts; base-uri 'none'; object-src 'none'; frame-ancestors 'self'; form-action 'none'; script-src-attr 'none'" },
+        { key: "Referrer-Policy", value: "no-referrer" },
+        { key: "X-Robots-Tag", value: "noindex, nofollow" },
       ],
     }];
   },
@@ -40,6 +48,16 @@ const nextConfig: NextConfig = {
     ]);
   },
   images: {
+    localPatterns: [
+      { pathname: "/**", search: "" },
+      // Only these refreshed screenshots use a cache version. Arbitrary image
+      // query strings remain disallowed.
+      ...["cafe-vogel", "steiner-handwerk", "salon-lumiere"].flatMap(project =>
+        ["", "-en"].map(locale => ({
+          pathname: `/images/projects/${project}-retina${locale}.webp`,
+          search: "?v=20260908",
+        }))),
+    ],
     qualities: [75, 90],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 2880, 3840],
     // AVIF first, WebP as the fallback. Measured on this site's own assets, AVIF

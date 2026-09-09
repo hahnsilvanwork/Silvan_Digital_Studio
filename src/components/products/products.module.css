@@ -77,6 +77,7 @@
 
 .heroControls,
 .heroIndicators {
+  --control-target-min: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -128,13 +129,36 @@
 }
 
 .categoryTabs {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: none;
+  flex-wrap: wrap;
   gap: var(--space-2xs);
 }
 
-.categoryTabs button:last-child:nth-child(odd) {
-  grid-column: 1 / -1;
+.mobileCategory {
+  display: grid;
+  gap: var(--space-2xs);
+}
+
+.mobileCategory select {
+  inline-size: 100%;
+  min-block-size: 3rem;
+  padding: .7rem .85rem;
+  border: var(--hairline) solid var(--color-line);
+  border-radius: 4px;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mobileCategory select:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.desktopCategoryPrompt {
+  display: none;
 }
 
 .categoryPrompt {
@@ -157,11 +181,12 @@
 }
 
 .categoryTabs button {
-  display: grid;
-  gap: 0.2rem;
-  min-block-size: 5rem;
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-media);
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  min-block-size: var(--control-target-min);
+  padding: .65rem .9rem;
+  border-radius: 4px;
   text-align: start;
 }
 
@@ -172,8 +197,7 @@
 }
 
 .categoryName {
-  font-size: var(--text-subitem);
-  letter-spacing: var(--tracking-item);
+  font-size: 1rem;
 }
 
 .categoryCount {
@@ -271,7 +295,7 @@
   min-inline-size: 0;
   aspect-ratio: 1;
   overflow: clip;
-  background: #f0efec;
+  background: var(--product-stage-surface);
 }
 
 .catalogImage {
@@ -414,7 +438,7 @@
   position: relative;
   min-block-size: 0;
   overflow: hidden;
-  background: #f0efec;
+  background: var(--product-stage-surface);
 }
 
 .dialogStill,
@@ -478,12 +502,11 @@
 
 @media (min-width: 44rem) {
   .categoryTabs {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: flex;
   }
 
-  .categoryTabs button:last-child:nth-child(odd) {
-    grid-column: auto;
-  }
+  .mobileCategory { display: none; }
+  .desktopCategoryPrompt { display: block; font-size: var(--text-subitem); }
 
   .catalogGrid {
     grid-auto-columns: initial;
@@ -525,3 +548,26 @@
 }
 
 .requestModel:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.catalogImageLink {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.catalogImageLink:focus-visible {
+  outline: 2px solid var(--focus-ring-outer);
+  outline-offset: -4px;
+}
+
+.familyGuide { padding-block: var(--space-sm); border-block-start: var(--hairline) solid var(--color-line); }
+.familyGuide h3 { margin-block-end: 1rem; font-size: var(--text-item); }
+.familyGuide p { max-width: 70ch; margin-block-start: 1rem; }
+.familyChoices { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.familyChoices button { min-height: 44px; padding: 0.625rem 0.875rem; border: 1px solid var(--color-line); border-radius: 4px; font: inherit; background: transparent; color: var(--color-ink); cursor: pointer; }
+.familyChoices button:hover { background: var(--color-stone, #e9e5df); }
+.familyChoices button[aria-pressed="true"] { background: var(--color-ink); color: var(--color-paper); }
+.variantHint { color: var(--color-ink-muted); font-size: var(--text-label); }
+
+.deliveryFacts { border-block-start: 1px solid var(--color-line); padding-block: 0.75rem; }
+.deliveryFacts summary { min-height: 44px; align-content: center; cursor: pointer; }
+.deliveryFacts p { max-width: 70ch; margin-block-start: 0.75rem; }

@@ -1,8 +1,4 @@
-import type { CSSProperties } from "react";
-
 import { SiteShell } from "../../components/layout/SiteShell";
-import { revealSequence } from "../../components/motion/reveal-sequence";
-import { SplitText } from "../../components/motion/SplitText";
 import { ButtonLink } from "../../components/ui/ButtonLink";
 import { ProjectPreview } from "../../components/work/ProjectPreview";
 import { projects } from "../../content/projects";
@@ -19,40 +15,26 @@ interface WorkPageProps {
 
 export function WorkPage({ locale }: WorkPageProps) {
   const content = getContent(locale);
-  const sequence = revealSequence(content.work.title);
 
   return (
     <SiteShell currentPath={localizePath("/work", locale)} locale={locale}>
       <div className={pageStyles.page}>
-        <section className={`${layoutStyles.container} ${pageStyles.pageHeader}`}>
-          <p className={pageStyles.heroLabel} data-reveal="rise">
+        <section className={`${layoutStyles.container} ${workStyles.overviewHeader}`}>
+          <p className={pageStyles.heroLabel}>
             {content.work.eyebrow}
           </p>
-          <SplitText
-            as="h1"
-            className={pageStyles.pageTitle}
-            startIndex={sequence.titleStartIndex}
-            text={content.work.title}
-          />
-          <p
-            className={pageStyles.editorialTight}
-            data-reveal="rise"
-            style={{ "--reveal-index": sequence.introIndex } as CSSProperties}
-          >
+          <h1 className={workStyles.overviewTitle}>{content.work.title}</h1>
+          <p className={workStyles.overviewIntro}>
             {content.work.intro}
           </p>
-          <div
-            className={pageStyles.heroActions}
-            data-reveal="rise"
-            style={{ "--reveal-index": sequence.actionsIndex } as CSSProperties}
-          >
+          <div className={workStyles.overviewActions}>
             <ButtonLink href={localizePath("/contact", locale)}>
               {content.work.ctaLabel}
             </ButtonLink>
           </div>
         </section>
 
-        <section className={`${layoutStyles.container} ${pageStyles.section}`}>
+        <section className={`${layoutStyles.container} ${workStyles.overviewProjects}`}>
           <h2 className="visually-hidden">{content.work.eyebrow}</h2>
           <ul className={workStyles.previewList}>
             {projects.map((project, index) => (
@@ -63,6 +45,7 @@ export function WorkPage({ locale }: WorkPageProps) {
                   // Two columns, so the first row is the first two cards.
                   priority={index < 2}
                   project={project}
+                  showOutcome
                 />
               </li>
             ))}

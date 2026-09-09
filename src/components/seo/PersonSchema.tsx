@@ -42,12 +42,12 @@ const AREA_SERVED = [
 
 const OFFERS: readonly ServiceOffer[] = [
   { route: "/websites", price: 300 },
-  { route: "/reviews", price: 49 },
+  { route: "/reviews", price: 15 },
   { route: "/presence", price: 249 },
   { route: "/automation", price: null },
 ];
 
-export function PersonSchema({ locale }: { readonly locale: Locale }) {
+export function PersonSchema({ locale, nonce }: { readonly locale: Locale; readonly nonce?: string }) {
   const content = getContent(locale);
   const { details } = content.contact;
   const { base } = getSiteOrigin();
@@ -127,9 +127,9 @@ export function PersonSchema({ locale }: { readonly locale: Locale }) {
         // country alone is the wrong granularity for a studio whose customers
         // are local businesses.
         areaServed: AREA_SERVED,
-        // A range, not a currency code: the published tiers run from the CHF 49
-        // review card to custom projects above CHF 5'000.
-        priceRange: "CHF 49-5000+",
+        // A range, not a currency code: from the CHF 15 chip
+        // to custom projects above CHF 5'000.
+        priceRange: "CHF 15-5000+",
         currenciesAccepted: "CHF",
         sameAs: [details.linkedIn],
         makesOffer: OFFERS.map(({ route, price }) => {
@@ -171,6 +171,7 @@ export function PersonSchema({ locale }: { readonly locale: Locale }) {
 
   return (
     <script
+      nonce={nonce}
       // Serialized with JSON.stringify and escaped, so no content string can
       // break out of the script element.
       dangerouslySetInnerHTML={{

@@ -1,4 +1,6 @@
-import { measurementCopy } from "./measurement-copy";
+import { productTierSummary } from "../lib/product-pricing";
+import { mergePhotoProducts } from "./photo-products";
+import { imprintContent, privacyContent } from "./legal-content";
 import type { SiteContent } from "./types";
 
 export const en = {
@@ -37,7 +39,7 @@ export const en = {
     getInTouch: "Get in touch",
     from: "from",
     onRequest: "On request",
-    recommended: "Most often chosen",
+    recommended: "For multi-page websites",
   },
   home: {
     hero: {
@@ -59,7 +61,7 @@ export const en = {
       {
         title: "NFC & QR Solutions",
         description: "Cards and stands for reviews, menus, bookings, and custom destinations.",
-        price: "from CHF 49",
+        price: "Chips from CHF 15 · cards from CHF 49",
         href: "/reviews",
       },
       {
@@ -90,44 +92,44 @@ export const en = {
     eyebrow: "Websites",
     title: "A website that makes your business easy to choose.",
     intro:
-      "From a focused information site to a large custom presence, you get a fast, accessible website that is straightforward to maintain.",
-    priceLabel: "CHF 300–5,000+",
+      "From a compact page with contact details to a large custom presence: we plan your website around your content, features and future updates.",
+    priceLabel: "Indicative prices · CHF 300–5,000+",
     priceTiers: [
       {
         id: "simple",
-        name: "Simple Info Website",
+        name: "Compact Website",
         price: "CHF 300–699",
-        description: "A focused first presence with the essential information customers need.",
+        description: "When your offer and contact details fit on a single page.",
         features: ["One concise page", "Mobile optimised", "Direct contact options"],
       },
       {
         id: "standard",
-        name: "Standard Business Website",
+        name: "Business Website",
         price: "CHF 700–1,999",
         recommended: true,
-        description: "For businesses ready to structure services, trust signals, and contact clearly.",
+        description: "When customers need separate pages for your services, business and contact information.",
         features: ["Multiple content pages", "Custom layout", "Essential search foundations"],
       },
       {
         id: "premium",
-        name: "Premium Large Website",
+        name: "Extensive Website",
         price: "CHF 2,000–4,999",
-        description: "For substantial content, ambitious design, and more advanced functionality.",
-        features: ["Expanded site structure", "Polished interactions", "Flexible content modules"],
+        description: "When substantial content needs distinct sections and the design and interactions need more planning.",
+        features: ["Site structure for multiple sections", "Custom-designed interactions", "Flexible building blocks for page content"],
       },
       {
         id: "custom",
-        name: "Custom Large Project",
+        name: "Custom Project",
         price: "from CHF 5,000",
-        description: "For bespoke digital projects with a scope we define together.",
+        description: "When specific requirements first need a dedicated concept and technical planning.",
         features: ["Tailored concept", "Technical planning", "Project-specific delivery"],
       },
     ],
-    benefitsTitle: "What you get",
+    benefitsTitle: "Which scope fits your business?",
     benefits: [
       "A clear structure for customers and search engines",
       "A responsive experience on every screen",
-      "Maintainable code without unnecessary technical weight",
+      "A technical foundation that makes later adjustments easier to follow",
     ],
     processTitle: "How your website takes shape",
     process: [
@@ -150,6 +152,11 @@ export const en = {
           question: "What is included in the price?",
           answer:
             "Concept, design, build, and launch within the scope of the chosen tier. Domain and hosting are not part of the price. We clarify which option makes sense for you in conversation.",
+        },
+        {
+          question: "Can I edit text and images myself?",
+          answer:
+            "This depends on the agreed editing solution. A content management system (CMS) is not automatically included in a price tier. Before the project starts, we clarify what you want to edit yourself, how often updates are needed and who will make them. The quote specifies the solution, any introduction and the costs of setup, content updates and technical maintenance.",
         },
         {
           question: "How does a project run?",
@@ -177,39 +184,39 @@ export const en = {
     priceLabel: "Design levels including setup",
     products: [
       {
-        id: "standard-card",
-        name: "Standard Card or Standard Stand",
-        price: "CHF 49.–",
-        description: "A Standard Card in the fixed design or a visible Standard Stand.",
-        features: ["No personalization", "NFC and QR", "Programming included"],
+        id: "nfc-chip",
+        name: "NFC sticker",
+        price: "CHF 15.–",
+        description: "A stick-on chip for your agreed digital link.",
+        features: [productTierSummary("nfc-chip", "en"), "Stick-on format", "Programming included"],
       },
       {
-        id: "standard-pair",
-        name: "Two Standard Cards",
-        price: "CHF 80.–",
-        description: "Two Standard Cards for more than one customer touchpoint.",
-        features: ["Choose either shape", "Both sizes available", "Setup included"],
+        id: "standard-card",
+        name: "Standard Card",
+        price: "CHF 49.–",
+        description: "A Standard Card in the fixed design.",
+        features: [productTierSummary("standard-card", "en"), "No personalization · NFC and QR", "Programming included"],
       },
       {
         id: "personalized-card",
         name: "Personalized Card",
         price: "CHF 69.–",
         description: "An existing design with your logo or company name.",
-        features: ["Round or square", "Both sizes", "Logo and company name"],
+        features: [productTierSummary("personalized-card", "en"), "Shape and size depend on model", "Logo and company name"],
       },
       {
         id: "fully-custom-card",
         name: "Fully Customized Card",
         price: "CHF 99.–",
         description: "A completely custom design aligned with your brand identity.",
-        features: ["Custom design", "Any digital destination", "Design service included"],
+        features: [productTierSummary("fully-custom-card", "en"), "Custom design and digital destination", "Design service included"],
       },
     ],
-    quantityDiscount: "A quantity discount applies to larger orders. I give you the price for your quantity when I reply to your enquiry, before anything is binding.",
+    quantityDiscount: "Over 10 items: additional quantity discounts by agreement.",
     processTitle: "Three simple steps",
     process: [
       { id: "tap", label: "TAP", title: "Tap", description: "The customer taps the NFC card or stand with their phone." },
-      { id: "open", label: "OPEN", title: "Open", description: "The saved destination opens directly, no app and no searching." },
+      { id: "open", label: "OPEN", title: "Open", description: "An NFC-compatible phone opens the saved link without an extra NFC app. The destination service's requirements apply to the next action." },
       { id: "act", label: "ACT", title: "Act", description: "The guest reviews, reads the menu, books or saves your contact details." },
     ],
     ctaLabel: "Make a no-obligation inquiry",
@@ -223,6 +230,10 @@ export const en = {
     heroResumeLabel: "Resume image rotation",
     categories: [
       { id: "reviews", label: "Google Reviews" },
+      { id: "tripadvisor", label: "Tripadvisor" },
+      { id: "social", label: "Social Media" },
+      { id: "contact", label: "WhatsApp" },
+      { id: "chips", label: "NFC chips" },
       { id: "menu", label: "Menu" },
       { id: "custom", label: "Custom" },
     ],
@@ -234,8 +245,8 @@ export const en = {
     nextProductLabel: "Next product",
     productPositionLabel: "Product",
     productPositionOfLabel: "of",
-    forms: ["Round", "Square"],
-    sizes: ["80 × 80 mm", "100 × 100 mm"],
+    forms: ["Round", "Square", "Rectangular"],
+    sizes: ["80 × 80 mm", "100 × 100 mm", "Other sizes by agreement"],
     view3dLabel: "View in 3D",
     comingSoonLabel: "3D model coming soon",
     close3dLabel: "Close 3D view",
@@ -243,7 +254,7 @@ export const en = {
     error3dLabel: "The 3D model could not be loaded.",
     retry3dLabel: "Try again",
     interact3dLabel: "Drag with one finger or your mouse to rotate",
-    catalog: [
+    catalog: mergePhotoProducts("en", [
       {
         id: "review-round-black", category: "reviews", title: "Standard Card · Round Black", price: "CHF 49.–",
         description: "A fixed Google Review design that leads directly to genuine feedback.",
@@ -302,7 +313,7 @@ export const en = {
         image: { src: "/images/products/catalog/booking-custom-blue.webp", alt: "Blue custom-designed NFC booking card" },
         details: ["Round or square", "80 × 80 or 100 × 100 mm", "Custom design and digital destination"],
       },
-    ],
+    ]),
     useCasesTitle: "One product, many possibilities",
     useCases: [
       { title: "Google Reviews", description: "Opens your review page directly." },
@@ -313,36 +324,43 @@ export const en = {
     ],
     inquiry: {
       title: "Ask about an NFC & QR solution",
-      intro: "Choose your solution. Then open the non-binding enquiry in WhatsApp or email, or copy it as text.",
+      intro: "Choose a product and use case, enter the quantity and see the base cost. Shape and size are preferences; we confirm the details in your quote. Then choose how to contact us.",
       fields: [
         { name: "destination", label: "Destination or use case", placeholder: "Choose a use case", required: true },
         { name: "product", label: "Product", placeholder: "Choose a product", required: true },
         { name: "shape", label: "Shape", placeholder: "Choose a shape", required: true },
         { name: "size", label: "Size", placeholder: "Choose a size", required: true },
         { name: "quantity", label: "Quantity", placeholder: "For example, 2", required: true },
-        { name: "businessName", label: "Business (optional)", placeholder: "Your business name", required: false, autoComplete: "organization" },
-        { name: "contactPerson", label: "Contact person (optional)", placeholder: "First and last name", required: false, autoComplete: "name" },
         { name: "setup", label: "Destination page", placeholder: "Choose destination status", required: true },
         { name: "destinationUrl", label: "Destination link", placeholder: "https://…", required: false, autoComplete: "url" },
+        { name: "businessName", label: "Business (optional)", placeholder: "Your business name", required: false, autoComplete: "organization" },
+        { name: "contactPerson", label: "Contact person (optional)", placeholder: "First and last name", required: false, autoComplete: "name" },
         { name: "note", label: "Design, colour or note (optional)", placeholder: "Logo, brand colours or other wishes", required: false },
       ],
       destinationOptions: [
         { value: "reviews", label: "Google Reviews" },
+        { value: "tripadvisor", label: "Tripadvisor" },
+        { value: "instagram", label: "Instagram" },
+        { value: "tiktok", label: "TikTok" },
+        { value: "facebook", label: "Facebook" },
+        { value: "youtube", label: "YouTube" },
+        { value: "whatsapp", label: "WhatsApp" },
         { value: "menu", label: "Digital menu" },
         { value: "booking", label: "Booking & reservation" },
+        { value: "airbnb", label: "Airbnb" },
         { value: "wifi", label: "Guest Wi-Fi" },
         { value: "contact", label: "Digital contact card" },
         { value: "other", label: "Another destination" },
       ],
       productOptions: [
+        { value: "nfc-chip", label: "NFC sticker · 1 item CHF 15.–" },
         { value: "standard-card", label: "Standard Card · CHF 49.–" },
-        { value: "standard-pair", label: "Two Standard Cards · CHF 80.–" },
         { value: "standard-stand", label: "Standard Stand · CHF 49.–" },
         { value: "personalized-card", label: "Personalized Card · CHF 69.–" },
         { value: "fully-custom-card", label: "Fully Customized Card · CHF 99.–" },
       ],
-      shapeOptions: [{ value: "round", label: "Round" }, { value: "square", label: "Square" }],
-      sizeOptions: [{ value: "80", label: "80 × 80 mm" }, { value: "100", label: "100 × 100 mm" }],
+      shapeOptions: [{ value: "round", label: "Round" }, { value: "square", label: "Square" }, { value: "rectangle", label: "Rectangular" }],
+      sizeOptions: [{ value: "80", label: "80 × 80 mm" }, { value: "100", label: "100 × 100 mm" }, { value: "confirm", label: "Size to be agreed" }],
       setupOptions: [
         { value: "ready", label: "I have the destination link" },
         { value: "needs-setup", label: "The destination still needs setup" },
@@ -357,8 +375,8 @@ export const en = {
       quantityError: "Please enter a whole quantity from 1 to 999. Request larger quantities in the message.",
       urlError: "Please enter a valid HTTPS link; use a Google link for reviews.",
       confirmTitle: "Please check your details",
-      nonBindingNotice: "This is a no-obligation inquiry. It only becomes binding after I personally confirm it.",
-      privacyNotice: "Your details stay in this browser tab until you choose how to pass them on. They are not stored here. Leaving or reloading the page clears them.",
+      nonBindingNotice: "This is a no-obligation enquiry. An agreement is only formed once both parties have accepted the quote specifying the scope and total price.",
+      privacyNotice: "Your details stay in this browser tab. When changing language, the enquiry is held for up to two minutes and deleted after transfer. Nothing is sent to us until you choose to pass it on.",
       messageIntro: "Hi Silvan, I would like to make a no-obligation inquiry about an NFC & QR solution.",
     },
     faq: {
@@ -367,12 +385,12 @@ export const en = {
         {
           question: "How does an NFC & QR solution work?",
           answer:
-            "Your guest taps the card with their phone or scans its QR code. The configured destination opens directly, no search, extra app, or link to type out.",
+            "Your guest taps the card, stand or NFC chip with a compatible phone. A QR code, where present, can be scanned instead. Opening the NFC link needs no extra NFC app; the destination service may require a login or its own app.",
         },
         {
           question: "Does it work with every phone?",
           answer:
-            "Current iPhones and Android devices read NFC tags without an extra app. For older devices, a QR code on the card can be used as well.",
+            "The phone must support reading NFC links; some devices require NFC to be enabled. A QR code, where present, offers an alternative. The individual stick-on chip has no printed QR code. Linked websites require an internet connection.",
         },
         {
           question: "Can I buy or influence reviews with this?",
@@ -388,21 +406,21 @@ export const en = {
         {
           question: "Which designs and sizes are available?",
           answer:
-            "Standard and personalized cards can be round or square in 80 × 80 mm or 100 × 100 mm. Personalized adds a logo or business name; Fully Customized is designed entirely in your brand identity.",
+            "The catalogue includes round, square and rectangular cards, stands and stick-on chips. Shape and size depend on the model. Unconfirmed dimensions are labelled 'Size to be agreed'. The 80 × 80 mm and 100 × 100 mm enquiry options are preferred sizes for suitable cards, not availability guarantees for every model. Personalized adds a logo or business name; Fully Customized is designed entirely in your brand identity.",
         },
         {
           question: "What does it cost and what is included?",
           answer:
-            "A Standard Card or Standard Stand costs CHF 49, two Standard Cards cost CHF 80, Personalized costs CHF 69, and Fully Customized costs CHF 99. Programming and setup are included; quantity discounts apply to larger orders.",
+            "Standard Card: 1 item CHF 49, 2 total CHF 80, each additional item CHF 20. NFC sticker: 1 item CHF 15, 2 total CHF 25, each additional item CHF 5. Personalized Card: 1 item CHF 69, 2 total CHF 100, each additional item CHF 25. Fully Customized Card: 1 item CHF 99, 2 total CHF 150, each additional item CHF 30. One Standard Stand costs CHF 49; multiple stands are priced by agreement. For more than 10 items, further discounts are available by agreement. Programming and setup of the agreed link are included. Shipping and additional services are itemised separately in the quote.",
         },
       ],
     },
   },
   presence: {
     eyebrow: "Online Presence",
-    title: "Get the details right wherever customers find you.",
+    title: "Clear business details on Google and Maps.",
     intro:
-      "I set up or improve your Google Business Profile and make sure your core business information is consistent and easy to understand.",
+      "I review, create or update your Google Business Profile: opening hours, contact options and services, agreed with you.",
     priceLabel: "from CHF 249",
     startingPrice: "from CHF 249",
     priceTiers: [
@@ -410,22 +428,22 @@ export const en = {
         id: "profile",
         name: "Google Business Profile Foundation",
         price: "from CHF 249",
-        description: "A properly configured profile that gives your local visibility a solid foundation.",
-        features: ["Profile audit or setup", "Consistent business details", "Clear service information"],
+        description: "Review, setup or improvements to your Google profile. The quote defines the profiles, locations and exact services; ongoing maintenance is agreed separately.",
+        features: ["Profile review or setup", "Check of your business details", "Service information and handover summary"],
       },
     ],
     benefitsTitle: "A dependable local presence",
     benefits: [
-      "Customers can find your business with accurate details",
-      "Opening hours and contact options stay consistent",
-      "People understand your offer more quickly",
+      "Identify conflicting opening hours and contact details",
+      "Check listed services against what you actually offer",
+      "Track completed changes and outstanding items",
     ],
     processTitle: "How we approach it",
     process: [
-      { id: "audit", label: "01", title: "Audit", description: "I review your current presence and identify visible gaps." },
-      { id: "align", label: "02", title: "Align", description: "We confirm your services, local area, and correct business details." },
-      { id: "optimize", label: "03", title: "Improve", description: "The profile and information are improved in a clear, accountable way." },
-      { id: "handover", label: "04", title: "Handover", description: "You receive a clear overview and practical next steps." },
+      { id: "audit", label: "01", title: "Review the profile", description: "We check existing details, ownership and access, and define the scope in the quote." },
+      { id: "align", label: "02", title: "Confirm the details", description: "You confirm opening hours, contact options and services. We work through any required Google verification together." },
+      { id: "optimize", label: "03", title: "Edit the details", description: "With your approval, I edit the agreed profile details using the access you have granted." },
+      { id: "handover", label: "04", title: "Hand over the status", description: "You receive a summary of changes, pending reviews and next steps. We clarify future access and maintenance." },
     ],
     ctaLabel: "Discuss your online presence",
     ctaHref: "/contact",
@@ -440,17 +458,17 @@ export const en = {
         {
           question: "I already have a profile. Is this still worth it?",
           answer:
-            "Usually yes. I check the existing entry for missing or contradictory details, add services and service area, and make sure your business details read the same everywhere.",
+            "A review can reveal missing or conflicting details. We check the Google profile against the business information you confirm. Edits to other platforms or locations are only included when agreed in the quote.",
         },
         {
           question: "Does this guarantee a better ranking on Google?",
           answer:
-            "No. Nobody can guarantee a position on Google, and anyone promising one should make you suspicious. A complete, consistent profile is the ground local visibility can grow on.",
+            "No. I promise neither a position on Google nor additional enquiries. The aim is clear business information agreed with you.",
         },
         {
           question: "What do I get at the end?",
           answer:
-            "A profile that is set up or reworked, consistent business details, and a clear overview of where things stand and which steps make sense next.",
+            "The agreed profile work and a summary of changes, outstanding items and next steps. Pending Google verifications are recorded as open. Ongoing maintenance is only included by separate agreement; ownership stays with you.",
         },
       ],
     },
@@ -483,7 +501,7 @@ export const en = {
       { id: "implement", label: "03", title: "Implement", description: "The right solution is introduced and tested step by step." },
       { id: "handover", label: "04", title: "Handover", description: "You receive a straightforward introduction and documentation." },
     ],
-    ctaLabel: "Request a workflow review",
+    ctaLabel: "Discuss your workflow, no obligation",
     ctaHref: "/contact",
     faq: {
       title: "Frequently asked questions about automation",
@@ -491,12 +509,12 @@ export const en = {
         {
           question: "Which tasks can be automated?",
           answer:
-            "Anything that runs regularly by the same rules: recurring emails and notifications, regular reports and data preparation, handovers between systems, and repeatable internal workflows.",
+            "Recurring tasks with clear rules can be suitable, such as reports, notifications, or information handoffs. Whether implementation is feasible and worthwhile depends on data quality, available interfaces, access permissions, and exceptions in the workflow.",
         },
         {
           question: "Why is there no price on this page?",
           answer:
-            "Because the effort depends entirely on your existing process. I assess feasibility, risks, and the expected benefit first. Only then can an honest price be named.",
+            "The effort depends on your process and the systems involved. The first enquiry carries no obligation. The scope and price of a detailed analysis are agreed before it is commissioned; implementation and possible ongoing costs are set out in the relevant quote.",
         },
         {
           question: "What if an automation is not worth it?",
@@ -506,7 +524,7 @@ export const en = {
         {
           question: "What happens after delivery?",
           answer:
-            "You get a clear introduction and documentation, so the workflow stays understandable and does not depend on a single person.",
+            "You receive a clear introduction and documentation. We agree who operates the workflow, who is notified of failures, and what maintenance is planned. Ongoing support and any required external subscriptions or usage fees depend on the specific quote and are not automatically included.",
         },
       ],
     },
@@ -539,12 +557,12 @@ export const en = {
       { title: "Direct", description: "There are no handoffs between sales, design, and development." },
       { title: "Practical", description: "The solution fits your business rather than a short-lived trend." },
     ],
-    standardsTitle: "What I take as given",
+    standardsTitle: "What you can expect",
     standards: [
-      "Every page is delivered as finished HTML and is there immediately, including on a slow connection.",
-      "Operable by keyboard and screen reader, with verified colour contrast.",
+      "Your visitors should reach the important information quickly. I check loading times and keep the pages technically lean.",
+      "Your website should work well with a keyboard too. Clear structure, readable contrast and understandable guidance are part of my checks.",
       "Designed for the narrow screen rather than adapted to it afterwards.",
-      "Automatically tested, so a later change cannot quietly break what already worked.",
+      "When something changes, I check the important journeys again. Automated tests help catch errors early.",
     ],
     portraitAlt: "Silvan Hahn, portrait photograph taken indoors",
     portraitCaption: "Silvan Hahn, independent web developer",
@@ -594,154 +612,8 @@ export const en = {
     ],
     directContactTitle: "Contact me directly",
   },
-  imprint: {
-    eyebrow: "Imprint",
-    title: "Who stands behind this website.",
-    intro:
-      "Provider identification under Art. 3 para. 1 lit. s of the Swiss Federal Act against Unfair Competition (UCA).",
-    updatedLabel: "Last updated",
-    updated: "7 September 2026",
-    sections: [
-      {
-        title: "Responsible for this website",
-        body: [
-          "Silvan Hahn",
-          "Regensbergstrasse 23",
-          "8113 Boppelsen",
-          "Switzerland",
-        ],
-      },
-      {
-        title: "Contact",
-        body: [
-          "Email: hahn.silvan.work@gmail.com",
-          "Phone: +41 78 900 85 00",
-          "Every contact route is also listed on the contact page.",
-        ],
-      },
-      {
-        title: "Legal form and VAT",
-        body: [
-          "SILVAN Digital Studio is the trading name of the sole proprietorship of Silvan Hahn. There is no entry in the commercial register.",
-          "There is no VAT liability. No VAT is therefore shown on invoices, and the prices stated on this website are final prices.",
-        ],
-      },
-      {
-        title: "About the work shown",
-        body: [
-          "The projects shown under \"Work\" are self-initiated design concepts and are labelled \"Concept project\" on every view. They are not completed client engagements, and no client, result, or metric is claimed for them.",
-        ],
-      },
-      {
-        title: "Liability for content",
-        body: [
-          "The content of this website is prepared with care. No warranty is given for its accuracy, completeness, or currency. Prices are indicative and become binding only with a written confirmation.",
-          "Inquiries made through this website are non-binding. A contract comes into effect only through an explicit confirmation.",
-        ],
-      },
-      {
-        title: "Liability for links",
-        body: [
-          "This website links to external websites over whose content there is no influence. The respective provider is solely responsible for that content.",
-        ],
-      },
-      {
-        title: "Copyright",
-        body: [
-          "The content, designs, and images published on this website are subject to Swiss copyright law. Reproduction or use beyond the legally permitted cases requires prior written consent.",
-        ],
-      },
-    ],
-  },
-  privacy: {
-    eyebrow: "Privacy",
-    title: "What data this website processes.",
-    intro:
-      "This statement describes which personal data is processed when you visit this website, under the revised Swiss Federal Act on Data Protection (revFADP).",
-    updatedLabel: "Last updated",
-    updated: "7 September 2026",
-    sections: [
-      {
-        title: "Responsible person",
-        body: [
-          "Silvan Hahn, Regensbergstrasse 23, 8113 Boppelsen, Switzerland",
-          "Email: hahn.silvan.work@gmail.com",
-        ],
-      },
-      {
-        title: "Principle",
-        body: [
-          "This website is built to process as little personal data as possible. It has no contact form that posts to a server, no user accounts, and no comment function.",
-        ],
-      },
-      {
-        title: "Audience measurement without cookies",
-        body: measurementCopy.en,
-      },
-      {
-        title: "Server log files",
-        body: [
-          "When this website is requested, the hosting provider processes technically necessary data: IP address, date and time of access, the address requested, the referring link, and details about browser and operating system.",
-          "This processing is required for the secure and stable operation of the website. The data is not merged with other sources and is not used to identify individuals.",
-        ],
-      },
-      {
-        title: "Hosting",
-        body: [
-          "This website is hosted with Vercel Inc. Data may therefore also be processed on servers outside Switzerland. The provider is contractually bound to maintain an adequate level of data protection.",
-        ],
-      },
-      {
-        title: "Fonts",
-        body: [
-          "The typeface used is downloaded when the website is built and served by this website itself. Your browser makes no connection to an external font provider, and no data is transmitted to third parties.",
-        ],
-      },
-      {
-        title: "NFC & QR enquiries",
-        body: [
-          "On the NFC & QR page you can enter the details of an enquiry. Its summary is assembled only in the memory of your browser tab and is not sent to this website. Model and category links contain only public product identifiers, never personal enquiry details.",
-          "Opening the prepared WhatsApp link passes the enquiry text to WhatsApp as part of the URL. It is sent to me only when you send the message there. WhatsApp's privacy terms also apply. The email alternative passes the text to your mail app; Copy enquiry writes it to your local clipboard.",
-        ],
-      },
-      {
-        title: "Optional 3D product views",
-        body: ["Only after you choose View in 3D does your browser load software and model data from cdn.spline.design and prod.spline.design, services provided by Spline. The external provider then receives technical connection data such as your IP address and browser information. Without this click, product images are served by this website and no Spline connection is established. You can make an enquiry without opening a 3D view."],
-      },
-      {
-        title: "Getting in touch",
-        body: [
-          "If you contact me by email, phone, WhatsApp, or LinkedIn, your details are used to handle your request and kept for as long as that and any statutory retention obligations require.",
-          "WhatsApp and LinkedIn are third-party services. If you use those routes, data is also processed by the respective provider: WhatsApp by Meta Platforms Ireland Ltd., LinkedIn by LinkedIn Ireland Unlimited Company.",
-        ],
-      },
-      {
-        title: "External links",
-        body: [
-          "This website links to external services, for example LinkedIn or Google Business Profiles. The respective provider is responsible for data processing on those websites.",
-        ],
-      },
-      {
-        title: "Your rights",
-        body: [
-          "You have the right to information about the data processed about you, and to its correction, deletion, or release. You may object to processing and withdraw consent at any time.",
-          "Please contact the address given above. You also have the right to lodge a complaint with the Federal Data Protection and Information Commissioner (FDPIC).",
-        ],
-      },
-      {
-        title: "Data security",
-        body: [
-          "This website is served exclusively over encrypted HTTPS. Data transmitted between your browser and the server is therefore protected against interception.",
-        ],
-      },
-      {
-        title: "Changes",
-        body: [
-          "This privacy statement may be adapted when the website or the legal requirements change. The version published on this page is the one that applies.",
-        ],
-      },
-    ],
-  },
+  imprint: imprintContent.en,
+  privacy: privacyContent.en,
   notFound: {
     eyebrow: "404",
     title: "This page could not be found.",
@@ -752,8 +624,8 @@ export const en = {
   // spelling, matching the rest of the English copy.
   seo: {
     home: { title: "Web Design for Small Businesses near Zurich | SILVAN", description: "Websites, Google reviews, local visibility and automation for Swiss SMEs. Built directly by an independent developer in Boppelsen ZH, websites from CHF 300." },
-    websites: { title: "Business Websites for Swiss SMEs, from CHF 300", description: "Fast, mobile-first business websites for Swiss SMEs, from a CHF 300 one-pager through to a custom build. Fixed price tiers, delivered by the developer." },
-    reviews: { title: "NFC & QR Solutions for Businesses | from CHF 49", description: "NFC cards and stands for Google reviews, digital menus, bookings, and custom destinations. Programming and setup included." },
+    websites: { title: "Business Websites for Swiss SMEs, from CHF 300", description: "Fast, mobile-first websites for Swiss SMEs from CHF 300. Indicative price ranges, with scope and price set out in a written quote." },
+    reviews: { title: "NFC & QR Solutions for Businesses | SILVAN", description: "NFC cards and stands from CHF 49, stick-on chips from CHF 15. For reviews, menus and bookings. Link programming and setup included." },
     presence: { title: "Google Business Profile Setup for Swiss Businesses", description: "Google Business Profile setup and optimisation, consistent business details, and better local visibility. For Swiss SMEs from CHF 249." },
     automation: { title: "Automating Recurring Work for Swiss SMEs | SILVAN", description: "Automate recurring emails, reports and internal workflows without a heavy software rollout. For Swiss SMEs, scoped on request." },
     work: { title: "Work: Website Design Concepts | SILVAN Digital Studio", description: "Four explorable demo websites for trades, a café, a salon and a business group. Actual screenshots and insights into structure and visual design." },
@@ -761,6 +633,6 @@ export const en = {
     contact: { title: "Contact: Web Design Enquiry, Canton Zurich | SILVAN", description: "Talk your project through directly with Silvan Hahn by email, WhatsApp, phone or LinkedIn. Based in Boppelsen ZH. Enquiries are non-binding." },
     hello: { title: "Hi, I'm Silvan | SILVAN Digital Studio", description: "A direct route to websites, Google reviews, online presence, work, and contact." },
     imprint: { title: "Imprint | SILVAN Digital Studio", description: "Responsible for this website: Silvan Hahn, Boppelsen. Legal form, contact details, and copyright." },
-    privacy: { title: "Privacy | SILVAN Digital Studio", description: "No cookies, no profiling, no recognition across visits. Only a cookieless page-view count. Privacy statement under the revised Swiss FADP." },
+    privacy: { title: "Privacy | SILVAN Digital Studio", description: "Privacy information about this website, demos, hosting, contact channels and optional cookieless measurement. Controller: Silvan Hahn, Boppelsen, Switzerland." },
   },
 } as const satisfies SiteContent;

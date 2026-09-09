@@ -1,48 +1,30 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 
-import "./globals.css";
-import { RootDocument } from "../components/layout/RootDocument";
-import { NotFoundPage } from "../features/pages/NotFoundPage";
+import './globals.css';
+import { RootDocument } from '../components/layout/RootDocument';
+import { NotFoundPage } from '../features/pages/NotFoundPage';
 
-/**
- * The 404 for URLs that match no route group at all -- a mistyped path, a stale
- * inbound link, an old URL from before a rename.
- *
- * The `(de)` and `(en)` groups each carry their own not-found, but those only
- * cover paths that already resolved into a group; `/gibt-es-nicht` reached
- * neither and fell through to the framework's own untranslated error page, with
- * no header, no footer, no way back into the site and no `lang` for a screen
- * reader to switch voice on.
- *
- * This is `global-not-found` rather than `not-found` because the two locale
- * groups are separate root layouts: there is no shared layout to inherit, so
- * the file has to render the document itself. A plain `not-found` here got
- * wrapped in the framework's own `<html>`, which nested two documents and left
- * the outer, attribute-less one as the real root.
- *
- * German, because that is the default locale an unprefixed path belongs to.
- *
- * Known limitation: a miss under `/en` also lands here and is therefore German.
- * `global-not-found` is one static document and cannot read the path. Routing
- * `/en` misses into the English group instead was tried and is worse: once this
- * file exists, Next stops using the group-level `not-found.tsx`, so a
- * `notFound()` from a catch-all renders the framework's empty error shell
- * rather than the English page. A complete page in the wrong language beats an
- * empty one in the right language, so this stays until the two locales share a
- * root layout.
- */
-export const metadata: Metadata = {
-  title: "Seite nicht gefunden | SILVAN Digital Studio",
-  // A 404 must never be indexed, and must not hand its canonical to another
-  // page: the parent metadata would otherwise point this at the home page.
-  alternates: { canonical: undefined },
-  robots: { index: false, follow: true },
-};
+async function errorLocale() {
+  return (await headers()).get('x-silvan-locale') === 'en' ? 'en' : 'de';
+}
 
-export default function GlobalNotFound() {
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await errorLocale();
+  return {
+    title: `${locale === 'en' ? 'Page not found' : 'Seite nicht gefunden'} | SILVAN Digital Studio`,
+    alternates: { canonical: undefined },
+    robots: { index: false, follow: true },
+  };
+}
+
+/** Multiple root layouts require one complete document for unmatched URLs. */
+export default async function GlobalNotFound() {
+  const locale = await errorLocale();
+  const nonce = (await headers()).get('x-silvan-nonce') ?? undefined;
   return (
-    <RootDocument locale="de">
-      <NotFoundPage locale="de" />
+    <RootDocument locale={locale} nonce={nonce}>
+      <NotFoundPage locale={locale} />
     </RootDocument>
   );
 }

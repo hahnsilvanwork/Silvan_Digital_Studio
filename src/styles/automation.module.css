@@ -1,0 +1,44 @@
+.flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  border-block-start: 1px solid currentColor;
+}
+
+.step {
+  padding: var(--space-md) var(--space-sm) var(--space-md) 0;
+  border-block-end: 1px solid currentColor;
+  min-inline-size: 0;
+}
+
+.step h3,
+.agreement h3 {
+  font-size: var(--text-body);
+  margin-block: 0 var(--space-xs);
+}
+
+.step p,
+.agreement p {
+  margin: 0;
+  line-height: 1.6;
+  max-inline-size: 60ch;
+}
+
+.number {
+  display: block;
+  margin-block-end: var(--space-sm);
+  font-size: var(--text-label);
+}
+
+.agreement {
+  display: grid;
+  gap: var(--space-md);
+}
+
+@media (min-width: 40rem) {
+  .flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

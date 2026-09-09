@@ -1,0 +1,21 @@
+{
+  "status": "composite_exported_for_playback_review",
+  "method": "Higgsfield base footage plus controlled local compositing",
+  "authorized": true,
+  "model": "seedance_2_0_fast",
+  "durationSeconds": 15,
+  "resolution": "720p",
+  "aspectRatio": "16:9",
+  "audio": "off",
+  "estimatedCredits": 53,
+  "observedBalanceBefore": 227,
+  "promptFile": "revision-02-base-prompt.txt",
+  "compositionReference": "artifacts/nfc-hero/revision-02-held-phone-reference.png",
+  "submitted": true,
+  "requestId": null,
+  "note": "One corrective base generation completed. Local composite exported and frame-inspected, fully decoded 450 frames at 30fps. No further generation. Full perceptual playback review remains with user.",
+  "referenceAssetId": "7c53fafd-000a-4948-8137-f5214804025d",
+  "outputAssetId": "b27331f8-6aaf-4195-94c7-20003b282923",
+  "outputFile": "artifacts\\nfc-hero\\revision-02-composite\\nfc-hero-revision-02.mp4",
+  "reviewFile": "revision-02-review.md"
+}

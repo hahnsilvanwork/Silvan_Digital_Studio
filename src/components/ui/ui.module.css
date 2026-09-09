@@ -1,6 +1,8 @@
 /* Shared editorial primitives: buttons, section headings and prices. */
 
 .button {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -104,5 +106,5 @@
   font-weight: 400;
   letter-spacing: var(--tracking-item);
   font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+  white-space: normal;
 }

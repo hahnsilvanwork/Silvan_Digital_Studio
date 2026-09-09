@@ -24,6 +24,13 @@ export function HomePage({ locale }: { readonly locale: Locale }) {
       <div className={styles.home}>
         <section className={`${layoutStyles.container} ${styles.hero}`}>
           <h1 className={styles.title}>{hero.headline}</h1>
+          <div className={styles.heroCopy}>
+            <p>{copy.intro}</p>
+            <div className={styles.actions}>
+              <ButtonLink href={localizePath("/contact", locale)}>{hero.primaryCta}</ButtonLink>
+              <Link className={styles.textLink} href="#services">{hero.secondaryCta}<span className={styles.arrow} aria-hidden="true" /></Link>
+            </div>
+          </div>
           <figure className={styles.heroFigure}>
             <Link className={styles.heroImageLink} href={localizePath(`/work/${projects[0].slug}`, locale)} aria-label={copy.heroProjectLabel}>
               <Image quality={90} src={projects[0].image[locale]} alt={projects[0].copy[locale].imageAlt} width={1440} height={1000} loading="eager" fetchPriority="high" sizes="(min-width: 90rem) 750px, (min-width: 64rem) 54vw, 92vw" />
@@ -33,13 +40,6 @@ export function HomePage({ locale }: { readonly locale: Locale }) {
               <Link href={localizePath(`/work/${projects[0].slug}`, locale)}>{copy.viewProject}<span className={styles.arrow} aria-hidden="true" /></Link>
             </figcaption>
           </figure>
-          <div className={styles.heroCopy}>
-            <p>{copy.intro}</p>
-            <div className={styles.actions}>
-              <ButtonLink href={localizePath("/contact", locale)}>{hero.primaryCta}</ButtonLink>
-              <Link className={styles.textLink} href="#services">{hero.secondaryCta}<span className={styles.arrow} aria-hidden="true" /></Link>
-            </div>
-          </div>
         </section>
         <section id="services" className={`${layoutStyles.container} ${styles.services}`}>
           <div className={styles.sectionIntro}>

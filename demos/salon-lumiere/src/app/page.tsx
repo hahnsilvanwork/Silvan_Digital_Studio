@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import { allServices } from "@/content/services";
+export const metadata: Metadata = { title: "Salon Lumière | Fiktives Salonkonzept in Zürich", description: "Ein Salonkonzept mit Team, beispielhaften Leistungen und Richtpreisen. Die Terminanfrage lässt sich lokal ohne Versand ausprobieren." };
 import Link from "next/link";
 
 const highlights = [
@@ -118,21 +121,16 @@ export default function Home() {
         </div>
 
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-px bg-cream-dark">
-          {[
-            { name: "Herrenschnitt", price: "CHF 45", icon: "✦" },
-            { name: "Damenschnitt", price: "ab CHF 85", icon: "✦" },
-            { name: "Färben", price: "ab CHF 120", icon: "✦" },
-            { name: "Strähnen", price: "ab CHF 140", icon: "✦" },
-          ].map(({ name, price }) => (
-            <Link href="/leistungen"
-              key={name}
+          {allServices.filter(({ id }) => ["herrenschnitt", "damenschnitt", "volltonfarbe", "straehnen"].includes(id)).map(({ id, name, price }) => (
+            <Link href={`/leistungen#${id}`}
+              key={id}
               className="bg-cream p-8 md:p-10 flex flex-col justify-between gap-4 hover:bg-charcoal group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg "
             >
               <h3 className="font-display text-xl text-charcoal group-hover:text-cream transition-colors duration-300">
                 {name}
               </h3>
               <div className="flex items-end justify-between">
-                <span className="text-gold text-sm font-body font-medium">{price}</span>
+                <span className="text-gold text-sm font-body font-medium">Richtpreis {price}</span>
                 <svg
                   className="text-muted group-hover:text-gold transition-colors duration-300"
                   width="16"
@@ -166,7 +164,7 @@ export default function Home() {
             Bereit für Ihren neuen Look?
           </h2>
           <p className="text-charcoal text-base mb-8 font-body">
-            Buchen Sie jetzt Ihren Termin und lassen Sie sich von uns verwöhnen.
+            Probieren Sie die Terminanfrage aus – ohne Versand und ohne echte Buchung.
           </p>
           <Link
             href="/kontakt"

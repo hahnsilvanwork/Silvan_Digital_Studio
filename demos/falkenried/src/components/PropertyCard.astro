@@ -51,7 +51,28 @@ const toneClasses: Record<string, string> = {
         <p class="label-caps text-[var(--color-ink-muted)] mb-1">{priceLabel}</p>
         <p class="font-semibold text-[var(--color-primary)]">{price}</p>
       </div>
-      <span class="label-caps text-[var(--color-primary)]">{detailsLabel}</span>
+      <a href="#property-enquiry" data-property-title={title} class="label-caps text-[var(--color-primary)] underline underline-offset-4">{detailsLabel}</a>
     </div>
   </div>
 </article>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('[data-property-title]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || (link.target && link.target !== '_self')) return;
+      const select = document.querySelector<HTMLSelectElement>('#property-enquiry select[name="objekt"]');
+      const title = link.dataset.propertyTitle;
+      if (!select || !title || select.disabled) return;
+      event.preventDefault();
+      if (![...select.options].some((option) => option.value === title)) {
+        select.add(new Option(title, title));
+      }
+      select.value = title;
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      // Native fragment navigation can otherwise steal focus back in Firefox.
+      if (window.location.hash !== link.hash) window.history.pushState(window.history.state, '', link.hash);
+      document.getElementById('property-enquiry')?.scrollIntoView({ block: 'start' });
+      select.focus({ preventScroll: true });
+    });
+  });
+</script>

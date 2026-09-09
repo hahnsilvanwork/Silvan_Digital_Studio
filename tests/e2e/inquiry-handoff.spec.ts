@@ -3,6 +3,9 @@ import { expect, test } from "@playwright/test";
 test("selected model survives review and all message alternatives agree", async ({ page }) => {
   await page.goto("/reviews");
   await page.getByRole("link", { name: "Dieses Modell anfragen", exact: true }).first().click();
+  await expect(page.getByTestId("inquiry-model")).toContainText("Google Reviews · Rund Schwarz");
+  await expect(page.locator('[name="product"]')).toHaveCount(0);
+  await page.getByRole("button", { name: "Auswahl anpassen", exact: true }).click();
   await expect(page.locator('[name="product"]')).toHaveValue("standard-card");
   await expect(page.locator('[name="shape"]')).toHaveValue("round");
   await expect(page.locator('[name="quantity"]')).toHaveValue("1");
@@ -10,17 +13,20 @@ test("selected model survives review and all message alternatives agree", async 
   await page.selectOption('[name="setup"]', "needs-setup");
   await page.getByRole("button", { name: "Angaben prüfen", exact: true }).click();
   const summary = page.locator('[data-inquiry-summary]');
-  await expect(summary).toContainText("Standard Card · Rund Schwarz");
-  await expect(summary).toContainText("100 × 100 mm");
+  await expect(summary).toContainText("Google Reviews · Rund Schwarz");
+  await expect(summary).not.toContainText('004');
+  await expect(summary).toContainText("Ø 100 mm");
   for (const name of [/Anfrage in WhatsApp öffnen/, /Per E-Mail anfragen/]) {
-    expect(decodeURIComponent((await summary.getByRole("link", { name }).getAttribute("href"))!)).toContain("Standard Card · Rund Schwarz");
+    expect(decodeURIComponent((await summary.getByRole("link", { name }).getAttribute("href"))!)).toContain("Google Reviews · Rund Schwarz");
   }
   await page.getByRole("link", { name: "Dieses Modell anfragen", exact: true }).first().click();
   await expect(summary).toHaveCount(0);
   await expect(page.locator('[name="destination"]')).toBeFocused();
   await page.getByRole("button", { name: "Angaben prüfen", exact: true }).click();
   await expect(summary).toBeVisible();
-  await page.getByRole("button", { name: "Menü 3 Produkte", exact: true }).click();
+  const categorySelect=page.locator('select[id$="-category"]');
+  if(await categorySelect.isVisible()) await categorySelect.selectOption('menu');
+  else await page.getByRole("button", { name: "Menü 4 Produkte", exact: true }).click();
   await expect(summary).toHaveCount(0);
   await expect(page).toHaveURL(/category=menu/);
   expect(new URL(page.url()).searchParams.has("model")).toBe(false);
@@ -28,6 +34,7 @@ test("selected model survives review and all message alternatives agree", async 
 
 test("editing a preset keeps focus on the field being changed", async ({ page }) => {
   await page.goto("/reviews?category=reviews&model=review-round-black#inquiry");
+  await page.getByRole("button", { name: "Auswahl anpassen", exact: true }).click();
   const shape = page.locator('[name="shape"]');
   await expect(shape).toHaveValue("round");
   await shape.focus();
@@ -39,7 +46,8 @@ test("editing a preset keeps focus on the field being changed", async ({ page })
 
 test("hidden invalid link cannot block review and large quantities are not silently truncated", async ({ page }) => {
   await page.goto("/reviews?category=reviews&model=review-stand-white#inquiry");
-  await expect(page.locator('[name="product"]')).toHaveValue("standard-stand");
+  await expect(page.getByTestId("inquiry-model")).toBeVisible();
+  await expect(page.locator('[name="product"]')).toHaveCount(0);
   await page.selectOption('[name="setup"]', "ready");
   await page.fill('[name="destinationUrl"]', "not-a-url");
   await page.selectOption('[name="setup"]', "needs-setup");
@@ -58,13 +66,15 @@ test("English handoff has readable values and a usable clipboard fallback", asyn
     configurable: true, value: { writeText: () => Promise.reject(new Error("unavailable")) },
   }));
   await page.goto("/en/reviews?category=menu&model=menu-personalized-white#inquiry");
-  await expect(page.locator('[name="product"]')).toHaveValue("personalized-card");
+  await page.getByRole("button", { name: "Adjust selection", exact: true }).click();
+  await expect(page.locator('[name="product"]')).toHaveValue("fully-custom-card");
   await page.selectOption('[name="size"]', "80");
   await page.selectOption('[name="setup"]', "needs-setup");
   await page.getByRole("button", { name: "Review details" }).click();
   const summary = page.locator('[data-inquiry-summary]');
-  await expect(summary).toContainText("80 × 80 mm");
+  await expect(summary).toContainText("Ø 80 mm");
   await expect(summary).toContainText("Round");
+  await expect(summary).toContainText("CHF 99");
   await expect(summary.getByRole("link", { name: "Enquire by email" })).toHaveAttribute("href", /^mailto:/);
   await summary.getByRole("button", { name: "Copy enquiry" }).click();
   const fallback = summary.getByRole("textbox", { name: "Your enquiry text" });

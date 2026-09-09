@@ -15,8 +15,8 @@ const lang = "de";
 <BaseLayout
   lang={lang}
   route="home"
-  title="Falkenried Gruppe | Autowerkstatt, Gartenbau & Immobilien in Zürcher Unterland"
-  description="Falkenried Gruppe in Zürcher Unterland: Ihr Spezialist für Fahrzeugservice, Experte für Gartenbau und Immobilien-Spezialist seit 55 Jahren. Persönliche Beratung im Zürcher Unterland."
+  title="Falkenried Gruppe | Autowerkstatt, Gartenbau & Immobilien im Zürcher Unterland"
+  description="Fiktives Unternehmensporträt: Fahrzeugservice, Gartenbau und Immobilien im Zürcher Unterland. Die Beispielgeschichte der Falkenried Gruppe beginnt 1969."
   jsonLd={organizationSchema(lang)}
 >
   <section class="falkenried-hero">
@@ -65,7 +65,7 @@ const lang = "de";
         <span class="label-caps text-[var(--color-primary)] mb-4 block">FALKENRIED GRUPPE IM PORTRÄT</span>
         <h2 class="font-display text-3xl lg:text-4xl font-semibold">Persönlich. Vielseitig. Seit 1969.</h2>
       </div>
-      <VideoPreview title="Vorschau des Falkenried Gruppe Unternehmensvideos" playLabel="Unternehmensvideo abspielen" externalLabel="Video auf YouTube ansehen" />
+      <VideoPreview lang="de" />
 
       <div class="mt-20">
         <div class="mb-12 text-center">
@@ -86,7 +86,7 @@ const lang = "de";
       <span class="label-caps text-[var(--color-primary)] mb-6 block">UNSERE GESCHICHTE</span>
       <h2 class="font-display text-3xl lg:text-4xl font-semibold italic font-light mb-8">Seit 1969 gewachsen.</h2>
       <p class="text-lg text-[var(--color-ink-muted)] leading-relaxed mb-10">
-        Was 1969 als lokale Werkstatt in Zürcher Unterland begann, ist heute ein modernes Familienunternehmen in
+        Was 1969 als lokale Werkstatt im Zürcher Unterland begann, ist heute ein modernes Familienunternehmen in
         zweiter Generation – mit drei starken Standbeinen und tiefen Wurzeln im Zürcher Unterland.
       </p>
       <a href={routes.geschichte[lang]} class="btn-secondary">Unsere Geschichte entdecken</a>
@@ -97,7 +97,7 @@ const lang = "de";
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 text-center">
       <h2 class="font-display text-3xl lg:text-4xl font-semibold mb-6">Bereit für den nächsten Schritt?</h2>
       <p class="contact-invitation-copy max-w-xl mx-auto mb-10 leading-relaxed">
-        Ob Werkstatttermin, Gartenprojekt oder Mietanfrage – unser Team meldet sich innerhalb von 24 Stunden bei Ihnen.
+        Probieren Sie eine Werkstatt-, Garten- oder Mietanfrage im Demoformular aus. Ihre Eingaben werden nicht gesendet; es erfolgt keine Rückmeldung.
       </p>
       <a href={routes.kontakt[lang]} class="btn-primary">Kontaktformular öffnen</a>
     </div>

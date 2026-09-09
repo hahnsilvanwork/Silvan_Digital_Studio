@@ -1,0 +1,68 @@
+{
+  "status": "first_result_rejected_revision_prepared",
+  "productionMethod": "Higgsfield, explicitly selected by user",
+  "submitted": true,
+  "model": "seedance_2_0_fast",
+  "jobId": null,
+  "uploadedReferences": [
+    {
+      "assetId": "7a307d8b-29cc-4658-ab9f-2e68595c2273",
+      "product": "menu"
+    },
+    {
+      "assetId": "d0734e7e-dd76-47f1-8712-56a4e26b23e3",
+      "product": "google"
+    },
+    {
+      "assetId": "8a6b6ede-b335-4242-9332-fde172aff726",
+      "product": "instagram"
+    },
+    {
+      "assetId": "faf249bc-087a-4138-a926-2b00c2dbe3d2",
+      "product": "facebook"
+    },
+    {
+      "assetId": "13f5a705-da2e-44ee-96d2-587eb99a78f6",
+      "product": "airbnb"
+    }
+  ],
+  "estimatedCost": {
+    "settings": "15s, 16:9, 720p, high bitrate, audio off",
+    "source": "Visible Generate button after five references selected; 2026-09-09",
+    "credits": 53
+  },
+  "actualCost": null,
+  "targetDurationSeconds": 15,
+  "targetAspectRatio": "16:9",
+  "targetDeliveryFps": 30,
+  "audio": "silent",
+  "promptFile": "full-film-prompt.txt",
+  "videoFile": "C:/Users/StartKlar/Downloads/hf_20260909_084850_6bd34091-8ccf-4d0e-846f-8d5f4581e515.mp4",
+  "review": {
+    "fullPlayback": "Not inspected continuously; 1-second frame samples decoded across 15.04s, 1280x720, 24fps",
+    "productIdentity": "not inspected; no video produced",
+    "communication": "FAIL: phone absent at 4-9s in sampled frames; Facebook UI appears on physical product",
+    "loopContinuity": "FAIL: transparent phone at 13s; opening phone already partly visible",
+    "mobileComposition": "not inspected; no video produced"
+  },
+  "connectionCheck": "User rejected first downloaded result. Revision-02 plan and SVG demo screens prepared. No additional generation submitted. Proposed controlled composite requires acceptance of production-method change; reliable tracking not yet validated.",
+  "conceptRevision": "Five synchronized same-angle card/screen examples: menu, Google, Instagram, Facebook, Airbnb; return to menu.",
+  "promptSha256": "62ab5b60d07c41a49a6814a7ec439c0f541a7fd88d3eee1b07b9ef233f245024",
+  "referencesInspected": [
+    "menu-round-black",
+    "review-round-black",
+    "nfc-014-instagram",
+    "nfc-020-facebook",
+    "nfc-032-airbnb"
+  ],
+  "browserDraft": {
+    "referencesUploaded": true,
+    "promptConfigured": true,
+    "note": "Fast adaptation uses locked camera throughout and larger simplified screens for native 720p. Five original references visibly attached. See starter-preparation.md. Recheck draft after reload.",
+    "displayedDefaultCredits": 53,
+    "url": "https://higgsfield.ai/ai/video",
+    "tabId": "2",
+    "finalSettingsAndPriceVerified": true
+  },
+  "submissionRequestId": "c7be5f98-c1dd-4eb8-9228-6a29dd73af94"
+}

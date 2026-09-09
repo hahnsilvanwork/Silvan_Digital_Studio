@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import type { Project } from "../../content/projects";
+import { portfolioCopy } from "../../content/portfolio-copy";
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
@@ -10,6 +11,7 @@ import { ButtonLink } from "../ui/ButtonLink";
 import layoutStyles from "../../styles/layout.module.css";
 import pageStyles from "../../styles/pages.module.css";
 import styles from "./work.module.css";
+import { ProjectEvidence } from './ProjectEvidence';
 
 interface ProjectDetailProps {
   readonly project: Project;
@@ -21,11 +23,12 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
   const content = getContent(locale);
   const copy = project.copy[locale];
   const nextCopy = next.copy[locale];
+  const caseStudy = portfolioCopy[locale];
 
   const sections = [
     { label: content.work.challengeLabel, body: copy.challenge },
-    { label: content.work.approachLabel, body: copy.approach },
-    { label: content.work.outcomeLabel, body: copy.outcome },
+    { label: caseStudy.approachLabel, body: copy.approach },
+    { label: caseStudy.outcomeLabel, body: copy.outcome },
   ];
 
   return (
@@ -43,8 +46,8 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
           {copy.tagline}
         </p>
         <div className={pageStyles.heroActions}>
-          <ButtonLink href={project.demoUrl} externalHint={locale === "de" ? " (neuer Tab)" : " (new tab)"}>
-            {locale === "de" ? "Demo-Website öffnen ↗" : "Open demo website ↗"}
+          <ButtonLink href={locale === "en" ? project.demoUrlEn ?? project.demoUrl : project.demoUrl} externalHint={locale === "de" ? " (neuer Tab)" : " (new tab)"}>
+            {locale === "de" ? "Demo-Website öffnen ↗" : project.demoUrlEn ? "Open demo website ↗" : "Open demo website (German) ↗"}
           </ButtonLink>
         </div>
       </header>
@@ -69,6 +72,7 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
       </div>
 
       <section className={`${layoutStyles.container} ${pageStyles.section}`}>
+        <ProjectEvidence project={project} locale={locale} />
         <h2 className="visually-hidden">{content.work.projectInfoLabel}</h2>
 
         {/* Each term now names what its value is. This read as
@@ -105,6 +109,10 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
             </section>
           ))}
         </div>
+        <aside className={styles.detailLimits} aria-label={caseStudy.limitsLabel}>
+          <h3 className={styles.detailSectionLabel}>{caseStudy.limitsLabel}</h3>
+          <p>{caseStudy.limits}</p>
+        </aside>
       </section>
 
       {/* Someone who has read a whole case study is the most engaged visitor

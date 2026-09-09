@@ -209,7 +209,7 @@
   min-inline-size: 0;
 }
 
-.serviceHeader { gap: var(--space-lg); min-block-size: calc(85svh - var(--header-block-size)); align-content: center; }
+.serviceHeader { gap: var(--space-lg); align-content: start; }
 .serviceVisual { display: grid; gap: 0.75rem; margin-block-start: 1rem; text-decoration: none; }
 .serviceVisual img { inline-size: 100%; block-size: auto; }
 .serviceVisual span { color: var(--color-ink-muted); font-size: 0.8125rem; }
@@ -278,6 +278,8 @@
   .serviceHeader {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     align-items: center;
+    align-content: center;
+    min-block-size: calc(85svh - var(--header-block-size));
   }
   .serviceHeader .pageTitle {
     font-size: clamp(3.5rem, 5.5vw, 5.5rem);
@@ -420,6 +422,8 @@
   text-decoration: none;
 }
 
+.reviewsHero { grid-template-columns: minmax(0, 1fr); }
+
 @media (min-width: 64rem) {
   .reviewsHero {
     grid-template-columns: minmax(0, 7fr) minmax(18rem, 5fr);
@@ -516,7 +520,9 @@
   .hero {
     min-block-size: calc(100dvh - var(--header-block-size));
   }
-  .serviceHeader { min-block-size: calc(85dvh - var(--header-block-size)); }
+  @media (min-width: 64rem) {
+    .serviceHeader { min-block-size: calc(85dvh - var(--header-block-size)); }
+  }
 }
 
 /* Page scaffolding -------------------------------------------------------- */
@@ -562,8 +568,28 @@
 
 .sectionBody {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-md);
   margin-block-start: var(--space-lg);
+}
+
+.reviewsMotionProduct {
+  inline-size: 100%;
+  max-inline-size: 36rem;
+  min-inline-size: 0;
+  justify-self: center;
+}
+
+@media (min-width: 64rem) {
+  .reviewsHero { align-items: start; }
+  .reviewsMotionProduct {
+    align-self: stretch;
+    container-type: size;
+  }
+}
+
+:where(.sectionBody > *) {
+  min-inline-size: 0;
 }
 
 .sectionActions {

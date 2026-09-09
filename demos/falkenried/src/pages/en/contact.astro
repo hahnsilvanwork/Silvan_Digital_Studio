@@ -8,11 +8,11 @@ import { company, externalLinks, people } from "../../data/company";
 const lang = "en";
 const divisions = [
   {
-    name: "Autowerkstatt",
+    name: "Auto Workshop",
     person: "jonas-lindberg",
     accent: "--color-bmw-text",
     description: "Service & Sales",
-    cta: "Book an Appointment",
+    cta: "Try a Service Enquiry",
     href: routes.kontakt[lang] + "#general-inquiry",
   },
   {
@@ -38,7 +38,7 @@ const divisions = [
   lang={lang}
   route="kontakt"
   title="Contact | Falkenried Gruppe in Zürcher Unterland"
-  description="Contact Falkenried Gruppe: Autowerkstatt, Landscaping, and Real Estate in Zürcher Unterland. Phone Telefon auf Anfrage."
+  description="Contact Falkenried Gruppe: Auto Workshop, Landscaping, and Real Estate in Zürcher Unterland. No real phone service in this demo."
   jsonLd={organizationSchema(lang)}
 >
   <section class="pt-40 pb-16 bg-[var(--color-surface)]">
@@ -62,8 +62,8 @@ const divisions = [
           <p class="text-sm font-semibold mb-1">{people[division.person].name}</p>
           <p class="text-xs text-[var(--color-ink-muted)] mb-6">{people[division.person].roles[lang].join(" · ")}</p>
           <p class="text-sm mb-6">
-            <a href={company.phone.href} class="block hover:text-[var(--color-primary)]">{company.phone.display}</a>
-            <a href={`/kontakt/#allgemeine-anfrage`} class="block hover:text-[var(--color-primary)]">{company.email}</a>
+            <a href={company.phone.href} class="block hover:text-[var(--color-primary)]">{"No real phone number in this demo"}</a>
+            <a href={routes.kontakt[lang] + "#general-inquiry"} class="block hover:text-[var(--color-primary)]">{company.email}</a>
           </p>
           <a href={division.href} class="btn-primary w-full" style={`background-color: var(${division.accent})`}>
             {division.cta}
@@ -78,8 +78,7 @@ const divisions = [
       <div class="lg:col-span-4">
         <h2 class="font-display text-2xl font-semibold mb-6">General Inquiry</h2>
         <p class="text-[var(--color-ink-muted)] leading-relaxed mb-10">
-          Use our form for general questions or if you're not sure which department to contact. We'll get
-          back to you within 24 hours.
+          Try the local form for a general enquiry. Use fictional test details only; nothing is sent and no reply will follow.
         </p>
         <div class="space-y-6 text-sm">
           <div>
@@ -88,15 +87,15 @@ const divisions = [
           </div>
           <div>
             <p class="label-caps text-[var(--color-ink-muted)] mb-2">Phone</p>
-            <a href={company.phone.href} class="hover:text-[var(--color-primary)]">{company.phone.display}</a>
+            <a href={company.phone.href} class="hover:text-[var(--color-primary)]">{"No real phone number in this demo"}</a>
           </div>
           <div>
             <p class="label-caps text-[var(--color-ink-muted)] mb-2">Fax</p>
-            <p>{company.fax.display}</p>
+            <p>{"No fax service in this demo"}</p>
           </div>
           <div>
             <p class="label-caps text-[var(--color-ink-muted)] mb-2">Email</p>
-            <a href={`/kontakt/#allgemeine-anfrage`} class="hover:text-[var(--color-primary)]">{company.email}</a>
+            <a href={routes.kontakt[lang] + "#general-inquiry"} class="hover:text-[var(--color-primary)]">{company.email}</a>
           </div>
         </div>
       </div>
@@ -112,7 +111,7 @@ const divisions = [
           fields={[
             { type: "text", name: "name", label: "Name", placeholder: "Enter your name" },
             { type: "email", name: "email", label: "Email", placeholder: "email@example.com" },
-            { type: "select", name: "betreff", label: "Subject", options: ["General Information", "Autowerkstatt", "Landscaping", "Real Estate"] },
+            { type: "select", name: "betreff", label: "Subject", options: ["General Information", "Auto Workshop", "Landscaping", "Real Estate"] },
             { type: "textarea", name: "message", label: "Message", placeholder: "How can we help you?" },
           ]}
         />

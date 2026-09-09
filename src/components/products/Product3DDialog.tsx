@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { NfcProduct } from "../../content/types";
-import { SplineProduct } from "./SplineProduct";
-import { SplineSceneProvider } from "./SplineSceneProvider";
+import { IsolatedSplineProduct } from "./IsolatedSplineProduct";
+import { LocalProduct3D } from "./LocalProduct3D";
 import styles from "./products.module.css";
 
 export interface Product3DLabels {
@@ -126,16 +126,21 @@ export function Product3DDialog({
         />
         {stageReady && !failed ? (
           <div className={styles.dialogViewer} key={attempt}>
-            <SplineSceneProvider>
-              <SplineProduct
+              {scene.format === 'glb' ? (closing ? null : <LocalProduct3D
+                url={scene.url}
+                label={scene.ariaLabel}
+                english={labels.close === 'Close 3D view'}
+                onError={() => { setReady(false); setFailed(true); }}
+                onReady={() => setReady(true)}
+              />) : <IsolatedSplineProduct
                 active={!closing}
+                onRequestClose={requestClose}
                 allowReducedMotion
                 ariaLabel={scene.ariaLabel}
-                onError={() => setFailed(true)}
+                onError={() => { setReady(false); setFailed(true); }}
                 onReady={() => setReady(true)}
                 sceneUrl={scene.url}
-              />
-            </SplineSceneProvider>
+              />}
           </div>
         ) : null}
         {!ready && !failed ? (

@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 
 import type { Project } from "../../content/projects";
+import { portfolioCopy } from "../../content/portfolio-copy";
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
@@ -15,6 +16,7 @@ interface ProjectPreviewProps {
   readonly index?: number;
   /** True only where this card is in the first viewport. */
   readonly priority?: boolean;
+  readonly showOutcome?: boolean;
 }
 
 export function ProjectPreview({
@@ -22,6 +24,7 @@ export function ProjectPreview({
   locale,
   index = 0,
   priority = false,
+  showOutcome = false,
 }: ProjectPreviewProps) {
   const content = getContent(locale);
   const copy = project.copy[locale];
@@ -66,6 +69,12 @@ export function ProjectPreview({
         <h3 className={styles.previewName}>{project.name}</h3>
         <p className={styles.previewTagline}>{copy.tagline}</p>
       </Link>
+      {showOutcome && (
+        <div className={styles.previewOutcome}>
+          <p className={styles.detailSectionLabel}>{portfolioCopy[locale].outcomeLabel}</p>
+          <p>{copy.outcome}</p>
+        </div>
+      )}
     </article>
   );
 }

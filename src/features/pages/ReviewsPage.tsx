@@ -5,7 +5,7 @@ import { SiteShell } from "../../components/layout/SiteShell";
 import { revealSequence } from "../../components/motion/reveal-sequence";
 import { SplitText } from "../../components/motion/SplitText";
 import { ProductCatalog } from "../../components/products/ProductCatalog";
-import { ProductHero } from "../../components/products/ProductHero";
+import { NfcMotionHero } from "../../components/products/NfcMotionHero";
 import { ReviewInquiryConfigurator } from "../../components/reviews/ReviewInquiryConfigurator";
 import { FaqList } from "../../components/services/FaqList";
 import { PriceTierList } from "../../components/services/PriceTierList";
@@ -70,13 +70,8 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
               </div>
             </div>
 
-            <div className={pageStyles.reviewsHeroProduct}>
-              <ProductHero
-                images={reviews.heroImages}
-                indicatorLabel={reviews.heroIndicatorLabel}
-                pauseLabel={reviews.heroPauseLabel}
-                resumeLabel={reviews.heroResumeLabel}
-              />
+            <div className={pageStyles.reviewsMotionProduct}>
+              <NfcMotionHero locale={locale} />
             </div>
         </section>
 
@@ -90,6 +85,7 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
             />
             <div className={inquiryStyles.contentBlock}>
               <ProductCatalog
+                locale={locale}
                 categories={reviews.categories}
                 labels={{
                   category: reviews.catalogLabel,
@@ -119,9 +115,15 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
                 {reviews.priceLabel}
               </p>
               <PriceTierList tiers={reviews.products} />
+              <p className={pageStyles.note}>
+                {locale === "de"
+                  ? "Preise in CHF inklusive der beschriebenen Einrichtung und allfälliger gesetzlicher Abgaben. Versand wird abhängig von Lieferort und Menge separat offeriert. Den Gesamtpreis und Liefertermin erhalten Sie vor einer Bestellung; die Anfrage ist unverbindlich."
+                  : "Prices in CHF include the setup described and any legally applicable charges. Shipping is quoted separately based on destination and quantity. You receive the total price and delivery date before ordering; enquiries are non-binding."}
+              </p>
               <p className={pageStyles.note} data-reveal="rise">
                 {reviews.quantityDiscount}
               </p>
+              <div><ButtonLink href="#inquiry">{reviews.ctaLabel}</ButtonLink></div>
               <div className={inquiryStyles.conditionsBlock}>
               <h3 className={inquiryStyles.conditionsTitle}>{auditCopy[locale].nfcConditions.title}</h3>
               <FaqList items={auditCopy[locale].nfcConditions.items} locale={locale} />

@@ -5,8 +5,8 @@ import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
-  title: "Konditorei Vogel – Zürich",
-  description: "Feine Backwaren, Torten und Café Crème seit 1987. Täglich frisch gebacken in Zürich.",
+  title: { default: "Café & Konditorei Vogel – Fiktives Café in Zürich", template: "%s | Café & Konditorei Vogel" },
+  description: "Fiktives Café-Konzept von SILVAN: Backwaren, Speisekarte, Öffnungszeiten und eine lokale Reservierungsdemo ohne Versand.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

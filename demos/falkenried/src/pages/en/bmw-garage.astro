@@ -22,7 +22,7 @@ const formatRanges = (ranges: readonly (readonly [string, string])[]) => ranges.
 <BaseLayout
   lang={lang}
   route="bmw"
-  title="Autowerkstatt | Service, Sales & Fuel Station – Falkenried Gruppe"
+  title="Auto Workshop | Service, Sales & Fuel Station – Falkenried Gruppe"
   description="Official vehicle service in Zürcher Unterland: maintenance, repairs, new and used cars, our own fuel station with EV charging and a car wash."
   jsonLd={automotiveBusinessSchema(lang)}
 >
@@ -33,7 +33,7 @@ const formatRanges = (ranges: readonly (readonly [string, string])[]) => ranges.
     subtitle="Swiss workshop expertise and BMW's engineering excellence – for a vehicle that deserves your full attention."
     image={heroImage}
     imageAlt="BMW in front of the garage"
-    primaryCta={{ label: "Book Online", href: routes.kontakt[lang] + "#general-inquiry" }}
+    primaryCta={{ label: "Try a Service Enquiry", href: routes.kontakt[lang] + "#general-inquiry" }}
     secondaryCta={{ label: "View Services", href: "#services" }}
   />
 
@@ -92,7 +92,7 @@ const formatRanges = (ranges: readonly (readonly [string, string])[]) => ranges.
               "Own fuel station, EV charging & car wash",
             ]}
           />
-          <a href={routes.kontakt[lang] + "#general-inquiry"} class="btn-primary mt-10 inline-flex">Book Online</a>
+          <a href={routes.kontakt[lang] + "#general-inquiry"} class="btn-primary mt-10 inline-flex">Try a Service Enquiry</a>
         </div>
         <div class="order-1 lg:order-2 relative">
           <div class="aspect-[4/3] rounded-xl overflow-hidden">
@@ -115,7 +115,7 @@ const formatRanges = (ranges: readonly (readonly [string, string])[]) => ranges.
       </div>
       <ProcessSteps
         steps={[
-          { number: "1", title: "Choose a date", description: "Choose your preferred date and service in the external BMW online booking system." },
+          { number: "1", title: "Describe your request", description: "Describe your service needs in the demo form. No appointment is reserved and nothing is sent." },
           { number: "2", title: "Drop off your vehicle", description: "Bring your vehicle in or use our pick-up service." },
           { number: "3", title: "Collect & drive off", description: "We'll let you know as soon as your vehicle is serviced and ready." },
         ]}

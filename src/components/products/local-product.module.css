@@ -1,0 +1,9 @@
+.viewer { position: absolute; inset: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+.canvas { min-height: 0; min-width: 0; overflow: hidden; cursor: grab; touch-action: none; }
+.canvas:active { cursor: grabbing; }
+.canvas:focus-visible { outline: 2px solid var(--product-control-ink); outline-offset: -4px; }
+.controls { display: flex; justify-content: center; flex-wrap: wrap; gap: .25rem; padding: .5rem; background: var(--product-stage-surface); }
+.controls button { min-width: 44px; min-height: 44px; padding: .5rem; border: 1px solid var(--product-control-border); border-radius: 6px; background: var(--product-control-surface); color: var(--product-control-ink); font: inherit; font-size: .85rem; cursor: pointer; }
+.controls button:hover { background: var(--product-control-hover); }
+.controls button:focus-visible { outline: 2px solid var(--product-control-ink); outline-offset: 2px; }
+@media (min-width: 361px) { .controls { gap: .4rem; } .controls button { padding-inline: .8rem; } }

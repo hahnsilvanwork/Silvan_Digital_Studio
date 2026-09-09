@@ -119,8 +119,8 @@ export default function Navbar() {
       <div
         id="salon-mobile-menu"
         hidden={!open}
-        className={`md:hidden transition-all duration-300 overflow-hidden bg-cream border-b border-cream-dark ${
-          open ? "max-h-80 opacity-100" : "max-h-0 opacity-0"
+        className={`md:hidden transition-all duration-300 overflow-y-auto overscroll-contain bg-cream border-b border-cream-dark ${
+          open ? "max-h-[calc(100dvh-65px)] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <ul className="px-6 pb-6 pt-2 flex flex-col gap-1">

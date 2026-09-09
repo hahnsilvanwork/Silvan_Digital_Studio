@@ -4,24 +4,13 @@ import { readFile } from "node:fs/promises";
 
 const readSource = (path) => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 
-test("contact form exposes honest demo and active states", async () => {
+test("contact form is locked before its cancellation handler is installed", async () => {
   const source = await readSource("src/components/ContactForm.astro");
-  assert.match(source, /isWeb3FormsEnabled/);
-  assert.match(source, /data-enabled=/);
-  assert.match(source, /disabled=\{!isEnabled\}/);
-  assert.match(source, /demoMessage/);
-  assert.doesNotMatch(source, /TODO-REPLACE-WITH-WEB3FORMS-KEY/);
-});
-
-test("contact form requires privacy consent and carries metadata", async () => {
-  const source = await readSource("src/components/ContactForm.astro");
-  assert.match(source, /name="privacy_consent"/);
-  assert.match(source, /required/);
-  assert.match(source, /name="area"/);
-  assert.match(source, /name="language"/);
-  assert.match(source, /name="source"/);
-  assert.match(source, /name="object_id"/);
-  assert.match(source, /name="botcheck"/);
+  assert.match(source, /<fieldset disabled/);
+  assert.match(source, /<noscript>/);
+  assert.ok(source.indexOf('form.addEventListener("submit"') < source.indexOf('fields.disabled = false'));
+  assert.match(source, /https:\/\/silvandigital\.ch\/privacy/);
+  assert.doesNotMatch(source, /access_key|privacy_consent|isWeb3FormsEnabled|type="hidden"/);
 });
 
 test("browser script confirms demo interaction without sending or storing data", async () => {

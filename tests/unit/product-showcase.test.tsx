@@ -4,8 +4,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { NfcProduct } from "../../src/content/types";
 
-vi.mock("../../src/components/products/SplineProduct", () => ({
-  SplineProduct: ({
+vi.mock("../../src/components/products/IsolatedSplineProduct", () => ({
+  IsolatedSplineProduct: ({
     sceneUrl,
     onError,
     active,
@@ -151,17 +151,23 @@ beforeEach(() => {
 });
 
 describe("ProductCatalog", () => {
+  it('filters with the compact native category selector and resets the rail', async () => {
+    const user=userEvent.setup();
+    render(<ProductCatalog {...props} />);
+    await user.click(screen.getByRole('button',{name:'Next product'}));
+    await user.selectOptions(screen.getByRole('combobox',{name:'Choose an application'}),'menu');
+    expect(screen.getByRole('img',{name:'Menu card photo'})).toBeVisible();
+    expect(screen.getByText('Product 1 of 1')).toBeVisible();
+    expect(window.location.search).toBe('?category=menu');
+  });
   it("makes every product family and its inventory visible before filtering", () => {
     render(<ProductCatalog {...props} />);
 
-    expect(screen.getByText("Choose an application")).toBeVisible();
+    expect(screen.getByRole('combobox', {name:'Choose an application'})).toHaveValue('reviews');
     for (const category of props.categories) {
-      const count = products.filter(
-        ({ category: productCategory }) => productCategory === category.id,
-      ).length;
       expect(
-        screen.getByRole("button", {
-          name: `${category.label} ${count} ${count === 1 ? "product" : "products"}`,
+        screen.getByRole("option", {
+          name: category.label,
         }),
       ).toBeVisible();
     }
@@ -187,7 +193,7 @@ describe("ProductCatalog", () => {
     expect(screen.getByText("Product 3 of 3")).toBeVisible();
     expect(next).toBeDisabled();
 
-    await user.click(screen.getByRole("button", { name: "Menu 1 product" }));
+    await user.selectOptions(screen.getByRole('combobox',{name:'Choose an application'}),'menu');
     expect(screen.getByText("Product 1 of 1")).toBeVisible();
     expect(screen.queryByRole("button", { name: "Previous product" })).toBeNull();
     expect(screen.queryByRole("button", { name: "Next product" })).toBeNull();
@@ -197,14 +203,13 @@ describe("ProductCatalog", () => {
     const user = userEvent.setup();
     render(<ProductCatalog {...props} />);
 
-    const categories = screen.getByRole("group", { name: "Choose category" });
-    expect(within(categories).getByRole("button", { name: /Google Reviews/ }))
-      .toHaveAttribute("aria-pressed", "true");
+    const categories = screen.getByRole("combobox", { name: "Choose an application" });
+    expect(categories).toHaveValue('reviews');
     expect(screen.getByRole("img", { name: "Review card photo" })).toBeVisible();
     expect(screen.getAllByText("CHF 49.–")[0]).toBeVisible();
     expect(screen.getAllByText("80 × 80 mm")[0]).toBeVisible();
 
-    await user.click(within(categories).getByRole("button", { name: /Menu/ }));
+    await user.selectOptions(categories,'menu');
 
     expect(screen.getByRole("img", { name: "Menu card photo" })).toBeVisible();
     expect(screen.getByText("3D model coming soon")).toBeVisible();
@@ -231,7 +236,7 @@ describe("ProductCatalog", () => {
     await user.click(within(dialog).getByRole("button", { name: "Close 3D view" }));
     await vi.waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     expect(screen.queryByTestId("viewer")).toBeNull();
-    expect(trigger).toHaveFocus();
+    await vi.waitFor(() => expect(trigger).toHaveFocus());
   });
 
   it("closes on the native cancel event and restores focus", async () => {
@@ -245,7 +250,7 @@ describe("ProductCatalog", () => {
     fireEvent(dialog, new Event("cancel", { cancelable: true }));
 
     await vi.waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
-    expect(trigger).toHaveFocus();
+    await vi.waitFor(() => expect(trigger).toHaveFocus());
   });
 
   it("keeps the still after an error and retries only the selected scene", async () => {

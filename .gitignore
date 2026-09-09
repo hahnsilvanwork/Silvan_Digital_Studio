@@ -5,6 +5,7 @@ node_modules/
 out/
 dist/
 /public/demos/
+/public/3d/
 *.tsbuildinfo
 next-env.d.ts
 
@@ -32,3 +33,6 @@ coverage/
 /*.jpg
 /*.jpeg
 /assets/nfc-products/source/*.png
+/NFC Cards/
+
+.vercel

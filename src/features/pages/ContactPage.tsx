@@ -1,65 +1,40 @@
-import type { CSSProperties } from "react";
-
-import { ContactActions } from "../../components/contact/ContactActions";
+import { ContactInquiry } from "../../components/contact/ContactInquiry";
 import { SiteShell } from "../../components/layout/SiteShell";
-import { revealSequence } from "../../components/motion/reveal-sequence";
-import { SplitText } from "../../components/motion/SplitText";
+import { contactCopy } from "../../content/contact-copy";
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
 import layoutStyles from "../../styles/layout.module.css";
 import pageStyles from "../../styles/pages.module.css";
+import styles from "../../components/contact/entry.module.css";
 
-interface ContactPageProps {
-  readonly locale: Locale;
-}
-
-/**
- * Direct contact only. There is no form and no submission endpoint, so nothing
- * a visitor types here can be lost between a server and an inbox.
- */
-export function ContactPage({ locale }: ContactPageProps) {
+export function ContactPage({ locale }: { readonly locale: Locale }) {
   const content = getContent(locale);
-  const sequence = revealSequence(content.contact.title);
-
+  const copy = contactCopy[locale];
   return (
     <SiteShell currentPath={localizePath("/contact", locale)} locale={locale}>
-      <div className={`${pageStyles.page} ${pageStyles.contactPageLayout}`}>
-        <section className={`${layoutStyles.container} ${pageStyles.pageHeader}`}>
-          <p className={pageStyles.heroLabel} data-reveal="rise">
-            {content.contact.eyebrow}
-          </p>
-          <SplitText
-            as="h1"
-            className={pageStyles.pageTitle}
-            startIndex={sequence.titleStartIndex}
-            text={content.contact.title}
-          />
-          <p
-            className={pageStyles.editorialTight}
-            data-reveal="rise"
-            style={{ "--reveal-index": sequence.introIndex } as CSSProperties}
-          >
-            {content.contact.intro}
-          </p>
+      <div className={pageStyles.page}>
+        <section className={`${layoutStyles.container} ${styles.header}`}>
+          <p className={pageStyles.heroLabel}>{content.contact.eyebrow}</p>
+          <h1 className={styles.title}>{content.contact.title}</h1>
+          <p className={pageStyles.editorialTight}>{content.contact.intro}</p>
         </section>
-
-        <section className={`${layoutStyles.container} ${pageStyles.section}`}>
-          <h2 className="visually-hidden">{content.contact.eyebrow}</h2>
-          <ContactActions locale={locale} />
-
-          {/* The postal address is a trust signal on a page selling to local
-              businesses, and it is the same address the imprint carries -- so
-              it is stated here rather than made someone hunt for it. */}
-          <address className={pageStyles.postalAddress}>
-            <span className={pageStyles.postalAddressLabel}>
-              {content.contact.addressLabel}
-            </span>
-            {content.contact.address.map((line) => (
-              <span key={line}>{line}</span>
-            ))}
-          </address>
-        </section>
+        <div className={`${layoutStyles.container} ${styles.body}`}>
+          <section className={styles.panel}>
+            <h2 className="visually-hidden">{content.contact.eyebrow}</h2>
+            <ContactInquiry locale={locale} />
+          </section>
+          <div className={styles.panel}>
+            <section className={styles.next}>
+              <h2>{copy.nextTitle}</h2>
+              <p>{copy.next}</p>
+            </section>
+            <address className={pageStyles.postalAddress}>
+              <span className={pageStyles.postalAddressLabel}>{content.contact.addressLabel}</span>
+              {content.contact.address.map((line) => <span key={line}>{line}</span>)}
+            </address>
+          </div>
+        </div>
       </div>
     </SiteShell>
   );

@@ -24,6 +24,23 @@ export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const header = triggerRef.current?.closest("header");
+    if (!header || typeof ResizeObserver === "undefined") return;
+    // Larger text can wrap the header onto two rows. Anchor destinations must
+    // clear its actual height, including after rotating the device.
+    const observer = new ResizeObserver(() => {
+      document.documentElement.style.setProperty(
+        "--header-offset", `${header.getBoundingClientRect().height}px`,
+      );
+    });
+    observer.observe(header);
+    return () => {
+      observer.disconnect();
+      document.documentElement.style.removeProperty("--header-offset");
+    };
+  }, []);
+
   const close = useCallback(() => {
     setOpen(false);
     // The trigger stays mounted, so focus can return before the panel unmounts.

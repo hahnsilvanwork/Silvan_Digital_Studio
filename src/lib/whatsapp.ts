@@ -1,8 +1,10 @@
 import type { Locale } from "../content/types";
 import { getContent } from "./locales";
 import { inquiryCopy } from "../content/inquiry-copy";
+import { productPriceSummary } from './product-pricing';
 import {
   trimInquiry,
+  isPositiveInteger,
   visibleInquiryFields,
   type ReviewInquiryValues,
 } from "./validation";
@@ -15,9 +17,16 @@ import {
  * with the non-binding statement.
  */
 export function inquiryDisplayValue(values: ReviewInquiryValues, field: keyof ReviewInquiryValues, locale: Locale): string {
+  if (field === "size" && values.shape === "round" && ["80", "100"].includes(values.size)) return `Ø ${values.size} mm`;
   const { inquiry } = getContent(locale).reviews;
   const groups = { destination: inquiry.destinationOptions, product: inquiry.productOptions, shape: inquiry.shapeOptions, size: inquiry.sizeOptions, setup: inquiry.setupOptions };
   const value = values[field].trim();
+  if (field === "quantity" && values.product === "standard-pair" && isPositiveInteger(value)) {
+    const count = Number(value);
+    return locale === "de"
+      ? `${count} ${count === 1 ? "Paket" : "Pakete"} (${count * 2} Karten)`
+      : `${count} ${count === 1 ? "pack" : "packs"} (${count * 2} cards)`;
+  }
   return groups[field as keyof typeof groups]?.find((option) => option.value === value)?.label ?? value;
 }
 
@@ -46,6 +55,8 @@ export function buildReviewInquiryMessage(
   }
 
   if (trimmed.product === "standard-pair") lines.push(inquiryCopy[locale].bundleHint);
+  const pricing = productPriceSummary(trimmed.product, trimmed.quantity, locale);
+  if (pricing) lines.push(pricing);
 
   lines.push("", content.reviews.quantityDiscount, inquiry.nonBindingNotice);
 

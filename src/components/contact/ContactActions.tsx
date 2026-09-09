@@ -2,31 +2,39 @@ import type { CSSProperties } from "react";
 
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
+import { contactCopy } from "../../content/contact-copy";
+import type { ServiceReason, WebsiteTier } from "../../lib/contact-inquiry";
 import styles from "./contact.module.css";
 
 interface ContactActionsProps {
   readonly locale: Locale;
+  readonly reason?: ServiceReason;
+  readonly immediate?: boolean;
+  readonly tier?: WebsiteTier;
 }
 
 /**
  * The four approved contact destinations. Every one is a real link with its own
  * accessible name; nothing here posts to a server.
  */
-export function ContactActions({ locale }: ContactActionsProps) {
+export function ContactActions({ locale, reason, tier, immediate = false }: ContactActionsProps) {
   const content = getContent(locale);
   const { details } = content.contact;
+  const copy = contactCopy[locale];
+  const selectedTier = reason === 'websites' && tier ? content.websites.priceTiers.find(item => item.id === tier) : undefined;
+  const message = reason ? `${copy.message} ${copy.reasons[reason]}.${selectedTier ? `\n${locale === 'de' ? 'Gewünschter Umfang' : 'Preferred scope'}: ${selectedTier.name} (${selectedTier.price}).\n${locale === 'de' ? 'Bitte besprechen wir den passenden Umfang und eine unverbindliche Offerte.' : 'Please help me confirm the scope and prepare a no-obligation quote.'}` : ''}` : undefined;
 
   const actions = [
     {
       label: content.contact.whatsappLabel,
       value: details.whatsappNumber,
-      href: details.whatsappHref,
+      href: message ? `${details.whatsappHref}?text=${encodeURIComponent(message)}` : details.whatsappHref,
       external: true,
     },
     {
       label: content.contact.emailLabel,
       value: details.email,
-      href: `mailto:${details.email}`,
+      href: message ? `mailto:${details.email}?subject=${encodeURIComponent(`${copy.subject}: ${copy.reasons[reason!]}`)}&body=${encodeURIComponent(message)}` : `mailto:${details.email}`,
       external: false,
     },
     {
@@ -48,7 +56,7 @@ export function ContactActions({ locale }: ContactActionsProps) {
       {actions.map((action, index) => (
         <li
           className={styles.action}
-          data-reveal="rise"
+          data-reveal={immediate ? undefined : "rise"}
           key={action.href}
           style={{ "--reveal-index": index } as CSSProperties}
         >
@@ -61,7 +69,7 @@ export function ContactActions({ locale }: ContactActionsProps) {
               : {})}
           >
             <span className={styles.actionLabel}>{action.label}</span>
-            <span className={styles.actionValue}>{action.value}</span>
+            <span className={`${styles.actionValue}${action.href.startsWith("mailto:") ? ` ${styles.emailValue}` : ""}`}>{action.value}</span>
             {action.external ? (
               <span className="visually-hidden">
                 {content.a11y.externalLink}

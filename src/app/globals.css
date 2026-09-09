@@ -16,6 +16,11 @@
   --color-on-dark: #f9f8f6;
   --focus-ring-inner: #f9f8f6;
   --focus-ring-outer: #1a1a1a;
+  --product-stage-surface: #f0efec;
+  --product-control-surface: #faf9f6;
+  --product-control-hover: #e5e2dc;
+  --product-control-border: #c8c5c0;
+  --product-control-ink: #252422;
 
   --font-sans: var(--font-archivo), "Helvetica Neue", Helvetica, Arial, sans-serif;
   /* min(vw, vh): a 1280x800 laptop is wide but short, and a width-only
@@ -113,7 +118,7 @@
 html {
   background: var(--color-paper);
   text-size-adjust: 100%;
-  scroll-padding-block-start: calc(var(--header-block-size) + 1rem);
+  scroll-padding-block-start: calc(var(--header-offset, var(--header-block-size)) + 1rem);
 }
 
 body {
@@ -164,6 +169,10 @@ h3,
 p,
 li,
 figcaption {
+  overflow-wrap: anywhere;
+}
+
+label, address, summary, dt, dd {
   overflow-wrap: anywhere;
 }
 

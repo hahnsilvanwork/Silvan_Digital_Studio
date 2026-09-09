@@ -17,6 +17,7 @@ import { SectionHeading } from "../../components/ui/SectionHeading";
 import type { Locale, RouteKey, ServiceContent } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
+import { getServiceReason } from "../../lib/contact-inquiry";
 import layoutStyles from "../../styles/layout.module.css";
 import pageStyles from "../../styles/pages.module.css";
 
@@ -36,6 +37,8 @@ export function ServicePage({
 }: ServicePageProps) {
   const content = getContent(locale);
   const sequence = revealSequence(service.title);
+  const reason = getServiceReason(new URLSearchParams({ service: route.slice(1) }));
+  const contactHref = `${service.ctaHref}${service.ctaHref === "/contact" && reason ? `?service=${reason}` : ""}`;
 
   return (
     <SiteShell currentPath={localizePath(route, locale)} locale={locale}>
@@ -68,7 +71,7 @@ export function ServicePage({
             data-reveal="rise"
             style={{ "--reveal-index": sequence.actionsIndex } as CSSProperties}
           >
-            <ButtonLink href={localizePath(service.ctaHref, locale)}>
+            <ButtonLink href={localizePath(contactHref, locale)}>
               {service.ctaLabel}
             </ButtonLink>
             <Link className={pageStyles.serviceSecondaryAction} href={localizePath("/about", locale)}>
@@ -90,6 +93,7 @@ export function ServicePage({
             <PriceTierList
               recommendedLabel={content.common.recommended}
               tiers={service.priceTiers}
+              websiteLocale={route === '/websites' ? locale : undefined}
             />
 
             {route === "/websites" ? (

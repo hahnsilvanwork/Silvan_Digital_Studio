@@ -10,6 +10,7 @@ export default defineConfig([
     "Demo Website/**",
     "demos/**",
     "public/demos/**",
+    "public/3d/**",
     // Git worktrees carry their own full checkout, including an installed
     // .next and any scratch files. Linting from the repository root walked
     // into them and reported ~15,000 problems that belong to a build output,

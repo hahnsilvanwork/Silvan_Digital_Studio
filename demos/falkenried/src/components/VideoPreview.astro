@@ -1,5 +1,35 @@
 ---
 import { Image } from "astro:assets";
 import previewImage from "../assets/images/garden/garden-path.jpg";
+import { getLangFromUrl, routes, type Lang } from "../i18n/nav";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = getLangFromUrl(Astro.url) } = Astro.props;
+const copy = {
+  de: {
+    alt: "Ein grüner Rückzugsort mit sorgfältig gestaltetem Gartenweg",
+    eyebrow: "MOBILITÄT · NATUR · WOHNEN",
+    firstLine: "Drei Perspektiven.",
+    secondLine: "Ein gemeinsamer Anspruch.",
+    link: "Die Falkenried Gruppe kennenlernen",
+  },
+  en: {
+    alt: "A green retreat with a carefully designed garden path",
+    eyebrow: "MOBILITY · NATURE · LIVING",
+    firstLine: "Three perspectives.",
+    secondLine: "One shared ambition.",
+    link: "Get to know the Falkenried Group",
+  },
+}[lang];
 ---
-<figure class="portrait-panel"><Image src={previewImage} alt="Ein grüner Rückzugsort mit sorgfältig gestaltetem Gartenweg" widths={[720,1200]} sizes="90vw" /><figcaption><span class="label-caps">MOBILITÄT · NATUR · WOHNEN</span><p>Drei Perspektiven.<br />Ein gemeinsamer Anspruch.</p><a href="/geschichte/">Die Falkenried Gruppe kennenlernen →</a></figcaption></figure>
+<figure class="portrait-panel">
+  <Image src={previewImage} alt={copy.alt} widths={[720,1200]} sizes="90vw" />
+  <figcaption>
+    <span class="label-caps">{copy.eyebrow}</span>
+    <p>{copy.firstLine}<br />{copy.secondLine}</p>
+    <a href={routes.geschichte[lang]}>{copy.link} →</a>
+  </figcaption>
+</figure>

@@ -2,7 +2,8 @@ import Image from "next/image";
 
 import type { NfcProduct } from "../../content/types";
 import styles from "./products.module.css";
-import { setCatalogueSelection } from "../reviews/use-catalogue-selection";
+import { requestCatalogueModel } from "../reviews/use-catalogue-selection";
+import type { MouseEvent } from "react";
 
 interface ProductCardProps {
   readonly product: NfcProduct;
@@ -24,6 +25,12 @@ export function ProductCard({
   onView3D,
   requestModelLabel,
 }: ProductCardProps) {
+  const requestHref = `?category=${encodeURIComponent(product.category)}&model=${encodeURIComponent(product.id)}#inquiry`;
+  const request = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    event.preventDefault();
+    requestCatalogueModel(product.category, product.id);
+  };
   return (
     <article
       className={styles.catalogCard}
@@ -31,6 +38,9 @@ export function ProductCard({
       data-product-index={index}
     >
       <div className={styles.catalogMedia}>
+        {requestModelLabel ? <a className={styles.catalogImageLink} href={requestHref} onClick={request} aria-label={`${requestModelLabel}: ${product.title}`}>
+          <Image alt={product.image.alt} className={styles.catalogImage} fill loading="lazy" sizes="(min-width: 72rem) 29vw, (min-width: 44rem) 45vw, 82vw" src={product.image.src} />
+        </a> :
         <Image
           alt={product.image.alt}
           className={styles.catalogImage}
@@ -38,7 +48,7 @@ export function ProductCard({
           loading="lazy"
           sizes="(min-width: 72rem) 29vw, (min-width: 44rem) 45vw, 82vw"
           src={product.image.src}
-        />
+        />}
       </div>
       <div className={styles.catalogCardBody}>
         <div className={styles.catalogCardHeading}>
@@ -54,14 +64,8 @@ export function ProductCard({
         {requestModelLabel ? <a
           className={styles.requestModel}
           data-touch-target
-          href={`?category=${encodeURIComponent(product.category)}&model=${encodeURIComponent(product.id)}#inquiry`}
-          onClick={(event) => {
-            if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
-            event.preventDefault();
-            setCatalogueSelection(product.category, product.id);
-            window.history.replaceState(window.history.state, "", `${window.location.pathname}${window.location.search}#inquiry`);
-            document.getElementById("inquiry")?.scrollIntoView({behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth"});
-          }}
+          href={requestHref}
+          onClick={request}
         >{requestModelLabel}</a> : null}
         {product.scene ? (
           <button
