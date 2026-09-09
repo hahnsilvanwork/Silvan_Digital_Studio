@@ -1,9 +1,12 @@
 import { expect, test } from '@playwright/test';
+import { waitForHydration } from './support';
 
 for (const width of [390, 1280]) {
   test(`NFC language transfer preserves all details and current preview at ${width}px`, async ({ page }) => {
     await page.setViewportSize({width,height:900});
     await page.goto('/reviews?category=reviews&model=review-round-black#inquiry');
+    await waitForHydration(page);
+    await expect(page.locator('[name=size]')).toBeFocused();
     await page.locator('[name=size]').selectOption('100');
     await page.locator('[name=quantity]').fill('3');
     await page.locator('[name=setup]').selectOption('ready');
@@ -16,6 +19,7 @@ for (const width of [390, 1280]) {
     for (const locale of ['en','de']) {
       await page.getByRole('link',{name:locale==='en'?'Englisch':'German',exact:true}).click();
       await expect(page.locator('html')).toHaveAttribute('lang',locale);
+      await waitForHydration(page);
       const summary=page.locator('[data-inquiry-summary]');
       await expect(summary).toBeVisible();
       for(const value of ['Private Company','Private Visitor','Please preserve this private note.','https://g.page/r/example/review','Ø 100 mm','CHF 100']) await expect(summary).toContainText(value);
@@ -58,6 +62,7 @@ test('blocked session storage keeps the draft when language change is cancelled'
 for (const width of [390,1280]) {
  test(`direct category selection retains every variant at ${width}px`,async({page})=>{
   await page.setViewportSize({width,height:900});await page.goto('/en/reviews?category=reviews&model=review-round-black#products');
+  await waitForHydration(page);
   const cards=page.locator('[data-product-card]');await expect(cards).toHaveCount(9);
   await expect(page.getByRole("button",{name:"All product types",exact:true})).toHaveCount(0);
   const category=page.locator('select[id$="-category"]');if(await category.isVisible()) await category.selectOption('chips');else await page.getByRole('button',{name:/^NFC chip.*1 product/}).click();
