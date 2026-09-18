@@ -23,7 +23,7 @@ export function useCatalogueSelection() {
 }
 
 /** Only public catalogue identifiers belong in the URL; form data stays in memory. */
-export function setCatalogueSelection(category: ProductCategory, model?: string, inquiry = false) {
+export function setCatalogueSelection(category: ProductCategory | 'selection', model?: string, inquiry = false) {
   const url = new URL(window.location.href);
   url.searchParams.set("category", category);
   if (model) url.searchParams.set("model", model);

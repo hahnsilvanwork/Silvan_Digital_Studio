@@ -11,6 +11,7 @@ import { Product3DDialog, type Product3DLabels } from "./Product3DDialog";
 import { ProductCard } from "./ProductCard";
 import styles from "./products.module.css";
 import { useCatalogueSelection, setCatalogueSelection } from "../reviews/use-catalogue-selection";
+import { catalogueGroup } from '../../lib/catalogue-groups';
 
 interface ProductCatalogLabels extends Product3DLabels {
   readonly category: string;
@@ -35,6 +36,7 @@ interface ProductCatalogProps {
     readonly label: string;
   }[];
   readonly labels: ProductCatalogLabels;
+  readonly starterProductIds?: readonly string[];
 }
 
 export function ProductCatalog({
@@ -42,10 +44,18 @@ export function ProductCatalog({
   locale = "de",
   categories,
   labels,
+  starterProductIds,
 }: ProductCatalogProps) {
   const selection = useCatalogueSelection();
-  const activeCategory = categories.find((category) => category.id === selection.category)?.id ?? categories[0]?.id ?? "reviews";
+  const selectedModel = products.find(product => product.id === selection.modelId);
+  const requestedCategory = starterProductIds && selectedModel ? catalogueGroup(selectedModel)
+    : starterProductIds && ['tripadvisor', 'contact'].includes(selection.category ?? '') ? 'custom' : selection.category;
+  const activeCategory = categories.find((category) => category.id === requestedCategory)?.id ?? (starterProductIds ? 'selection' : categories[0]?.id ?? 'reviews');
   const de = locale === "de";
+  const choices = starterProductIds ? [{ id: 'selection' as const, label: de ? 'Startauswahl' : 'Start here' }, ...categories] : categories;
+  const productsFor = (category: string) => category === 'selection'
+    ? (starterProductIds ?? []).flatMap(id => products.find(product => product.id === id) ?? [])
+    : products.filter(product => (starterProductIds ? catalogueGroup(product) : product.category) === category);
   const railKey = activeCategory;
   const [selectedProduct, setSelectedProduct] = useState<NfcProduct | null>(
     null,
@@ -64,11 +74,9 @@ export function ProductCatalog({
     }
   }, [selectedProduct]);
 
-  const visibleProducts = products.filter(
-    product => product.category === activeCategory,
-  );
+  const visibleProducts = productsFor(activeCategory);
   const activeCategoryLabel =
-    categories.find(({ id }) => id === activeCategory)?.label ?? "";
+    choices.find(({ id }) => id === activeCategory)?.label ?? "";
   const countLabel = (count: number) =>
     `${count} ${count === 1 ? labels.productSingular : labels.productPlural}`;
 
@@ -92,21 +100,21 @@ export function ProductCatalog({
 
   return (
     <div className={styles.catalog}>
+      <details className={styles.catalogFilters} open={!starterProductIds || activeCategory !== 'selection'}>
+      {starterProductIds ? <summary>{de ? 'Weitere Modelle nach Anwendung ansehen' : 'Browse more models by use'}</summary> : null}
       <div className={styles.mobileCategory}>
         <label className={styles.categoryPrompt} htmlFor={`${railId}-category`}>{labels.categoryPrompt}</label>
         <select id={`${railId}-category`} value={activeCategory} onChange={(event) => {
           setActiveProductIndex(0);
-          setCatalogueSelection(event.target.value as ProductCategory);
+          setCatalogueSelection(event.target.value as ProductCategory | 'selection');
         }}>
-          {categories.map(category => <option key={category.id} value={category.id}>{category.label}</option>)}
+          {choices.map(category => <option key={category.id} value={category.id}>{category.label}</option>)}
         </select>
       </div>
       <p className={styles.desktopCategoryPrompt}>{labels.categoryPrompt}</p>
       <div aria-label={labels.category} className={styles.categoryTabs} role="group">
-        {categories.map((category) => {
-          const productCount = products.filter(
-            (product) => product.category === category.id,
-          ).length;
+        {choices.map((category) => {
+          const productCount = productsFor(category.id).length;
 
           return (
             <button
@@ -126,6 +134,8 @@ export function ProductCatalog({
           );
         })}
       </div>
+
+      </details>
 
 <details className={styles.deliveryFacts}>
         <summary>{de ? "Verfügbarkeit, Lieferung und Betreuung" : "Availability, delivery and support"}</summary>

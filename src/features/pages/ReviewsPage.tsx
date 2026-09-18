@@ -20,6 +20,7 @@ import layoutStyles from "../../styles/layout.module.css";
 import pageStyles from "../../styles/pages.module.css";
 import { inquiryCopy } from "../../content/inquiry-copy";
 import { auditCopy } from "../../content/audit-copy";
+import { STARTER_PRODUCT_IDS } from '../../lib/catalogue-groups';
 import inquiryStyles from "../../components/reviews/review-inquiry.module.css";
 
 interface ReviewsPageProps {
@@ -86,6 +87,7 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
             <div className={inquiryStyles.contentBlock}>
               <ProductCatalog
                 locale={locale}
+                starterProductIds={STARTER_PRODUCT_IDS}
                 categories={reviews.categories}
                 labels={{
                   category: reviews.catalogLabel,

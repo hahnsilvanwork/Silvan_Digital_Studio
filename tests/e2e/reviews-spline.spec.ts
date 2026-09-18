@@ -1,9 +1,4 @@
 import { expect, test } from "@playwright/test";
-import { readFileSync } from "node:fs";
-
-const importedProducts = JSON.parse(readFileSync(new URL("../../src/content/nfc-import.json", import.meta.url), "utf8")) as { category: string }[];
-const googleCount = importedProducts.filter(({ category }) => category === "reviews").length;
-
 test.describe("image-first NFC product catalogue", () => {
   test("opens at the true top of the page", async ({ page }) => {
     await page.goto("/reviews");
@@ -19,13 +14,16 @@ test.describe("image-first NFC product catalogue", () => {
 
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
       await expect(page.locator("[data-local-product-stage]")).toHaveCount(0);
-      await expect(page.locator('[data-product-hero] img')).toHaveCount(3);
+      await expect(page.locator('[data-nfc-motion] [data-index] > div:first-child > img')).toHaveCount(5);
       await expect(
-        page.locator('[data-product-hero] img[data-fit="contain"]'),
+        page.locator('[data-nfc-motion] [data-index] > div:first-child > img').first(),
       ).toHaveCSS("object-fit", "contain");
       await expect(page.getByText("CHF 49.–", { exact: true }).first()).toBeVisible();
 
-      for (const control of await page.getByRole("button", { name: /Google Reviews|Tripadvisor|Social Media|WhatsApp.*Kontakt|Menü|Individuell/ }).all()) {
+      await expect(page.locator('[data-product-card]')).toHaveCount(7);
+      await expect(page.locator('select[id$="-category"]')).toBeHidden();
+      await page.getByText('Weitere Modelle nach Anwendung ansehen', { exact: true }).click();
+      for (const control of await page.getByRole("button", { name: /Google Reviews|Instagram|NFC-Chips|Menü|Individuell/ }).all()) {
         // Firefox reports a 44 CSS-pixel box as 43.9999 at some scale factors.
         const box = await control.boundingBox();
         expect(box?.height).toBeGreaterThanOrEqual(43.9);
@@ -47,7 +45,7 @@ test.describe("image-first NFC product catalogue", () => {
           expect((await button.boundingBox())?.height).toBeGreaterThanOrEqual(43.9);
         }
         await railControls.getByRole("button", { name: "Nächstes Produkt" }).click();
-        await expect(railControls.getByText(`Produkt 2 von ${googleCount}`)).toBeVisible();
+        await expect(railControls.getByText(`Produkt 2 von 7`)).toBeVisible();
       } else {
         await expect(railControls).toBeHidden();
         const cards = await rail.locator("[data-product-card]").all();
@@ -144,6 +142,7 @@ test.describe("image-first NFC product catalogue", () => {
 
   test("shows four menu models with 3D views", async ({ page }) => {
     await page.goto("/reviews");
+    await page.getByText('Weitere Modelle nach Anwendung ansehen', { exact: true }).click();
     const categorySelect=page.locator('select[id$="-category"]');
     if(await categorySelect.isVisible()) await categorySelect.selectOption('menu');
     else await page.getByRole("button", { name: "Menü 4 Produkte", exact: true }).click();
@@ -155,9 +154,9 @@ test.describe("image-first NFC product catalogue", () => {
   test("keeps the first hero image still under reduced motion", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/reviews");
-    const first = page.locator('[data-product-hero] img').first();
-    await expect(first).toHaveAttribute("data-active", "true");
+    const first = page.locator('[data-nfc-motion]');
+    await expect(first).toHaveAttribute("data-static", "true");
     await page.waitForTimeout(6000);
-    await expect(first).toHaveAttribute("data-active", "true");
+    await expect(first).toHaveAttribute("data-static", "true");
   });
 });

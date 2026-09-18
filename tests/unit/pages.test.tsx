@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 
@@ -223,6 +223,8 @@ describe("ReviewsPage", () => {
     render(<ReviewsPage locale="de" />);
 
     const main = screen.getByRole("main");
+    expect(main.querySelectorAll('[data-product-card]')).toHaveLength(7);
+    fireEvent.click(within(main).getByText('Weitere Modelle nach Anwendung ansehen'));
     for (const category of de.reviews.categories) {
       expect(
           within(within(main).getByRole('combobox', {name:de.reviews.categoryPrompt})).getByRole("option", {

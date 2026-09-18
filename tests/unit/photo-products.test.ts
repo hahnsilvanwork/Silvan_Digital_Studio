@@ -22,7 +22,7 @@ describe("photographed NFC catalogue", () => {
     }
     for (const id of pending) expect(catalog.find((product) => product.id === id)).toBeDefined();
     expect(new Set(catalog.map((product) => product.id)).size).toBe(catalog.length);
-    for (const product of catalog) expect(categories.map(({ id }) => id)).toContain(product.category);
+    for (const product of catalog) expect(categories.map(({ id }) => id)).toContain(catalogueGroup(product));
   });
 
   it("assigns the renamed WhatsApp photo to 009 and keeps existing inquiry links valid", () => {
@@ -74,3 +74,4 @@ describe("photographed NFC catalogue", () => {
     expect(getInquiryPreset("constructor")).toBeNull();
   });
 });
+import { catalogueGroup } from '../../src/lib/catalogue-groups';
