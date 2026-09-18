@@ -4,7 +4,8 @@
 .heroIntro { display: grid; gap: 1.5rem; align-content: start; }
 .title { max-inline-size: 15ch; font-size: clamp(2.7rem, 11.5vw, 3.75rem); line-height: 1.04; letter-spacing: -0.035em; font-weight: 500; text-wrap: balance; }
 .heroDescription { max-inline-size: 43ch; font-size: 1.0625rem; line-height: 1.6; }
-.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; }
+.actions { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; gap: 0.75rem 1.5rem; }
+.actions > a { inline-size: 100%; min-block-size: 3.25rem; }
 .actions > *, .caption a { max-inline-size: 100%; overflow-wrap: anywhere; }
 .textLink { display: inline-flex; align-items: center; justify-content: space-between; gap: 1.25rem; min-block-size: 2.75rem; text-decoration: none; font-size: 1rem; border-block-end: 1px solid currentColor; justify-self: start; max-inline-size: 100%; }
 .arrow { display: inline-block; flex: none; inline-size: 0.5rem; block-size: 0.5rem; border-block-start: 1.5px solid currentColor; border-inline-end: 1.5px solid currentColor; transform: rotate(45deg); }
@@ -58,6 +59,8 @@
 .contactBand { background: var(--color-stone); }
 .contact { display: grid; gap: 2rem; padding-block: clamp(3rem, 5vw, 5rem); }
 @media (min-width: 48rem) {
+  .actions { display: flex; flex-wrap: wrap; }
+  .actions > a { inline-size: auto; }
   .title { font-size: clamp(3.25rem, 5.2vw, 5rem); }
   .heroDescription { font-size: 1.125rem; }
   .websiteOffer, .sectionTop, .contact { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; }

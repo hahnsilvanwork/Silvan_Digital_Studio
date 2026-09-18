@@ -87,7 +87,7 @@
   margin-block-start: -0.28125rem;
   color: var(--color-ink-muted);
   content: "";
-  opacity: 0.55;
+  opacity: 0.85;
   pointer-events: none;
   /* The rotation stays inside `transform` and last in the list, so the hover
      translation is applied in the unrotated frame and slides straight out. */

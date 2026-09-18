@@ -39,7 +39,7 @@
   --text-price: clamp(0.9375rem, 0.85rem + 0.35vw, 1.125rem);
   /* Buttons used to borrow --text-label, so the most important control on
      the page was set at the same size as a metadata caption. */
-  --text-action: clamp(0.875rem, 0.83rem + 0.2vw, 1rem);
+  --text-action: 1rem;
   --text-label: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
 
   /* Optical sizing: tracking tightens as type grows and opens back up as it

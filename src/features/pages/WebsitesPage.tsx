@@ -27,7 +27,8 @@ export function WebsitesPage({ locale }: WebsitesPageProps) {
           <div>
             <h2 className={pageStyles.legalHeading}>{comparison.title}</h2>
             <p>{comparison.intro}</p>
-            <div className={exampleStyles.tableRegion} tabIndex={0} role="region" aria-label={comparison.title}>
+            <p id="package-scroll-hint" className={exampleStyles.tableHint}>{locale === 'de' ? 'Seitlich wischen, um alle Pakete zu vergleichen. Mit Tastatur: Tabelle fokussieren und Pfeiltasten verwenden.' : 'Swipe sideways to compare all packages. With a keyboard: focus the table and use the arrow keys.'}</p>
+            <div className={exampleStyles.tableRegion} tabIndex={0} role="region" aria-label={comparison.title} aria-describedby="package-scroll-hint">
               <table><thead><tr><th scope="col">{locale === 'de' ? 'Bereich' : 'Area'}</th>{getContent(locale).websites.priceTiers.map(tier => <th key={tier.id} scope="col">{tier.name}</th>)}</tr></thead>
                 <tbody>{comparison.rows.map(row => <tr key={row[0]}><th scope="row">{row[0]}</th>{row.slice(1).map((cell,index) => <td key={index}>{cell}</td>)}</tr>)}</tbody>
               </table>

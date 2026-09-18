@@ -50,6 +50,20 @@ export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
     triggerRef.current?.focus();
   }, []);
 
+  useEffect(() => {
+    if (!open || typeof window.matchMedia !== 'function') return;
+    const desktop = window.matchMedia('(min-width: 72rem)');
+    function releaseDrawer(event: MediaQueryListEvent) {
+      if (!event.matches) return;
+      const focusWasInDrawer = panelRef.current?.contains(document.activeElement);
+      setOpen(false);
+      // The mobile trigger disappears here; return focus to the visible home link.
+      if (focusWasInDrawer) triggerRef.current?.closest('header')?.querySelector<HTMLAnchorElement>('a[href="/"], a[href="/en"]')?.focus();
+    }
+    desktop.addEventListener('change', releaseDrawer);
+    return () => desktop.removeEventListener('change', releaseDrawer);
+  }, [open]);
+
   // The page lock and the background inertness both live outside this subtree,
   // so they are applied imperatively and released by the same effect -- also
   // when the component unmounts while the drawer is still open.

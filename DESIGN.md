@@ -10,6 +10,8 @@ Desktop navigation uses four direct destinations and a native disclosure for sup
 
 The historical direction below remains relevant for palette, typography and assets; this section supersedes its earlier homepage order.
 
+Mobile refinement: home/NFC hero actions fill the phone column with a 52px minimum height; shared button text is 16px with vertical padding for wrapped labels. Website package pairs share subgrid rows from tablet width to align comparisons and actions. An open mobile drawer releases the page when the desktop navigation takes over. Preserve native scrolling for wide comparison tables and expose a mobile scroll hint.
+
 Direction: a photographic contact sheet and Swiss editorial portfolio. Work and people carry the identity; typography and spacing organise it. User rejected the pastel card system and electric blue; replace them throughout.
 
 Home is a Persuade surface: clear offer with a large, honestly labelled concept image in the first viewport; a concise service directory; selected work; physical NFC products; the actual developer; contact. The cultural references are Swiss studio portfolios, architecture monographs and carefully edited photographic contact sheets. The selected system is the fourth of the grounded candidates considered (Swiss poster, architecture monograph, product catalogue, photographic contact sheet, studio journal, typographic index, exhibition guide). Instrument displays, marbling and underwater worlds were rejected as unrelated to the business; retain their discipline of consistent states, one material family and a legible sequence without borrowing their motifs.

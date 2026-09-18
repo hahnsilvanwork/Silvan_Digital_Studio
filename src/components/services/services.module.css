@@ -103,6 +103,10 @@
 
 @media (min-width: 48rem) {
   .tierBadge:empty { display: block; }
+  /* Share each content row within a pair, including variable-length copy.
+     This aligns prices, features and enquiry actions without fixed heights. */
+  .websiteTiers > .tier { grid-row: span 7; grid-template-rows: subgrid; }
+  .websiteTiers .tierName { min-block-size: 0; }
   .tiers:has(> :nth-child(4):last-child) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -248,6 +252,7 @@
 .tierExample { margin-block-start: .75rem; font-size: .9375rem; line-height: 1.5; max-inline-size: 50ch; }
 .tierAction { display: inline-flex; align-items: center; justify-content: space-between; gap: .5rem; min-block-size: var(--control-target-min); margin-block-start: .5rem; padding-block: .5rem; border-block-end: 1px solid var(--color-ink); font-weight: 500; font-size: 1rem; text-decoration: none; }
 .tierAction:hover { text-decoration: underline; text-underline-offset: .25em; }
+.tierArrow { flex: none; inline-size: 0.5rem; block-size: 0.5rem; margin-inline-end: 0.25rem; border-block-start: 1.5px solid currentColor; border-inline-end: 1.5px solid currentColor; transform: rotate(45deg); }
 .faqQuestion::-webkit-details-marker { display: none; }
 .faqQuestion::after { content: ""; position: absolute; inset-inline-end: 0.5rem; inset-block-start: 1.8rem; inline-size: 0.5rem; block-size: 0.5rem; border-inline-end: 1.5px solid currentColor; border-block-end: 1.5px solid currentColor; transform: rotate(45deg); }
 .faqItem[open] .faqQuestion::after { transform: rotate(225deg); }

@@ -14,7 +14,8 @@ for (const width of [390, 1280]) {
     await page.locator('[name=businessName]').fill('Private Company');
     await page.locator('[name=contactPerson]').fill('Private Visitor');
     await page.locator('[name=note]').fill('Please preserve this private note.');
-    expect(await page.evaluate(()=>sessionStorage.length)).toBe(0);
+    expect(await page.evaluate(()=>Object.keys(sessionStorage))).toEqual(['silvan:inquiry-selection:v1']);
+    expect(await page.evaluate(()=>JSON.stringify(sessionStorage))).not.toMatch(/Private|https:|private note/);
     await page.getByRole('button',{name:'Angaben prüfen',exact:true}).click();
     for (const locale of ['en','de']) {
       await page.getByRole('link',{name:locale==='en'?'Englisch':'German',exact:true}).click();
@@ -24,7 +25,8 @@ for (const width of [390, 1280]) {
       await expect(summary).toBeVisible();
       for(const value of ['Private Company','Private Visitor','Please preserve this private note.','https://g.page/r/example/review','Ø 100 mm','CHF 100']) await expect(summary).toContainText(value);
       await expect(summary).toContainText(locale==='en'?'Destination link':'Link zur Zielseite');
-      expect(await page.evaluate(()=>sessionStorage.length)).toBe(0);
+      expect(await page.evaluate(()=>Object.keys(sessionStorage))).toEqual(['silvan:inquiry-selection:v1']);
+      expect(await page.evaluate(()=>JSON.stringify(sessionStorage))).not.toMatch(/Private|https:|private note/);
       const url=new URL(page.url());expect(url.searchParams.get('model')).toBe('review-round-black');expect([...url.searchParams.keys()]).toEqual(['category','model']);
       for(const link of await summary.locator('a[href^="mailto:"], a[href*="wa.me/"]').all()) {
         const message=decodeURIComponent((await link.getAttribute('href'))!);expect(message).toContain('Private Company');expect(message).toContain('CHF 100');expect(message).toContain('Ø 100 mm');

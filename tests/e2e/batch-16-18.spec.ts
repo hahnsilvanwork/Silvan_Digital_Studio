@@ -12,12 +12,12 @@ for (const locale of ['de', 'en']) {
   test(`${locale}: home explains the offer before the project and about shows the person early`, async ({ page }) => {
     await page.goto(prefix || '/');
     const hero = page.locator('main section').first();
-    const contact = hero.locator(`a[href="${prefix}/contact"]`);
+    const contact = hero.locator(`a[href="${prefix}/contact?service=websites"]`);
     await expect(contact).toBeVisible();
     const contactBox = await contact.boundingBox();
     expect(contactBox!.y + contactBox!.height).toBeLessThan(page.viewportSize()!.height);
     expect(await hero.evaluate(el => {
-      const contact = el.querySelector('a[href$="/contact"]')!;
+      const contact = el.querySelector('a[href$="/contact?service=websites"]')!;
       const figure = el.querySelector('figure')!;
       return Boolean(contact.compareDocumentPosition(figure) & Node.DOCUMENT_POSITION_FOLLOWING);
     })).toBe(true);

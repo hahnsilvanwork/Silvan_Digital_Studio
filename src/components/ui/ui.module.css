@@ -8,6 +8,7 @@
   justify-content: center;
   gap: var(--space-2xs);
   min-block-size: max(var(--control-target-min), 3.25rem);
+  padding-block: 0.75rem;
   padding-inline: var(--space-md);
   border: var(--hairline) solid currentColor;
   border-radius: var(--radius-media);

@@ -25,10 +25,14 @@
 }
 
 .heroActions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-xs);
   margin-block-start: var(--space-xs);
+}
+
+@media (min-width: 48rem) {
+  .heroActions { display: flex; flex-wrap: wrap; }
 }
 
 /* Same zero-specificity shrink default as the layout grid; see layout.module.css. */

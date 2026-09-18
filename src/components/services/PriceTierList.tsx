@@ -31,7 +31,7 @@ export function PriceTierList({
     recommendedLabel !== undefined && tiers.some((tier) => tier.recommended);
 
   return (
-    <ul className={styles.tiers}>
+    <ul className={`${styles.tiers}${websiteLocale ? ` ${styles.websiteTiers}` : ''}`}>
       {tiers.map((tier, index) => (
         <li
           className={`${styles.tier} ${
@@ -59,7 +59,7 @@ export function PriceTierList({
           {websiteLocale && websiteTiers.some(id => id === tier.id) ? <>
             <p className={styles.tierExample}>{websiteExamples[websiteLocale][tier.id as WebsiteTier]}</p>
             <Link data-touch-target className={styles.tierAction} href={`${localizePath('/contact', websiteLocale)}?service=websites&tier=${tier.id}`}>
-              {websiteLocale === 'de' ? 'Diesen Umfang besprechen' : 'Discuss this scope'}<span className="visually-hidden">: {tier.name}</span><span aria-hidden="true"> ↗</span>
+              {websiteLocale === 'de' ? 'Diesen Umfang besprechen' : 'Discuss this scope'}<span className="visually-hidden">: {tier.name}</span><span className={styles.tierArrow} aria-hidden="true" />
             </Link>
           </> : null}
         </li>
