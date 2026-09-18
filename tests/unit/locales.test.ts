@@ -109,7 +109,7 @@ describe("locale content", () => {
       locale: "de" as const,
       hero: {
         serviceLine: "Websites und digitale Lösungen für Schweizer KMU",
-        headline: "Mehr Kunden. Weniger Aufwand.",
+        headline: "Websites für kleine Unternehmen.",
         supporting:
           "Ich bin Silvan Hahn. Ich entwickle Websites, mache Ihr Unternehmen online sichtbar und vereinfache wiederkehrende Aufgaben. Direkt mit Ihnen, von der Idee bis zum Start.",
       },
@@ -118,7 +118,7 @@ describe("locale content", () => {
       locale: "en" as const,
       hero: {
         serviceLine: "Websites and digital solutions for Swiss businesses",
-        headline: "More customers. Less busywork.",
+        headline: "Websites for small businesses.",
         supporting:
           "I'm Silvan Hahn. I build websites, help people find your business online and simplify recurring tasks. You work directly with me, from the first idea to launch.",
       },

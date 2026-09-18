@@ -18,7 +18,7 @@ test.describe("global navigation", () => {
 
     await expect(page).toHaveURL(/\/$/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
-      "Mehr Kunden",
+      "Websites für kleine Unternehmen",
     );
   });
 
@@ -198,9 +198,12 @@ test.describe("mobile drawer", () => {
   });
 
   test("the backdrop closes the drawer", async ({ browserName, page }) => {
+    // A narrow phone has a full-width panel, so no backdrop is exposed there.
+    // Test the actual exposed area at a width that still uses the mobile menu.
+    await page.setViewportSize({ width: 600, height: 844 });
     await page.goto("/");
     await page.getByRole("button", { name: "Menü öffnen" }).click();
-    await page.getByTestId("mobile-menu-backdrop").click({ force: true });
+    await page.getByTestId("mobile-menu-backdrop").click({ position: { x: 20, y: 200 } });
 
     await expect(page.getByRole("dialog", { name: "Menü" })).toBeHidden();
     await expect(page.locator("[inert]")).toHaveCount(0);

@@ -32,6 +32,8 @@ import { getContent } from "../../lib/locales";
 
 import { consumeInquiryDraft, DRAFT_REQUEST, type DraftRequest } from "../../lib/inquiry-draft";
 
+import { consumeInquirySelection, saveInquirySelection } from "../../lib/inquiry-session";
+
 import { inquiryCopy } from "../../content/inquiry-copy";
 
 import { InquiryEstimate } from './InquiryEstimate';
@@ -121,6 +123,8 @@ export function ReviewInquiryConfigurator({
   const pendingModelFocus = useRef(false);
 
   const checkedTransfer = useRef(false);
+  const [loadedModel, setLoadedModel] = useState<string | null>(null);
+  const [restoredSelection, setRestoredSelection] = useState(false);
 
 
 
@@ -169,6 +173,7 @@ export function ReviewInquiryConfigurator({
       if (!checkedTransfer.current) {
 
         checkedTransfer.current = true;
+        setLoadedModel(selection.modelId);
 
         let draft = null;
 
@@ -186,7 +191,17 @@ export function ReviewInquiryConfigurator({
 
         }
 
+        let saved = null;
+        try { saved = consumeInquirySelection(window.sessionStorage, selection.modelId); } catch { /* Storage may be unavailable. */ }
+        if (saved) {
+          setValues(saved);
+          setRestoredSelection(true);
+          return;
+        }
       }
+
+      setLoadedModel(selection.modelId);
+      setRestoredSelection(false);
 
       pendingModelFocus.current = Boolean(preset && window.location.hash === "#inquiry");
 
@@ -265,6 +280,11 @@ export function ReviewInquiryConfigurator({
   }, [values, inquiryUrl, adjustingSelection]);
 
 
+
+  useEffect(() => {
+    if (loadedModel !== selection.modelId) return;
+    try { saveInquirySelection(window.sessionStorage, selection.modelId, values); } catch { /* Form stays usable without storage. */ }
+  }, [loadedModel, selection.modelId, values]);
 
   const errorCount = Object.keys(errors).length;
 
@@ -599,6 +619,7 @@ export function ReviewInquiryConfigurator({
     >
 
       <p className={styles.formIntro}>{model ? copy.remaining : inquiry.intro}</p>
+      {restoredSelection ? <p className={styles.hint} role="status">{copy.selectionRestored}</p> : null}
 
       {model ? <section className={styles.modelSelection} data-testid="inquiry-model" aria-label={copy.model}>
 
@@ -846,6 +867,7 @@ export function ReviewInquiryConfigurator({
 
 
 
+
       <button
 
         className={styles.submit}
@@ -864,9 +886,16 @@ export function ReviewInquiryConfigurator({
 
       </button>
 
+      <button className={styles.editButton} data-touch-target type="button" onClick={() => {
+        setValues(EMPTY_REVIEW_INQUIRY);
+        setErrors({});
+        setRestoredSelection(false);
+        setCatalogueSelection(model?.category ?? "reviews");
+        window.requestAnimationFrame(() => focusInquiryStart(formRef.current));
+      }}>{copy.restart}</button>
+
     </form>
 
   );
 
 }
-

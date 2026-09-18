@@ -29,9 +29,9 @@ const ROUTES: readonly InternalPath[] = [
  * date every entry reports, so it has to mean something.
  */
 const CONTENT_REVISIONS: Readonly<Record<string, string>> = {
-  '/': '2026-09-08', '/websites': '2026-09-09', '/reviews': '2026-09-09',
+  '/': '2026-09-18', '/websites': '2026-09-09', '/reviews': '2026-09-18',
   '/presence': '2026-09-09', '/automation': '2026-09-09', '/work': '2026-09-09',
-  '/about': '2026-09-09', '/contact': '2026-09-09', '/privacy': '2026-09-09',
+  '/about': '2026-09-09', '/contact': '2026-09-18', '/privacy': '2026-09-18',
   '/imprint': '2026-09-07',
 };
 

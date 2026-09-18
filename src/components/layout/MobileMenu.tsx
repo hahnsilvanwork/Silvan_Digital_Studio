@@ -4,6 +4,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
+import { localizePath } from "../../lib/routes";
 import { getPrimaryLinks } from "./nav-links";
 import { SITE_CONTENT_ID } from "./site-regions";
 import styles from "./navigation.module.css";
@@ -18,6 +19,8 @@ interface MobileMenuProps {
 export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
   const content = getContent(locale);
   const links = getPrimaryLinks(locale, currentPath);
+  const supportingLinks = links.filter(link => ['/reviews', '/presence', '/automation'].some(route => link.href === localizePath(route, locale)));
+  const mainLinks = links.filter(link => !supportingLinks.includes(link));
   const dialogId = useId();
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -173,11 +176,11 @@ export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
             </div>
 
             <ul className={styles.panelList}>
-              {links.map((link) => (
+              {mainLinks.map((link) => (
                 <li className={styles.panelItem} key={link.href}>
                   <a
                     aria-current={link.isCurrent ? "page" : undefined}
-                    className={styles.panelLink}
+                    className={`${styles.panelLink}${link.href === localizePath('/contact', locale) ? ` ${styles.panelLinkContact}` : ''}`}
                     data-touch-target
                     href={link.href}
                     onClick={close}
@@ -186,6 +189,12 @@ export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
                   </a>
                 </li>
               ))}
+            </ul>
+            <p className={styles.panelGroupLabel}>{locale === 'de' ? 'Weitere Leistungen' : 'More services'}</p>
+            <ul className={styles.panelList}>
+              {supportingLinks.map(link => <li className={styles.panelItem} key={link.href}>
+                <a aria-current={link.isCurrent ? 'page' : undefined} className={`${styles.panelLink} ${styles.panelSecondaryLink}`} data-touch-target href={link.href} onClick={close}>{link.label}</a>
+              </li>)}
             </ul>
           </div>
         </div>

@@ -11,6 +11,8 @@ Swiss small-business owners evaluating websites, NFC/QR products, online presenc
 ## Product Purpose
 Explain the offer quickly, demonstrate Silvan's design and development skills, and make direct contact easy.
 
+September 18 priority: lead with websites for small businesses; present NFC/QR, local presence and automation as complementary services. Show concrete working concept examples, scope and prices, the collaboration process and the person responsible. Preserve service/package context in contact drafts. Personal contact text is not automatically persisted; NFC reload restoration is restricted to validated non-personal choices in session storage.
+
 ## Capabilities and Constraints
 Preserve existing routes, prices, bilingual content, contact destinations, product filtering and optional 3D viewing. User authorized production deployment on September 7 after local review and changing the contact email to hahn.silvan.work@gmail.com. No fabricated clients, testimonials or performance claims.
 

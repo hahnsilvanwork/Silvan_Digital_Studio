@@ -63,9 +63,9 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
                   { "--reveal-index": sequence.actionsIndex } as CSSProperties
                 }
               >
-                <ButtonLink href="#inquiry">{reviews.ctaLabel}</ButtonLink>
-                <ButtonLink href="#products" variant="secondary">
-                  {locale === "de" ? "Modelle ansehen" : "Explore models"}
+                <ButtonLink href="#products">{locale === "de" ? "Modelle auswählen" : "Choose a model"}</ButtonLink>
+                <ButtonLink href="#inquiry" variant="secondary">
+                  {reviews.ctaLabel}
                 </ButtonLink>
               </div>
             </div>

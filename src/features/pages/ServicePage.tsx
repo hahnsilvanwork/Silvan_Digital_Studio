@@ -146,7 +146,7 @@ export function ServicePage({
             title={content.contact.title}
           />
           <div className={pageStyles.sectionBody}>
-            <ContactActions locale={locale} />
+            <ContactActions locale={locale} reason={reason ?? undefined} emphasize />
           </div>
           </div>
         </section>

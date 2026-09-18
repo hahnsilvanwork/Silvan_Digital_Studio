@@ -276,12 +276,12 @@ describe("MobileMenu", () => {
 
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
       "/websites",
-      "/reviews",
-      "/presence",
-      "/automation",
       "/work",
       "/about",
       "/contact",
+      "/reviews",
+      "/presence",
+      "/automation",
     ]);
     expect(
       links.filter((link) => link.getAttribute("aria-current") === "page"),

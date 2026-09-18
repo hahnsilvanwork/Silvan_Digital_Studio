@@ -1,5 +1,15 @@
 # SILVAN / Photographic studio portfolio
 
+## September 18 clarity update (current homepage)
+
+Websites are the primary offer. The hero groups the concrete headline, explanation, primary contact action and actual developer identity before the concept image on phones. Desktop keeps a two-column composition. The image has an explicit concept label, factual implementation evidence and a direct demo link.
+
+The following sections are website scope/pricing, two selected concept projects with task and implementation, three collaboration steps, compact supporting services, the developer, native FAQ disclosures and a contextual contact action. Keep fictional work clearly labelled and avoid invented customer results.
+
+Desktop navigation uses four direct destinations and a native disclosure for supporting services. Mobile groups these services below the main destinations. Contact offers an optional collapsed brief, direct channel drafts and a selectable clipboard fallback. The NFC flow restores only validated non-personal selections within the same tab for up to eight hours; the existing short language transfer remains separate.
+
+The historical direction below remains relevant for palette, typography and assets; this section supersedes its earlier homepage order.
+
 Direction: a photographic contact sheet and Swiss editorial portfolio. Work and people carry the identity; typography and spacing organise it. User rejected the pastel card system and electric blue; replace them throughout.
 
 Home is a Persuade surface: clear offer with a large, honestly labelled concept image in the first viewport; a concise service directory; selected work; physical NFC products; the actual developer; contact. The cultural references are Swiss studio portfolios, architecture monographs and carefully edited photographic contact sheets. The selected system is the fourth of the grounded candidates considered (Swiss poster, architecture monograph, product catalogue, photographic contact sheet, studio journal, typographic index, exhibition guide). Instrument displays, marbling and underwater worlds were rejected as unrelated to the business; retain their discipline of consistent states, one material family and a legible sequence without borrowing their motifs.

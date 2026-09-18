@@ -46,6 +46,11 @@
   font-variant-numeric: tabular-nums;
 }
 
+.primaryAction { border: 0; margin-block-end: 0.75rem; background: var(--color-ink); color: var(--color-paper); border-radius: 4px; --focus-ring-inner: var(--color-ink); --focus-ring-outer: var(--color-paper); }
+.primaryAction .actionLink, .primaryAction .actionLink:hover { padding: 1rem 1.25rem; color: var(--color-paper); }
+.primaryAction .actionLabel { color: var(--color-paper); }
+.primaryAction .actionLink::after { inset-inline-end: 1.25rem; color: var(--color-paper); opacity: 1; }
+
 /* Keep the address readable as a whole on narrow contact panels. The clamp
    still permits wrapping when a visitor enlarges their preferred font size. */
 .emailValue {

@@ -6,7 +6,9 @@ export const inquiryCopy = {
 
   de: {
 
-    draftNotice: "Ihre Angaben bleiben in diesem Browser-Tab. Beim Sprachwechsel wird die Anfrage für höchstens zwei Minuten zwischengespeichert und nach der Übernahme gelöscht. Ohne Ihre gewählte Übergabe wird nichts an uns gesendet.",
+    selectionRestored: "Auswahl wiederhergestellt. Persönliche Angaben, Links und Bemerkungen bitte erneut eingeben.",
+    restart: "Neu beginnen",
+    draftNotice: "Produktauswahl, Masse, Menge und Ziel-Status werden bei erlaubtem Browserspeicher in diesem Tab gespeichert und nach dem Neuladen bis zu acht Stunden nach der letzten Speicherung wiederhergestellt. Persönliche Angaben, Links und Bemerkungen werden dabei nicht wiederhergestellt. Beim Sprachwechsel wird die Anfrage für höchstens zwei Minuten zwischengespeichert und nach der Übernahme gelöscht. Ohne Ihre gewählte Übergabe wird nichts an uns gesendet.",
 
     suggestions: "Passende Modelle", matches: "Modelle passen zu Ihrer Auswahl. Übernehmen Sie eines oder fahren Sie mit einer individuellen Anfrage fort.",
 
@@ -52,7 +54,9 @@ export const inquiryCopy = {
 
   en: {
 
-    draftNotice: "Your details stay in this browser tab. When changing language, the enquiry is held for up to two minutes and deleted after transfer. Nothing is sent to us until you choose to pass it on.",
+    selectionRestored: "Selection restored. Please re-enter personal details, links and notes.",
+    restart: "Start again",
+    draftNotice: "With browser storage available, product choices, dimensions, quantity and destination status are saved in this tab and restored after a reload for up to eight hours after the last save. Personal details, links and notes are not restored. When changing language, the enquiry is held for up to two minutes and deleted after transfer. Nothing is sent to us until you choose to pass it on.",
 
     suggestions: "Matching models", matches: "models match your selection. Choose one or continue with an individual enquiry.",
 
@@ -97,4 +101,3 @@ export const inquiryCopy = {
   },
 
 } satisfies Record<Locale, Record<string, string>>;
-

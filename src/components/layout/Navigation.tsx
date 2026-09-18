@@ -1,10 +1,12 @@
 import Link from "next/link";
+import { Fragment } from "react";
 
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
 import { LanguageSwitcher } from "../ui/LanguageSwitcher";
 import { MobileMenu } from "./MobileMenu";
+import { ServiceNavigation } from "./ServiceNavigation";
 import { getPrimaryLinks } from "./nav-links";
 import { MAIN_CONTENT_ID } from "./site-regions";
 import styles from "./navigation.module.css";
@@ -17,6 +19,7 @@ interface NavigationProps {
 export function Navigation({ locale, currentPath }: NavigationProps) {
   const content = getContent(locale);
   const links = getPrimaryLinks(locale, currentPath);
+  const supportingLinks = links.filter(link => ['/reviews', '/presence', '/automation'].some(route => link.href === localizePath(route, locale)));
 
   return (
     <header className={styles.header}>
@@ -37,17 +40,20 @@ export function Navigation({ locale, currentPath }: NavigationProps) {
           className={styles.primaryNav}
         >
           <ul className={styles.primaryList}>
-            {links.map((link) => (
-              <li key={link.href}>
+            {links.filter(link => !supportingLinks.includes(link)).map((link, index) => (
+              <Fragment key={link.href}>
+              <li>
                 <Link
                   aria-current={link.isCurrent ? "page" : undefined}
-                  className={`${styles.primaryLink} hoverUnderline`}
+                  className={`${styles.primaryLink} hoverUnderline${link.href === localizePath('/contact', locale) ? ` ${styles.contactLink}` : ''}`}
                   data-touch-target
                   href={link.href}
                 >
                   {link.label}
                 </Link>
               </li>
+              {index === 0 ? <li><ServiceNavigation locale={locale} links={supportingLinks} /></li> : null}
+              </Fragment>
             ))}
           </ul>
         </nav>

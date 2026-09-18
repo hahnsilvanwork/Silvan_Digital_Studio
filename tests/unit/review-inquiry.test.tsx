@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
 import { ReviewInquiryConfigurator } from "../../src/components/reviews/ReviewInquiryConfigurator";
 import { getContent } from "../../src/lib/locales";
@@ -18,6 +18,7 @@ import { inquiryCopy } from "../../src/content/inquiry-copy";
 
 const de = getContent("de");
 const en = getContent("en");
+afterEach(() => sessionStorage.clear());
 
 const complete: ReviewInquiryValues = {
   destination: "reviews",

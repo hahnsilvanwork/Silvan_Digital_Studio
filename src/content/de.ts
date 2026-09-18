@@ -2,6 +2,7 @@ import { productTierSummary } from "../lib/product-pricing";
 import { mergePhotoProducts } from "./photo-products";
 import { imprintContent, privacyContent } from "./legal-content";
 import type { SiteContent } from "./types";
+import { homeCopy } from './home-copy';
 
 export const de = {
   brand: {
@@ -44,11 +45,11 @@ export const de = {
   home: {
     hero: {
       serviceLine: "Websites und digitale Lösungen für Schweizer KMU",
-      headline: "Mehr Kunden. Weniger Aufwand.",
+      headline: homeCopy.de.headline,
       supporting:
         "Ich bin Silvan Hahn. Ich entwickle Websites, mache Ihr Unternehmen online sichtbar und vereinfache wiederkehrende Aufgaben. Direkt mit Ihnen, von der Idee bis zum Start.",
-      primaryCta: "Projekt besprechen",
-      secondaryCta: "Leistungen ansehen",
+      primaryCta: homeCopy.de.primaryCta,
+      secondaryCta: homeCopy.de.secondaryCta,
     },
     servicesTitle: "Was möchten Sie verbessern?",
     services: [
@@ -59,20 +60,20 @@ export const de = {
         href: "/websites",
       },
       {
-        title: "NFC & QR Lösungen",
+        title: "Bewertungen und digitale Menüs",
         description: "Karten und Aufsteller für Bewertungen, Menüs, Buchungen und individuelle Ziele.",
         price: "Chips ab CHF 15 · Karten ab CHF 49",
         href: "/reviews",
       },
       {
-        title: "Online-Präsenz",
-        description: "Ein konsistenter Auftritt, damit Ihr Unternehmen lokal leichter gefunden wird.",
+        title: "Lokal gefunden werden",
+        description: "Google-Unternehmensprofil und ein einheitlicher Auftritt für Ihren Betrieb.",
         price: "ab CHF 249",
         href: "/presence",
       },
       {
-        title: "Automation",
-        description: "Praktische Abläufe, die wiederkehrende Aufgaben zuverlässig reduzieren.",
+        title: "Wiederkehrende Aufgaben vereinfachen",
+        description: "Zum Beispiel Anfragen erfassen und Daten übertragen. Wir prüfen, welche Abläufe sich automatisieren lassen.",
         price: "Auf Anfrage",
         href: "/automation",
       },

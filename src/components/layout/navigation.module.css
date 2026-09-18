@@ -45,7 +45,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-sm);
+  gap: 0.25rem 0.5rem;
   inline-size: min(calc(100% - (2 * var(--page-gutter))), var(--container-max));
   min-block-size: var(--header-block-size);
   margin-inline: auto;
@@ -308,6 +308,22 @@
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
+
+.contactLink { justify-content: center; padding-inline: 1.15rem; border-radius: 4px; background: var(--color-ink); color: var(--color-paper); }
+.contactLink[aria-current="page"] { color: var(--color-paper); text-decoration: underline; text-underline-offset: 0.25em; }
+.contactLink::after { display: none; }
+.serviceDisclosure { position: relative; }
+.serviceSummary { gap: 0.75rem; cursor: pointer; list-style: none; }
+.serviceSummary::-webkit-details-marker { display: none; }
+.serviceSummary[data-active] { text-decoration: underline; text-underline-offset: 0.35em; }
+.disclosureArrow { inline-size: 0.45rem; block-size: 0.45rem; border-inline-end: 1px solid currentColor; border-block-end: 1px solid currentColor; transform: translateY(-2px) rotate(45deg); }
+.serviceDisclosure[open] .disclosureArrow { transform: translateY(2px) rotate(225deg); }
+.serviceList { position: absolute; inset-block-start: calc(100% + 0.5rem); inset-inline-end: 0; inline-size: 16rem; max-inline-size: calc(100vw - 2rem); padding: 0.5rem; margin: 0; list-style: none; background: var(--color-paper); border: 1px solid var(--color-line); }
+.serviceList a { display: flex; align-items: center; min-block-size: 3rem; padding: 0.65rem 0.75rem; text-decoration: none; font-size: 0.9375rem; }
+.serviceList a:hover, .serviceList a[aria-current="page"] { background: var(--color-stone); }
+.panelLinkContact, .panelLinkContact[aria-current="page"] { background: var(--color-ink); color: var(--color-paper); padding-inline: 1rem; border-radius: 4px; }
+.panelGroupLabel { margin-block: 1.5rem 0.5rem; color: var(--color-ink-muted); font-size: 0.875rem; }
+.panelSecondaryLink { font-size: 1.125rem; min-block-size: 3rem; }
 
 /* Footer ------------------------------------------------------------------ */
 

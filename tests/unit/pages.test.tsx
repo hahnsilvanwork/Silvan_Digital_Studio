@@ -4,6 +4,8 @@ import { describe, expect, it, vi } from "vitest";
 
 import { RootDocument } from "../../src/components/layout/RootDocument";
 import { projects } from "../../src/content/projects";
+import { homeCopy } from '../../src/content/home-copy';
+import { inquiryCopy } from '../../src/content/inquiry-copy';
 import type { Locale } from "../../src/content/types";
 import { AboutPage } from "../../src/features/pages/AboutPage";
 import { AutomationPage } from "../../src/features/pages/AutomationPage";
@@ -63,7 +65,7 @@ describe("HomePage", () => {
     // Testing Library normalizes the rendered text, and \s matches U+00A0, so the
     // expected string has to be normalized the same way to line up with it.
     expect(
-      within(main).getByText(/^Websites.*Silvan Hahn/),
+      within(main).getByText(homeCopy.de.byline),
     ).toBeInTheDocument();
     expect(
       within(main).getByRole("heading", {
@@ -72,11 +74,11 @@ describe("HomePage", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      within(main).getByRole("link", { name: de.home.hero.primaryCta }),
-    ).toHaveAttribute("href", "/contact");
+      within(main).getAllByRole("link", { name: de.home.hero.primaryCta })[0],
+    ).toHaveAttribute("href", "/contact?service=websites");
     expect(
-      within(main).getByRole("link", { name: de.home.hero.secondaryCta }),
-    ).toHaveAttribute("href", "#services");
+      within(main).getAllByRole("link", { name: de.home.hero.secondaryCta })[0],
+    ).toHaveAttribute("href", "#work");
   });
 
   it("shows every service with its starting price without interaction", () => {
@@ -84,7 +86,9 @@ describe("HomePage", () => {
 
     const main = screen.getByRole("main");
 
-    for (const service of de.home.services) {
+    expect(within(main).getByRole('link', { name: homeCopy.de.pricesCta })).toHaveAttribute('href', '/websites');
+    expect(within(main).getByText(de.home.services[0].price)).toBeVisible();
+    for (const service of de.home.services.slice(1)) {
       expect(within(main).getByText(service.price)).toBeVisible();
       expect(
         within(main).getByRole("link", {
@@ -101,7 +105,7 @@ describe("HomePage", () => {
     const conceptLabels = within(main).getAllByText(en.work.conceptLabel);
 
     expect(conceptLabels).toHaveLength(2);
-    expect(main.textContent).not.toMatch(/\bclient\b/i);
+    expect(within(main).getByText(homeCopy.en.workIntro)).toHaveTextContent('Fictional businesses, not client commissions.');
   });
 
   it("localizes every internal destination under /en", () => {
@@ -237,7 +241,7 @@ describe("ReviewsPage", () => {
     const text = screen.getByRole("main").textContent ?? "";
 
     expect(text).toContain(de.reviews.quantityDiscount);
-    expect(text).toContain(de.reviews.inquiry.privacyNotice);
+    expect(text).toContain(inquiryCopy.de.draftNotice);
   });
 });
 

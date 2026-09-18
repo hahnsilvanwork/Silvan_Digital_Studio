@@ -5,7 +5,7 @@ import { ReviewInquiryConfigurator } from '../../src/components/reviews/ReviewIn
 import { setCatalogueSelection } from '../../src/components/reviews/use-catalogue-selection';
 import { getContent } from '../../src/lib/locales';
 
-afterEach(() => window.history.replaceState(null, '', '/'));
+afterEach(() => { window.history.replaceState(null, '', '/'); sessionStorage.clear(); });
 const settle = () => act(() => new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
 
 it.each(['de', 'en'] as const)('summarizes fixed model details and validates only remaining choices in %s', async locale => {

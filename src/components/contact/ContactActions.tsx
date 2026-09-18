@@ -4,6 +4,7 @@ import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { contactCopy } from "../../content/contact-copy";
 import type { ServiceReason, WebsiteTier } from "../../lib/contact-inquiry";
+import { buildContactMessage } from "../../lib/contact-message";
 import styles from "./contact.module.css";
 
 interface ContactActionsProps {
@@ -11,18 +12,19 @@ interface ContactActionsProps {
   readonly reason?: ServiceReason;
   readonly immediate?: boolean;
   readonly tier?: WebsiteTier;
+  readonly brief?: string;
+  readonly emphasize?: boolean;
 }
 
 /**
  * The four approved contact destinations. Every one is a real link with its own
  * accessible name; nothing here posts to a server.
  */
-export function ContactActions({ locale, reason, tier, immediate = false }: ContactActionsProps) {
+export function ContactActions({ locale, reason, tier, brief = '', emphasize = false, immediate = false }: ContactActionsProps) {
   const content = getContent(locale);
   const { details } = content.contact;
   const copy = contactCopy[locale];
-  const selectedTier = reason === 'websites' && tier ? content.websites.priceTiers.find(item => item.id === tier) : undefined;
-  const message = reason ? `${copy.message} ${copy.reasons[reason]}.${selectedTier ? `\n${locale === 'de' ? 'Gewünschter Umfang' : 'Preferred scope'}: ${selectedTier.name} (${selectedTier.price}).\n${locale === 'de' ? 'Bitte besprechen wir den passenden Umfang und eine unverbindliche Offerte.' : 'Please help me confirm the scope and prepare a no-obligation quote.'}` : ''}` : undefined;
+  const message = reason || brief.trim() ? buildContactMessage(locale, reason, tier, brief) : undefined;
 
   const actions = [
     {
@@ -34,7 +36,7 @@ export function ContactActions({ locale, reason, tier, immediate = false }: Cont
     {
       label: content.contact.emailLabel,
       value: details.email,
-      href: message ? `mailto:${details.email}?subject=${encodeURIComponent(`${copy.subject}: ${copy.reasons[reason!]}`)}&body=${encodeURIComponent(message)}` : `mailto:${details.email}`,
+      href: message ? `mailto:${details.email}?subject=${encodeURIComponent(reason ? `${copy.subject}: ${copy.reasons[reason]}` : copy.subject)}&body=${encodeURIComponent(message)}` : `mailto:${details.email}`,
       external: false,
     },
     {
@@ -55,7 +57,7 @@ export function ContactActions({ locale, reason, tier, immediate = false }: Cont
     <ul className={styles.actions}>
       {actions.map((action, index) => (
         <li
-          className={styles.action}
+          className={`${styles.action}${emphasize && index === 0 ? ` ${styles.primaryAction}` : ''}`}
           data-reveal={immediate ? undefined : "rise"}
           key={action.href}
           style={{ "--reveal-index": index } as CSSProperties}

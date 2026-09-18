@@ -2,6 +2,7 @@ import { productTierSummary } from "../lib/product-pricing";
 import { mergePhotoProducts } from "./photo-products";
 import { imprintContent, privacyContent } from "./legal-content";
 import type { SiteContent } from "./types";
+import { homeCopy } from './home-copy';
 
 export const en = {
   brand: {
@@ -44,11 +45,11 @@ export const en = {
   home: {
     hero: {
       serviceLine: "Websites and digital solutions for Swiss businesses",
-      headline: "More customers. Less busywork.",
+      headline: homeCopy.en.headline,
       supporting:
         "I'm Silvan Hahn. I build websites, help people find your business online and simplify recurring tasks. You work directly with me, from the first idea to launch.",
-      primaryCta: "Discuss a project",
-      secondaryCta: "Explore services",
+      primaryCta: homeCopy.en.primaryCta,
+      secondaryCta: homeCopy.en.secondaryCta,
     },
     servicesTitle: "What would you like to improve?",
     services: [
@@ -59,20 +60,20 @@ export const en = {
         href: "/websites",
       },
       {
-        title: "NFC & QR Solutions",
+        title: "Reviews and digital menus",
         description: "Cards and stands for reviews, menus, bookings, and custom destinations.",
         price: "Chips from CHF 15 · cards from CHF 49",
         href: "/reviews",
       },
       {
-        title: "Online Presence",
-        description: "A consistent presence that makes your business easier to find locally.",
+        title: "Get found locally",
+        description: "A Google Business Profile and a consistent online presence for your business.",
         price: "from CHF 249",
         href: "/presence",
       },
       {
-        title: "Automation",
-        description: "Practical workflows that reliably reduce repetitive tasks.",
+        title: "Simplify recurring tasks",
+        description: "For example, recording enquiries and transferring data. We check which workflows can be automated.",
         price: "On request",
         href: "/automation",
       },

@@ -11,6 +11,7 @@ docs/
 .scratch/
 .worktrees/
 .superpowers/
+.impeccable/
 .idea/
 artifacts/
 /assets/
