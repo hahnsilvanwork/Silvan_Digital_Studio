@@ -672,7 +672,7 @@ export const de = {
   // the tiers, the location matches the imprint, and nothing promises delivery
   // terms or turnaround that the site does not state.
   seo: {
-    home: { title: "Websites & NFC für Unternehmen in Zürich | SILVAN", description: "Websites sowie NFC-Karten, Chips und Aufsteller für Bewertungen, Menüs und Kontaktdaten. Persönlich mit Silvan Hahn aus Boppelsen ZH. Websites ab CHF 300." },
+    home: { title: "Webdesign für KMU im Kanton Zürich | SILVAN", description: "Websites, Google-Bewertungen, lokale Sichtbarkeit und Automation für Schweizer KMU. Direkt vom Entwickler aus Boppelsen ZH, Websites ab CHF 300." },
     websites: { title: "Website erstellen lassen, Kanton Zürich | ab CHF 300", description: "Schnelle, mobil gestaltete Websites für Schweizer KMU ab CHF 300. Preisrahmen zur Orientierung, genauer Umfang und Preis in der schriftlichen Offerte." },
     reviews: { title: "NFC & QR Lösungen für Unternehmen | SILVAN", description: "NFC-Karten und Aufsteller ab CHF 49, Klebechips ab CHF 15. Für Bewertungen, Menüs und Buchungen. Programmierung und Einrichtung des Links inklusive." },
     presence: { title: "Google Unternehmensprofil einrichten im Kanton Zürich", description: "Google-Unternehmensprofil einrichten oder optimieren, Geschäftsdaten konsistent halten, lokal leichter gefunden werden. Für Schweizer KMU ab CHF 249." },

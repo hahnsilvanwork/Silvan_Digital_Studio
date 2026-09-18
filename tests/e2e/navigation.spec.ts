@@ -18,7 +18,7 @@ test.describe("global navigation", () => {
 
     await expect(page).toHaveURL(/\/$/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
-      "Websites und NFC für Ihr Unternehmen",
+      "Websites für kleine Unternehmen",
     );
   });
 

@@ -1,12 +1,6 @@
 # SILVAN / Photographic studio portfolio
 
-## September 18 business priority (latest direction)
-
-Websites and NFC/QR are equally important core businesses, explicitly requested by the owner. The homepage names both in its headline and offers two equal direct buttons. Two open image-led offer columns follow immediately, with equal image ratios, shared desktop content rows, real starting prices and clear product links. Mobile stacks these columns and keeps both entry buttons at the top. Supporting services exclude NFC. The closing enquiry is service-neutral.
-
-Main navigation: Websites, NFC & QR, Work, More, Contact. More contains Online Presence, Automation and About. Mobile keeps Websites and NFC first, then Work and Contact, then the secondary group. German and English follow the same structure. This supersedes the website-only priority below; preserve the alignment rules.
-
-## September 18 alignment correction
+## September 18 alignment correction (latest direction)
 
 The owner explicitly requested cleaner alignment and fewer dividers after the mobile pass. Use a shared equal-column grid with a 3rem desktop gap across the homepage's paired sections, top-align the groups and remove arbitrary image insets. On phones, primary images fill the text column. The homepage portrait uses a deliberate 4:3 crop to avoid an oversized portrait block; the About portrait retains its original ratio. Portfolio pairs no longer stagger vertically.
 
@@ -48,3 +42,5 @@ Service introductions use a 7:5 desktop split with the explanation, action and d
 # Demo portfolio update
 
 September 7: Falkenried Gruppe, Café Vogel, Steiner Handwerk and Salon Lumière replace the four placeholder projects. Use actual 1440×1000 viewport screenshots in their original colours, without device mockups or cropping. Project cards fill their grid columns. Homepage and website service page feature the Falkenried screenshot. Each detail page links to an explorable static demo; all remain clearly labelled concept projects.
+
+Latest owner clarification: the Websites/NFC priority change applies only to navigation. Keep the existing homepage unchanged. Direct navigation contains Websites, NFC & QR, Work and Contact; More groups Online Presence, Automation and About.
