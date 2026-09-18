@@ -60,7 +60,7 @@
 }
 
 .section + .section {
-  border-block-start: var(--hairline) solid var(--color-line);
+  padding-block-start: 0;
 }
 
 /* A section that follows the page header directly does not need top padding of
@@ -213,8 +213,9 @@
   min-inline-size: 0;
 }
 
-.serviceHeader { gap: var(--space-lg); align-content: start; }
-.serviceVisual { display: grid; gap: 0.75rem; margin-block-start: 1rem; text-decoration: none; }
+.pageHeader.serviceHeader { gap: var(--space-lg); align-content: start; }
+.serviceCopy { display: grid; gap: var(--space-md); min-inline-size: 0; }
+.serviceVisual { display: grid; gap: 0.75rem; align-self: start; min-inline-size: 0; text-decoration: none; }
 .serviceVisual img { inline-size: 100%; block-size: auto; }
 .serviceVisual span { color: var(--color-ink-muted); font-size: 0.8125rem; }
 .serviceActions {
@@ -235,7 +236,6 @@
   justify-content: center;
   min-block-size: 3.25rem;
   padding-block: 0.5rem;
-  border-block-end: var(--hairline) solid var(--color-line);
   color: var(--color-ink);
   font-size: var(--text-action);
   font-weight: 500;
@@ -245,7 +245,8 @@
 
 .serviceSecondaryAction:hover,
 .serviceSecondaryAction:focus-visible {
-  border-block-end-color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
 }
 .serviceHeader .pageTitle { max-inline-size: 16ch; font-size: clamp(2.5rem, 5vw, 4.75rem); line-height: 1.02; }
 
@@ -279,18 +280,22 @@
 }
 
 @media (min-width: 64rem) {
-  .serviceHeader {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    align-items: center;
-    align-content: center;
-    min-block-size: calc(85svh - var(--header-block-size));
+  .pageHeader.serviceHeader {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 3rem;
+    align-content: start;
   }
+  .serviceCopy { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; align-items: start; }
+  .pageHeader.websiteHeader { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .websiteHeader .serviceCopy { grid-template-columns: minmax(0, 1fr); gap: var(--space-md); }
   .serviceHeader .pageTitle {
     font-size: clamp(3.5rem, 5.5vw, 5.5rem);
     max-inline-size: 16ch;
   }
   .contactLayout {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem;
     align-items: start;
   }
 }
@@ -524,9 +529,6 @@
   .hero {
     min-block-size: calc(100dvh - var(--header-block-size));
   }
-  @media (min-width: 64rem) {
-    .serviceHeader { min-block-size: calc(85dvh - var(--header-block-size)); }
-  }
 }
 
 /* Page scaffolding -------------------------------------------------------- */
@@ -535,7 +537,6 @@
   display: grid;
   gap: var(--space-sm);
   padding-block: var(--space-xl) var(--space-lg);
-  border-block-end: var(--hairline) solid var(--color-line);
   margin-block-end: 0;
 }
 

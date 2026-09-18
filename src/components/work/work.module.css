@@ -223,11 +223,6 @@
     row-gap: var(--space-lg);
   }
 
-  /* A subtle extra half-rem makes the alternating columns more deliberate
-     without changing the reading order or the single-column mobile layout. */
-  .previewList > :nth-child(even) {
-    margin-block-start: calc(var(--space-md) + 0.5rem);
-  }
 
   .detailBody {
     grid-template-columns: repeat(3, minmax(0, 1fr));

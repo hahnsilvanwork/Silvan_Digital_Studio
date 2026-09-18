@@ -8,7 +8,7 @@
   list-style: none;
 }
 
-.directoryItem {
+.directoryItem + .directoryItem {
   border-block-start: var(--hairline) solid var(--color-line);
 }
 
@@ -31,6 +31,7 @@
 .directoryLink::after {
   inset-inline-end: var(--space-xs);
 }
+.directoryItem:first-child .directoryLink { padding-block-start: 0; }
 
 .directoryTitle {
   font-size: clamp(1.375rem, 2.2vw, 2rem);
@@ -233,8 +234,11 @@
 }
 
 .faqItem:last-child {
-  border-block-end: var(--hairline) solid var(--color-line);
+  border-block-end: 0;
 }
+.faqItem:first-child { border-block-start: 0; }
+.faqItem:first-child .faqQuestion { padding-block-start: 0; }
+.faqItem:first-child .faqQuestion::after { inset-block-start: 0.45rem; }
 
 .faqQuestion {
   overflow-wrap: anywhere;

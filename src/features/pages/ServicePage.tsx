@@ -43,7 +43,8 @@ export function ServicePage({
   return (
     <SiteShell currentPath={localizePath(route, locale)} locale={locale}>
       <div className={pageStyles.page}>
-        <section className={`${layoutStyles.container} ${pageStyles.pageHeader} ${pageStyles.serviceHeader}`}>
+        <section className={`${layoutStyles.container} ${pageStyles.pageHeader} ${pageStyles.serviceHeader}${route === '/websites' ? ` ${pageStyles.websiteHeader}` : ''}`}>
+          <div className={pageStyles.serviceCopy}>
           <div className={pageStyles.serviceHeading}>
           <SplitText
             as="h1"
@@ -51,12 +52,6 @@ export function ServicePage({
             startIndex={sequence.titleStartIndex}
             text={service.title}
           />
-          {route === "/websites" ? (
-            <Link className={pageStyles.serviceVisual} href={localizePath(`/work/${projects[0].slug}`, locale)}>
-              <Image quality={90} src={projects[0].image[locale]} width={1440} height={1000} sizes="(min-width: 64rem) 48vw, 100vw" priority alt={projects[0].copy[locale].imageAlt} />
-              <span>{projects[0].name} / {content.work.conceptLabel}</span>
-            </Link>
-          ) : null}
           </div>
           <div className={pageStyles.serviceSummary}>
           <p
@@ -82,6 +77,13 @@ export function ServicePage({
             </Link>
           </div>
           </div>
+          </div>
+          {route === "/websites" ? (
+            <Link className={pageStyles.serviceVisual} href={localizePath(`/work/${projects[0].slug}`, locale)}>
+              <Image quality={90} src={projects[0].image[locale]} width={1440} height={1000} sizes="(min-width: 64rem) 46vw, 92vw" priority alt={projects[0].copy[locale].imageAlt} />
+              <span>{projects[0].name} / {content.work.conceptLabel}</span>
+            </Link>
+          ) : null}
         </section>
 
         <section className={`${layoutStyles.container} ${pageStyles.section}`}>

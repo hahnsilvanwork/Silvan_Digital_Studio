@@ -106,3 +106,46 @@ for(const locale of ['de','en']) test(`automation example supports review, error
   await expect(demo.getByRole('checkbox')).not.toBeChecked();
   await expect(demo).toContainText(locale==='de'?'Noch kein Bericht':'No report yet');
 });
+
+test('homepage uses shared column edges and mobile images fill the text column', async ({page})=>{
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.setViewportSize({width:1280,height:900});
+  await page.goto('/');
+  const pairs=await page.evaluate(()=>[...document.querySelectorAll('main section, main section > div')].filter(el=>{
+    const css=getComputedStyle(el);
+    return css.display==='grid' && css.gridTemplateColumns.split(' ').length===2;
+  }).map(el=>[...el.children].filter(child=>child.getBoundingClientRect().width>0).slice(0,2).map(child=>{const r=child.getBoundingClientRect();return {x:r.x,width:r.width,y:r.y};})));
+  expect(pairs.length).toBeGreaterThanOrEqual(5);
+  for(const pair of pairs) {
+    expect(Math.abs(pair[0].x-pairs[0][0].x)).toBeLessThan(1);
+    expect(Math.abs(pair[1].x-pairs[0][1].x)).toBeLessThan(1);
+    expect(Math.abs(pair[0].y-pair[1].y)).toBeLessThan(1);
+  }
+  await page.setViewportSize({width:390,height:844});
+  const edges=await page.evaluate(()=>{
+    const title=document.querySelector('h1')!.getBoundingClientRect();
+    return [...document.querySelectorAll('main img')].map(img=>img.getBoundingClientRect()).filter(r=>r.width>100).map(r=>({left:r.x-title.x,width:r.width-title.width}));
+  });
+  for(const edge of edges) { expect(Math.abs(edge.left)).toBeLessThan(1); expect(Math.abs(edge.width)).toBeLessThan(1); }
+});
+
+test('website offer stays together before its image and contact labels share an inset', async ({page})=>{
+  await page.emulateMedia({reducedMotion:'reduce'});
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/websites');
+  const hero=page.locator('main section').first();
+  const button=await hero.getByRole('link',{name:'Website unverbindlich besprechen',exact:true}).boundingBox();
+  const image=await hero.locator('img').boundingBox();
+  expect(button!.y+button!.height).toBeLessThan(image!.y);
+  expect(Math.abs(button!.x-image!.x)).toBeLessThan(1);
+  expect(Math.abs(button!.width-image!.width)).toBeLessThan(1);
+  await page.setViewportSize({width:1280,height:900});
+  const desktopTitle=await hero.locator('h1').boundingBox();
+  const desktopImage=await hero.locator('img').boundingBox();
+  expect(desktopImage!.x).toBeGreaterThan(desktopTitle!.x+desktopTitle!.width);
+  expect(Math.abs(desktopImage!.y-desktopTitle!.y)).toBeLessThan(1);
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/contact');
+  const labelEdges=await page.locator('main a[href^="mailto:"],main a[href^="tel:"],main a[href^="https://wa.me/"]').evaluateAll(links=>links.map(a=>a.querySelector('span')!.getBoundingClientRect().x));
+  expect(Math.max(...labelEdges)-Math.min(...labelEdges)).toBeLessThan(1);
+});

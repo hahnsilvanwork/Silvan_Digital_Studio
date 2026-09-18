@@ -11,13 +11,11 @@
   list-style: none;
 }
 
-.action {
+.action + .action {
   border-block-start: var(--hairline) solid var(--color-line);
 }
 
-.action:last-child {
-  border-block-end: var(--hairline) solid var(--color-line);
-}
+.primaryAction + .action { border-block-start: 0; }
 
 .actionLink {
   display: grid;
@@ -29,6 +27,7 @@
   text-align: start;
   min-block-size: max(var(--control-target-min), 4.5rem);
   padding-block: var(--space-xs);
+  padding-inline: 1.25rem;
   text-decoration: none;
 }
 
@@ -45,6 +44,7 @@
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
 }
+.actionLink::after { inset-inline-end: 1.25rem; }
 
 .primaryAction { border: 0; margin-block-end: 0.75rem; background: var(--color-ink); color: var(--color-paper); border-radius: 4px; --focus-ring-inner: var(--color-ink); --focus-ring-outer: var(--color-paper); }
 .primaryAction .actionLink, .primaryAction .actionLink:hover { padding: 1rem 1.25rem; color: var(--color-paper); }

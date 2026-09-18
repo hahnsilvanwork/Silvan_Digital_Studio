@@ -40,7 +40,7 @@ export function HomePage({ locale }: { readonly locale: Locale }) {
         </div>
         <figure className={styles.heroFigure}>
           <Link className={styles.heroImageLink} href={localizePath(`/work/${featured.slug}`, locale)} aria-label={`${featured.name} – ${copy.projectCta}`}>
-            <Image quality={90} src={featured.image[locale]} alt={featured.copy[locale].imageAlt} width={1440} height={1000} loading="eager" fetchPriority="high" sizes="(min-width: 90rem) 750px, (min-width: 64rem) 54vw, 92vw" />
+            <Image quality={90} src={featured.image[locale]} alt={featured.copy[locale].imageAlt} width={1440} height={1000} loading="eager" fetchPriority="high" sizes="(min-width: 98rem) 696px, (min-width: 64rem) 46vw, 92vw" />
           </Link>
           <figcaption className={styles.caption}>
             <span>{featured.name} / {content.work.conceptLabel}</span>
@@ -101,7 +101,7 @@ export function HomePage({ locale }: { readonly locale: Locale }) {
       <section className={styles.supportingServices}>
         <div className={`${layoutStyles.container} ${styles.services}`}>
           <div className={styles.sectionIntro}><h2>{copy.servicesTitle}</h2><p>{copy.servicesIntro}</p>
-            <Image src="/images/products/catalog/all-products.webp" width={1536} height={1024} sizes="(min-width: 64rem) 360px, 80vw" alt={locale === 'de' ? 'NFC-Karten und Aufsteller für Bewertungen und digitale Menüs' : 'NFC cards and stands for reviews and digital menus'} className={styles.productThumbnail} />
+            <Image src="/images/products/catalog/all-products.webp" width={1536} height={1024} sizes="(min-width: 98rem) 696px, (min-width: 64rem) 46vw, 92vw" alt={locale === 'de' ? 'NFC-Karten und Aufsteller für Bewertungen und digitale Menüs' : 'NFC cards and stands for reviews and digital menus'} className={styles.productThumbnail} />
           </div>
           <ServiceDirectory locale={locale} services={supportingServices} />
         </div>
@@ -109,7 +109,7 @@ export function HomePage({ locale }: { readonly locale: Locale }) {
 
       <Testimonials items={content.home.testimonials} title={content.home.testimonialsTitle} />
       <section className={`${layoutStyles.container} ${styles.studio}`}>
-        <figure className={styles.portrait}><Image {...PORTRAIT} alt="Silvan Hahn" sizes="(min-width: 64rem) 30vw, 80vw" /><figcaption>Silvan Hahn / Boppelsen, Zürich</figcaption></figure>
+        <figure className={styles.portrait}><Image {...PORTRAIT} alt="Silvan Hahn" sizes="(min-width: 98rem) 696px, (min-width: 48rem) 46vw, 92vw" /><figcaption>Silvan Hahn / Boppelsen, Zürich</figcaption></figure>
         <div className={styles.studioCopy}><h2>{content.home.studioTitle}</h2><p>{content.home.studioCopy}</p><Link className={styles.textLink} href={localizePath('/about', locale)}>{content.about.eyebrow}<span className={styles.arrow} aria-hidden="true" /></Link></div>
       </section>
 

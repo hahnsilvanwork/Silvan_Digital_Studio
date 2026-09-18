@@ -1,13 +1,14 @@
-.home { background: var(--color-paper); }
+.home { --home-section-space: clamp(3rem, 5vw, 5rem); background: var(--color-paper); }
 .home section > *, .heroIntro > *, .actions > * { min-inline-size: 0; }
-.hero { display: grid; align-items: center; gap: 2rem; padding-block: clamp(2rem, 5vw, 4.5rem); }
+.hero { display: grid; align-items: start; gap: 2rem; padding-block: clamp(2rem, 5vw, 4.5rem); }
 .heroIntro { display: grid; gap: 1.5rem; align-content: start; }
 .title { max-inline-size: 15ch; font-size: clamp(2.7rem, 11.5vw, 3.75rem); line-height: 1.04; letter-spacing: -0.035em; font-weight: 500; text-wrap: balance; }
 .heroDescription { max-inline-size: 43ch; font-size: 1.0625rem; line-height: 1.6; }
 .actions { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; gap: 0.75rem 1.5rem; }
 .actions > a { inline-size: 100%; min-block-size: 3.25rem; }
 .actions > *, .caption a { max-inline-size: 100%; overflow-wrap: anywhere; }
-.textLink { display: inline-flex; align-items: center; justify-content: space-between; gap: 1.25rem; min-block-size: 2.75rem; text-decoration: none; font-size: 1rem; border-block-end: 1px solid currentColor; justify-self: start; max-inline-size: 100%; }
+.textLink { display: inline-flex; align-items: center; justify-content: space-between; gap: 1.25rem; min-block-size: 2.75rem; text-decoration: none; font-size: 1rem; justify-self: start; max-inline-size: 100%; }
+.actions .textLink { justify-content: center; }
 .arrow { display: inline-block; flex: none; inline-size: 0.5rem; block-size: 0.5rem; border-block-start: 1.5px solid currentColor; border-inline-end: 1.5px solid currentColor; transform: rotate(45deg); }
 .byline { display: flex; align-items: center; gap: 0.8rem; max-inline-size: 34ch; margin-block-start: 0.25rem; color: var(--color-ink-muted); font-size: 0.875rem; line-height: 1.45; text-decoration: none; }
 .avatar { flex: none; inline-size: 3rem; block-size: 3rem; object-fit: cover; object-position: center 28%; border-radius: 50%; }
@@ -22,12 +23,12 @@
 .sectionIntro { display: grid; gap: 1.25rem; align-content: start; }
 .sectionIntro h2, .sectionTop h2, .studio h2, .faq > h2 { font-size: clamp(2rem, 3.8vw, 3.25rem); line-height: 1.1; letter-spacing: -0.03em; text-wrap: balance; }
 .sectionIntro p, .sectionTop p { color: var(--color-ink-muted); max-inline-size: 45ch; line-height: 1.6; }
-.websiteOffer { display: grid; gap: 2rem; padding-block: clamp(3rem, 5vw, 5rem); border-block-start: 1px solid var(--color-line); }
-.offerDetail { align-self: center; }
+.websiteOffer { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
+.offerDetail { align-self: start; }
 .offerPrice { font-size: clamp(2rem, 3.5vw, 3rem); letter-spacing: -0.03em; }
 .priceNote { color: var(--color-ink-muted); font-size: 0.875rem; margin-block: 0.5rem 1.5rem; }
 .offerPoints { display: grid; gap: 0.75rem; padding-inline-start: 1.2rem; line-height: 1.5; }
-.work { padding-block: clamp(3rem, 6vw, 6rem); background: var(--color-stone); }
+.work { padding-block: var(--home-section-space); background: var(--color-stone); }
 .sectionTop { display: grid; gap: 1.25rem; margin-block-end: 2.5rem; }
 .projects { display: grid; gap: 3rem; margin: 0 0 2.5rem; padding: 0; list-style: none; }
 .project { display: flex; flex-direction: column; gap: 1.25rem; min-inline-size: 0; }
@@ -40,41 +41,38 @@
 .projectEvidence { display: grid; gap: 1rem; margin: 0; }
 .projectEvidence dt { font-size: 0.875rem; font-weight: 600; margin-block-end: 0.35rem; }
 .projectEvidence dd { margin: 0; max-inline-size: 57ch; color: var(--color-ink-muted); line-height: 1.6; }
-.process { padding-block: clamp(3rem, 6vw, 6rem); }
+.process { padding-block: var(--home-section-space); }
 .steps { display: grid; gap: 2rem; padding: 0; margin: 0 0 2rem; list-style: none; }
-.steps li { border-block-start: 1px solid var(--color-line); padding-block-start: 1rem; }
+.steps li { padding-block-start: 1rem; }
 .stepNumber { display: block; margin-block-end: 1rem; color: var(--color-ink-muted); font-size: 0.875rem; font-variant-numeric: tabular-nums; }
 .steps h3 { font-size: 1.375rem; line-height: 1.25; letter-spacing: -0.02em; font-weight: 500; margin-block-end: 0.8rem; }
 .steps p { color: var(--color-ink-muted); line-height: 1.6; max-inline-size: 48ch; }
 .supportingServices { background: var(--color-stone); }
-.services { display: grid; gap: 2rem; padding-block: clamp(3rem, 5vw, 5rem); }
-.productThumbnail { inline-size: min(100%, 21rem); block-size: auto; }
-.studio { display: grid; gap: 2rem; padding-block: clamp(3rem, 6vw, 6rem); }
-.portrait { inline-size: min(80%, 20rem); }
-.portrait img { inline-size: 100%; block-size: auto; }
+.services { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
+.productThumbnail { inline-size: 100%; block-size: auto; }
+.studio { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
+.portrait { inline-size: 100%; }
+.portrait img { inline-size: 100%; block-size: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 30%; }
 .portrait figcaption { padding-block-start: 0.75rem; font-size: 0.8125rem; color: var(--color-ink-muted); }
-.studioCopy { display: grid; align-content: center; gap: 1.5rem; }
+.studioCopy { display: grid; align-content: start; gap: 1.5rem; }
 .studioCopy p { max-inline-size: 40ch; font-size: clamp(1.125rem, 1.8vw, 1.5rem); line-height: 1.5; color: var(--color-ink-muted); }
-.faq { display: grid; gap: 2rem; border-block-start: 1px solid var(--color-line); padding-block: clamp(3rem, 5vw, 5rem); }
+.faq { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
 .contactBand { background: var(--color-stone); }
-.contact { display: grid; gap: 2rem; padding-block: clamp(3rem, 5vw, 5rem); }
+.contact { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
 @media (min-width: 48rem) {
   .actions { display: flex; flex-wrap: wrap; }
   .actions > a { inline-size: auto; }
   .title { font-size: clamp(3.25rem, 5.2vw, 5rem); }
   .heroDescription { font-size: 1.125rem; }
   .websiteOffer, .sectionTop, .contact { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; }
-  .sectionTop { align-items: end; }
-  .offerDetail { padding-inline-start: 1rem; }
+  .sectionTop { align-items: start; }
   .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
-  .studio { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: clamp(3rem, 8vw, 8rem); }
-  .portrait { inline-size: min(100%, 23rem); }
-  .faq { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 3rem; }
+  .studio, .faq { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
 }
 @media (min-width: 64rem) {
-  .hero { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 3rem; }
+  .hero { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
   .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
-  .services { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 5rem; }
+  .services { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
 }
 @media (hover: hover) and (pointer: fine) {
   .heroImageLink:hover img { transform: scale(1.015); }

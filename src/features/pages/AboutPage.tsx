@@ -40,7 +40,7 @@ export function AboutPage({ locale }: AboutPageProps) {
               className={pageStyles.portraitImage}
               height={PORTRAIT.height}
               priority
-              sizes="(min-width: 48rem) 320px, 90vw"
+              sizes="(min-width: 98rem) 696px, (min-width: 48rem) 46vw, 92vw"
               src={PORTRAIT.src}
               width={PORTRAIT.width}
             />
