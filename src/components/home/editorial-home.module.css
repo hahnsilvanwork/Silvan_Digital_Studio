@@ -52,7 +52,7 @@
 .productThumbnail { inline-size: 100%; block-size: auto; }
 .studio { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
 .portrait { inline-size: 100%; }
-.portrait img { inline-size: 100%; block-size: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 30%; }
+.portrait img { inline-size: 100%; block-size: auto; aspect-ratio: 4 / 5; object-fit: contain; }
 .portrait figcaption { padding-block-start: 0.75rem; font-size: 0.8125rem; color: var(--color-ink-muted); }
 .studioCopy { display: grid; align-content: start; gap: 1.5rem; }
 .studioCopy p { max-inline-size: 40ch; font-size: clamp(1.125rem, 1.8vw, 1.5rem); line-height: 1.5; color: var(--color-ink-muted); }

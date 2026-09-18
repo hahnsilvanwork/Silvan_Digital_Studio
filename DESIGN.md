@@ -2,7 +2,7 @@
 
 ## September 18 alignment correction (latest direction)
 
-The owner explicitly requested cleaner alignment and fewer dividers after the mobile pass. Use a shared equal-column grid with a 3rem desktop gap across the homepage's paired sections, top-align the groups and remove arbitrary image insets. On phones, primary images fill the text column. The homepage portrait uses a deliberate 4:3 crop to avoid an oversized portrait block; the About portrait retains its original ratio. Portfolio pairs no longer stagger vertically.
+The owner explicitly requested cleaner alignment and fewer dividers after the mobile pass. Use a shared equal-column grid with a 3rem desktop gap across the homepage's paired sections, top-align the groups and remove arbitrary image insets. On phones, primary images fill the text column. Owner correction: the homepage and About portraits retain the original 4:5 ratio, showing the complete approved photograph without a cover crop. Portfolio pairs no longer stagger vertically.
 
 Website-service heading, explanation and actions form one group before the project image on mobile and beside it on desktop. Other service headers use the same paired grid. A section break uses spacing or a surface change; it does not add an automatic border above an already ruled list. FAQ and service-list rules remain only between items. Contact labels share the same inset across highlighted and ordinary rows. This supersedes earlier asymmetric-column and stagger directions below.
 
