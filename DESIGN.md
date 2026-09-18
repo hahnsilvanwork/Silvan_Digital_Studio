@@ -1,6 +1,12 @@
 # SILVAN / Photographic studio portfolio
 
-## September 18 alignment correction (latest direction)
+## September 18 business priority (latest direction)
+
+Websites and NFC/QR are equally important core businesses, explicitly requested by the owner. The homepage names both in its headline and offers two equal direct buttons. Two open image-led offer columns follow immediately, with equal image ratios, shared desktop content rows, real starting prices and clear product links. Mobile stacks these columns and keeps both entry buttons at the top. Supporting services exclude NFC. The closing enquiry is service-neutral.
+
+Main navigation: Websites, NFC & QR, Work, More, Contact. More contains Online Presence, Automation and About. Mobile keeps Websites and NFC first, then Work and Contact, then the secondary group. German and English follow the same structure. This supersedes the website-only priority below; preserve the alignment rules.
+
+## September 18 alignment correction
 
 The owner explicitly requested cleaner alignment and fewer dividers after the mobile pass. Use a shared equal-column grid with a 3rem desktop gap across the homepage's paired sections, top-align the groups and remove arbitrary image insets. On phones, primary images fill the text column. The homepage portrait uses a deliberate 4:3 crop to avoid an oversized portrait block; the About portrait retains its original ratio. Portfolio pairs no longer stagger vertically.
 

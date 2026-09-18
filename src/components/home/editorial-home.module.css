@@ -6,25 +6,17 @@
 .heroDescription { max-inline-size: 43ch; font-size: 1.0625rem; line-height: 1.6; }
 .actions { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; gap: 0.75rem 1.5rem; }
 .actions > a { inline-size: 100%; min-block-size: 3.25rem; }
-.actions > *, .caption a { max-inline-size: 100%; overflow-wrap: anywhere; }
+.actions > * { max-inline-size: 100%; overflow-wrap: anywhere; }
 .textLink { display: inline-flex; align-items: center; justify-content: space-between; gap: 1.25rem; min-block-size: 2.75rem; text-decoration: none; font-size: 1rem; justify-self: start; max-inline-size: 100%; }
 .actions .textLink { justify-content: center; }
 .arrow { display: inline-block; flex: none; inline-size: 0.5rem; block-size: 0.5rem; border-block-start: 1.5px solid currentColor; border-inline-end: 1.5px solid currentColor; transform: rotate(45deg); }
 .byline { display: flex; align-items: center; gap: 0.8rem; max-inline-size: 34ch; margin-block-start: 0.25rem; color: var(--color-ink-muted); font-size: 0.875rem; line-height: 1.45; text-decoration: none; }
 .avatar { flex: none; inline-size: 3rem; block-size: 3rem; object-fit: cover; object-position: center 28%; border-radius: 50%; }
-.heroFigure { min-inline-size: 0; }
 .heroImageLink { display: block; overflow: clip; background: var(--color-stone); }
 .heroImageLink img { inline-size: 100%; block-size: auto; transition: transform 500ms var(--ease-out); }
-.caption { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.25rem 1rem; padding-block-start: 0.5rem; font-size: 0.8125rem; }
-.caption > span { color: var(--color-ink-muted); }
-.caption a { display: inline-flex; align-items: center; gap: 0.65rem; min-block-size: 2.75rem; text-decoration: none; }
-.heroProof { color: var(--color-ink-muted); font-size: 0.875rem; }
-.featuredDemo { display: inline-flex; align-items: center; gap: 0.75rem; min-block-size: 44px; font-size: 0.875rem; text-underline-offset: 0.25em; }
 .sectionIntro { display: grid; gap: 1.25rem; align-content: start; }
 .sectionIntro h2, .sectionTop h2, .studio h2, .faq > h2 { font-size: clamp(2rem, 3.8vw, 3.25rem); line-height: 1.1; letter-spacing: -0.03em; text-wrap: balance; }
 .sectionIntro p, .sectionTop p { color: var(--color-ink-muted); max-inline-size: 45ch; line-height: 1.6; }
-.websiteOffer { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
-.offerDetail { align-self: start; }
 .offerPrice { font-size: clamp(2rem, 3.5vw, 3rem); letter-spacing: -0.03em; }
 .priceNote { color: var(--color-ink-muted); font-size: 0.875rem; margin-block: 0.5rem 1.5rem; }
 .offerPoints { display: grid; gap: 0.75rem; padding-inline-start: 1.2rem; line-height: 1.5; }
@@ -49,7 +41,6 @@
 .steps p { color: var(--color-ink-muted); line-height: 1.6; max-inline-size: 48ch; }
 .supportingServices { background: var(--color-stone); }
 .services { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
-.productThumbnail { inline-size: 100%; block-size: auto; }
 .studio { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
 .portrait { inline-size: 100%; }
 .portrait img { inline-size: 100%; block-size: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 30%; }
@@ -64,7 +55,7 @@
   .actions > a { inline-size: auto; }
   .title { font-size: clamp(3.25rem, 5.2vw, 5rem); }
   .heroDescription { font-size: 1.125rem; }
-  .websiteOffer, .sectionTop, .contact { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; }
+  .sectionTop, .contact { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; }
   .sectionTop { align-items: start; }
   .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
   .studio, .faq { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
@@ -79,3 +70,17 @@
   .textLink:hover, .byline:hover { text-decoration: underline; text-underline-offset: 0.25em; }
 }
 @media (prefers-reduced-motion: reduce) { .heroImageLink img { transition-duration: 0ms; } .heroImageLink:hover img { transform: none; } }
+
+/* The two core businesses share image dimensions, content rows and link baselines. */
+.primaryOffers { display: grid; gap: 3rem; padding-block-end: var(--home-section-space); }
+.primaryOffer { display: grid; gap: 1.25rem; min-inline-size: 0; align-content: start; }
+.primaryOffer h2 { font-size: clamp(2rem, 3.8vw, 3.25rem); line-height: 1.1; letter-spacing: -0.03em; font-weight: 500; }
+.primaryOffer .heroImageLink img { aspect-ratio: 3 / 2; object-fit: cover; }
+.offerDescription { color: var(--color-ink-muted); line-height: 1.6; max-inline-size:  55ch; }
+.offerNote { color: var(--color-ink-muted); font-size: 0.8125rem; }
+.nfcPrice { font-size: clamp(1.375rem, 2.4vw, 2rem); }
+.primaryOffer .priceNote { margin-block-end: 0; }
+@media (min-width: 64rem) {
+  .primaryOffers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .primaryOffer { grid-template-rows: subgrid; grid-row: span 7; }
+}

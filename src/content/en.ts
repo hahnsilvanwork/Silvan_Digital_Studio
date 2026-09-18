@@ -624,7 +624,7 @@ export const en = {
   // Keyword first, brand last -- see the note on the German dictionary. British
   // spelling, matching the rest of the English copy.
   seo: {
-    home: { title: "Web Design for Small Businesses near Zurich | SILVAN", description: "Websites, Google reviews, local visibility and automation for Swiss SMEs. Built directly by an independent developer in Boppelsen ZH, websites from CHF 300." },
+    home: { title: "Websites & NFC for businesses in Zurich | SILVAN", description: "Websites and NFC cards, chips and stands for reviews, menus and contact details. Work directly with Silvan Hahn in Boppelsen near Zurich. Websites from CHF 300." },
     websites: { title: "Business Websites for Swiss SMEs, from CHF 300", description: "Fast, mobile-first websites for Swiss SMEs from CHF 300. Indicative price ranges, with scope and price set out in a written quote." },
     reviews: { title: "NFC & QR Solutions for Businesses | SILVAN", description: "NFC cards and stands from CHF 49, stick-on chips from CHF 15. For reviews, menus and bookings. Link programming and setup included." },
     presence: { title: "Google Business Profile Setup for Swiss Businesses", description: "Google Business Profile setup and optimisation, consistent business details, and better local visibility. For Swiss SMEs from CHF 249." },

@@ -75,10 +75,10 @@ describe("HomePage", () => {
     ).toBeInTheDocument();
     expect(
       within(main).getAllByRole("link", { name: de.home.hero.primaryCta })[0],
-    ).toHaveAttribute("href", "/contact?service=websites");
+    ).toHaveAttribute("href", "/websites");
     expect(
       within(main).getAllByRole("link", { name: de.home.hero.secondaryCta })[0],
-    ).toHaveAttribute("href", "#work");
+    ).toHaveAttribute("href", "/reviews");
   });
 
   it("shows every service with its starting price without interaction", () => {
@@ -88,7 +88,9 @@ describe("HomePage", () => {
 
     expect(within(main).getByRole('link', { name: homeCopy.de.pricesCta })).toHaveAttribute('href', '/websites');
     expect(within(main).getByText(de.home.services[0].price)).toBeVisible();
-    for (const service of de.home.services.slice(1)) {
+    expect(within(main).getByText(de.home.services[1].price)).toBeVisible();
+    expect(within(main).getByRole('link', { name: homeCopy.de.nfcCta })).toHaveAttribute('href', '/reviews');
+    for (const service of de.home.services.slice(2)) {
       expect(within(main).getByText(service.price)).toBeVisible();
       expect(
         within(main).getByRole("link", {

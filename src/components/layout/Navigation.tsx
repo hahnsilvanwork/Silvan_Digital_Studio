@@ -19,7 +19,7 @@ interface NavigationProps {
 export function Navigation({ locale, currentPath }: NavigationProps) {
   const content = getContent(locale);
   const links = getPrimaryLinks(locale, currentPath);
-  const supportingLinks = links.filter(link => ['/reviews', '/presence', '/automation'].some(route => link.href === localizePath(route, locale)));
+  const supportingLinks = links.filter(link => ['/presence', '/automation', '/about'].some(route => link.href === localizePath(route, locale)));
 
   return (
     <header className={styles.header}>
@@ -52,7 +52,7 @@ export function Navigation({ locale, currentPath }: NavigationProps) {
                   {link.label}
                 </Link>
               </li>
-              {index === 0 ? <li><ServiceNavigation locale={locale} links={supportingLinks} /></li> : null}
+              {index === 2 ? <li><ServiceNavigation locale={locale} links={supportingLinks} /></li> : null}
               </Fragment>
             ))}
           </ul>

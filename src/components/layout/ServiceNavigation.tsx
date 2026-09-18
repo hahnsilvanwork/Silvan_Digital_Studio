@@ -29,7 +29,7 @@ export function ServiceNavigation({ locale, links }: { readonly locale: Locale; 
       if (event.relatedTarget instanceof Node && !event.currentTarget.contains(event.relatedTarget)) event.currentTarget.open = false;
     }}>
     <summary className={`${styles.primaryLink} ${styles.serviceSummary}`} data-active={links.some(link => link.isCurrent) || undefined}>
-      {locale === 'de' ? 'Weitere Leistungen' : 'More services'}
+      {locale === 'de' ? 'Weiteres' : 'More'}
       <span className={styles.disclosureArrow} aria-hidden="true" />
     </summary>
     <ul className={styles.serviceList}>

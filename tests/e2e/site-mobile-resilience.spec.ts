@@ -31,6 +31,6 @@ for (const locale of ["", "/en"]) {
     await expect(last).toBeInViewport();
     await expect(dialog.getByRole("button")).toBeInViewport();
     await last.click();
-    await expect(page).toHaveURL(new RegExp(`${locale}/automation$`));
+    await expect(page).toHaveURL(new RegExp(`${locale}/about$`));
   });
 }

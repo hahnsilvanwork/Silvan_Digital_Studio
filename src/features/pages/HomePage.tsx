@@ -21,49 +21,47 @@ export function HomePage({ locale }: { readonly locale: Locale }) {
   const copy = homeCopy[locale];
   const featured = projects[0];
   const contactHref = localizePath('/contact?service=websites', locale);
-  const supportingServices = content.home.services.filter(service => service.href !== '/websites');
+  const supportingServices = content.home.services.filter(service => service.href !== '/websites' && service.href !== '/reviews');
 
   return <SiteShell currentPath={localizePath('/', locale)} locale={locale}>
     <div className={styles.home}>
       <section className={`${layoutStyles.container} ${styles.hero}`}>
+        <h1 className={styles.title}>{copy.headline}</h1>
         <div className={styles.heroIntro}>
-          <h1 className={styles.title}>{copy.headline}</h1>
           <p className={styles.heroDescription}>{copy.intro}</p>
           <div className={styles.actions}>
-            <ButtonLink href={contactHref}>{copy.primaryCta}</ButtonLink>
-            <Link className={styles.textLink} href="#work">{copy.secondaryCta}<span className={styles.arrow} aria-hidden="true" /></Link>
+            <ButtonLink href={localizePath('/websites', locale)}>{copy.primaryCta}</ButtonLink>
+            <ButtonLink href={localizePath('/reviews', locale)}>{copy.secondaryCta}</ButtonLink>
           </div>
           <Link className={styles.byline} href={localizePath('/about', locale)}>
             <Image {...PORTRAIT} alt="" sizes="48px" className={styles.avatar} />
             <span>{copy.byline}</span>
           </Link>
         </div>
-        <figure className={styles.heroFigure}>
-          <Link className={styles.heroImageLink} href={localizePath(`/work/${featured.slug}`, locale)} aria-label={`${featured.name} – ${copy.projectCta}`}>
-            <Image quality={90} src={featured.image[locale]} alt={featured.copy[locale].imageAlt} width={1440} height={1000} loading="eager" fetchPriority="high" sizes="(min-width: 98rem) 696px, (min-width: 64rem) 46vw, 92vw" />
-          </Link>
-          <figcaption className={styles.caption}>
-            <span>{featured.name} / {content.work.conceptLabel}</span>
-            <Link href={localizePath(`/work/${featured.slug}`, locale)}>{copy.projectCta}<span className={styles.arrow} aria-hidden="true" /></Link>
-          </figcaption>
-          <p className={styles.heroProof}>{copy.featuredProof}</p>
-          <a className={styles.featuredDemo} href={locale === 'en' && featured.demoUrlEn ? featured.demoUrlEn : featured.demoUrl} target="_blank" rel="noopener noreferrer">
-            {copy.demoCta}<span className="visually-hidden"> – {featured.name}. {content.a11y.externalLink}</span><span className={styles.arrow} aria-hidden="true" />
-          </a>
-        </figure>
       </section>
 
-      <section id="services" className={`${layoutStyles.container} ${styles.websiteOffer}`}>
-        <div className={styles.sectionIntro}>
-          <h2>{copy.offerTitle}</h2>
-          <p>{copy.offerIntro}</p>
-          <Link className={styles.textLink} href={localizePath('/websites', locale)}>{copy.pricesCta}<span className={styles.arrow} aria-hidden="true" /></Link>
-        </div>
-        <div className={styles.offerDetail}>
-          <p className={styles.offerPrice}>{content.home.services[0].price}</p>
-          <p className={styles.priceNote}>{copy.priceNote}</p>
+      <section id="services" aria-label={locale === 'de' ? 'Websites und NFC' : 'Websites and NFC'} className={`${layoutStyles.container} ${styles.primaryOffers}`}>
+        <article className={styles.primaryOffer}>
+          <h2>Websites</h2>
+          <Link className={styles.heroImageLink} href={localizePath('/websites', locale)} aria-label={copy.primaryCta}>
+            <Image quality={90} src={featured.image[locale]} alt={featured.copy[locale].imageAlt} width={1440} height={1000} loading="eager" fetchPriority="high" sizes="(min-width: 98rem) 696px, (min-width: 64rem) 46vw, 92vw" />
+          </Link>
+          <p className={styles.offerDescription}>{copy.offerIntro}</p>
+          <div><p className={styles.offerPrice}>{content.home.services[0].price}</p><p className={styles.priceNote}>{copy.priceNote}</p></div>
           <ul className={styles.offerPoints}>{copy.offerPoints.map(point => <li key={point}>{point}</li>)}</ul>
-        </div>
+          <Link className={styles.textLink} href={localizePath('/websites', locale)}>{copy.pricesCta}<span className={styles.arrow} aria-hidden="true" /></Link>
+          <p className={styles.offerNote}>{featured.name} / {content.work.conceptLabel}</p>
+        </article>
+        <article className={styles.primaryOffer}>
+          <h2>NFC &amp; QR</h2>
+          <Link className={styles.heroImageLink} href={localizePath('/reviews', locale)} aria-label={copy.secondaryCta}>
+            <Image src="/images/products/catalog/all-products.webp" width={1536} height={1024} loading="eager" sizes="(min-width: 98rem) 696px, (min-width: 64rem) 46vw, 92vw" alt={locale === 'de' ? 'NFC-Karten und Aufsteller für Bewertungen und digitale Menüs' : 'NFC cards and stands for reviews and digital menus'} />
+          </Link>
+          <p className={styles.offerDescription}>{copy.nfcIntro}</p>
+          <div><p className={`${styles.offerPrice} ${styles.nfcPrice}`}>{content.home.services[1].price}</p><p className={styles.priceNote}>{locale === 'de' ? 'Je nach Produkt und Ausführung.' : 'Depending on product and configuration.'}</p></div>
+          <ul className={styles.offerPoints}>{copy.nfcPoints.map(point => <li key={point}>{point}</li>)}</ul>
+          <Link className={styles.textLink} href={localizePath('/reviews', locale)}>{copy.nfcCta}<span className={styles.arrow} aria-hidden="true" /></Link>
+        </article>
       </section>
 
       <section id="work" className={styles.work}>
@@ -95,14 +93,12 @@ export function HomePage({ locale }: { readonly locale: Locale }) {
           <span className={styles.stepNumber} aria-hidden="true">0{index + 1}</span>
           <h3>{step.title}</h3><p>{step.description}</p>
         </li>)}</ol>
-        <Link className={styles.textLink} href={contactHref}>{copy.primaryCta}<span className={styles.arrow} aria-hidden="true" /></Link>
+        <Link className={styles.textLink} href={contactHref}>{copy.websiteCta}<span className={styles.arrow} aria-hidden="true" /></Link>
       </section>
 
       <section className={styles.supportingServices}>
         <div className={`${layoutStyles.container} ${styles.services}`}>
-          <div className={styles.sectionIntro}><h2>{copy.servicesTitle}</h2><p>{copy.servicesIntro}</p>
-            <Image src="/images/products/catalog/all-products.webp" width={1536} height={1024} sizes="(min-width: 98rem) 696px, (min-width: 64rem) 46vw, 92vw" alt={locale === 'de' ? 'NFC-Karten und Aufsteller für Bewertungen und digitale Menüs' : 'NFC cards and stands for reviews and digital menus'} className={styles.productThumbnail} />
-          </div>
+          <div className={styles.sectionIntro}><h2>{copy.servicesTitle}</h2><p>{copy.servicesIntro}</p></div>
           <ServiceDirectory locale={locale} services={supportingServices} />
         </div>
       </section>
@@ -118,8 +114,8 @@ export function HomePage({ locale }: { readonly locale: Locale }) {
       </section>
       <section className={styles.contactBand}>
         <div className={`${layoutStyles.container} ${styles.contact}`}>
-          <div className={styles.sectionIntro}><h2>{copy.contactTitle}</h2><p>{copy.contactIntro}</p><Link className={styles.textLink} href={contactHref}>{copy.contactCta}<span className={styles.arrow} aria-hidden="true" /></Link></div>
-          <ContactActions locale={locale} reason="websites" emphasize immediate />
+          <div className={styles.sectionIntro}><h2>{copy.contactTitle}</h2><p>{copy.contactIntro}</p><Link className={styles.textLink} href={localizePath('/contact', locale)}>{copy.contactCta}<span className={styles.arrow} aria-hidden="true" /></Link></div>
+          <ContactActions locale={locale} emphasize immediate />
         </div>
       </section>
     </div>

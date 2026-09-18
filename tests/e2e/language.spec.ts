@@ -46,7 +46,7 @@ test.describe("language switching", () => {
     await page.goto("/en");
 
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
-      "Websites for small businesses",
+      "Websites and NFC for your business",
     );
     await expect(page.getByRole("link", { name: "Skip to content" })).toHaveCount(1);
   });

@@ -57,18 +57,18 @@ describe("Navigation", () => {
     expect(links.map((link) => link.textContent)).toEqual([
       "Websites",
       "NFC & QR",
+      "Arbeiten",
       "Online-Präsenz",
       "Automation",
-      "Arbeiten",
       "Über mich",
       "Kontakt",
     ]);
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
       "/websites",
       "/reviews",
+      "/work",
       "/presence",
       "/automation",
-      "/work",
       "/about",
       "/contact",
     ]);
@@ -93,9 +93,9 @@ describe("Navigation", () => {
     ).toEqual([
       "/en/websites",
       "/en/reviews",
+      "/en/work",
       "/en/presence",
       "/en/automation",
-      "/en/work",
       "/en/about",
       "/en/contact",
     ]);
@@ -276,12 +276,12 @@ describe("MobileMenu", () => {
 
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
       "/websites",
-      "/work",
-      "/about",
-      "/contact",
       "/reviews",
+      "/work",
+      "/contact",
       "/presence",
       "/automation",
+      "/about",
     ]);
     expect(
       links.filter((link) => link.getAttribute("aria-current") === "page"),

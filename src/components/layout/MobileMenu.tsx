@@ -19,7 +19,7 @@ interface MobileMenuProps {
 export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
   const content = getContent(locale);
   const links = getPrimaryLinks(locale, currentPath);
-  const supportingLinks = links.filter(link => ['/reviews', '/presence', '/automation'].some(route => link.href === localizePath(route, locale)));
+  const supportingLinks = links.filter(link => ['/presence', '/automation', '/about'].some(route => link.href === localizePath(route, locale)));
   const mainLinks = links.filter(link => !supportingLinks.includes(link));
   const dialogId = useId();
   const [open, setOpen] = useState(false);
@@ -204,7 +204,7 @@ export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
                 </li>
               ))}
             </ul>
-            <p className={styles.panelGroupLabel}>{locale === 'de' ? 'Weitere Leistungen' : 'More services'}</p>
+            <p className={styles.panelGroupLabel}>{locale === 'de' ? 'Weiteres' : 'More'}</p>
             <ul className={styles.panelList}>
               {supportingLinks.map(link => <li className={styles.panelItem} key={link.href}>
                 <a aria-current={link.isCurrent ? 'page' : undefined} className={`${styles.panelLink} ${styles.panelSecondaryLink}`} data-touch-target href={link.href} onClick={close}>{link.label}</a>
