@@ -1,6 +1,6 @@
-import { mkdtemp, rm, stat } from "node:fs/promises";
+import { mkdir, mkdtemp, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { dirname, join } from "node:path";
 
 import sharp from "sharp";
 import { afterEach, describe, expect, it } from "vitest";
@@ -56,7 +56,18 @@ describe("NFC catalogue asset importer", () => {
   it("writes smaller metadata-free WebP derivatives", async () => {
     const outputDir = await mkdtemp(join(tmpdir(), "nfc-assets-"));
     temporaryDirectories.push(outputDir);
-    const sourceDir = resolve(process.cwd());
+    const sourceDir = await mkdtemp(join(tmpdir(), "nfc-sources-"));
+    temporaryDirectories.push(sourceDir);
+    // Original product photos are local archival files, not repository inputs.
+    // Exercise resizing and metadata removal with a reproducible source fixture.
+    const fixture = await sharp({
+      create: { width: 2000, height: 1000, channels: 3, background: "#456789" },
+    }).withMetadata().png({ compressionLevel: 0 }).toBuffer();
+    for (const sourceName of Object.keys(SOURCE_TO_OUTPUT)) {
+      const sourcePath = join(sourceDir, sourceName);
+      await mkdir(dirname(sourcePath), { recursive: true });
+      await writeFile(sourcePath, fixture);
+    }
 
     await importNfcAssets({ outputDir, sourceDir });
 
@@ -69,8 +80,8 @@ describe("NFC catalogue asset importer", () => {
       const metadata = await sharp(outputPath).metadata();
 
       expect(metadata.format).toBe("webp");
-      expect(metadata.width).toBeLessThanOrEqual(1600);
-      expect(metadata.height).toBeLessThanOrEqual(1600);
+      expect(metadata.width).toBe(1600);
+      expect(metadata.height).toBe(800);
       expect(metadata.exif).toBeUndefined();
       expect(metadata.icc).toBeUndefined();
       expect(metadata.xmp).toBeUndefined();
