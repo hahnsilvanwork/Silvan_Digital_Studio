@@ -49,13 +49,16 @@ export function PriceTierList({
           <h3 className={styles.tierName}>{tier.name}</h3>
           <PriceDisplay label={priceLabel} price={tier.price} />
           <p className={styles.tierDescription}>{tier.description}</p>
-          <ul className={styles.tierFeatures}>
+          {websiteLocale ? <details className={styles.tierDetails}>
+            <summary>{websiteLocale === 'de' ? 'Enthaltene Leistungen' : 'Included features'}</summary>
+            <ul className={styles.tierFeatures}>{tier.features.map(feature => <li className={styles.tierFeature} key={feature}>{feature}</li>)}</ul>
+          </details> : <ul className={styles.tierFeatures}>
             {tier.features.map((feature) => (
               <li className={styles.tierFeature} key={feature}>
                 {feature}
               </li>
             ))}
-          </ul>
+          </ul>}
           {websiteLocale && websiteTiers.some(id => id === tier.id) ? <>
             <p className={styles.tierExample}>{websiteExamples[websiteLocale][tier.id as WebsiteTier]}</p>
             <Link data-touch-target className={styles.tierAction} href={`${localizePath('/contact', websiteLocale)}?service=websites&tier=${tier.id}`}>

@@ -14,13 +14,14 @@ interface ContactActionsProps {
   readonly tier?: WebsiteTier;
   readonly brief?: string;
   readonly emphasize?: boolean;
+  readonly compact?: boolean;
 }
 
 /**
  * The four approved contact destinations. Every one is a real link with its own
  * accessible name; nothing here posts to a server.
  */
-export function ContactActions({ locale, reason, tier, brief = '', emphasize = false, immediate = false }: ContactActionsProps) {
+export function ContactActions({ locale, reason, tier, brief = '', emphasize = false, compact = false, immediate = false }: ContactActionsProps) {
   const content = getContent(locale);
   const { details } = content.contact;
   const copy = contactCopy[locale];
@@ -53,8 +54,12 @@ export function ContactActions({ locale, reason, tier, brief = '', emphasize = f
     },
   ];
 
+  const compactLabels = locale === "de"
+    ? ["WhatsApp schreiben", "E-Mail senden", "Anrufen", "LinkedIn"]
+    : ["Message on WhatsApp", "Send an email", "Call", "LinkedIn"];
+
   return (
-    <ul className={styles.actions}>
+    <ul className={`${styles.actions}${compact ? ` ${styles.compactActions}` : ""}`}>
       {actions.map((action, index) => (
         <li
           className={`${styles.action}${emphasize && index === 0 ? ` ${styles.primaryAction}` : ''}`}
@@ -70,8 +75,8 @@ export function ContactActions({ locale, reason, tier, brief = '', emphasize = f
               ? { rel: "noopener noreferrer", target: "_blank" }
               : {})}
           >
-            <span className={styles.actionLabel}>{action.label}</span>
-            <span className={`${styles.actionValue}${action.href.startsWith("mailto:") ? ` ${styles.emailValue}` : ""}`}>{action.value}</span>
+            <span className={styles.actionLabel}>{compact ? compactLabels[index] : action.label}</span>
+            <span className={compact && index > 1 ? "visually-hidden" : `${styles.actionValue}${action.href.startsWith("mailto:") ? ` ${styles.emailValue}` : ""}`}>{action.value}</span>
             {action.external ? (
               <span className="visually-hidden">
                 {content.a11y.externalLink}

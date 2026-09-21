@@ -1,4 +1,5 @@
 .page {
+  --text-lead: clamp(1rem, 0.85rem + 1vw, 1.75rem);
   position: relative;
   min-block-size: 100svh;
   background: var(--color-paper);
@@ -536,7 +537,7 @@
 .pageHeader {
   display: grid;
   gap: var(--space-sm);
-  padding-block: var(--space-xl) var(--space-lg);
+  padding-block: clamp(2rem, 5vw, 5rem) var(--space-lg);
   margin-block-end: 0;
 }
 
@@ -548,6 +549,18 @@
   display: grid;
   gap: var(--space-sm);
   min-inline-size: 0;
+}
+
+@media (min-width: 48rem) {
+  .reviewsHeroCopy .heroActions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    inline-size: min(100%, 32rem);
+  }
+
+  .reviewsHeroCopy .heroActions > a {
+    padding-inline: 1rem;
+  }
 }
 
 .reviewsHeroProduct {
@@ -567,7 +580,7 @@
   max-inline-size: 44rem;
   color: var(--color-ink-muted);
   font-size: var(--text-lead);
-  line-height: 1.4;
+  line-height: 1.6;
   letter-spacing: var(--tracking-text);
 }
 
@@ -582,7 +595,7 @@
   inline-size: 100%;
   max-inline-size: 36rem;
   min-inline-size: 0;
-  justify-self: center;
+  justify-self: end;
 }
 
 @media (min-width: 80rem) {

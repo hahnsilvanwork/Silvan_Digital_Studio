@@ -24,3 +24,6 @@ coverage/
 /*.jpg
 /*.jpeg
 .tmp-*
+
+# Local visual verification captures.
+.artifacts/

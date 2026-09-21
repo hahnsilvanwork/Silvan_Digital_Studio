@@ -24,7 +24,7 @@ test('optional brief reaches both drafts and clipboard fallback without URL leak
     configurable: true, value: { writeText: () => Promise.reject(new Error('unavailable')) },
   }));
   await page.goto('/contact?service=websites&tier=business');
-  await page.locator('summary').filter({ hasText: 'optional' }).click();
+  await expect(page.locator('#contact-brief')).toBeVisible();
   await page.locator('#contact-brief').fill('Website für meine Testfirma');
   for (const scheme of ['mailto:', 'https://wa.me/']) {
     const href = await page.locator(`main a[href^="${scheme}"]`).first().getAttribute('href');
@@ -46,4 +46,16 @@ test('home remains within a narrow viewport in both languages', async ({ page })
     const header = await page.locator('header').boundingBox();
     expect(header!.height).toBeLessThan(100);
   }
+});
+
+
+test('contact offers direct channels before the optional enquiry fields', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/contact');
+  await expect(page.locator('#contact-reason')).not.toBeVisible();
+  await expect(page.locator('main a[href^="mailto:"]')).toBeInViewport();
+  await expect(page.locator('main a[href^="https://wa.me/"]')).toBeInViewport();
+  await page.getByText('Anfrage vorbereiten (optional)', { exact: true }).click();
+  await expect(page.locator('#contact-reason')).toBeVisible();
+  await expect(page.locator('#contact-brief')).toBeVisible();
 });

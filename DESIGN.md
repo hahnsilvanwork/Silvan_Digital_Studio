@@ -1,5 +1,8 @@
 # SILVAN / Photographic studio portfolio
 
+## September 19 online-presence and mobile correction (latest direction)
+The homepage leads with “Online-Präsenz, die zu Ihnen passt.” and a general project enquiry. Its order is introduction, four equal service links, selected concepts, the person, contact. Detailed website pricing, project evidence, process and website FAQs live on their dedicated pages. Preserve the existing palette, imagery and navigation. Mobile uses a smaller fluid headline and shorter copy. Service pages have wrapping topic links to prices, examples, process and FAQs; website package features are native disclosures while prices remain visible. This supersedes the website-first homepage direction below. Owner approved GitHub push and production deployment on September 21.
+
 ## September 18 alignment correction (latest direction)
 
 The owner explicitly requested cleaner alignment and fewer dividers after the mobile pass. Use a shared equal-column grid with a 3rem desktop gap across the homepage's paired sections, top-align the groups and remove arbitrary image insets. On phones, primary images fill the text column. Owner correction: the homepage and About portraits retain the original 4:5 ratio, showing the complete approved photograph without a cover crop. Portfolio pairs no longer stagger vertically.
@@ -44,3 +47,6 @@ Service introductions use a 7:5 desktop split with the explanation, action and d
 September 7: Falkenried Gruppe, Café Vogel, Steiner Handwerk and Salon Lumière replace the four placeholder projects. Use actual 1440×1000 viewport screenshots in their original colours, without device mockups or cropping. Project cards fill their grid columns. Homepage and website service page feature the Falkenried screenshot. Each detail page links to an explorable static demo; all remain clearly labelled concept projects.
 
 Latest owner clarification: the Websites/NFC priority change applies only to navigation. Keep the existing homepage unchanged. Direct navigation contains Websites, NFC & QR, Work and Contact; More groups Online Presence, Automation and About.
+
+## September 21 NFC and contact refinement
+NFC uses the existing warm palette with an alpine lock-screen wallpaper. Product cards align closed title/description rows but expand their specifications independently. The film aligns with the right content edge and the hero actions have equal widths. Contact prioritises WhatsApp/email, groups phone/LinkedIn into a compact row, and reveals optional enquiry fields on demand (preselected service links open them). Preserve bilingual drafts and all existing contact destinations.

@@ -462,6 +462,15 @@
     margin-inline-start: 0;
   }
 
+  /* Align the visible language codes with the content edge, retaining 44px targets. */
+  .language {
+    justify-content: flex-end;
+  }
+
+  .language > span[aria-hidden="true"] {
+    margin-inline-end: -0.08em;
+  }
+
   .primaryNav {
     display: block;
   }

@@ -44,7 +44,7 @@ export const en = {
   },
   home: {
     hero: {
-      serviceLine: "Websites and digital solutions for Swiss businesses",
+      serviceLine: "Online presence for Swiss businesses",
       headline: homeCopy.en.headline,
       supporting:
         "I'm Silvan Hahn. I build websites, help people find your business online and simplify recurring tasks. You work directly with me, from the first idea to launch.",
@@ -60,7 +60,7 @@ export const en = {
         href: "/websites",
       },
       {
-        title: "Reviews and digital menus",
+        title: "NFC & QR",
         description: "Cards and stands for reviews, menus, bookings, and custom destinations.",
         price: "Chips from CHF 15 · cards from CHF 49",
         href: "/reviews",
@@ -72,7 +72,7 @@ export const en = {
         href: "/presence",
       },
       {
-        title: "Simplify recurring tasks",
+        title: "Automation",
         description: "For example, recording enquiries and transferring data. We check which workflows can be automated.",
         price: "On request",
         href: "/automation",
@@ -91,9 +91,9 @@ export const en = {
   },
   websites: {
     eyebrow: "Websites",
-    title: "A website that makes your business easy to choose.",
+    title: "Your website. Clear and personal.",
     intro:
-      "From a compact page with contact details to a large custom presence: we plan your website around your content, features and future updates.",
+      "From a compact page to a multi-page presence: we plan your website around your business.",
     priceLabel: "Indicative prices · CHF 300–5,000+",
     priceTiers: [
       {
@@ -474,7 +474,7 @@ export const en = {
   },
   automation: {
     eyebrow: "Automation",
-    title: "Turn recurring work into a clear, reliable workflow.",
+    title: "Less manual work. Clear workflows.",
     intro:
       "I examine manual routines and build sensible automations for emails, reports, information handoffs, and internal processes.",
     priceLabel: "On request",
@@ -622,7 +622,7 @@ export const en = {
   // Keyword first, brand last -- see the note on the German dictionary. British
   // spelling, matching the rest of the English copy.
   seo: {
-    home: { title: "Web Design for Small Businesses near Zurich | SILVAN", description: "Websites, Google reviews, local visibility and automation for Swiss SMEs. Built directly by an independent developer in Boppelsen ZH, websites from CHF 300." },
+    home: { title: "Online Presence for Small Businesses near Zurich | SILVAN", description: "Websites, Google reviews, local visibility and automation for Swiss SMEs. Personal support from Silvan Hahn in Boppelsen near Zurich." },
     websites: { title: "Business Websites for Swiss SMEs, from CHF 300", description: "Fast, mobile-first websites for Swiss SMEs from CHF 300. Indicative price ranges, with scope and price set out in a written quote." },
     reviews: { title: "NFC & QR Solutions for Businesses | SILVAN", description: "NFC cards and stands from CHF 49, stick-on chips from CHF 15. For reviews, menus and bookings. Link programming and setup included." },
     presence: { title: "Google Business Profile Setup for Swiss Businesses", description: "Google Business Profile setup and optimisation, consistent business details, and better local visibility. For Swiss SMEs from CHF 249." },

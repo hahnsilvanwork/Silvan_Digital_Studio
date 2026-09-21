@@ -1,9 +1,9 @@
 .home { --home-section-space: clamp(3rem, 5vw, 5rem); background: var(--color-paper); }
 .home section > *, .heroIntro > *, .actions > * { min-inline-size: 0; }
 .hero { display: grid; align-items: start; gap: 2rem; padding-block: clamp(2rem, 5vw, 4.5rem); }
-.heroIntro { display: grid; gap: 1.5rem; align-content: start; }
-.title { max-inline-size: 15ch; font-size: clamp(2.7rem, 11.5vw, 3.75rem); line-height: 1.04; letter-spacing: -0.035em; font-weight: 500; text-wrap: balance; }
-.heroDescription { max-inline-size: 43ch; font-size: 1.0625rem; line-height: 1.6; }
+.heroIntro { display: grid; gap: 1.125rem; align-content: start; }
+.title { max-inline-size: 19ch; font-size: clamp(2.125rem, 8.8vw, 3.25rem); line-height: 1.08; letter-spacing: -0.035em; font-weight: 500; text-wrap: balance; }
+.heroDescription { max-inline-size: 43ch; font-size: 1rem; line-height: 1.6; }
 .actions { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; gap: 0.75rem 1.5rem; }
 .actions > a { inline-size: 100%; min-block-size: 3.25rem; }
 .actions > *, .caption a { max-inline-size: 100%; overflow-wrap: anywhere; }
@@ -28,7 +28,7 @@
 .offerPrice { font-size: clamp(2rem, 3.5vw, 3rem); letter-spacing: -0.03em; }
 .priceNote { color: var(--color-ink-muted); font-size: 0.875rem; margin-block: 0.5rem 1.5rem; }
 .offerPoints { display: grid; gap: 0.75rem; padding-inline-start: 1.2rem; line-height: 1.5; }
-.work { padding-block: var(--home-section-space); background: var(--color-stone); }
+.work { padding-block: var(--home-section-space); }
 .sectionTop { display: grid; gap: 1.25rem; margin-block-end: 2.5rem; }
 .projects { display: grid; gap: 3rem; margin: 0 0 2.5rem; padding: 0; list-style: none; }
 .project { display: flex; flex-direction: column; gap: 1.25rem; min-inline-size: 0; }
@@ -50,16 +50,17 @@
 .supportingServices { background: var(--color-stone); }
 .services { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
 .productThumbnail { inline-size: 100%; block-size: auto; }
-.studio { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
-.portrait { inline-size: 100%; }
+.studio { display: grid; gap: 1.5rem; padding-block: var(--home-section-space); }
+.portrait { inline-size: min(100%, 12rem); }
 .portrait img { inline-size: 100%; block-size: auto; aspect-ratio: 4 / 5; object-fit: contain; }
 .portrait figcaption { padding-block-start: 0.75rem; font-size: 0.8125rem; color: var(--color-ink-muted); }
-.studioCopy { display: grid; align-content: start; gap: 1.5rem; }
-.studioCopy p { max-inline-size: 40ch; font-size: clamp(1.125rem, 1.8vw, 1.5rem); line-height: 1.5; color: var(--color-ink-muted); }
+.studioCopy { display: grid; align-content: start; gap: 1rem; }
+.studioCopy p { max-inline-size: 40ch; font-size: clamp(1rem, 1.8vw, 1.5rem); line-height: 1.6; color: var(--color-ink-muted); }
 .faq { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
 .contactBand { background: var(--color-stone); }
 .contact { display: grid; gap: 2rem; padding-block: var(--home-section-space); }
 @media (min-width: 48rem) {
+  .portrait { inline-size: 100%; }
   .actions { display: flex; flex-wrap: wrap; }
   .actions > a { inline-size: auto; }
   .title { font-size: clamp(3.25rem, 5.2vw, 5rem); }

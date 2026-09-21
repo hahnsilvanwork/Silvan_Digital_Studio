@@ -14,6 +14,7 @@ import { ProcessSteps } from "../../components/services/ProcessSteps";
 import { FaqSchema } from "../../components/seo/FaqSchema";
 import { ButtonLink } from "../../components/ui/ButtonLink";
 import { SectionHeading } from "../../components/ui/SectionHeading";
+import { PageTopics } from "../../components/ui/PageTopics";
 import type { Locale, RouteKey, ServiceContent } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
@@ -69,12 +70,6 @@ export function ServicePage({
             <ButtonLink href={localizePath(contactHref, locale)}>
               {service.ctaLabel}
             </ButtonLink>
-            <Link className={pageStyles.serviceSecondaryAction} href={localizePath("/about", locale)}>
-              {content.about.eyebrow}
-            </Link>
-            <Link className={pageStyles.serviceSecondaryAction} href={localizePath("/work", locale)}>
-              {content.common.viewWork}
-            </Link>
           </div>
           </div>
           </div>
@@ -86,7 +81,13 @@ export function ServicePage({
           ) : null}
         </section>
 
-        <section className={`${layoutStyles.container} ${pageStyles.section}`}>
+        <div className={layoutStyles.container}><PageTopics locale={locale} items={[
+          { href: '#packages', label: locale === 'de' ? 'Leistungen & Preise' : 'Services & prices' },
+          { href: '#examples', label: locale === 'de' ? 'Beispiele & Details' : 'Examples & details' },
+          { href: '#process', label: locale === 'de' ? 'Ablauf' : 'Process' },
+          { href: '#questions', label: locale === 'de' ? 'Fragen' : 'Questions' },
+        ]} /></div>
+        <section id="packages" className={`${layoutStyles.container} ${pageStyles.section}`}>
           <SectionHeading
             eyebrow={service.priceLabel}
             title={service.benefitsTitle}
@@ -121,9 +122,9 @@ export function ServicePage({
           </div>
         </section>
 
-        {children}
+        <div id="examples">{children}</div>
 
-        <section className={pageStyles.darkBand}>
+        <section id="process" className={pageStyles.darkBand}>
           <div className={layoutStyles.container}>
             <SectionHeading title={service.processTitle} />
             <div className={pageStyles.sectionBody}>
@@ -132,7 +133,7 @@ export function ServicePage({
           </div>
         </section>
 
-        <section className={`${layoutStyles.container} ${pageStyles.section}`}>
+        <section id="questions" className={`${layoutStyles.container} ${pageStyles.section}`}>
           <FaqSchema items={service.faq.items} />
           <SectionHeading title={service.faq.title} />
           <div className={pageStyles.sectionBody}>

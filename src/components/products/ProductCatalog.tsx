@@ -67,6 +67,28 @@ export function ProductCatalog({
   const railRef = useRef<HTMLDivElement>(null);
   const railId = useId();
 
+  // Share only the natural title/description heights. Disclosure rows stay local
+  // to each card, so expanding one never stretches the neighbouring cards.
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail || typeof ResizeObserver === "undefined") return;
+    const headings = Array.from(rail.querySelectorAll<HTMLElement>("[data-card-heading]"));
+    const descriptions = Array.from(rail.querySelectorAll<HTMLElement>("[data-card-description]"));
+    const measure = () => {
+      for (const [property, elements] of [
+        ["--card-heading-height", headings],
+        ["--card-description-height", descriptions],
+      ] as const) {
+        const height = Math.ceil(Math.max(0, ...elements.map(element => element.getBoundingClientRect().height)));
+        rail.style.setProperty(property, `${height}px`);
+      }
+    };
+    const observer = new ResizeObserver(measure);
+    [...headings, ...descriptions].forEach(element => observer.observe(element));
+    measure();
+    return () => observer.disconnect();
+  }, [railKey, locale, products]);
+
   useEffect(() => {
     if (selectedProduct === null && returnFocusRef.current) {
       returnFocusRef.current.focus();
@@ -100,8 +122,7 @@ export function ProductCatalog({
 
   return (
     <div className={styles.catalog}>
-      <details className={styles.catalogFilters} open={!starterProductIds || activeCategory !== 'selection'}>
-      {starterProductIds ? <summary>{de ? 'Weitere Modelle nach Anwendung ansehen' : 'Browse more models by use'}</summary> : null}
+      <div className={styles.catalogFilters}>
       <div className={styles.mobileCategory}>
         <label className={styles.categoryPrompt} htmlFor={`${railId}-category`}>{labels.categoryPrompt}</label>
         <select id={`${railId}-category`} value={activeCategory} onChange={(event) => {
@@ -135,13 +156,9 @@ export function ProductCatalog({
         })}
       </div>
 
-      </details>
+      </div>
 
-<details className={styles.deliveryFacts}>
-        <summary>{de ? "Verfügbarkeit, Lieferung und Betreuung" : "Availability, delivery and support"}</summary>
-        <p>{de ? "Standardprodukte ohne Personalisierung sind bei mir vor Ort an Lager. Logo-, personalisierte und individuelle Produkte erhalten Sie nach Absprache innerhalb von 3–5 Wochen fertig konfiguriert und einsatzbereit." : "Standard products without personalisation are stocked at my location. Logo, personalised and custom products arrive configured and ready to use within 3–5 weeks after agreement."}</p>
-        <p>{de ? "Google-Bewertungskarten benötigen keine laufende Betreuung durch mich. Besondere Wünsche oder spätere Anpassungen vereinbaren wir separat." : "Google review cards require no ongoing support from me. Special requests or later changes are agreed separately."}</p>
-      </details>
+
 
       <h3 aria-live="polite" className={styles.catalogResult}>
         {activeCategoryLabel} · {countLabel(visibleProducts.length)}
@@ -186,6 +203,8 @@ export function ProductCatalog({
             product={product}
             view3dLabel={labels.view3d}
             requestModelLabel={labels.requestModel}
+            detailsLabel={de ? "Details & Masse" : "Details & dimensions"}
+            actionLabel={de ? "Anfragen" : "Enquire"}
           />
         ))}
       </div>
@@ -222,6 +241,12 @@ export function ProductCatalog({
           </div>
         ) : null}
       </div>
+
+      <details className={styles.deliveryFacts}>
+        <summary>{de ? "Verfügbarkeit, Lieferung und Betreuung" : "Availability, delivery and support"}</summary>
+        <p>{de ? "Standardprodukte ohne Personalisierung sind bei mir vor Ort an Lager. Logo-, personalisierte und individuelle Produkte erhalten Sie nach Absprache innerhalb von 3–5 Wochen fertig konfiguriert und einsatzbereit." : "Standard products without personalisation are stocked at my location. Logo, personalised and custom products arrive configured and ready to use within 3–5 weeks after agreement."}</p>
+        <p>{de ? "Google-Bewertungskarten benötigen keine laufende Betreuung durch mich. Besondere Wünsche oder spätere Anpassungen vereinbaren wir separat." : "Google review cards require no ongoing support from me. Special requests or later changes are agreed separately."}</p>
+      </details>
 
       {selectedProduct ? (
         <Product3DDialog

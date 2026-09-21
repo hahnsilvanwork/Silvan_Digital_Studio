@@ -1,5 +1,8 @@
 # SILVAN Digital Studio
 
+## September 19 owner correction (current)
+The company offers online presence as a whole. The homepage introduces websites, NFC & QR, local Google visibility and automation as equal entry points. Website priority applies to navigation only. Keep the homepage concise; scope, pricing, processes and detailed examples belong on the respective service/project pages. Mobile needs readable typography, short introductions and clear topic navigation. Owner approved the reviewed local website for GitHub push and Vercel production deployment on September 21.
+
 <!-- impeccable:product-schema 1 -->
 
 ## Platform

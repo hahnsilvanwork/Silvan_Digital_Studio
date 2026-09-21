@@ -18,3 +18,53 @@
 .next h2 { font-size: 1.1rem; }
 .next p { line-height: 1.6; }
 @media (min-width: 56rem) { .body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4rem; } }
+
+/* Direct contact first; preparing a draft remains an optional secondary action. */
+.contactLayout { display: grid; grid-template-areas: "intro" "channels" "support"; gap: 1.75rem; padding-block: clamp(2rem, 5vw, 5rem) 4rem; }
+.contactLayout .header { grid-area: intro; padding: 0; }
+.contactLayout .title { margin-block: 0 1.25rem; }
+.intro { max-inline-size: 42ch; font-size: clamp(1.0625rem, 1.4vw, 1.25rem); line-height: 1.65; color: var(--color-ink-muted); }
+.contactPanel { grid-area: channels; }
+.support { grid-area: support; align-self: start; max-inline-size: 46ch; }
+.personal { font-size: 0.9375rem; color: var(--color-ink-muted); }
+.prepareDisclosure { margin-block-start: 1.5rem; border-block-start: 1px solid var(--color-line); }
+.prepareDisclosure > summary, .nextDisclosure > summary { min-block-size: 48px; padding-block: 0.75rem; cursor: pointer; font-size: 1rem; }
+.prepareDisclosure[open] > summary { margin-block-end: 0.75rem; }
+.prepareDisclosure .reason { margin-block-end: 0; }
+.prepareDisclosure .copyBlock { margin-block-start: 0.5rem; }
+.nextDisclosure > p { margin-block: 0.5rem 1rem; line-height: 1.65; color: var(--color-ink-muted); }
+.address { display: grid; font-style: normal; font-size: 0.9375rem; color: var(--color-ink-muted); }
+@media (min-width: 64rem) {
+  .contactLayout { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr; grid-template-areas: "intro channels" "support channels"; gap: 2rem 3rem; }
+}
+
+/* A shorter introduction keeps both primary contact actions in the first phone viewport. */
+.contactLayout .title { max-inline-size: 13ch; margin-block-end: 1rem; }
+.contactLayout { gap: 1.5rem; }
+.prepareDisclosure { margin-block-start: 1.25rem; }
+.prepareDisclosure > summary, .nextDisclosure > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  list-style: none; min-block-size: 52px;
+}
+.prepareDisclosure > summary::-webkit-details-marker, .nextDisclosure > summary::-webkit-details-marker { display: none; }
+.prepareDisclosure > summary::after, .nextDisclosure > summary::after {
+  content: ""; inline-size: 0.45rem; block-size: 0.45rem; flex-shrink: 0;
+  border-inline-end: 1.5px solid currentColor; border-block-end: 1.5px solid currentColor;
+  transform: rotate(45deg); margin-inline-end: 0.35rem;
+}
+.prepareDisclosure[open] > summary::after, .nextDisclosure[open] > summary::after { transform: rotate(225deg); }
+.prepareDisclosure > summary:focus-visible, .nextDisclosure > summary:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 3px; }
+  .contactLayout { max-inline-size: 38rem; padding-block: 1.75rem 2.5rem; }
+  .contactLayout .title { font-size: clamp(2rem, 7.5vw, 3rem); }
+  .intro { font-size: 1rem; line-height: 1.6; max-inline-size: 35ch; }
+  .support { max-inline-size: none; margin-block-start: 0.25rem; }
+  .personal { font-size: 0.875rem; }
+  .nextDisclosure > summary { color: var(--color-ink-muted); font-size: 0.9375rem; }
+@media (min-width: 64rem) {
+  .contactLayout { max-inline-size: none; padding-block: clamp(2rem, 5vw, 5rem) 4rem; gap: 2rem 3rem; }
+  .contactLayout .title { font-size: clamp(2.1rem, 5vw, 4rem); }
+  .intro { font-size: clamp(1.0625rem, 1.4vw, 1.25rem); line-height: 1.65; max-inline-size: 42ch; }
+  .support { max-inline-size: 46ch; margin-block-start: 0; }
+  .personal { font-size: 0.9375rem; }
+  .nextDisclosure > summary { color: inherit; font-size: 1rem; }
+}

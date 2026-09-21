@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 
@@ -75,10 +75,10 @@ describe("HomePage", () => {
     ).toBeInTheDocument();
     expect(
       within(main).getAllByRole("link", { name: de.home.hero.primaryCta })[0],
-    ).toHaveAttribute("href", "/contact?service=websites");
+    ).toHaveAttribute("href", "/contact");
     expect(
       within(main).getAllByRole("link", { name: de.home.hero.secondaryCta })[0],
-    ).toHaveAttribute("href", "#work");
+    ).toHaveAttribute("href", "#services");
   });
 
   it("shows every service with its starting price without interaction", () => {
@@ -86,9 +86,8 @@ describe("HomePage", () => {
 
     const main = screen.getByRole("main");
 
-    expect(within(main).getByRole('link', { name: homeCopy.de.pricesCta })).toHaveAttribute('href', '/websites');
     expect(within(main).getByText(de.home.services[0].price)).toBeVisible();
-    for (const service of de.home.services.slice(1)) {
+    for (const service of de.home.services) {
       expect(within(main).getByText(service.price)).toBeVisible();
       expect(
         within(main).getByRole("link", {
@@ -224,7 +223,6 @@ describe("ReviewsPage", () => {
 
     const main = screen.getByRole("main");
     expect(main.querySelectorAll('[data-product-card]')).toHaveLength(7);
-    fireEvent.click(within(main).getByText('Weitere Modelle nach Anwendung ansehen'));
     for (const category of de.reviews.categories) {
       expect(
           within(within(main).getByRole('combobox', {name:de.reviews.categoryPrompt})).getByRole("option", {
@@ -329,7 +327,7 @@ describe("ContactPage", () => {
       "href",
       "mailto:hahn.silvan.work@gmail.com",
     );
-    expect(within(main).getByRole("link", { name: /Telefon/ })).toHaveAttribute(
+    expect(within(main).getByRole("link", { name: /Anrufen/ })).toHaveAttribute(
       "href",
       "tel:+41789008500",
     );

@@ -207,6 +207,8 @@ describe("ProductCatalog", () => {
     expect(categories).toHaveValue('reviews');
     expect(screen.getByRole("img", { name: "Review card photo" })).toBeVisible();
     expect(screen.getAllByText("CHF 49.–")[0]).toBeVisible();
+    expect(screen.getAllByText("80 × 80 mm")[0]).not.toBeVisible();
+    await user.click(screen.getAllByText("Details & Masse")[0]);
     expect(screen.getAllByText("80 × 80 mm")[0]).toBeVisible();
 
     await user.selectOptions(categories,'menu');

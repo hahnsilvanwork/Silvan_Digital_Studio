@@ -36,3 +36,6 @@ coverage/
 /NFC Cards/
 
 .vercel
+
+# Local visual verification captures.
+.artifacts/

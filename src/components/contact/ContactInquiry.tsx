@@ -25,6 +25,9 @@ export function ContactInquiry({ locale }: { readonly locale: Locale }) {
     } catch { setCopyState('fallback'); }
   }
   return <>
+    <ContactActions locale={locale} reason={reason ?? undefined} tier={tier ?? undefined} brief={brief} emphasize immediate compact />
+    <details className={styles.prepareDisclosure} open={Boolean(reason) || undefined}>
+      <summary>{locale === 'de' ? 'Anfrage vorbereiten (optional)' : 'Prepare an enquiry (optional)'}</summary>
     <div className={styles.reason}>
       <label htmlFor="contact-reason">{copy.reason}</label>
       <select id="contact-reason" value={reason ?? ""} onChange={(event) => {
@@ -50,17 +53,15 @@ export function ContactInquiry({ locale }: { readonly locale: Locale }) {
         </select>
       </> : null}
       {reason ? <p className={styles.prompt}>{copy.prompts[reason]}</p> : null}
-      <details className={styles.briefDisclosure}>
-      <summary>{copy.briefLabel}</summary>
-      <label className="visually-hidden" htmlFor="contact-brief">{copy.briefLabel}</label>
+      <div className={styles.briefDisclosure}>
+      <label htmlFor="contact-brief">{copy.briefLabel}</label>
       <textarea id="contact-brief" rows={4} value={brief} maxLength={CONTACT_BRIEF_LIMIT}
         placeholder={copy.briefPlaceholder} aria-describedby="contact-brief-hint"
         onChange={event => { setBrief(event.target.value); setCopyState('idle'); }} />
       <p id="contact-brief-hint" className={styles.notice}>{copy.briefHint}</p>
-      </details>
+      </div>
       <p className={styles.notice}>{copy.notice}</p>
     </div>
-    <ContactActions locale={locale} reason={reason ?? undefined} tier={tier ?? undefined} brief={brief} emphasize immediate />
     <div className={styles.copyBlock}>
       <button className={styles.copyButton} type="button" onClick={copyMessage}>{copy.copyAction}</button>
       {copyState !== 'idle' ? <p className={styles.notice} role="status">{copyState === 'copied' ? copy.copied : copy.copyFallback}</p> : null}
@@ -69,5 +70,6 @@ export function ContactInquiry({ locale }: { readonly locale: Locale }) {
         <textarea id="contact-draft" value={message} readOnly rows={8} onFocus={event => event.currentTarget.select()} />
       </> : null}
     </div>
+    </details>
   </>;
 }

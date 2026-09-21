@@ -229,9 +229,11 @@
 .catalogGrid {
   position: relative;
   display: grid;
-  grid-auto-columns: minmax(16rem, calc(100% - 2rem));
+  grid-auto-columns: calc(100% - 2rem);
+  min-inline-size: 0;
   grid-auto-flow: column;
-  grid-template-rows: repeat(7, auto);
+  grid-template-rows: auto;
+  align-items: start;
   gap: var(--space-sm);
   overflow-x: auto;
   overscroll-behavior-inline: contain;
@@ -245,14 +247,13 @@
 
 .catalogCard {
   display: grid;
-  grid-row: span 7;
-  grid-template-rows: subgrid;
+  grid-template-rows: auto auto;
   row-gap: 0;
   scroll-snap-align: start;
   overflow: clip;
-  border: var(--hairline) solid var(--color-line);
-  background: var(--color-paper-raised);
-  border-radius: 0.75rem;
+  border: 0;
+  background: #fff;
+  border-radius: 4px;
 }
 
 .catalogRailControls,
@@ -302,9 +303,10 @@
 .catalogMedia {
   position: relative;
   min-inline-size: 0;
-  aspect-ratio: 1;
+  aspect-ratio: 1.08;
   overflow: clip;
-  background: var(--product-stage-surface);
+  background: var(--color-stone, #e9e5df);
+  border-radius: 4px 4px 0 0;
 }
 
 .catalogImage {
@@ -318,25 +320,35 @@
 
 .catalogCardBody {
   display: grid;
-  grid-row: span 6;
-  grid-template-rows: subgrid;
-  gap: var(--space-xs);
-  padding: var(--space-sm);
+  grid-template-rows: var(--card-heading-height, auto) var(--card-description-height, auto) auto auto;
+  gap: 0.75rem;
+  padding: 1.25rem;
 }
 
 .catalogCardHeading {
-  display: contents;
+  align-self: start;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .catalogCardHeading h3 {
-  font-size: var(--text-subitem);
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  font-weight: 500;
   align-self: start;
 }
 
 .catalogPrice {
   align-self: start;
-  color: var(--color-ink-muted);
-  font-size: var(--text-price);
+  color: var(--color-ink);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 .catalogDescription,
@@ -349,7 +361,8 @@
   align-content: start;
   gap: 0.25rem;
   margin: 0;
-  padding-inline-start: 1.15rem;
+  padding-inline-start: 0;
+  list-style: none;
   font-size: 0.9375rem;
 }
 
@@ -365,9 +378,13 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  inline-size: 100%;
-  padding: var(--space-2xs) var(--space-sm);
-  border-color: var(--color-line);
+  position: absolute;
+  inset: auto 0.75rem 0.75rem auto;
+  inline-size: auto;
+  min-block-size: 44px;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  border-radius: 4px;
   background: var(--color-paper);
   color: var(--color-accent);
   font-weight: 500;
@@ -545,8 +562,9 @@
 .requestModel {
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-block-size: 2.75rem;
+  justify-content: space-between;
+  gap: 1rem;
+  min-block-size: 3rem;
   padding: 0.625rem 0.75rem;
   color: var(--color-paper);
   background: var(--color-ink);
@@ -572,3 +590,36 @@
 .deliveryFacts { border-block-start: 1px solid var(--color-line); padding-block: 0.75rem; }
 .deliveryFacts summary { min-height: 44px; align-content: center; cursor: pointer; }
 .deliveryFacts p { max-width: 70ch; margin-block-start: 0.75rem; }
+
+/* Each card owns its rows so opening specifications never stretches its neighbours. */
+.catalog { gap: 1.5rem; }
+.catalogFilters { display: grid; gap: 0.75rem; }
+.catalogResult { font-size: 1rem; font-weight: 400; border: 0; padding: 0; color: var(--color-ink-muted); }
+.catalogDescription { font-size: 1rem; line-height: 1.6; max-width: 48ch; }
+.catalogGrid { column-gap: 1.5rem; row-gap: 0.875rem; }
+.catalogCard { margin-block-end: 1.75rem; }
+.catalogDetails { padding-block: 0.25rem 0.75rem; }
+.requestModel svg { flex-shrink: 0; transition: transform 180ms ease-out; }
+.requestModel:hover svg { transform: translateX(3px); }
+.view3dButton:hover { background: var(--color-ink); color: var(--color-paper); }
+.catalogMedia .comingSoon { position: absolute; inset: auto 1rem 0.75rem; font-size: 0.75rem; }
+.requestModel:focus-visible, .view3dButton:focus-visible, .categoryTabs button:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 4px; }
+@media (prefers-reduced-motion: reduce) { .requestModel:hover svg { transform: none; } }
+
+.catalogCardHeading h3 span { display: block; margin-block-start: 0.3rem; font-size: 0.9375rem; line-height: 1.5; letter-spacing: 0; font-weight: 400; color: var(--color-ink-muted); }
+
+.productSpecs { align-self: start; color: var(--color-ink-muted); font-size: 0.875rem; }
+.productSpecs summary { display: flex; align-items: center; justify-content: space-between; min-block-size: 44px; gap: 0.75rem; cursor: pointer; list-style: none; color: var(--color-ink); }
+.productSpecs summary::-webkit-details-marker { display: none; }
+.productSpecs summary svg { flex-shrink: 0; transition: transform 180ms ease-out; }
+.productSpecs[open] summary svg { transform: rotate(180deg); }
+.productSpecs summary:hover { text-decoration: underline; text-underline-offset: 0.2em; }
+.productSpecs summary:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+.cardPurchase { display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-block-start: 1px solid var(--color-line); padding-block-start: 1rem; }
+.cardPurchase .catalogPrice { align-self: center; }
+.cardPurchase .requestModel { gap: 1rem; min-block-size: 44px; padding: 0.625rem 0.875rem; }
+.catalogCardBody { padding: 1rem; } .cardPurchase { gap: 0.5rem; } .cardPurchase .requestModel { gap: 0.5rem; padding-inline: 0.625rem; } .catalogPrice { font-size: 1.25rem; }
+@media (min-width: 23rem) { .catalogCardBody { padding: 1.25rem; } .cardPurchase { gap: 1rem; } .cardPurchase .requestModel { gap: 1rem; padding-inline: 0.875rem; } .catalogPrice { font-size: 1.375rem; } }
+@media (prefers-reduced-motion: reduce) { .productSpecs summary svg { transition-duration: 0s; } }
+
+.catalogCardBody > .catalogDescription { align-self: start; }

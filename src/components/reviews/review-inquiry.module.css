@@ -44,10 +44,21 @@
 }
 .conditionsBlock {
   display: grid;
-  gap: var(--space-sm);
-  margin-block-start: var(--space-xs);
+  gap: clamp(1.25rem, 2vw, 2rem);
+  margin-block-start: clamp(1.5rem, 3vw, 2.5rem);
 }
-.conditionsTitle { margin: 0; font-size: var(--text-subitem); font-weight: 500; }
+.conditionsTitle {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.2rem + 0.8vw, 1.875rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.conditionsBlock summary {
+  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+}
 .disclosure { margin-block-start: var(--space-md); border-block-start: var(--hairline) solid var(--color-line); }
 .disclosure > summary {
   padding-block: var(--space-sm);

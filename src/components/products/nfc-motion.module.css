@@ -1,12 +1,12 @@
 .film { width: 100%; min-width: 0; margin: 0; }
-.stage { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 1.04; container-type: inline-size; background: linear-gradient(180deg, #f7f6f2 0%, #f1f0eb 64%, #e7e5dd 100%); color: var(--color-ink); }
+.stage { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 1.04; container-type: inline-size; background: #e9e5df; border-radius: 4px; color: var(--color-ink); }
 .light { position: absolute; inset: -20%; background: linear-gradient(125deg, transparent 30%, #fff5 52%, transparent 72%); animation: light 15s cubic-bezier(.4,0,.2,1) infinite; }
-.topline { position: absolute; inset: 5.5% 6% auto; display: flex; align-items: center; justify-content: space-between; font-size: 2cqw; line-height: 1; letter-spacing: .02em; color: #68665f; }
-.signature { color: var(--color-ink); font-size: 2.7cqw; letter-spacing: .2em; font-weight: 500; }
+.topline { position: absolute; inset: 5.5% 6% auto; display: flex; align-items: center; justify-content: space-between; font-size: 2.3cqw; line-height: 1; letter-spacing: .02em; color: #68665f; }
+.signature { color: var(--color-ink); font-size: 2.6cqw; letter-spacing: -.015em; font-weight: 500; }
 .scene { position: absolute; inset: 0; opacity: 0; animation: scene 37.5s linear infinite; animation-delay: var(--delay); }
 .product { position: absolute; width: 73%; height: 73%; left: -8%; top: 14%; mix-blend-mode: multiply; animation: product 7.5s cubic-bezier(.4,0,.2,1) infinite both; animation-delay: var(--delay); }
 .photo { object-fit: contain; mask-image: radial-gradient(ellipse at 50% 52%, #000 50%, transparent 73%); }
-.phone { position: absolute; width: 34%; height: 70%; top: 15%; right: 8%; padding: 1.2%; border: .45cqw solid #777772; border-radius: 5.5cqw; background: #1b1c1b; box-shadow: .2cqw .3cqw .15cqw #333, 1.2cqw 2.4cqw 3cqw #32271b35, inset 0 0 0 .2cqw #bcbcb5; transform-origin: 50% 8%; transform: rotate(2deg); animation: phone 7.5s cubic-bezier(.4,0,.2,1) infinite both; animation-delay: var(--delay); }
+.phone { position: absolute; width: 34%; height: 70%; top: 15%; right: 8%; padding: 1.2%; border: .45cqw solid #44433f; border-radius: 5.5cqw; background: #1b1c1b; box-shadow: .15cqw .25cqw .15cqw #333, 1.2cqw 2.4cqw 3.5cqw #32271b30, inset 0 0 0 .15cqw #99968f; transform-origin: 50% 8%; transform: rotate(0deg); animation: phone 7.5s cubic-bezier(.4,0,.2,1) infinite both; animation-delay: var(--delay); }
 .phone::before { content: ""; position: absolute; inset: 1.2%; border-radius: 4.5cqw; background: #fff; }
 .phone::after { content: ""; pointer-events: none; position: absolute; z-index: 6; inset: 1%; border-radius: 4.8cqw; background: linear-gradient(115deg, transparent 8%, #fff8 16%, transparent 27% 70%, #fff3 80%, transparent 85%); animation: reflection 7.5s cubic-bezier(.4,0,.2,1) infinite both; animation-delay: var(--delay); }
 .island { position: absolute; z-index: 3; top: 3%; left: 35%; width: 30%; height: 3.7%; border-radius: 2cqw; background: #20211f; }
@@ -17,10 +17,10 @@
 .volumeKeys { position: absolute; left: -.7cqw; top: 23%; width: .4cqw; height: 5cqw; background: #777; border-radius: .4cqw; box-shadow: 0 6cqw #777; }
 .reader { position: absolute; top: 8%; left: 50%; width: 1px; height: 1px; }
 .screen { position: absolute; z-index: 2; inset: 8.5% 2% 2%; border-radius: 0 0 4cqw 4cqw; overflow: hidden; padding-bottom: 2.6cqw; background: white; animation: screen 7.5s cubic-bezier(.4,0,.2,1) infinite both; animation-delay: var(--delay); }
-.lockScreen { position: absolute; inset: 1.2%; overflow: hidden; border-radius: 4.5cqw; padding-top: 7cqw; text-align: center; background: radial-gradient(ellipse at 10% 100%, #102f33 0%, transparent 60%), radial-gradient(ellipse at 90% 60%, #93aaa0 10%, transparent 65%), linear-gradient(140deg, #dce4db, #b2c4b7 50%, #435e55); color: #243d33; animation: lock 7.5s cubic-bezier(.4,0,.2,1) infinite both; animation-delay: var(--delay); }
+.lockScreen { position: absolute; inset: 1.2%; overflow: hidden; border-radius: 4.5cqw; padding-top: 7cqw; text-align: center; background: #e5e0d7 url("/images/nfc/alpine-lockscreen.webp") center / cover no-repeat; color: #35322d; animation: lock 7.5s cubic-bezier(.4,0,.2,1) infinite both; animation-delay: var(--delay); }
 .lockScreen > span { font: 2.3cqw/1 Arial,sans-serif; }
 .lockScreen > small { display: block; font: 1.55cqw/1 Arial,sans-serif; margin-top: 1.5cqw; }
-.lockScreen > strong { display: block; font: 500 9.5cqw/1.1 Arial,sans-serif; letter-spacing: -.05em; margin-top: .5cqw; }
+.lockScreen > strong { display: block; font: 500 9.5cqw/1.1 Arial,sans-serif; letter-spacing: -.035em; margin-top: .5cqw; }
 .lockTools { position: absolute; bottom: 5%; left: 10%; right: 10%; display: flex; justify-content: space-between; }
 .lockTools > span { display: grid; place-items: center; width: 5cqw; height: 5cqw; background: #16382f44; color: white; border-radius: 50%; font: 2.3cqw/1 Arial,sans-serif; }
 .notification { position: absolute; z-index: 4; top: 12%; left: 7%; width: 86%; display: flex; align-items: center; gap: 1.5cqw; padding: 2cqw; border: 1px solid #ddd9d0; border-radius: 2cqw; background: #f0eee9f5; box-shadow: 0 1cqw 2cqw #00000012; font: 1.8cqw/1.4 sans-serif; animation: notification 7.5s cubic-bezier(.4,0,.2,1) infinite both; animation-delay: var(--delay); }
@@ -33,8 +33,8 @@
 .signal span + span { inset: -20%; }
 .sceneLabel { position: absolute; left: 6%; bottom: 5.5%; max-width: 53%; display: grid; gap: 1.2cqw; }
 .sceneLabel strong { font-size: 4.3cqw; line-height: 1; letter-spacing: -.035em; font-weight: 500; }
-.sceneLabel > span { color: #625f57; font-size: 2.2cqw; line-height: 1.35; letter-spacing: -.015em; }
-.caption { padding-top: .7rem; color: var(--color-ink-muted); font-size: .6875rem; line-height: 1.4; letter-spacing: 0; }
+.sceneLabel > span { color: #625f57; font-size: 2.5cqw; line-height: 1.35; letter-spacing: -.015em; }
+.caption { padding-top: .7rem; color: var(--color-ink-muted); font-size: .75rem; line-height: 1.4; letter-spacing: 0; }
 @media (min-width: 64rem) {
   /* The copy defines the shared height. Keep the film proportional at the top
      and the controls on the same bottom row as the adjacent action links. */
@@ -56,11 +56,11 @@
 @keyframes scene { 0%, 18.5% { opacity: 1; } 20%, 99.999% { opacity: 0; } 100% { opacity: 1; } }
 @keyframes product { 0%, 100% { transform: rotate(-2deg); } 12%, 89% { transform: rotate(0); } }
 @keyframes phone {
-  0%, 8%, 100% { transform: translate(2%, 0) rotate(7deg); animation-timing-function: cubic-bezier(.42,0,.75,.5); }
-  16% { transform: translate(-61%, 18%) rotate(-24deg) scale(.94); animation-timing-function: cubic-bezier(.25,.5,.5,1); }
-  26% { transform: translate(-134%, 42%) rotate(-52deg) scale(.86); animation-timing-function: cubic-bezier(.5,0,.75,.5); }
-  35% { transform: translate(-61%, 18%) rotate(-24deg) scale(.94); animation-timing-function: cubic-bezier(.25,.5,.58,1); }
-  43%, 90% { transform: translate(0, 0) rotate(2deg); animation-timing-function: cubic-bezier(.4,0,.2,1); }
+  0%, 8%, 100% { transform: translate(2%, 0) rotate(3deg); animation-timing-function: cubic-bezier(.42,0,.75,.5); }
+  16% { transform: translate(-61%, 18%) rotate(-18deg) scale(.94); animation-timing-function: cubic-bezier(.25,.5,.5,1); }
+  26% { transform: translate(-134%, 40%) rotate(-42deg) scale(.78); animation-timing-function: cubic-bezier(.5,0,.75,.5); }
+  35% { transform: translate(-61%, 18%) rotate(-18deg) scale(.94); animation-timing-function: cubic-bezier(.25,.5,.58,1); }
+  43%, 90% { transform: translate(0, 0) rotate(0deg); animation-timing-function: cubic-bezier(.4,0,.2,1); }
 }
 @keyframes screen { 0%, 46%, 100% { opacity: 0; transform: translateY(3%) scale(.97); } 52%, 91% { opacity: 1; transform: translateY(0) scale(1); } 96% { opacity: 0; transform: translateY(0) scale(.99); } }
 @keyframes lock { 0%, 46%, 100% { opacity: 1; } 52%, 91% { opacity: 0; } }
@@ -82,4 +82,20 @@
 @media (min-width: 64rem) {
   .caption { min-height: calc(max(var(--control-target-min), 3.25rem) + .7rem); }
   .motionControl { min-height: max(var(--control-target-min), 3.25rem); }
+}
+
+/* The three captions follow the actual reader, notification and opening moments. */
+.phase { position: absolute; top: 11%; left: 6%; right: 6%; display: grid; font-size: 2.3cqw; line-height: 1.4; color: #625f57; }
+.phase span { grid-area: 1 / 1; opacity: 0; animation: phaseApproach 7.5s linear infinite both; animation-delay: var(--delay); }
+.phase span:nth-child(2) { animation-name: phaseRecognised; }
+.phase span:nth-child(3) { animation-name: phaseOpen; }
+.lockIcon { display: block; width: 2.8cqw; height: 2.8cqw; margin-inline: auto; }
+@keyframes phaseApproach { 0%, 22%, 100% { opacity: 1; } 24%, 98% { opacity: 0; } }
+@keyframes phaseRecognised { 0%, 23%, 43%, 100% { opacity: 0; } 26%, 41% { opacity: 1; } }
+@keyframes phaseOpen { 0%, 44%, 98%, 100% { opacity: 0; } 48%, 94% { opacity: 1; } }
+.film[data-static="true"] .phase span { opacity: 0; }
+.film[data-static="true"] .phase span:last-child { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .film .phase span { opacity: 0; }
+  .film .phase span:last-child { opacity: 1; }
 }

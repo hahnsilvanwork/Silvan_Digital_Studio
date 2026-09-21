@@ -11,6 +11,8 @@ interface ProductCardProps {
   readonly view3dLabel: string;
   readonly comingSoonLabel: string;
   readonly requestModelLabel?: string;
+  readonly detailsLabel?: string;
+  readonly actionLabel?: string;
   readonly onView3D: (
     product: NfcProduct,
     trigger: HTMLButtonElement,
@@ -24,7 +26,10 @@ export function ProductCard({
   comingSoonLabel,
   onView3D,
   requestModelLabel,
+  detailsLabel = "Details",
+  actionLabel,
 }: ProductCardProps) {
+  const [name, ...variant] = product.title.split(" · ");
   const requestHref = `?category=${encodeURIComponent(product.category)}&model=${encodeURIComponent(product.id)}#inquiry`;
   const request = (event: MouseEvent<HTMLAnchorElement>) => {
     if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button !== 0) return;
@@ -49,24 +54,6 @@ export function ProductCard({
           sizes="(min-width: 72rem) 29vw, (min-width: 44rem) 45vw, 82vw"
           src={product.image.src}
         />}
-      </div>
-      <div className={styles.catalogCardBody}>
-        <div className={styles.catalogCardHeading}>
-          <h3>{product.title}</h3>
-          <p className={styles.catalogPrice}>{product.price}</p>
-        </div>
-        <p className={styles.catalogDescription}>{product.description}</p>
-        <ul className={styles.catalogDetails}>
-          {product.details.map((detail) => (
-            <li key={detail}>{detail}</li>
-          ))}
-        </ul>
-        {requestModelLabel ? <a
-          className={styles.requestModel}
-          data-touch-target
-          href={requestHref}
-          onClick={request}
-        >{requestModelLabel}</a> : null}
         {product.scene ? (
           <button
             className={styles.view3dButton}
@@ -83,6 +70,30 @@ export function ProductCard({
         ) : (
           <p className={styles.comingSoon}>{comingSoonLabel}</p>
         )}
+      </div>
+      <div className={styles.catalogCardBody}>
+        <div className={styles.catalogCardHeading} data-card-heading>
+          <h3 aria-label={product.title}>{name}{variant.length ? <span>{variant.join(" · ")}</span> : null}</h3>
+        </div>
+        <p className={styles.catalogDescription} data-card-description>{product.description}</p>
+        <details className={styles.productSpecs}>
+          <summary>{detailsLabel}<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="m6 9 6 6 6-6" /></svg></summary>
+        <ul className={styles.catalogDetails}>
+          {product.details.map((detail) => (
+            <li key={detail}>{detail}</li>
+          ))}
+        </ul>
+        </details>
+        <div className={styles.cardPurchase}>
+          <p className={styles.catalogPrice}>{product.price}</p>
+        {requestModelLabel ? <a
+          className={styles.requestModel}
+          aria-label={requestModelLabel}
+          data-touch-target
+          href={requestHref}
+          onClick={request}
+        ><span>{actionLabel ?? requestModelLabel}</span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M4 12h15m-6-6 6 6-6 6" /></svg></a> : null}
+        </div>
       </div>
     </article>
   );

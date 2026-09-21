@@ -13,6 +13,7 @@ import { ProcessSteps } from "../../components/services/ProcessSteps";
 import { FaqSchema } from "../../components/seo/FaqSchema";
 import { ButtonLink } from "../../components/ui/ButtonLink";
 import { SectionHeading } from "../../components/ui/SectionHeading";
+import { PageTopics } from "../../components/ui/PageTopics";
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
@@ -76,6 +77,12 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
             </div>
         </section>
 
+        <div className={layoutStyles.container}><PageTopics locale={locale} items={[
+          { href: '#products', label: locale === 'de' ? 'Modelle' : 'Models' },
+          { href: '#how-it-works', label: locale === 'de' ? 'So funktioniert’s' : 'How it works' },
+          { href: '#inquiry', label: locale === 'de' ? 'Anfrage' : 'Enquiry' },
+          { href: '#questions', label: locale === 'de' ? 'Fragen' : 'Questions' },
+        ]} /></div>
         <section
           className={`${layoutStyles.container} ${inquiryStyles.catalogueSection}`}
           id="products"
@@ -133,7 +140,7 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
             </div>
         </section>
 
-        <section className={`${layoutStyles.container} ${inquiryStyles.compactSection}`}>
+        <section id="how-it-works" className={`${layoutStyles.container} ${inquiryStyles.compactSection}`}>
           <SectionHeading title={reviews.processTitle} />
           <div className={inquiryStyles.contentBlock}>
             <ProcessSteps steps={reviews.process} />
@@ -164,7 +171,7 @@ export function ReviewsPage({ locale }: ReviewsPageProps) {
           </div>
         </section>
 
-        <section className={`${layoutStyles.container} ${pageStyles.section}`}>
+        <section id="questions" className={`${layoutStyles.container} ${pageStyles.section}`}>
           <FaqSchema items={reviews.faq.items} />
           <SectionHeading title={reviews.faq.title} />
           <div className={pageStyles.sectionBody}>

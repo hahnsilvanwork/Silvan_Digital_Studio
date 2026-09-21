@@ -1,0 +1,5 @@
+.topics { padding-block: 1rem; }
+.label { color: var(--color-ink-muted); font-size: 0.875rem; }
+.topics ul { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; margin: 0.25rem 0 0; padding: 0; list-style: none; }
+.topics a { display: inline-flex; align-items: center; min-block-size: 2.75rem; font-size: 1rem; text-underline-offset: 0.25em; }
+.topics a:hover { text-decoration-thickness: 2px; }

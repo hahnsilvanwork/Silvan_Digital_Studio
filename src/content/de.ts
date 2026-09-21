@@ -44,7 +44,7 @@ export const de = {
   },
   home: {
     hero: {
-      serviceLine: "Websites und digitale Lösungen für Schweizer KMU",
+      serviceLine: "Online-Präsenz für Schweizer KMU",
       headline: homeCopy.de.headline,
       supporting:
         "Ich bin Silvan Hahn. Ich entwickle Websites, mache Ihr Unternehmen online sichtbar und vereinfache wiederkehrende Aufgaben. Direkt mit Ihnen, von der Idee bis zum Start.",
@@ -60,7 +60,7 @@ export const de = {
         href: "/websites",
       },
       {
-        title: "Bewertungen und digitale Menüs",
+        title: "NFC & QR",
         description: "Karten und Aufsteller für Bewertungen, Menüs, Buchungen und individuelle Ziele.",
         price: "Chips ab CHF 15 · Karten ab CHF 49",
         href: "/reviews",
@@ -72,8 +72,8 @@ export const de = {
         href: "/presence",
       },
       {
-        title: "Wiederkehrende Aufgaben vereinfachen",
-        description: "Zum Beispiel Anfragen erfassen und Daten übertragen. Wir prüfen, welche Abläufe sich automatisieren lassen.",
+        title: "Automation",
+        description: "Anfragen erfassen und Daten übertragen: weniger wiederkehrende Handarbeit.",
         price: "Auf Anfrage",
         href: "/automation",
       },
@@ -91,9 +91,9 @@ export const de = {
   },
   websites: {
     eyebrow: "Websites",
-    title: "Eine Website, die Ihr Unternehmen klar verkauft.",
+    title: "Ihre Website. Klar und persönlich.",
     intro:
-      "Von einer kompakten Seite mit Kontaktinformationen bis zum individuellen grossen Auftritt: Wir planen Ihre Website nach Ihren Inhalten, Funktionen und der späteren Pflege.",
+      "Vom kompakten Einstieg bis zum mehrseitigen Auftritt: Wir planen Ihre Website passend zu Ihrem Betrieb.",
     priceLabel: "Preisrahmen · CHF 300–5'000+",
     priceTiers: [
       {
@@ -511,7 +511,7 @@ export const de = {
   },
   automation: {
     eyebrow: "Automation",
-    title: "Wiederkehrende Arbeit auf einen klaren Ablauf bringen.",
+    title: "Weniger Handarbeit. Klare Abläufe.",
     intro:
       "Ich untersuche manuelle Routinen und entwickle passende Automationen für E-Mails, Berichte, Informationsübergaben und interne Abläufe.",
     priceLabel: "Auf Anfrage",
@@ -670,7 +670,7 @@ export const de = {
   // the tiers, the location matches the imprint, and nothing promises delivery
   // terms or turnaround that the site does not state.
   seo: {
-    home: { title: "Webdesign für KMU im Kanton Zürich | SILVAN", description: "Websites, Google-Bewertungen, lokale Sichtbarkeit und Automation für Schweizer KMU. Direkt vom Entwickler aus Boppelsen ZH, Websites ab CHF 300." },
+    home: { title: "Online-Präsenz für KMU im Kanton Zürich | SILVAN", description: "Websites, Google-Bewertungen, lokale Sichtbarkeit und Automation für Schweizer KMU. Direkt vom Entwickler aus Boppelsen ZH, Websites ab CHF 300." },
     websites: { title: "Website erstellen lassen, Kanton Zürich | ab CHF 300", description: "Schnelle, mobil gestaltete Websites für Schweizer KMU ab CHF 300. Preisrahmen zur Orientierung, genauer Umfang und Preis in der schriftlichen Offerte." },
     reviews: { title: "NFC & QR Lösungen für Unternehmen | SILVAN", description: "NFC-Karten und Aufsteller ab CHF 49, Klebechips ab CHF 15. Für Bewertungen, Menüs und Buchungen. Programmierung und Einrichtung des Links inklusive." },
     presence: { title: "Google Unternehmensprofil einrichten im Kanton Zürich", description: "Google-Unternehmensprofil einrichten oder optimieren, Geschäftsdaten konsistent halten, lokal leichter gefunden werden. Für Schweizer KMU ab CHF 249." },
