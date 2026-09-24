@@ -221,7 +221,7 @@ export default function Home() {
                 priority
                 sizes="(max-width: 700px) 100vw, 60vw"
               />
-              <figcaption>KI-Gestaltungsidee · kein Kundenprojekt</figcaption>
+              <figcaption>So könnte es aussehen. · Symbolbild</figcaption>
             </figure>
           </div>
           <div className="hero-foundation">

@@ -89,7 +89,7 @@ At the 900px navigation boundary (CSS `max-width: 899px`), the header exposes a 
 
 Below the demo banner and sticky header, the desktop opening runs full bleed: 42% forest copy and 58% room image, with headline “Aus Räumen wird Zuhause.”, introduction and actions grouped on the left. The composition has a 620px minimum height, increasing to 700px at 1600px wide; shorter desktop viewports use 560px. Between 701px and 1100px it becomes 46%/54% with a 590px minimum. The photo fills its plane with a 58% horizontal crop (62% on tablet). A ruled foundation strip follows the composition inside the shared container.
 
-At 700px and below, copy and image stack. The copy uses compact padding, wrapping horizontal actions and no craft footnote, bringing the image into the first viewport at the reviewed mobile sizes. The image is 340px high with a 56% crop, reducing to 290px at 360px and below. Its explicit AI caption stays on an opaque light plate at the lower right. The foundation strip stacks beneath it. These rules in `app/hero.css` replace the earlier headline-above-image opening.
+At 700px and below, copy and image stack. The copy uses compact padding, wrapping horizontal actions and no craft footnote, bringing the image into the first viewport at the reviewed mobile sizes. The image is 340px high with a 56% crop, reducing to 290px at 360px and below. Its illustrative-image caption stays on an opaque light plate at the lower right. The foundation strip stacks beneath it. These rules in `app/hero.css` replace the earlier headline-above-image opening.
 
 ## Elevation & Depth
 
@@ -112,7 +112,7 @@ Images and content regions are rectangular. Controls have only the small radius 
 ## Do's and Don'ts
 
 - **Do** preserve the room-first visual hierarchy, generous spacing and regular Barlow typography.
-- **Do** use `public/hero-zuhause.webp` for the opening: a new AI-generated architectural illustration created with the built-in image generation tool and compressed to WebP. Its caption reads “KI-Gestaltungsidee · kein Kundenprojekt”. The source prompt and provenance are recorded in `../../docs/superpowers/plans/2026-09-24-steiner-hero.md`.
+- **Do** use `public/hero-zuhause.webp` for the opening: a new AI-generated architectural illustration created with the built-in image generation tool and compressed to WebP. Its caption reads “So könnte es aussehen. · Symbolbild”. The source prompt and provenance are recorded in `../../docs/superpowers/plans/2026-09-24-steiner-hero.md`.
 - **Do** retain the existing local gallery assets: `public/proj-1.webp` for interior inspiration, `proj-2.webp` for facade, `proj-3.webp` for bathroom, `proj-4.webp` for wood detail, and `hero-handwerk.webp` for craft. Runtime URLs use `/demos/handwerk/`. This documentation asserts no external photographer or licensing provenance for these existing assets.
 - **Do** retain image alt text and captions distinguishing inspiration and symbolic craft imagery from customer references.
 - **Don't** introduce invented customer proof, condensed industrial display type, floating card shadows or unrelated visual metaphors into this established demo.

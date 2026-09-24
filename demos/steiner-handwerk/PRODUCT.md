@@ -14,7 +14,7 @@ There is no submission endpoint, email delivery, browser-storage persistence or 
 
 ## Truth and accessibility
 
-The banner, project introduction, image captions, enquiry and footer identify the fictional context. The new opening image (`public/hero-zuhause.webp`) is AI-generated and explicitly captioned “KI-Gestaltungsidee · kein Kundenprojekt”. Existing local gallery and craft assets remain illustrative; none are claimed completed customer work. No prices, testimonials or invented credentials supply false proof. External SilvanDigital links connect the demonstration to the real studio portfolio and contact page.
+The banner, project introduction, image captions, enquiry and footer identify the fictional context. The new opening image (`public/hero-zuhause.webp`) is AI-generated and explicitly captioned “So könnte es aussehen. · Symbolbild”. Existing local gallery and craft assets remain illustrative; none are claimed completed customer work. No prices, testimonials or invented credentials supply false proof. External SilvanDigital links connect the demonstration to the real studio portfolio and contact page.
 
 The document language is German. Metadata specifies `noindex, nofollow`. Local fonts avoid a remote font dependency. The implementation includes a skip link, visible focus, labelled controls, keyboard-operable native disclosures, responsive navigation, accessible error feedback and reduced-motion support.
 
