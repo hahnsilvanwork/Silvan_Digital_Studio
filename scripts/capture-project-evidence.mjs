@@ -22,7 +22,7 @@ async function capture(page, slug, locale, kind, description) {
   const state = await page.evaluate(() => ({ overflow: document.documentElement.scrollWidth > innerWidth + 1, broken: [...document.images].filter(i => !i.complete || !i.naturalWidth).map(i => i.src) }));
   expect(state.overflow).toBe(false);
   expect(state.broken).toEqual([]);
-  const filename = `${slug}-${kind}-${locale}.webp`;
+  const filename = `${slug}-${kind}-${locale}-20260924.webp`;
   const data = await sharp(await page.screenshot({ animations: 'disabled' })).webp({ quality: 84, effort: 6 }).toBuffer();
   const { width, height } = await sharp(data).metadata();
   await writeFile(`${output}/${filename}`, data);
@@ -51,21 +51,21 @@ try {
       description = 'First sample property selected through its enquiry link; actual carried-over property title in the demo form.';
     } else if (slug === 'cafe-vogel') {
       await page.goto(`${base}/kontakt/`, { waitUntil: 'networkidle' });
-      await page.locator('#persons').selectOption('2 Personen');
+      await page.locator('#persons').selectOption('2');
       await page.locator('#date').fill('2026-10-14');
       await page.locator('#time').selectOption('10:00');
       description = 'Reservation demo with two people, sample date and generated preferred time selected; no reservation submitted.';
     } else if (slug === 'steiner-handwerk') {
       await page.goto(`${base}/`, { waitUntil: 'networkidle' });
-      await page.getByRole('link', { name: 'Malerarbeiten besprechen', exact: true }).click();
-      await expect(page.locator('#service')).toHaveValue(/maler/i);
+      await page.getByRole('link', { name: 'Malerarbeiten anfragen', exact: true }).click();
+      await expect(page.locator('#inquiry-service')).toHaveValue(/maler/i);
       description = 'Malerarbeiten service arrow clicked; chosen service carried into the enquiry form.';
     } else {
       await page.goto(`${base}/leistungen/`, { waitUntil: 'networkidle' });
-      await page.getByRole('link', { name: 'Balayage / Ombré: Demo-Anfrage ausprobieren', exact: true }).click();
+      await page.getByRole('link', { name: 'Balayage / Ombré: Termin anfragen', exact: true }).click();
       await expect(page.locator('#service')).toHaveValue('balayage-ombre');
       await page.locator('#desiredDate').fill('2026-10-14');
-      await page.locator('#desiredTime').fill('10:00');
+      await page.locator('#desiredTime').selectOption('10:00');
       description = 'Balayage / Ombré selected on the services page, carried into the contact form with sample date and time.';
     }
     await page.locator('form').evaluate((form, offset) => window.scrollTo({ top: window.scrollY + form.getBoundingClientRect().top - offset, behavior: 'instant' }), tallForm ? 175 : 120);

@@ -52,10 +52,10 @@ const nextConfig: NextConfig = {
       { pathname: "/**", search: "" },
       // Only these refreshed screenshots use a cache version. Arbitrary image
       // query strings remain disallowed.
-      ...["cafe-vogel", "steiner-handwerk", "salon-lumiere"].flatMap(project =>
+      ...["falkenried", "cafe-vogel", "steiner-handwerk", "salon-lumiere"].flatMap(project =>
         ["", "-en"].map(locale => ({
           pathname: `/images/projects/${project}-retina${locale}.webp`,
-          search: "?v=20260908",
+          search: "?v=20260924",
         }))),
     ],
     qualities: [75, 90],

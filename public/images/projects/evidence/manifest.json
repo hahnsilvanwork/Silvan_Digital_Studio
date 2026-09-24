@@ -3,10 +3,10 @@
     "project": "falkenried",
     "kind": "mobile",
     "locale": "de",
-    "src": "/images/projects/evidence/falkenried-mobile-de.webp",
+    "src": "/images/projects/evidence/falkenried-mobile-de-20260924.webp",
     "width": 780,
     "height": 1560,
-    "bytes": 73314,
+    "bytes": 120696,
     "viewport": {
       "width": 390,
       "height": 780
@@ -14,17 +14,17 @@
     "sourceUrl": "https://silvan-demo-falkenried.vercel.app/",
     "description": "Actual mobile home page at 390 CSS pixels; upper viewport.",
     "status": "demo-concept",
-    "capturedAt": "2026-09-09T12:55:09.621Z",
+    "capturedAt": "2026-09-24T09:55:21.799Z",
     "submitted": false
   },
   {
     "project": "falkenried",
     "kind": "workflow",
     "locale": "de",
-    "src": "/images/projects/evidence/falkenried-workflow-de.webp",
+    "src": "/images/projects/evidence/falkenried-workflow-de-20260924.webp",
     "width": 1500,
     "height": 1170,
-    "bytes": 36290,
+    "bytes": 36170,
     "viewport": {
       "width": 1000,
       "height": 780
@@ -32,17 +32,17 @@
     "sourceUrl": "https://silvan-demo-falkenried.vercel.app/immobilien/#property-enquiry",
     "description": "First sample property selected through its enquiry link; actual carried-over property title in the demo form.",
     "status": "demo-concept",
-    "capturedAt": "2026-09-09T12:55:11.173Z",
+    "capturedAt": "2026-09-24T09:55:23.289Z",
     "submitted": false
   },
   {
     "project": "falkenried",
     "kind": "mobile",
     "locale": "en",
-    "src": "/images/projects/evidence/falkenried-mobile-en.webp",
+    "src": "/images/projects/evidence/falkenried-mobile-en-20260924.webp",
     "width": 780,
     "height": 1560,
-    "bytes": 82218,
+    "bytes": 120028,
     "viewport": {
       "width": 390,
       "height": 780
@@ -50,17 +50,17 @@
     "sourceUrl": "https://silvan-demo-falkenried.vercel.app/en/",
     "description": "Actual mobile home page at 390 CSS pixels; upper viewport.",
     "status": "demo-concept",
-    "capturedAt": "2026-09-09T12:55:12.736Z",
+    "capturedAt": "2026-09-24T09:55:24.969Z",
     "submitted": false
   },
   {
     "project": "falkenried",
     "kind": "workflow",
     "locale": "en",
-    "src": "/images/projects/evidence/falkenried-workflow-en.webp",
+    "src": "/images/projects/evidence/falkenried-workflow-en-20260924.webp",
     "width": 1500,
     "height": 1170,
-    "bytes": 30860,
+    "bytes": 31642,
     "viewport": {
       "width": 1000,
       "height": 780
@@ -68,17 +68,17 @@
     "sourceUrl": "https://silvan-demo-falkenried.vercel.app/en/immobilien/#property-enquiry",
     "description": "First sample property selected through its enquiry link; actual carried-over property title in the demo form.",
     "status": "demo-concept",
-    "capturedAt": "2026-09-09T12:55:14.214Z",
+    "capturedAt": "2026-09-24T09:55:26.546Z",
     "submitted": false
   },
   {
     "project": "cafe-vogel",
     "kind": "mobile",
     "locale": "de",
-    "src": "/images/projects/evidence/cafe-vogel-mobile-de.webp",
+    "src": "/images/projects/evidence/cafe-vogel-mobile-de-20260924.webp",
     "width": 780,
     "height": 1560,
-    "bytes": 66260,
+    "bytes": 76640,
     "viewport": {
       "width": 390,
       "height": 780
@@ -86,17 +86,17 @@
     "sourceUrl": "https://silvan-demo-cafe-vogel.vercel.app/",
     "description": "Actual mobile home page at 390 CSS pixels; upper viewport.",
     "status": "demo-concept",
-    "capturedAt": "2026-09-09T12:55:16.189Z",
+    "capturedAt": "2026-09-24T09:55:28.174Z",
     "submitted": false
   },
   {
     "project": "cafe-vogel",
     "kind": "workflow",
     "locale": "de",
-    "src": "/images/projects/evidence/cafe-vogel-workflow-de.webp",
+    "src": "/images/projects/evidence/cafe-vogel-workflow-de-20260924.webp",
     "width": 1500,
     "height": 1350,
-    "bytes": 72190,
+    "bytes": 74460,
     "viewport": {
       "width": 1000,
       "height": 900
@@ -104,17 +104,17 @@
     "sourceUrl": "https://silvan-demo-cafe-vogel.vercel.app/kontakt/",
     "description": "Reservation demo with two people, sample date and generated preferred time selected; no reservation submitted.",
     "status": "demo-concept",
-    "capturedAt": "2026-09-09T12:55:18.247Z",
+    "capturedAt": "2026-09-24T09:55:29.818Z",
     "submitted": false
   },
   {
     "project": "steiner-handwerk",
     "kind": "mobile",
     "locale": "de",
-    "src": "/images/projects/evidence/steiner-handwerk-mobile-de.webp",
+    "src": "/images/projects/evidence/steiner-handwerk-mobile-de-20260924.webp",
     "width": 780,
     "height": 1560,
-    "bytes": 52258,
+    "bytes": 77770,
     "viewport": {
       "width": 390,
       "height": 780
@@ -122,17 +122,17 @@
     "sourceUrl": "https://silvan-demo-steiner.vercel.app/",
     "description": "Actual mobile home page at 390 CSS pixels; upper viewport.",
     "status": "demo-concept",
-    "capturedAt": "2026-09-09T12:55:20.152Z",
+    "capturedAt": "2026-09-24T09:55:31.979Z",
     "submitted": false
   },
   {
     "project": "steiner-handwerk",
     "kind": "workflow",
     "locale": "de",
-    "src": "/images/projects/evidence/steiner-handwerk-workflow-de.webp",
+    "src": "/images/projects/evidence/steiner-handwerk-workflow-de-20260924.webp",
     "width": 1500,
     "height": 1170,
-    "bytes": 67580,
+    "bytes": 58192,
     "viewport": {
       "width": 1000,
       "height": 780
@@ -140,17 +140,17 @@
     "sourceUrl": "https://silvan-demo-steiner.vercel.app/#kontakt",
     "description": "Malerarbeiten service arrow clicked; chosen service carried into the enquiry form.",
     "status": "demo-concept",
-    "capturedAt": "2026-09-09T12:55:21.871Z",
+    "capturedAt": "2026-09-24T09:55:33.657Z",
     "submitted": false
   },
   {
     "project": "salon-lumiere",
     "kind": "mobile",
     "locale": "de",
-    "src": "/images/projects/evidence/salon-lumiere-mobile-de.webp",
+    "src": "/images/projects/evidence/salon-lumiere-mobile-de-20260924.webp",
     "width": 780,
     "height": 1560,
-    "bytes": 72818,
+    "bytes": 79750,
     "viewport": {
       "width": 390,
       "height": 780
@@ -158,17 +158,17 @@
     "sourceUrl": "https://silvan-demo-salon-lumiere.vercel.app/",
     "description": "Actual mobile home page at 390 CSS pixels; upper viewport.",
     "status": "demo-concept",
-    "capturedAt": "2026-09-09T12:55:23.702Z",
+    "capturedAt": "2026-09-24T09:55:35.523Z",
     "submitted": false
   },
   {
     "project": "salon-lumiere",
     "kind": "workflow",
     "locale": "de",
-    "src": "/images/projects/evidence/salon-lumiere-workflow-de.webp",
+    "src": "/images/projects/evidence/salon-lumiere-workflow-de-20260924.webp",
     "width": 1500,
     "height": 1350,
-    "bytes": 88610,
+    "bytes": 99406,
     "viewport": {
       "width": 1000,
       "height": 900
@@ -176,7 +176,7 @@
     "sourceUrl": "https://silvan-demo-salon-lumiere.vercel.app/kontakt/?service=balayage-ombre#demo-form",
     "description": "Balayage / Ombré selected on the services page, carried into the contact form with sample date and time.",
     "status": "demo-concept",
-    "capturedAt": "2026-09-09T12:55:25.987Z",
+    "capturedAt": "2026-09-24T09:55:37.522Z",
     "submitted": false
   }
 ]

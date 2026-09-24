@@ -16,7 +16,7 @@ export const projects: readonly Project[] = [
     "slug": "falkenried",
     "name": "Falkenried Gruppe",
     "year": "2026",
-    "image": { "de": "/images/projects/falkenried-retina.webp", "en": "/images/projects/falkenried-retina-en.webp" },
+    "image": { "de": "/images/projects/falkenried-retina.webp?v=20260924", "en": "/images/projects/falkenried-retina-en.webp?v=20260924" },
     "demoUrl": "https://silvan-demo-falkenried.vercel.app",
     "demoUrlEn": "https://silvan-demo-falkenried.vercel.app/en/",
     "status": "demo-concept",
@@ -47,7 +47,7 @@ export const projects: readonly Project[] = [
     "slug": "cafe-vogel",
     "name": "Café & Konditorei Vogel",
     "year": "2026",
-    "image": { "de": "/images/projects/cafe-vogel-retina.webp?v=20260908", "en": "/images/projects/cafe-vogel-retina-en.webp?v=20260908" },
+    "image": { "de": "/images/projects/cafe-vogel-retina.webp?v=20260924", "en": "/images/projects/cafe-vogel-retina-en.webp?v=20260924" },
     "demoUrl": "https://silvan-demo-cafe-vogel.vercel.app",
     "status": "demo-concept",
     "copy": {
@@ -77,7 +77,7 @@ export const projects: readonly Project[] = [
     "slug": "steiner-handwerk",
     "name": "Steiner Bau",
     "year": "2026",
-    "image": { "de": "/images/projects/steiner-handwerk-retina.webp?v=20260908", "en": "/images/projects/steiner-handwerk-retina-en.webp?v=20260908" },
+    "image": { "de": "/images/projects/steiner-handwerk-retina.webp?v=20260924", "en": "/images/projects/steiner-handwerk-retina-en.webp?v=20260924" },
     "demoUrl": "https://silvan-demo-steiner.vercel.app",
     "status": "demo-concept",
     "copy": {
@@ -107,7 +107,7 @@ export const projects: readonly Project[] = [
     "slug": "salon-lumiere",
     "name": "Salon Lumière",
     "year": "2026",
-    "image": { "de": "/images/projects/salon-lumiere-retina.webp?v=20260908", "en": "/images/projects/salon-lumiere-retina-en.webp?v=20260908" },
+    "image": { "de": "/images/projects/salon-lumiere-retina.webp?v=20260924", "en": "/images/projects/salon-lumiere-retina-en.webp?v=20260924" },
     "demoUrl": "https://silvan-demo-salon-lumiere.vercel.app",
     "status": "demo-concept",
     "copy": {

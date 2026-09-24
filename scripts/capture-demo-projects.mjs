@@ -20,7 +20,8 @@ try {
       const page = await browser.newPage({ viewport: { width, height: 1000 }, reducedMotion: 'reduce', deviceScaleFactor: width === 1440 ? 2 : 1 });
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));
-      await page.goto(`${base}/demos/${demo}${locale === 'en' && demo === 'falkenried' ? '/en/' : ''}`, { waitUntil: 'load' });
+      const origin = process.env.DEMO_LIVE === "1" ? `https://${demoProjects.find(item => item.slug === demo).project}.vercel.app` : `${base}/demos/${demo}`;
+      await page.goto(`${origin}${locale === 'en' && demo === 'falkenried' ? '/en/' : ''}`, { waitUntil: 'load' });
       // Capture the actual available demo. German-only demos stay German in
       // English portfolio screenshots, matching their labelled destination.
       await page.evaluate(() => document.fonts.ready);
