@@ -13,7 +13,7 @@ const { groups } = Astro.props;
 ---
 
 <div class="faq-tabs">
-  <div role="tablist" aria-label="FAQ" class="grid grid-cols-1 justify-center gap-3 bg-[var(--color-surface-container)] rounded-xl p-2 mb-12 md:grid-cols-3">
+  <div hidden role="tablist" aria-label="FAQ" class="grid grid-cols-1 justify-center gap-3 bg-[var(--color-surface-container)] rounded-xl p-2 mb-12 md:grid-cols-3">
     {groups.map((group, i) => (
       <button
         role="tab"
@@ -37,7 +37,6 @@ const { groups } = Astro.props;
       aria-labelledby={`tab-${group.key}`}
       data-panel={group.key}
       class="tab-panel divide-y divide-[var(--color-outline-variant)]/40"
-      hidden={i !== 0}
     >
       {group.items.map((item) => (
         <details class="group py-6">
@@ -58,6 +57,8 @@ const { groups } = Astro.props;
   document.querySelectorAll(".faq-tabs").forEach((wrapper) => {
     const tabs = wrapper.querySelectorAll<HTMLButtonElement>(".tab-btn");
     const panels = wrapper.querySelectorAll<HTMLElement>(".tab-panel");
+    wrapper.querySelector<HTMLElement>('[role="tablist"]')!.hidden = false;
+    panels.forEach((panel, index) => { panel.hidden = index !== 0; });
     tabs.forEach((tab, index) => {
       tab.addEventListener("keydown", (event) => {
         let next = index;

@@ -13,12 +13,22 @@ test("contact form is locked before its cancellation handler is installed", asyn
   assert.doesNotMatch(source, /access_key|privacy_consent|isWeb3FormsEnabled|type="hidden"/);
 });
 
-test("browser script confirms demo interaction without sending or storing data", async () => {
+test("browser script reviews the enquiry without sending, storing, or resetting data", async () => {
   const source = await readSource("src/components/ContactForm.astro");
   assert.match(source, /event\.preventDefault\(\)/);
   assert.doesNotMatch(source, /fetch\(|XMLHttpRequest|localStorage|sessionStorage/);
   assert.match(source, /Nothing has been sent or stored/);
-  assert.match(source, /form\.reset\(\)/);
+  assert.doesNotMatch(source, /form\.reset\(\)/);
+  assert.match(source, /description\.textContent = value/);
+  assert.match(source, /control\.dataset\.label/);
+  assert.match(source, /form\.dataset\.objectId/);
+  assert.match(source, /form\.dataset\.source/);
+  assert.match(source, /data-form-edit/);
+  assert.match(source, /data-form-clear/);
+  assert.match(source, /control\.value = ""/);
+  assert.match(source, /invalid\[0\]\.focus\(\)/);
+  assert.match(source, /aria-describedby/);
+  assert.match(source, /control\.validity\.typeMismatch/);
 });
 
 test("every form declares area and source metadata", async () => {

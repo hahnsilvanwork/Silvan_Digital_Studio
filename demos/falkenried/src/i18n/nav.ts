@@ -35,7 +35,7 @@ export const nav = {
     bmw: "Autowerkstatt",
     gartenbau: "Gartenbau",
     immobilien: "Immobilien",
-    geschichte: "Geschichte",
+    geschichte: "Über Falkenried",
     faq: "FAQ",
     kontakt: "Kontakt",
     cta: "Kontakt aufnehmen",
@@ -45,7 +45,7 @@ export const nav = {
     bmw: "Auto Workshop",
     gartenbau: "Landscaping",
     immobilien: "Real Estate",
-    geschichte: "History",
+    geschichte: "About Falkenried",
     faq: "FAQ",
     kontakt: "Contact",
     cta: "Get in Touch",
@@ -56,25 +56,25 @@ export const nav = {
 export const footer = {
   de: {
     tagline:
-      "Ihr kompetenter Partner für Mobilität, Garten und Immobilien im Zürcher Unterland – seit über 55 Jahren.",
+      "Mobilität, Garten und Immobilien: ein fiktives Unternehmenskonzept für das Zürcher Unterland.",
     divisionsHeading: "Bereiche",
     companyHeading: "Unternehmen",
     legalHeading: "Rechtliches",
     ueberUns: "Über uns",
     impressum: "Impressum",
     datenschutz: "Datenschutz",
-    copyright: "Falkenried Gruppe. Swiss Excellence Since 1969.",
+    copyright: "Falkenried Gruppe. Designkonzept.",
   },
   en: {
     tagline:
-      "Your trusted partner for mobility, gardens, and real estate in the Zürcher Unterland – for over 55 years.",
+      "Mobility, gardens and real estate: a fictional company concept for the Zürcher Unterland.",
     divisionsHeading: "Divisions",
     companyHeading: "Company",
     legalHeading: "Legal",
     ueberUns: "About Us",
     impressum: "Imprint",
     datenschutz: "Privacy Policy",
-    copyright: "Falkenried Gruppe. Swiss Excellence Since 1969.",
+    copyright: "Falkenried Gruppe. Design concept.",
   },
 } as const;
 

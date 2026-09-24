@@ -1,81 +1,40 @@
----
-name: Falkenried Gruppe — Heritage Precision
-description: Consolidated design system for the Falkenried Gruppe website, derived from the Stitch "heritage_precision_1" mockup direction.
----
+# Falkenried — design reference
 
-## 1. Brand & Style
+Updated 24 September 2026. Scope: `demos/falkenried`. Source components and the final CSS cascade are authoritative.
 
-Falkenried Gruppe combines three pillars — BMW service, landscaping, real estate — under one 55-year family legacy. The direction is **Corporate / Modern "Quiet Luxury"**: generous whitespace, editorial typography, large photography, no neon or glassmorphism. It should feel like "Trusted Stewardship" — a client's car, garden, or home is in competent, patient hands.
+## Direction
 
-## 2. Color Palette
+A calm regional business concept joining motoring, landscaping and property. Warm cream, deep green, generous spacing and substantial photography make the three areas feel related. The homepage uses an editorial split composition and three photographic service links. Avoid decorative statistics, invented testimonials or unsupported company heritage.
 
-All ratios computed with the WCAG 2.1 relative-luminance formula.
+## Current foundations
 
-| Token | Hex | Role | Contrast |
-|---|---|---|---|
-| `--color-surface` | `#F8F9FA` | Page background | — |
-| `--color-surface-lowest` | `#FFFFFF` | Card/content background | — |
-| `--color-ink` | `#191C1D` | Primary body text | 16.26:1 on surface |
-| `--color-ink-muted` | `#424751` | Secondary text | 9.33:1 on white |
-| `--color-outline-variant` | `#C2C6D3` | Borders/dividers only | 1.71:1 — never use as text |
-| `--color-primary` | `#00356C` | Swiss Navy — buttons, links, headline accents | 12.17:1 on white; 12.17:1 white-on-navy |
-| `--color-primary-strong` | `#004B95` | Hover/active state of primary | 8.61:1 on white |
-| `--color-charcoal` | `#333333` | Structural text alternative | 12.63:1 on white |
-| `--color-heritage-gold` | `#E9B63C` | Anniversary/premium badges — **decorative only** | 1.87:1 — never as text |
-| `--color-bmw` | `#3C8CBF` | BMW division accent — borders, icons, backgrounds with white text | 3.69:1 — large text (≥18px/14px bold) or non-text only |
-| `--color-bmw-text` | `#1C4F73` | BMW division text/links | 8.69:1 on white |
-| `--color-garden` | `#2D5A27` | Gartenbau division accent — safe as text | 8.07:1 on white |
-| `--color-realestate` | `#55606B` | Immobilien division text | 7.1:1 on white |
-| `--color-realestate-muted` | `#707070` | Immobilien decorative (icons/dividers) | 4.95:1 |
-| `--color-inverse-surface` | `#2E3132` | Dark section background (Immobilien showcase) | — |
-| `--color-inverse-ink` | `#F0F1F2` | Text on inverse surface | 13.9:1 |
-| `--color-error` | `#BA1A1A` | Form validation errors | 5.9:1 on white |
+| Role | Value |
+|---|---|
+| Page surface | `#f5f3ed` |
+| White content surface | `#ffffff` |
+| Soft surface | `#ebece4` |
+| Primary / hover | `#163c35` / `#265b4e` |
+| Main / muted text | `#191c1d` / `#424751` |
+| Divider | `#c2c6d3` |
+| Workshop text accent | `#1c4f73` |
+| Garden accent | `#2d5a27` |
+| Property accent | `#55606b` |
+| Validation text | `#9a1515` |
 
-**Rule:** `--color-bmw` and `--color-heritage-gold` must never carry small body text directly — use `--color-bmw-text` for BMW copy, and reserve gold for badges/icons/borders with dark text on top.
+Hanken Grotesk Variable is the active body and shared heading font. Georgia provides the homepage hero and brand-symbol serif accents; importing Inter does not make it the current body face. The homepage hero scales from 48px on small screens to 84px on wide screens. Shared controls use readable, sentence-case labels; legacy uppercase labels remain in supporting components.
 
-## 3. Typography
+Content containers cap at 1280px, with responsive gutters starting at 24px. The homepage splits copy and image above 899px; its three service columns become a single column below that breakpoint. Sections use generous vertical separation. Small radii and borders provide structure; shared cards have no shadow in the final cascade.
 
-- **Display/Headlines:** Hanken Grotesk Variable (weights 400–800)
-- **Body/UI:** Inter (400, 500, 600, 700)
+## Components and behaviour
 
-| Role | Family | Size | Weight | Line-height | Tracking |
-|---|---|---|---|---|---|
-| display-lg | Hanken Grotesk | 56px / 36px mobile | 700 | 1.1 | -0.02em |
-| headline-md | Hanken Grotesk | 32px | 600 | 1.25 | normal |
-| headline-sm | Hanken Grotesk | 24px | 600 | 1.33 | normal |
-| body-lg | Inter | 18px | 400 | 1.55 | normal |
-| body-md | Inter | 16px | 400 | 1.5 | normal |
-| label-caps | Inter | 12px | 700 | 1.33 | 0.14em, uppercase |
-| button | Inter | 13px | 600 | 1.4 | 0.05em, uppercase |
+- **Homepage:** clear introduction, garden photograph with an explicit concept caption, three service links, explanation of the fictional company and a contact invitation. No empty video block or testimonial section.
+- **Shared heroes:** split or full-image layouts. Full-image text uses a dark contrast overlay and distinct white/green buttons. Hero images load eagerly with responsive widths; supporting homepage images load lazily.
+- **Header:** fixed brand/navigation bar, equivalent-page language switch and mobile menu. It switches to compact navigation when the measured desktop links no longer fit, including enlarged text. Escape closes an open menu and returns focus.
+- **Controls:** primary and secondary buttons have a minimum height of 48px and visible focus treatment. Image and dark sections use light focus outlines. Preserve reduced-motion rules and the skip link.
+- **Properties:** image, status, descriptive content and enquiry link. Category filters update `aria-pressed`, hide nonmatching cards and announce the result count. Property links carry the selected object into the enquiry form.
+- **Forms:** persistent labels, inline validation and a local review panel with edit/clear actions. Summary values wrap and preserve line breaks. The fieldset starts disabled until the submit-cancellation handler is installed.
+- **FAQ:** native disclosures inside keyboard-operable tabs. Without JavaScript all FAQ panels remain readable and the tab controls remain hidden.
 
-## 4. Layout & Spacing
+## Rules for future edits
 
-- Max content width: 1280px, 24px gutter mobile, 40–64px desktop margins.
-- Section vertical rhythm: `clamp(4rem, 8vw, 7.5rem)` between major blocks.
-- Desktop: 12-column grid, left-aligned content (Swiss modernist influence). Division cards span 4 columns each.
-- Mobile: single column, generous 64px+ stacking between modules.
-
-## 5. Shapes & Elevation
-
-- Radius scale: `sm` 2px, `md` 6px, `lg` 8px, `xl` 12px — soft but not bubbly (Level 1–2).
-- Buttons/inputs: `md` (6px). Cards/image containers: `lg`–`xl`.
-- Shadows are soft and diffused: `0 4px 20px rgba(0,0,0,0.05)` to lift cards without hard edges.
-- Photography carries a subtle navy-to-transparent gradient overlay where text sits on images.
-
-## 6. Components
-
-- **Division Card:** white card, colored 3px top border matching division accent, lifts slightly with ambient shadow on hover.
-- **Primary Button** (`.btn-primary`): solid navy, white uppercase label, 6px radius, no gradient.
-- **Secondary Button** (`.btn-secondary`): transparent, 1.5px navy border, fills navy on hover.
-- **Timeline:** vertical 1px navy line, year in `display-lg` navy, content alternating or stacked on mobile.
-- **FAQ Accordion:** `<details>`/`<summary>` native element for zero-JS accessibility, chevron rotates on open.
-- **Property Card:** image, status chip (frei/reserviert/vermietet), title, address, price, "Details" link. Filterable by category via a small inline script toggling `hidden`.
-- **Contact Form:** label-above-input, bottom-border-only inputs, navy focus ring, submits to Web3Forms.
-- **Input Fields:** minimalist, 1px bottom border, navy on focus, label always visible.
-
-## 7. Accessibility
-
-- WCAG AA is the floor: 4.5:1 body text, 3:1 large text/UI components.
-- All interactive elements have visible `:focus-visible` outlines (navy, 2px offset).
-- Skip-to-content link on every page.
-- FAQ and property filters work without JavaScript where feasible (`<details>` for FAQ); filter script is a light progressive enhancement.
+Keep German and English layouts equivalent without forcing identical line breaks. Test long labels, mobile widths and 200% text before release. Keep photographs useful to the service being described; the concept caption and demo notice must remain understandable. Do not restore navy branding, a fabricated founding date, accreditation claims or real submission behaviour from older mockup notes. Contrast numbers in old comments are not a substitute for checking rendered colours.

@@ -13,6 +13,6 @@ export const news: readonly NewsItem[] = [
 export const events: readonly EventItem[] = [];
 export const jobs: readonly JobOpening[] = [];
 export const partners: readonly Partner[] = [
-  { name: "Talblick Mobilität", service: { de: "Mietwagen für Ihren Umzug", en: "Rental vehicles for your move" }, description: { de: "Mietwagenstation in Schöfflisdorf im Wehntal.", en: "Rental vehicle station in Schöfflisdorf in the Wehntal valley." }, url: "/kontakt/", phone: "Telefon auf Anfrage" },
+  { name: "Talblick Mobilität", service: { de: "Mietwagen für Ihren Umzug", en: "Rental vehicles for your move" }, description: { de: "Fiktives Partnerprofil für Transporter und Umzugsfahrzeuge im Wehntal.", en: "Fictional partner profile for vans and moving vehicles in the Wehntal valley." }, url: "/kontakt/", phone: "Telefon auf Anfrage" },
   { name: "Lindenklar Reinigung", service: { de: "Wohnungsreinigung", en: "Apartment cleaning" }, description: { de: "Fiktives Partnerprofil für Wohnungsreinigung bei einem Mieterwechsel.", en: "Fictional partner profile for apartment cleaning when tenants move." }, url: "/kontakt/" },
 ] as const;

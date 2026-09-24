@@ -24,6 +24,7 @@ const { filters, gridId } = Astro.props;
     </button>
   ))}
 </div>
+<p class="sr-only filter-status" aria-live="polite" data-filter-status={gridId}></p>
 
 <script>
   document.querySelectorAll<HTMLElement>(".property-filter").forEach((bar) => {
@@ -38,8 +39,11 @@ const { filters, gridId } = Astro.props;
         btn.setAttribute("aria-pressed", "true");
         const key = btn.dataset.filter;
         cards.forEach((card) => {
-          card.style.display = key === "all" || card.dataset.category === key ? "" : "none";
+          card.hidden = !(key === "all" || card.dataset.category === key);
         });
+        const count = [...cards].filter(card => !card.hidden).length;
+        const status = document.querySelector<HTMLElement>(`[data-filter-status="${gridId}"]`);
+        if (status) status.textContent = document.documentElement.lang === "de" ? `${count} Beispielobjekte angezeigt` : `${count} example properties shown`;
       });
     });
   });

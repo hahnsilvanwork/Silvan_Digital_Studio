@@ -34,7 +34,7 @@ interface Props {
   errorMessage: string;
 }
 
-const { lang, subject, fields } = Astro.props;
+const { lang, subject, fields, source, objectId } = Astro.props;
 const demoMessage = lang === "de"
   ? "Demoformular: Sie können die Eingabe ausprobieren. Ihre Daten werden weder übertragen noch gespeichert."
   : "Demo form: Try the interaction. Your details are neither transmitted nor stored.";
@@ -43,6 +43,9 @@ const formId = `form-${subject.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
 <form
   id={formId}
+  data-lang={lang}
+  data-source={source}
+  data-object-id={objectId}
   class="contact-form space-y-8 card p-8 lg:p-12"
 >
   <p class="text-sm">{demoMessage} <a href={lang === "de" ? "https://silvandigital.ch/privacy" : "https://silvandigital.ch/en/privacy"} class="underline">{lang === "de" ? "Datenschutz" : "Privacy"}</a></p>
@@ -60,6 +63,8 @@ const formId = `form-${subject.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
             <select
               id={`${formId}-${field.name}`}
               name={field.name}
+              data-label={field.label}
+              aria-describedby={`${formId}-${field.name}-error`}
               required
               class="w-full border-0 border-b border-[var(--color-outline-variant)] focus:ring-0 focus:border-[var(--color-primary)] px-0 py-3 bg-transparent outline-none appearance-none"
             >
@@ -72,11 +77,16 @@ const formId = `form-${subject.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
               id={`${formId}-${field.name}`}
               type={field.type}
               name={field.name}
+              data-label={field.label}
+              minlength="1"
+              maxlength={field.type === "email" ? 254 : field.type === "tel" ? 40 : 120}
+              aria-describedby={`${formId}-${field.name}-error`}
               required
               placeholder={(field as TextField).placeholder}
               class="w-full border-0 border-b border-[var(--color-outline-variant)] focus:ring-0 focus:border-[var(--color-primary)] px-0 py-3 bg-transparent outline-none"
             />
           )}
+          <p id={`${formId}-${field.name}-error`} class="field-error" hidden></p>
         </div>
       ))}
   </div>
@@ -91,11 +101,16 @@ const formId = `form-${subject.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
         <textarea
           id={`${formId}-${field.name}`}
           name={field.name}
+          data-label={field.label}
+          minlength="10"
+          maxlength="3000"
+          aria-describedby={`${formId}-${field.name}-error`}
           required
           rows="4"
           placeholder={(field as TextareaField).placeholder}
           class="w-full border-0 border-b border-[var(--color-outline-variant)] focus:ring-0 focus:border-[var(--color-primary)] px-0 py-3 bg-transparent outline-none resize-none"
         ></textarea>
+        <p id={`${formId}-${field.name}-error`} class="field-error" hidden></p>
       </div>
     ))}
 
@@ -103,22 +118,104 @@ const formId = `form-${subject.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
     type="submit"
     class="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-50"
   >
-    {lang === "de" ? "Demo-Anfrage testen" : "Try demo enquiry"}
+    {lang === "de" ? "Demo-Anfrage prüfen" : "Review demo enquiry"}
   </button>
   </fieldset>
-  <p class="form-feedback text-sm hidden" role="status" aria-live="polite"></p>
+  <section class="form-summary" hidden aria-labelledby={`${formId}-review-title`}>
+    <h3 id={`${formId}-review-title`} tabindex="-1">{lang === "de" ? "Ihre Demo-Anfrage – nicht versendet" : "Your demo enquiry – not sent"}</h3>
+    <p>{lang === "de" ? "Prüfen Sie Ihre Angaben. Es wurde nichts versendet oder gespeichert." : "Review your details. Nothing has been sent or stored."}</p>
+    <dl></dl>
+    <div class="form-review-actions">
+      <button type="button" class="btn-primary" data-form-edit>{lang === "de" ? "Angaben bearbeiten" : "Edit details"}</button>
+      <button type="button" class="btn-secondary" data-form-clear>{lang === "de" ? "Angaben löschen" : "Clear details"}</button>
+    </div>
+  </section>
+  <p class="form-feedback text-sm" role="status" aria-live="polite"></p>
 </form>
 
 <script>
+  import { validateDemoValue } from "../lib/form-validation";
   document.querySelectorAll<HTMLFormElement>(".contact-form").forEach((form) => {
+    const fields = form.querySelector<HTMLFieldSetElement>("fieldset")!;
+    const controls = [...fields.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>("input, textarea, select")];
+    const summary = form.querySelector<HTMLElement>(".form-summary")!;
+    const details = summary.querySelector("dl")!;
+    const feedback = form.querySelector<HTMLElement>(".form-feedback")!;
+    const de = form.dataset.lang === "de";
+    const validate = (control: typeof controls[number]) => {
+      control.setCustomValidity("");
+      const min = Number(control.getAttribute("minlength") ?? 1);
+      const max = Number(control.getAttribute("maxlength") ?? 10000);
+      const issue = validateDemoValue(control.value, min, max, control.required);
+      const message = issue === 'required' ? (de ? "Bitte füllen Sie dieses Feld aus." : "Please complete this field.")
+        : issue === 'short' ? (de ? `Bitte mindestens ${min} Zeichen eingeben.` : `Please enter at least ${min} characters.`)
+        : issue === 'long' ? (de ? `Bitte höchstens ${max} Zeichen eingeben.` : `Please enter no more than ${max} characters.`)
+        : control.validity.typeMismatch ? (de ? "Bitte eine gültige E-Mail-Adresse eingeben." : "Please enter a valid email address.")
+        : control.validationMessage;
+      control.setCustomValidity(message);
+      control.setAttribute("aria-invalid", String(Boolean(message)));
+      const error = document.getElementById(`${control.id}-error`)!;
+      error.textContent = message;
+      error.hidden = !message;
+      return !message;
+    };
+    const returnToEditing = () => {
+      summary.hidden = true;
+      details.replaceChildren();
+      fields.hidden = false;
+      feedback.textContent = "";
+      controls[0]?.focus();
+    };
+    controls.forEach((control) => {
+      control.addEventListener("input", () => {
+        if (control.getAttribute("aria-invalid") === "true") validate(control);
+      });
+      control.addEventListener("change", () => {
+        if (!summary.hidden) returnToEditing();
+        if (control.getAttribute("aria-invalid") === "true") validate(control);
+      });
+    });
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      const feedback = form.querySelector<HTMLElement>(".form-feedback");
-      if (feedback) { feedback.textContent = document.documentElement.lang === "de" ? "Vielen Dank! So sieht die Bestätigung aus. Dies ist eine Demo – es wurde nichts versendet oder gespeichert." : "Thank you! This is a demo confirmation. Nothing has been sent or stored."; feedback.classList.remove("hidden"); }
-      form.reset();
+      const invalid = controls.filter((control) => !validate(control));
+      if (invalid.length) {
+        feedback.textContent = de ? "Bitte korrigieren Sie die markierten Felder." : "Please correct the highlighted fields.";
+        invalid[0].focus();
+        return;
+      }
+      details.replaceChildren();
+      const appendDetail = (label: string, value: string) => {
+        const row = document.createElement("div");
+        const term = document.createElement("dt");
+        const description = document.createElement("dd");
+        term.textContent = label;
+        description.textContent = value;
+        row.append(term, description);
+        details.append(row);
+      };
+      controls.forEach((control) => appendDetail(control.dataset.label ?? control.name, control.value.trim()));
+      if (form.dataset.source) appendDetail(de ? "Anfrageseite" : "Enquiry page", form.dataset.source);
+      if (form.dataset.objectId) appendDetail(de ? "Objekt" : "Property", form.dataset.objectId);
+      feedback.textContent = "";
+      fields.hidden = true;
+      summary.hidden = false;
+      summary.querySelector<HTMLElement>("h3")?.focus();
+    });
+    form.querySelector("[data-form-edit]")?.addEventListener("click", returnToEditing);
+    form.querySelector("[data-form-clear]")?.addEventListener("click", () => {
+      controls.forEach((control) => {
+        control.value = "";
+        control.setCustomValidity("");
+        control.removeAttribute("aria-invalid");
+        const error = document.getElementById(`${control.id}-error`)!;
+        error.textContent = "";
+        error.hidden = true;
+      });
+      returnToEditing();
+      feedback.textContent = de ? "Ihre Angaben wurden gelöscht." : "Your details have been cleared.";
     });
     // Only accept input once the submit cancellation handler exists.
-    const fields = form.querySelector<HTMLFieldSetElement>("fieldset");
-    if (fields) fields.disabled = false;
+    form.noValidate = true;
+    fields.disabled = false;
   });
 </script>

@@ -6,7 +6,6 @@ import ServiceList from "./ServiceList.astro";
 import { Image } from "astro:assets";
 import { routes, type Lang } from "../i18n/nav";
 import { autolina, bmwServices, stationFeatures } from "../data/bmw";
-import { externalLinks } from "../data/company";
 import { bmwHeroImages } from "../data/bmw-images";
 
 type Kind = "service" | "occasions" | "station" | "accessories";
@@ -23,20 +22,20 @@ const navItems = [
   { label: isDE ? "Zubehör" : "Accessories", href: routes.bmwAccessories[lang] },
 ] as const;
 const copy = {
-  service: { title: isDE ? "Service, der weiterdenkt." : "Service that thinks ahead.", intro: isDE ? "Diagnose, Wartung und Reparatur – persönlich betreut und transparent erklärt." : "Diagnostics, maintenance and repair – personally managed and clearly explained." },
+  service: { title: isDE ? "Wartung und Reparatur." : "Maintenance and repairs.", intro: isDE ? "Diagnose, Wartung und Reparatur – persönlich betreut und transparent erklärt." : "Diagnostics, maintenance and repair – personally managed and clearly explained." },
   occasions: { title: isDE ? "Fahrzeugangebot im Konzept." : "Vehicle listings in the concept.", intro: isDE ? "Entdecken Sie, wie eine übersichtliche Fahrzeugauswahl in Ihrem digitalen Showroom aussehen kann." : "Explore how a clear vehicle selection could look in your digital showroom." },
-  station: { title: isDE ? "Tanken. Laden. Pflegen." : "Fuel. Charge. Care.", intro: isDE ? "Eine Servicestation für alle Marken – zentrale Leistungen direkt in Zürcher Unterland." : "A service station for all brands, conveniently located in Zürcher Unterland." },
+  station: { title: isDE ? "Tanken. Laden. Pflegen." : "Fuel. Charge. Care.", intro: isDE ? "Eine Servicestation für alle Marken – zentrale Leistungen im Zürcher Unterland." : "A service station for all brands, conveniently located in Zürcher Unterland." },
   accessories: { title: isDE ? "Original BMW Zubehör." : "Original BMW accessories.", intro: isDE ? "Passgenaue Lösungen für Alltag, Reise und Saison – mit persönlicher Beratung." : "Precisely matched solutions for everyday driving, travel and every season." },
 }[kind];
 ---
 
 <BaseLayout lang={lang} route={kind === "service" ? "bmwService" : kind === "occasions" ? "bmwOccasions" : kind === "station" ? "bmwStation" : "bmwAccessories"} title={`${copy.title.replace(/<[^>]+>/g, "")} | Falkenried Gruppe`} description={copy.intro}>
   <section class="portal-hero relative overflow-hidden bg-[#07182d] text-white">
-    <div class="absolute inset-0"><Image src={hero.image} alt={hero.alt[lang]} class="h-full w-full object-cover opacity-55" widths={[700, 1100, 1600]} sizes="100vw" /><div class="absolute inset-0 bg-gradient-to-r from-[#07182d] via-[#07182d]/80 to-[#07182d]/20"></div></div>
+    <div class="absolute inset-0"><Image src={hero.image} alt={hero.alt[lang]} class="h-full w-full object-cover opacity-55" widths={[700, 1100, 1600]} sizes="100vw" loading="eager" fetchpriority="high" /><div class="absolute inset-0 bg-gradient-to-r from-[#07182d] via-[#07182d]/80 to-[#07182d]/20"></div></div>
     <div class="relative mx-auto max-w-[var(--container-max)] px-6 py-24 lg:px-16 lg:py-32">
-      <span class="label-caps text-[#62a8ff]">BMW SERVICE · ZÜRCHER UNTERLAND</span>
-      <h1 class="mt-5 max-w-3xl font-display text-4xl font-semibold leading-tight lg:text-6xl">{copy.title}</h1>
-      <p class="mt-6 max-w-2xl text-lg text-white/75">{copy.intro}</p>
+      
+      <h1 class=" max-w-3xl font-display text-4xl font-semibold leading-tight lg:text-6xl">{copy.title}</h1>
+      <p class="mt-6 max-w-2xl text-lg text-white/90">{copy.intro}</p>
     </div>
   </section>
   <SectionNav label={isDE ? "BMW Bereich" : "BMW section"} items={navItems} activePath={activeRoute} accentVar="--color-bmw-text" />
@@ -47,5 +46,5 @@ const copy = {
 
   {kind === "station" && <section class="bg-[var(--color-surface-low)] py-[var(--spacing-section-gap)]"><div class="mx-auto max-w-[var(--container-max)] px-6 lg:px-16"><div class="grid gap-6 md:grid-cols-2">{stationFeatures.map((feature) => <article class="card min-w-0 [overflow-wrap:anywhere] border-t-4 border-t-[var(--color-bmw-text)] p-6 sm:p-8"><p class="label-caps text-[var(--color-bmw-text)]">{feature.eyebrow[lang]}</p><h2 class="mt-4 font-display text-3xl font-semibold">{feature.title[lang]}</h2><p class="mt-4 text-[var(--color-ink-muted)]">{feature.description[lang]}</p><dl class="mt-7 space-y-3 border-t border-[var(--color-outline-variant)]/50 pt-5"><div><dt class="text-xs font-semibold uppercase tracking-wider">{isDE ? "Verfügbarkeit" : "Availability"}</dt><dd class="mt-1">{feature.availability[lang]}</dd></div>{feature.payment && <div><dt class="text-xs font-semibold uppercase tracking-wider">{isDE ? "Bezahlung" : "Payment"}</dt><dd class="mt-1">{feature.payment[lang]}</dd></div>}</dl></article>)}</div><p class="mt-8 text-sm text-[var(--color-ink-muted)]">{isDE ? "Waschanlage und Staubsauger sind an Sonn- und Feiertagen geschlossen. Beispielangaben für diese Demo." : "Car wash and vacuum are closed on Sundays and public holidays. Example details for this demo."}</p></div></section>}
 
-  {kind === "accessories" && <section class="bg-[var(--color-surface)] py-[var(--spacing-section-gap)]"><div class="mx-auto grid max-w-[var(--container-max)] gap-8 px-6 md:grid-cols-2 lg:px-16"><article class="card p-10"><span class="label-caps text-[var(--color-bmw-text)]">BMW ORIGINAL</span><h2 class="mt-4 font-display text-3xl font-semibold">{isDE ? "Zubehör" : "Accessories"}</h2><p class="mt-4 text-[var(--color-ink-muted)]">{isDE ? "Demo-Beispiel Dachtransport: Für eine passende Auswahl wären Fahrzeugmodell, Baujahr, Dachausführung und gewünschte Nutzung relevant. Diese Angaben können Sie im Demoformular ausprobieren." : "Roof transport example: a suitable choice would depend on the vehicle model, year, roof type and intended use. Try describing these requirements in the demo form."}</p><a href={routes.kontakt[lang]} class="btn-primary mt-8 inline-flex">{isDE ? "Demo-Anfrage zu Zubehör" : "Try an accessories enquiry"}</a></article><article class="card p-10"><span class="label-caps text-[var(--color-bmw-text)]">{isDE ? "SOMMER · WINTER" : "SUMMER · WINTER"}</span><h2 class="mt-4 font-display text-3xl font-semibold">{isDE ? "Kompletträder" : "Complete wheels"}</h2><p class="mt-4 text-[var(--color-ink-muted)]">{isDE ? "Original BMW Sommer- und Winterräder, abgestimmt auf Modell und Saison." : "Original BMW summer and winter wheels matched to your model and the season."}</p><a href={routes.kontakt[lang]} class="btn-secondary mt-8 inline-flex">{isDE ? "Beratung anfragen" : "Request advice"}</a></article></div></section>}
+  {kind === "accessories" && <section class="bg-[var(--color-surface)] py-[var(--spacing-section-gap)]"><div class="mx-auto grid max-w-[var(--container-max)] gap-8 px-6 md:grid-cols-2 lg:px-16"><article class="card p-10"><span class="label-caps text-[var(--color-bmw-text)]">BMW ORIGINAL</span><h2 class="mt-4 font-display text-3xl font-semibold">{isDE ? "Zubehör" : "Accessories"}</h2><p class="mt-4 text-[var(--color-ink-muted)]">{isDE ? "Demo-Beispiel Dachtransport: Für eine passende Auswahl wären Fahrzeugmodell, Baujahr, Dachausführung und gewünschte Nutzung relevant. Diese Angaben können Sie im Demoformular ausprobieren." : "Roof transport example: a suitable choice would depend on the vehicle model, year, roof type and intended use. Try describing these requirements in the demo form."}</p><a href={routes.kontakt[lang]} class="btn-primary mt-8 inline-flex">{isDE ? "Demo-Anfrage zu Zubehör" : "Try an accessories enquiry"}</a></article><article class="card p-10"><span class="label-caps text-[var(--color-bmw-text)]">{isDE ? "SOMMER · WINTER" : "SUMMER · WINTER"}</span><h2 class="mt-4 font-display text-3xl font-semibold">{isDE ? "Kompletträder" : "Complete wheels"}</h2><p class="mt-4 text-[var(--color-ink-muted)]">{isDE ? "Original BMW Sommer- und Winterräder, abgestimmt auf Modell und Saison." : "Original BMW summer and winter wheels matched to your model and the season."}</p><a href={routes.kontakt[lang]} class="btn-secondary mt-8 inline-flex">{isDE ? "Demo-Anfrage öffnen" : "Open demo enquiry"}</a></article></div></section>}
 </BaseLayout>
