@@ -20,7 +20,7 @@ export default function RootLayout({
       <body>
         <a className="salon-skip" href="#main">Zum Inhalt</a>
         <Navbar />
-        <main id="main">{children}</main>
+        <main id="main" tabIndex={-1}>{children}</main>
         <Footer />
       </body>
     </html>

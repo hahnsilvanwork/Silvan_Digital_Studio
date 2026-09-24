@@ -1,2 +1,16 @@
 import Link from "next/link";
-export default function Footer() { return <footer className="salon-footer"><div><Link href="/" className="font-display text-3xl">Salon Lumière</Link><p>Ein persönlicher Look beginnt mit einem guten Gespräch.</p></div><nav aria-label="Fussnavigation"><Link href="/leistungen">Leistungen & Preise</Link><Link href="/ueber-uns">Unser Team</Link><Link href="/kontakt">Termin anfragen</Link></nav><div className="salon-demo"><p>Konzeptwebsite von SILVAN. Fiktiver Salon; Bilder, Personen und Angebote dienen der Gestaltung.</p><a href="/work/salon-lumiere">Zurück zum Projekt ↗</a></div><a href="https://silvandigital.ch/privacy" className="block text-center underline py-4">Datenschutz dieser Demo</a></footer>; }
+
+export default function Footer() {
+  return (
+    <footer className="salon-footer">
+      <div className="salon-shell">
+        <div className="footer-main">
+          <div><Link prefetch={false} href="/" className="footer-brand">Salon Lumière.</Link><p>Ein persönlicher Look beginnt<br />mit einem guten Gespräch.</p></div>
+          <nav aria-label="Fussnavigation"><Link prefetch={false} href="/leistungen">Leistungen & Preise</Link><Link prefetch={false} href="/ueber-uns">Der Salon & das Team</Link><Link prefetch={false} href="/kontakt">Termin anfragen</Link></nav>
+          <div className="footer-concept"><p>Ein Salonkonzept von SilvanDigital.</p><p>Fiktiver Salon in Zürich. Bilder, Personen, Öffnungszeiten und Angebote dienen der Gestaltung. Es werden keine Termine gebucht.</p></div>
+        </div>
+        <div className="footer-bottom"><a href="https://silvandigital.ch/work/salon-lumiere">Zum Projekt bei SilvanDigital</a><a href="https://silvandigital.ch/privacy">Datenschutz dieser Demo</a></div>
+      </div>
+    </footer>
+  );
+}

@@ -1,154 +1,80 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/", label: "Startseite" },
-  { href: "/leistungen", label: "Leistungen" },
-  { href: "/ueber-uns", label: "Über uns" },
-  { href: "/kontakt", label: "Kontakt" },
+  { href: "/leistungen", label: "Leistungen & Preise" },
+  { href: "/ueber-uns", label: "Der Salon" },
 ];
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
   const pathname = usePathname().replace(/\/$/, "") || "/";
+  const [open, setOpen] = useState(false);
   const [previousPath, setPreviousPath] = useState(pathname);
+  const header = useRef<HTMLElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const brand = useRef<HTMLAnchorElement>(null);
   if (previousPath !== pathname) {
     setPreviousPath(pathname);
     setOpen(false);
   }
 
-  useEffect(() => { const close = (event: KeyboardEvent) => { if (event.key === "Escape") { setOpen(false); document.querySelector<HTMLButtonElement>('[aria-controls="salon-mobile-menu"]')?.focus(); } }; window.addEventListener("keydown", close); return () => window.removeEventListener("keydown", close); }, []);
-  // Solid background when: scrolled OR on a subpage
-  const solidBg = true;
-  // When navbar is transparent (home hero, dark bg), use light text
-  const lightText = !solidBg;
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        trigger.current?.focus();
+      }
+    };
+    const onOutside = (event: PointerEvent | FocusEvent) => {
+      if (event.target instanceof Node && !header.current?.contains(event.target)) setOpen(false);
+    };
+    const desktop = window.matchMedia("(min-width: 900px)");
+    const onResize = () => {
+      if (!desktop.matches) return;
+      if (document.activeElement === trigger.current || document.activeElement?.closest("#salon-mobile-menu")) brand.current?.focus();
+      setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onOutside);
+    document.addEventListener("focusin", onOutside);
+    desktop.addEventListener("change", onResize);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onOutside);
+      document.removeEventListener("focusin", onOutside);
+      desktop.removeEventListener("change", onResize);
+    };
+  }, [open]);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        solidBg
-          ? "bg-cream/95 backdrop-blur-sm shadow-sm border-b border-cream-dark"
-          : "bg-transparent"
-      }`}
-    >
-      <nav aria-label="Hauptnavigation" className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16 md:h-20">
-        {/* Logo */}
-        <Link href="/" className="flex flex-col leading-none group">
-          <span
-            className={`font-display text-xl md:text-2xl font-semibold tracking-wide transition-colors duration-300 ${
-              lightText ? "text-cream" : "text-charcoal"
-            }`}
-          >
-            Salon
-          </span>
-          <span className="font-display text-xs md:text-sm tracking-[0.25em] text-gold uppercase font-medium">
-            Lumière
-          </span>
+    <header className="salon-header" ref={header}>
+      <div className="salon-nav salon-shell">
+        <Link prefetch={false} href="/" className="salon-brand" ref={brand} aria-label="Salon Lumière – Startseite" onClick={() => setOpen(false)}>
+          <span>Salon Lumière<span className="brand-period" aria-hidden="true">.</span></span>
         </Link>
-
-        {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-8">
-          {links.map(({ href, label }) => (
-            <li key={href}>
-              <Link
-                href={href}
-                aria-current={pathname === href ? "page" : undefined}
-                className={`relative text-sm tracking-wide font-body font-medium transition-colors duration-200 py-1 group ${
-                  pathname === href
-                    ? "text-gold"
-                    : lightText
-                    ? "text-cream/80 hover:text-gold"
-                    : "text-charcoal hover:text-gold"
-                }`}
-              >
-                {label}
-                <span
-                  className={`absolute -bottom-0.5 left-0 h-px bg-gold transition-all duration-300 ${
-                    pathname === href ? "w-full" : "w-0 group-hover:w-full"
-                  }`}
-                />
-              </Link>
-            </li>
-          ))}
-          <li>
-            <Link
-              href="/kontakt"
-              className={`ml-2 px-5 py-2.5 text-sm font-medium tracking-wide transition-all duration-200 rounded-none ${
-                lightText
-                  ? "bg-gold text-charcoal hover:bg-gold-light"
-                  : "bg-charcoal text-cream hover:bg-charcoal-light"
-              }`}
-            >
-              Termin anfragen
-            </Link>
-          </li>
-        </ul>
-
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden p-3 -mr-2"
-          aria-expanded={open}
-          aria-controls="salon-mobile-menu"
-          aria-label={open ? "Menü schliessen" : "Menü öffnen"}
-        >
-          <span className="block w-6 relative h-5">
-            <span
-              className={`absolute block h-px w-full transition-all duration-300 ${
-                lightText ? "bg-cream" : "bg-charcoal"
-              } ${open ? "top-2 rotate-45" : "top-0"}`}
-            />
-            <span
-              className={`absolute block h-px w-full top-2 transition-all duration-300 ${
-                lightText ? "bg-cream" : "bg-charcoal"
-              } ${open ? "opacity-0 translate-x-2" : "opacity-100"}`}
-            />
-            <span
-              className={`absolute block h-px w-full transition-all duration-300 ${
-                lightText ? "bg-cream" : "bg-charcoal"
-              } ${open ? "top-2 -rotate-45" : "top-4"}`}
-            />
-          </span>
+        <nav className="salon-desktop-nav" aria-label="Hauptnavigation">
+          {links.map(({ href, label }) => <Link prefetch={false} key={href} href={href} aria-current={pathname === href ? "page" : undefined}>{label}</Link>)}
+          <Link prefetch={false} href="/kontakt" className="salon-button" aria-current={pathname === "/kontakt" ? "page" : undefined}>Termin anfragen</Link>
+        </nav>
+        <button ref={trigger} type="button" className="salon-menu-toggle" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="salon-mobile-menu" aria-label={open ? "Menü schliessen" : "Menü öffnen"}>
+          <span>{open ? "Schliessen" : "Menü"}</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+            {open ? <path d="m5 5 14 14M5 19 19 5" /> : <path d="M3 7h18M3 17h18" />}
+          </svg>
         </button>
-      </nav>
-
-      {/* Mobile menu */}
-      <div
-        id="salon-mobile-menu"
-        hidden={!open}
-        className={`md:hidden transition-all duration-300 overflow-y-auto overscroll-contain bg-cream border-b border-cream-dark ${
-          open ? "max-h-[calc(100dvh-65px)] opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <ul className="px-6 pb-6 pt-2 flex flex-col gap-1">
-          {links.map(({ href, label }) => (
-            <li key={href}>
-              <Link
-                href={href}
-                aria-current={pathname === href ? "page" : undefined}
-                className={`block py-3 text-base font-body border-b border-cream-dark last:border-0 transition-colors duration-200 ${
-                  pathname === href
-                    ? "text-gold font-medium"
-                    : "text-charcoal hover:text-gold"
-                }`}
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
-          <li className="pt-3">
-            <Link
-              href="/kontakt"
-              className="block text-center py-3 bg-charcoal text-cream text-sm font-medium tracking-wide"
-            >
-              Termin anfragen
-            </Link>
-          </li>
-        </ul>
       </div>
+      <nav id="salon-mobile-menu" className="salon-mobile-nav" aria-label="Mobile Navigation" hidden={!open}>
+        <div className="salon-shell">
+          {links.map(({ href, label }) => <Link prefetch={false} key={href} href={href} onClick={() => setOpen(false)} aria-current={pathname === href ? "page" : undefined}>{label}</Link>)}
+          <Link prefetch={false} href="/kontakt" className="salon-button" onClick={() => setOpen(false)} aria-current={pathname === "/kontakt" ? "page" : undefined}>Termin anfragen</Link>
+          <p>Fiktives Salonkonzept · Keine echte Buchung</p>
+        </div>
+      </nav>
     </header>
   );
 }

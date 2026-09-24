@@ -2,301 +2,185 @@
 
 import { useState, useEffect, useRef, useSyncExternalStore } from "react";
 import { allServices, serviceFromQuery } from "@/content/services";
+import { type Appointment, type AppointmentErrors, swissDate, nextDate, durationMinutes, timeSlots, validateAppointment, localizedDate } from "@/lib/appointment";
+import styles from "./contact.module.css";
 
 const hours = [
-  { day: "Montag", time: "09:00 – 19:00" },
-  { day: "Dienstag", time: "09:00 – 19:00" },
-  { day: "Mittwoch", time: "09:00 – 19:00" },
-  { day: "Donnerstag", time: "09:00 – 20:00" },
-  { day: "Freitag", time: "09:00 – 20:00" },
-  { day: "Samstag", time: "09:00 – 17:00" },
-  { day: "Sonntag", time: "Geschlossen" },
+  ["Montag", "09:00 – 19:00"], ["Dienstag", "09:00 – 19:00"],
+  ["Mittwoch", "09:00 – 19:00"], ["Donnerstag", "09:00 – 20:00"],
+  ["Freitag", "09:00 – 20:00"], ["Samstag", "09:00 – 17:00"], ["Sonntag", "Geschlossen"],
 ];
-
-
-const dayMap = [6, 0, 1, 2, 3, 4, 5]; // map JS day to our array index
-const subscribeToDay = (notify: () => void) => {
-  const timer = window.setInterval(notify, 60_000);
-  return () => window.clearInterval(timer);
-};
-const currentDay = () => dayMap[new Date().getDay()];
-const serverDay = () => null;
-
-// The server and hydration snapshot stay locked until React has attached handlers.
 const subscribeToReadiness = () => () => {};
 const clientReady = () => true;
 const serverReady = () => false;
-
 const subscribeToService = (notify: () => void) => {
   window.addEventListener("popstate", notify);
   return () => window.removeEventListener("popstate", notify);
 };
 const currentService = () => serviceFromQuery(window.location.search);
-const serverService = () => "";
+const emptySnapshot = () => "";
+const subscribeToDate = (notify: () => void) => {
+  const timer = window.setInterval(notify, 60_000);
+  return () => window.clearInterval(timer);
+};
+const todaySnapshot = () => swissDate();
+const emptyForm: Appointment = { name: "", email: "", message: "", desiredDate: "", desiredTime: "" };
 
 export default function Kontakt() {
-  const requestedService = useSyncExternalStore(subscribeToService, currentService, serverService);
+  const requestedService = useSyncExternalStore(subscribeToService, currentService, emptySnapshot);
   const [chosenService, setChosenService] = useState<string | null>(null);
   const service = chosenService ?? requestedService;
+  const selected = allServices.find(({ id }) => id === service);
+  const duration = selected ? durationMinutes(selected.duration) : 0;
   const ready = useSyncExternalStore(subscribeToReadiness, clientReady, serverReady);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-    desiredDate: "",
-    desiredTime: "",
-  });
+  const today = useSyncExternalStore(subscribeToDate, todaySnapshot, emptySnapshot);
+  const [formData, setFormData] = useState<Appointment>(emptyForm);
+  const [errors, setErrors] = useState<AppointmentErrors>({});
   const [submitted, setSubmitted] = useState(false);
+  const [notice, setNotice] = useState("");
   const statusRef = useRef<HTMLDivElement>(null);
-  useEffect(() => { if (submitted) statusRef.current?.focus(); }, [submitted]);
+  const focusAfterRender = useRef<string | null>(null);
+  const slots = timeSlots(formData.desiredDate, duration);
+  useEffect(() => {
+    if (submitted) statusRef.current?.focus();
+    else if (focusAfterRender.current) {
+      document.getElementById(focusAfterRender.current)?.focus();
+      focusAfterRender.current = null;
+    }
+  }, [submitted, notice]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simulate form submission
-    setSubmitted(true);
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const todayIndex = useSyncExternalStore(subscribeToDay, currentDay, serverDay);
+  function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    const nextErrors = validateAppointment(formData, duration);
+    setErrors(nextErrors);
+    const firstError = Object.keys(nextErrors)[0];
+    if (firstError) {
+      setNotice("Bitte die markierten Angaben prüfen.");
+      document.getElementById(firstError)?.focus();
+    } else {
+      setNotice("");
+      setSubmitted(true);
+    }
+  }
+  function change(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+    const { name, value } = event.target;
+    setFormData(prev => ({ ...prev, [name]: value, ...(name === "desiredDate" ? { desiredTime: "" } : {}) }));
+    setErrors(prev => ({ ...prev, [name]: undefined, ...(name === "desiredDate" ? { desiredTime: undefined } : {}) }));
+    setNotice("");
+  }
+  function edit() {
+    focusAfterRender.current = "name";
+    setSubmitted(false);
+  }
+  function clear() {
+    setFormData({ ...emptyForm });
+    setChosenService("");
+    setErrors({});
+    focusAfterRender.current = "service";
+    setSubmitted(false);
+    setNotice("Alle Angaben wurden gelöscht.");
+    // Also works when clearing an already-visible form.
+    document.getElementById("service")?.focus();
+  }
+  function describedBy(field: keyof Appointment, hint?: string) {
+    return [hint, errors[field] ? `${field}-error` : ""].filter(Boolean).join(" ") || undefined;
+  }
+  const error = (field: keyof Appointment) => errors[field] ? <p id={`${field}-error`} className={styles.error}>{errors[field]}</p> : null;
 
   return (
     <>
-      {/* Page Header */}
-      <section className="pt-32 md:pt-40 pb-16 md:pb-20 bg-charcoal">
-        <div className="max-w-6xl mx-auto px-6">
-          <p className="text-gold tracking-[0.3em] text-xs uppercase font-body font-medium mb-4">
-            Wir freuen uns auf Sie
-          </p>
-          <h1 className="font-display text-4xl md:text-6xl text-cream font-semibold leading-tight">
-            Kontakt & Demo-Terminanfrage
-          </h1>
+      <section className="page-intro">
+        <div className="salon-shell">
+          <h1>Ihr Terminwunsch.</h1>
+          <p>Leistung wählen, Wunschzeit ergänzen und Angaben prüfen. Probieren Sie den Ablauf mit Beispieldaten aus.</p>
         </div>
       </section>
-
-      <section className="max-w-6xl mx-auto px-6 py-16 md:py-24">
-        <div className="grid md:grid-cols-2 gap-12 md:gap-20">
-          {/* Left: Info */}
-          <div className="space-y-10">
-            {/* Address */}
-            <div>
-              <h2 className="font-display text-xl text-charcoal font-semibold mb-4">
-                Adresse
-              </h2>
-              <address className="not-italic text-muted font-body text-base space-y-1 leading-relaxed">
-                <p className="font-medium text-charcoal">Salon Lumière</p>
-                <p>Beispieladresse 42</p>
-                <p>8001 Zürich</p>
-                <p className="mt-3">
-                  <a
-                    href="#demo-form"
-                    className="text-charcoal hover:text-gold transition-colors duration-200"
-                  >
-                    Kontakt im Demoformular
-                  </a>
-                </p>
-                <p>
-                  <a
-                    href="#demo-form"
-                    className="text-charcoal hover:text-gold transition-colors duration-200"
-                  >
-                    Keine reale Kontaktadresse
-                  </a>
-                </p>
-              </address>
-            </div>
-
-            {/* Opening hours */}
-            <div>
-              <h2 className="font-display text-xl text-charcoal font-semibold mb-4">
-                Öffnungszeiten
-              </h2>
-              <ul className="space-y-2">
-                {hours.map(({ day, time }, i) => (
-                  <li
-                    key={day}
-                    className={`flex justify-between items-center py-2.5 border-b font-body text-sm ${
-                      i === todayIndex
-                        ? "border-gold/40 text-charcoal"
-                        : "border-cream-dark text-muted"
-                    }`}
-                  >
-                    <span
-                      className={`flex items-center gap-2 ${
-                        i === todayIndex ? "font-semibold" : ""
-                      }`}
-                    >
-                      {i === todayIndex && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
-                      )}
-                      {day}
-                    </span>
-                    <span
-                      className={
-                        time === "Geschlossen"
-                          ? "text-muted italic"
-                          : i === todayIndex
-                          ? "text-gold font-medium"
-                          : ""
-                      }
-                    >
-                      {time}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-          </div>
-
-          {/* Right: Contact form */}
-          <div id="demo-form">
-            <h2 className="font-display text-xl text-charcoal font-semibold mb-6">
-              Anfrage ausprobieren
-            </h2>
-
-            {submitted ? (
-              <div ref={statusRef} tabIndex={-1} role="status" className="border border-gold/30 bg-gold/5 p-8 text-center">
-                <svg
-                  className="w-10 h-10 text-gold mx-auto mb-4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <h3 className="font-display text-xl text-charcoal font-semibold mb-2">
-                  Demo ausprobiert.
-                </h3>
-                <p className="text-muted text-sm font-body">
-                  Es wurde nichts versendet oder dauerhaft gespeichert. Es wurde kein Termin gebucht. Ihre Angaben bleiben nur bis zum Neuladen in dieser Browseransicht.
-                </p>
-                <p className="mt-4 text-sm text-charcoal" data-testid="inquiry-summary">
-                  Gewünschte Leistung: {allServices.find(({ id }) => id === service)?.name ?? "Beratung zur passenden Leistung"}. Wunschdatum: {formData.desiredDate}. Wunschzeit: {formData.desiredTime} Uhr. Keine Verfügbarkeitsprüfung.
-                </p>
-                <button className="salon-button mt-6" type="button" onClick={() => { setSubmitted(false); setTimeout(() => document.getElementById("name")?.focus(), 0); }}>Erneut ausprobieren</button>
+      <section className={`salon-shell salon-section ${styles.layout}`}>
+        <div id="demo-form" className={styles.formColumn}>
+          <h2>{submitted ? "Ihr Wunsch im Überblick" : "Anfrage ausprobieren"}</h2>
+          <p className={styles.intro}>Dies ist eine Konzeptwebsite. Es wird nichts versendet oder dauerhaft gespeichert und kein Termin gebucht.</p>
+          <p role="status" aria-live="polite" className={styles.notice}>{notice}</p>
+          {submitted ? (
+            <div ref={statusRef} tabIndex={-1} className={styles.summary} aria-label="Zusammenfassung Ihrer Beispielanfrage">
+              <p>Ihre Angaben bleiben nur in dieser Browseransicht. Es wurde keine Verfügbarkeit geprüft.</p>
+              <dl data-testid="inquiry-summary">
+                <div><dt>Leistung</dt><dd>{selected?.name ?? "Beratung zur passenden Leistung"}{selected ? <span>{selected.price} · {selected.duration}</span> : <span>Preis und Dauer noch offen</span>}</dd></div>
+                <div><dt>Wunschdatum</dt><dd>{localizedDate(formData.desiredDate)}</dd></div>
+                <div><dt>Wunschzeit</dt><dd>{formData.desiredTime} Uhr</dd></div>
+                <div><dt>Name</dt><dd>{formData.name}</dd></div>
+                <div><dt>E-Mail</dt><dd>{formData.email}</dd></div>
+                <div><dt>Nachricht</dt><dd className={styles.message}>{formData.message || "Keine Nachricht ergänzt"}</dd></div>
+              </dl>
+              <div className={styles.actions}>
+                <button type="button" className="salon-button" onClick={edit}>Angaben ändern</button>
+                <button type="button" className="salon-button-secondary" onClick={clear}>Angaben löschen</button>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} autoComplete="off">
-                <noscript><p>Zum Ausprobieren bitte JavaScript aktivieren. Das Formular bleibt sonst deaktiviert.</p></noscript>
-                <fieldset disabled={!ready} className="space-y-5 border-0 p-0 m-0 min-w-0" aria-label="Demo-Anfrage">
-                <p className="text-sm text-muted">Konzeptwebsite: Dieses Formular demonstriert eine Terminanfrage. Es werden keine Daten versendet oder dauerhaft gespeichert und keine Termine gebucht. Es wird keine Verfügbarkeit geprüft.</p>
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-xs tracking-widest uppercase font-body font-medium text-charcoal mb-2"
-                  >
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    placeholder="Ihr vollständiger Name"
-                    className="w-full border border-cream-dark bg-cream px-4 py-3 text-sm font-body text-charcoal placeholder:text-muted/40 focus:outline-none focus:border-gold transition-colors duration-200"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-xs tracking-widest uppercase font-body font-medium text-charcoal mb-2"
-                  >
-                    E-Mail
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="ihre@email.ch"
-                    className="w-full border border-cream-dark bg-cream px-4 py-3 text-sm font-body text-charcoal placeholder:text-muted/40 focus:outline-none focus:border-gold transition-colors duration-200"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="service" className="block text-xs tracking-widest uppercase font-body font-medium text-charcoal mb-2">Gewünschte Leistung</label>
-                  <select id="service" name="service" value={service} onChange={(event) => setChosenService(event.target.value)} className="w-full border border-cream-dark bg-cream px-4 py-3 text-sm font-body text-charcoal focus:outline-none focus:border-gold">
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} noValidate autoComplete="off">
+              <noscript><p>Zum Ausprobieren bitte JavaScript aktivieren. Das Formular bleibt sonst deaktiviert.</p></noscript>
+              <fieldset disabled={!ready} className={styles.fields} aria-label="Demo-Anfrage">
+                <p className={styles.hint}>Name, E-Mail, Wunschdatum und Wunschzeit sind erforderlich. Ohne Leistungswahl wird eine Beratung angefragt.</p>
+                <div className={styles.field}>
+                  <label htmlFor="service">Gewünschte Leistung</label>
+                  <select id="service" name="service" value={service} aria-describedby="service-detail" onChange={event => { setChosenService(event.target.value); setFormData(prev => ({ ...prev, desiredTime: "" })); setErrors(prev => ({ ...prev, desiredTime: undefined })); }}>
                     <option value="">Beratung zur passenden Leistung</option>
                     {allServices.map(({ id, name }) => <option key={id} value={id}>{name}</option>)}
                   </select>
+                  <p id="service-detail" className={styles.serviceDetail} aria-live="polite">{selected ? `${selected.price} · ${selected.duration}` : "Preis und Dauer werden erst mit der passenden Leistung festgelegt."}</p>
                 </div>
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <div>
-                    <label htmlFor="desiredDate" className="block text-xs tracking-widest uppercase font-body font-medium text-charcoal mb-2">Wunschdatum</label>
-                    <input id="desiredDate" name="desiredDate" type="date" required value={formData.desiredDate} onChange={handleChange} aria-describedby="date-time-note" className="w-full min-w-0 border border-cream-dark bg-cream px-4 py-3 text-sm font-body text-charcoal focus:outline-none focus:border-gold" />
+                <div className={styles.pair}>
+                  <div className={styles.field}>
+                    <label htmlFor="desiredDate">Wunschdatum</label>
+                    <input id="desiredDate" name="desiredDate" type="date" required min={today ? nextDate(today) : undefined} value={formData.desiredDate} onChange={change} aria-invalid={!!errors.desiredDate} aria-describedby={describedBy("desiredDate", "date-time-note")} />
+                    {error("desiredDate")}
                   </div>
-                  <div>
-                    <label htmlFor="desiredTime" className="block text-xs tracking-widest uppercase font-body font-medium text-charcoal mb-2">Wunschzeit</label>
-                    <input id="desiredTime" name="desiredTime" type="time" required value={formData.desiredTime} onChange={handleChange} aria-describedby="date-time-note" className="w-full min-w-0 border border-cream-dark bg-cream px-4 py-3 text-sm font-body text-charcoal focus:outline-none focus:border-gold" />
+                  <div className={styles.field}>
+                    <label htmlFor="desiredTime">Wunschzeit</label>
+                    <select id="desiredTime" name="desiredTime" required value={formData.desiredTime} onChange={change} aria-invalid={!!errors.desiredTime} aria-describedby={describedBy("desiredTime", "date-time-note")}>
+                      <option value="">{!formData.desiredDate ? "Zuerst Datum wählen" : slots.length ? "Uhrzeit wählen" : "Keine Beispielzeiten"}</option>
+                      {slots.map(time => <option key={time} value={time}>{time} Uhr</option>)}
+                    </select>
+                    {error("desiredTime")}
                   </div>
                 </div>
-                <p id="date-time-note" className="text-xs text-muted font-body">Datum und Uhrzeit sind freie Beispielwünsche, keine verfügbaren Termine. In einem realen Salon müssten sie erst bestätigt werden.</p>
-
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-xs tracking-widest uppercase font-body font-medium text-charcoal mb-2"
-                  >
-                    Nachricht
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={6}
-                    placeholder="Beschreiben Sie Ihren Wunsch oder fragen Sie uns etwas…"
-                    className="w-full border border-cream-dark bg-cream px-4 py-3 text-sm font-body text-charcoal placeholder:text-muted/40 focus:outline-none focus:border-gold transition-colors duration-200 resize-none"
-                  />
+                <p id="date-time-note" className={styles.hint}>Bitte ab morgen wählen; sonntags geschlossen. Die Beispielzeiten berücksichtigen die Öffnungszeiten und bei gewählter Leistung die längste angegebene Dauer. Sie zeigen keine echte Verfügbarkeit.</p>
+                <div className={styles.field}>
+                  <label htmlFor="name">Name</label>
+                  <input id="name" name="name" type="text" required maxLength={100} value={formData.name} onChange={change} placeholder="Anna Beispiel" aria-invalid={!!errors.name} aria-describedby={describedBy("name")} />
+                  {error("name")}
                 </div>
-
-                <p className="text-xs text-muted font-body">
-                  Bitte verwenden Sie Beispieldaten. Name, E-Mail, Wunschdatum, Wunschzeit und Nachricht sind erforderlich. Ohne Leistungswahl wird eine Beratung angefragt. Ihre Eingaben bleiben nur in dieser Browseransicht.
-                </p>
-
-                <button
-                  type="submit"
-                  className="w-full py-4 bg-charcoal text-cream text-sm font-medium tracking-wide hover:bg-charcoal-light transition-colors duration-200 font-body"
-                >
-                  Anfrage ausprobieren
-                </button>
+                <div className={styles.field}>
+                  <label htmlFor="email">E-Mail</label>
+                  <input id="email" name="email" type="email" inputMode="email" required maxLength={254} value={formData.email} onChange={change} placeholder="anna@example.com" aria-invalid={!!errors.email} aria-describedby={describedBy("email")} />
+                  {error("email")}
+                </div>
+                <div className={styles.field}>
+                  <label htmlFor="message">Nachricht <span>(optional)</span></label>
+                  <textarea id="message" name="message" rows={4} maxLength={1000} value={formData.message} onChange={change} placeholder="Was möchten Sie ergänzen?" aria-invalid={!!errors.message} aria-describedby={describedBy("message", "message-hint")} />
+                  <p id="message-hint" className={styles.hint}>Höchstens 1000 Zeichen.</p>
+                  {error("message")}
+                </div>
+                <div className={styles.actions}>
+                  <button type="submit" className="salon-button">Angaben prüfen</button>
+                  <button type="button" className="salon-button-secondary" onClick={clear}>Angaben löschen</button>
+                </div>
               </fieldset>
-              </form>
-            )}
-
-            {/* Quick booking note */}
-            <div className="mt-8 p-6 bg-cream-dark border-l-2 border-gold">
-              <p className="text-sm font-body text-charcoal font-medium mb-1">
-                Eine Terminanfrage zum Ausprobieren
-              </p>
-              <p className="text-sm text-muted font-body">
-                Dieser fiktive Salon nimmt keine Buchungen entgegen:{" "}
-                <a
-                  href="#demo-form"
-                  className="text-charcoal font-semibold hover:text-gold transition-colors duration-200"
-                >
-                  Kontakt im Demoformular
-                </a>
-              </p>
-            </div>
-          </div>
+            </form>
+          )}
         </div>
+        <aside className={styles.visit} aria-label="Beispieladresse und Öffnungszeiten">
+          <div>
+            <h2>Ein Salon in Zürich.</h2>
+            <p>So könnten die Besuchsinformationen eines Salons aussehen. Adresse und Öffnungszeiten gehören zu dieser fiktiven Demo.</p>
+            <address>Salon Lumière<br />Beispieladresse 42<br />8001 Zürich</address>
+            <p className={styles.hint}>Keine reale Kontaktadresse.</p>
+          </div>
+          <div>
+            <h3>Öffnungszeiten im Beispiel</h3>
+            <dl className={styles.hours}>{hours.map(([day, time]) => <div key={day}><dt>{day}</dt><dd>{time}</dd></div>)}</dl>
+          </div>
+        </aside>
       </section>
     </>
   );
