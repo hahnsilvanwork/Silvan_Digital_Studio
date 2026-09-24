@@ -1,42 +1,489 @@
-﻿"use client";
-import { useEffect, useRef, useState, useSyncExternalStore, type MouseEvent } from "react";
-const nav = [["start","Start"],["leistungen","Leistungen"],["projekte","Projekte"],["ueber","Über uns"],["kontakt","Kontakt"]];
+"use client";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
+import Image from "next/image";
+import InquiryForm, { type Selection } from "../components/InquiryForm";
+const nav = [
+  ["leistungen", "Leistungen"],
+  ["projekte", "Projektideen"],
+  ["ueber", "Arbeitsweise"],
+  ["kontakt", "Kontakt"],
+];
 const services = [
-{title:"Renovationen",text:"Aus bestehenden Räumen wird ein neues Zuhause. Wir koordinieren Ihren Umbau – vom ersten Plan bis zum letzten Handgriff.",tags:"Innenausbau · Küche · Bad"},
-{title:"Malerarbeiten",text:"Frische Farbe. Klare Kanten. Wir bringen Wände und Fassaden wieder zum Strahlen und schützen, was bleiben soll.",tags:"Innenanstrich · Fassade · Tapezieren"},
-{title:"Bodenbeläge",text:"Ein guter Boden trägt den Alltag. Wir verlegen, schleifen und versiegeln mit dem richtigen Gefühl fürs Material.",tags:"Parkett · Vinyl · Fliesen"},
-{title:"Fassade & Aussen",text:"Schön anzusehen. Gut geschützt. Wir machen Fassaden, Balkone und Terrassen bereit für die nächsten Jahre.",tags:"Sanierung · Dämmung · Terrasse"}];
-const projects=[{title:"Mehr Raum fürs Leben.",location:"Wohnungsrenovation · Zürich-Wiedikon",image:"proj-1",alt:"Heller renovierter Wohnraum mit warmem Holzboden",description:"Gestaltungsidee: Helle Wandflächen und ein durchgehender Holzboden verbinden Wohnen und Essen. Im Musterprojekt stehen Materialabstimmung und eine ruhige Raumwirkung im Mittelpunkt."},{title:"Ein neuer erster Eindruck.",location:"Fassadenrenovation · Zürich-Altstetten",image:"proj-2",alt:"Frisch renovierte Fassade eines Mehrfamilienhauses",description:"Gestaltungsidee: Ein zurückhaltender Farbton betont Fenster und Gebäudekanten. Untergrundprüfung, Schutz angrenzender Bauteile und Anstrichaufbau wären die zentralen Planungsschritte."},{title:"Der Tag beginnt hier.",location:"Badsanierung · Winterthur",image:"proj-3",alt:"Modernisiertes Badezimmer mit sorgfältig verlegten Fliesen",description:"Gestaltungsidee: Klare Fliesenflächen und gut zugängliche Sanitärelemente schaffen Übersicht. Leitungsführung, Abdichtung und die Reihenfolge der Gewerke müssten vorab abgestimmt werden."},{title:"Natürlich. Bodenständig.",location:"Parkettarbeiten · Küsnacht",image:"proj-4",alt:"Präzise verlegter Parkettboden in einem Wohnraum",description:"Gestaltungsidee: Die Verlegerichtung unterstützt die Raumproportionen. Holzton, Oberflächenbehandlung und Übergänge zu anderen Räumen werden als zusammenhängendes Materialkonzept gedacht."}];
-const image=(name:string)=>`/demos/handwerk/${name}.webp`;
-// The server and hydration snapshot stay locked until React has attached handlers.
-const subscribeToReadiness = () => () => {};
-const clientReady = () => true;
-const serverReady = () => false;
-
-export default function Home(){
-  const ready = useSyncExternalStore(subscribeToReadiness, clientReady, serverReady);
-const serviceControl = useRef<HTMLSelectElement>(null);
-const nameControl = useRef<HTMLInputElement>(null);
-const [selectedService, setSelectedService] = useState("");
-const chooseService = (event: MouseEvent<HTMLAnchorElement>, service: string) => {
-  const link = event.currentTarget;
-  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || (link.target && link.target !== "_self") || !ready) return;
-  event.preventDefault();
-  setSelectedService(service);
-  setPreviewed(false);
-  // Avoid native fragment navigation overriding the form focus in Firefox.
-  if (window.location.hash !== link.hash) window.history.pushState(window.history.state, "", link.hash);
-  document.getElementById("kontakt")?.scrollIntoView({ block: "start" });
-  serviceControl.current?.focus({ preventScroll: true });
-};
-const menuButton = useRef<HTMLButtonElement>(null);const [active,setActive]=useState("start");const [open,setOpen]=useState(false);const [previewed,setPreviewed]=useState(false);
-useEffect(()=>{const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)setActive(entry.target.id)})},{rootMargin:"-15% 0px -65% 0px"});nav.forEach(([id])=>{const el=document.getElementById(id);if(el)observer.observe(el)});const escape=(event:KeyboardEvent)=>{if(event.key==="Escape"){setOpen(false);menuButton.current?.focus()}};document.addEventListener("keydown",escape);return()=>{observer.disconnect();document.removeEventListener("keydown",escape)}},[]);
-return <><a className="skip" href="#inhalt">Zum Inhalt</a><aside className="sidebar"><a href="#start" className="logo" onClick={()=>setOpen(false)} aria-label="Steiner Bau – Startseite"><span className="logo-mark" aria-hidden="true">S<span>↗</span></span><span>STEINER<strong>BAU.</strong></span></a><button ref={menuButton} className="menu-button" aria-expanded={open} aria-controls="navigation" onClick={()=>setOpen(!open)}>{open?"Schliessen ×":"Menü +"}</button><nav id="navigation" aria-label="Hauptnavigation" className={open?"navigation open":"navigation"}>{nav.map(([id,label],i)=><a href={`#${id}`} key={id} aria-current={active===id?"location":undefined} onClick={()=>setOpen(false)}><span>0{i+1}</span>{label}<b aria-hidden="true">↗</b></a>)}</nav><div className="sidebar-bottom"><span className="eyebrow">Zürich & Umgebung</span><p>Gutes Handwerk.<br/>Ein gutes Gefühl.</p><a href="#kontakt" className="sidebar-cta">Projekt besprechen <span>↗</span></a><a className="portfolio-link" href="/work/steiner-handwerk">← Zurück zum Portfolio</a><small>Fiktiver Betrieb · Website-Demo</small></div></aside>
-<main id="inhalt"><section id="start" className="hero"><img className="hero-image" src={image("hero-handwerk")} alt="Handwerker bei Renovationsarbeiten an einer Innenwand" fetchPriority="high"/><div className="hero-shade"/><div className="hero-top"><span>HANDWERK MIT HANDSCHLAG.</span><span className="demo-label">DEMO-PROJEKT</span></div><div className="hero-content"><p className="eyebrow"><span className="line"/>Ihr Zuhause. Unser Handwerk.</p><h1>WIR PACKEN<br/>AN. <em>SIE KOMMEN<br/>AN.</em></h1><p className="hero-description">Renovieren, umbauen, besser wohnen.<br/>Ihr Handwerksteam für Zürich und Umgebung.</p><a className="button" href="#kontakt">Ihr Projekt beginnt hier <span>↗</span></a></div><div className="hero-bottom"><span>RENOVATION · MALERARBEITEN · BODENBELÄGE</span><a href="#leistungen" aria-label="Leistungen entdecken">ENTDECKEN <span>↓</span></a></div></section>
-<div className="promise-strip"><span><b>01</b> Eine Ansprechperson</span><span><b>02</b> Klare Absprachen</span><span><b>03</b> Sauber bis zum Schluss</span></div>
-<section id="leistungen" className="section services-section"><div className="section-heading"><div><p className="eyebrow">01 / Unsere Leistungen</p><h2>GUTE ARBEIT.<br/><span>VON GRUND AUF.</span></h2></div><p>Ein Zimmer auffrischen oder ein ganzes Zuhause verändern: Wir denken mit und setzen um.</p></div><div className="services">{services.map((service,i)=><article key={service.title}><span className="service-number">0{i+1}</span><div><h3>{service.title}</h3><p>{service.text}</p><small>{service.tags}</small></div><a href="#kontakt" aria-label={`${service.title} besprechen`} className="service-arrow" onClick={event => chooseService(event, service.title)}>↗</a></article>)}</div></section>
-<section id="projekte" className="section projects-section"><div className="section-heading"><div><p className="eyebrow">02 / So kann es aussehen</p><h2>RÄUME MIT<br/><span>NEUEM KAPITEL.</span></h2></div><p>Von der Idee zum fertigen Raum. Eine Auswahl exemplarischer Projekte für diesen Demobetrieb.</p></div><div className="projects">{projects.map((project,i)=><article key={project.image}><div className="project-image"><img src={image(project.image)} alt={project.alt} loading="lazy" width="1000" height="750"/><span>0{i+1} / BEISPIELPROJEKT</span></div><div className="project-caption"><div><p>{project.location}</p><h3>{project.title}</h3></div><a href="#kontakt" aria-label={`Ähnliches Projekt wie ${project.title} besprechen`}>↗</a></div><p className="project-description">{project.description}</p></article>)}</div></section>
-<section id="ueber" className="section about-section"><div className="about-image"><img src={image("team")} alt="Handwerker bei sorgfältigen Spachtelarbeiten an einer Innenwand" loading="lazy" width="1000" height="1200"/><span>MIT KOPF. MIT HAND. MIT HERZ.</span></div><div><p className="eyebrow">03 / So arbeiten wir</p><h2>HANDWERKER.<br/><span>MITDENKER.<br/>MACHER.</span></h2><p>Ein Zuhause ist mehr als eine Baustelle. Es ist Ihr Alltag. Deshalb hören wir zuerst zu, planen gemeinsam und halten Sie während der Arbeiten auf dem Laufenden.</p><p>Unser Anspruch: Arbeiten, auf die wir stolz sind. Und Räume, in denen Sie sich wohlfühlen.</p><ul><li>Ein Team vom ersten Gespräch bis zur Übergabe</li><li>Verständliche Offerten und transparente Abläufe</li><li>Sorgfältiger Umgang mit Ihrem Zuhause</li></ul><a href="#kontakt" className="text-link">Lernen wir uns kennen <span>↗</span></a></div></section>
-<section className="section process-section"><p className="eyebrow">Einfach zum fertigen Projekt</p><h2>SO GEHEN WIR’S AN.</h2><div className="process">{[["Reden.","Sie erzählen uns, was Sie vorhaben. Wir hören zu und klären die wichtigsten Fragen."],["Planen.","Wir besichtigen, besprechen Material und Ablauf und erstellen eine nachvollziehbare Offerte."],["Machen.","Unser Team legt los. Sie haben eine feste Ansprechperson – bis zur sauberen Übergabe."]].map(([title,text],i)=><article key={title}><span>0{i+1}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
-<section id="kontakt" className="section contact-section"><div><p className="eyebrow">04 / Der erste Schritt</p><h2>WAS HABEN<br/>SIE <span>VOR?</span></h2><p>Ein frischer Anstrich? Ein neues Bad? Oder schon eine ganz konkrete Idee? So könnte Ihre Projektanfrage aussehen.</p><div className="demo-note" id="demo-hinweis"><b>Eine Website zum Ausprobieren.</b><p>Steiner Bau ist ein fiktiver Beispielbetrieb. Dieses Formular versendet und speichert keine Daten. Bitte verwenden Sie nur Testdaten.</p></div></div><form aria-describedby="demo-hinweis" onChange={() => setPreviewed(false)} onReset={() => { setSelectedService(""); setPreviewed(false); requestAnimationFrame(() => nameControl.current?.focus()); }} onSubmit={event=>{event.preventDefault();setPreviewed(true)}}><noscript><p>Zum Ausprobieren bitte JavaScript aktivieren. Das Formular bleibt sonst deaktiviert.</p></noscript><fieldset disabled={!ready} style={{border:0,padding:0,margin:0,minWidth:0,display:"flex",flexDirection:"column",gap:21}} aria-label="Demo-Anfrage"><div className="form-row"><label htmlFor="name">Ihr Name *<input ref={nameControl} id="name" name="name" required placeholder="Max Muster" autoComplete="off"/></label><label htmlFor="email">E-Mail *<input id="email" name="email" type="email" required placeholder="max@example.com" autoComplete="off"/></label></div><label htmlFor="service">Worum geht es?<select ref={serviceControl} id="service" name="service" value={selectedService} onChange={event => setSelectedService(event.target.value)}><option value="">Bitte wählen</option>{services.map(s=><option key={s.title}>{s.title}</option>)}<option>Etwas anderes</option></select></label><label htmlFor="message">Ihr Projekt *<textarea id="message" name="message" required rows={4} placeholder="Was möchten Sie verändern?"/></label><button className="button" type="submit">Demo-Anfrage ausprobieren <span>↗</span></button><p className="form-status" role="status">{previewed?"Demo erfolgreich ausprobiert. Es wurden keine Daten versendet oder gespeichert.":"* Pflichtfelder · Unverbindliche Formularvorschau"}</p>{previewed && <button className="text-link" type="reset">Neue Demo-Anfrage</button>}</fieldset></form></section><footer><a className="footer-brand" href="#start">STEINER BAU.</a><p>Fiktiver Beispielbetrieb · Zürich</p><a href="/work/steiner-handwerk">Zurück zum Portfolio ↗</a><a href="https://silvandigital.ch/privacy">Datenschutz</a></footer></main></>;
+  {
+    title: "Renovationen",
+    detail: "Bestehendes neu denken.",
+    text: "Ein Raum soll mehr können? Beim Umbau greifen Grundriss, Oberflächen und Einbauten ineinander. Am Anfang stehen Ihre Wünsche und der Blick auf das, was bereits da ist.",
+    scope: "Innenausbau · Küche · Bad",
+  },
+  {
+    title: "Malerarbeiten",
+    detail: "Frische, die bleibt.",
+    text: "Ein neuer Anstrich verändert einen ganzen Raum. Farbton, Licht und Untergrund gehören dabei zusammen – vom sorgfältigen Abdecken bis zur passenden Oberfläche.",
+    scope: "Wände · Decken · Lackierarbeiten",
+  },
+  {
+    title: "Bodenbeläge",
+    detail: "Ein gutes Gefühl unter den Füssen.",
+    text: "Warm, robust oder besonders pflegeleicht: Der richtige Boden passt zu Ihrem Alltag. Material, Aufbau und Übergänge werden gemeinsam betrachtet.",
+    scope: "Parkett · Vinyl · Fliesen",
+  },
+  {
+    title: "Fassade & Aussen",
+    detail: "Ein Haus mit Ausstrahlung.",
+    text: "Aussenflächen prägen den ersten Eindruck und schützen das Gebäude. Vor einer Erneuerung werden Zustand, Beanspruchung und Material aufeinander abgestimmt.",
+    scope: "Fassaden · Balkone · Terrassen",
+  },
+];
+const projects = [
+  {
+    title: "Licht. Holz. Mehr Ruhe.",
+    category: "Wohnen & Innenausbau",
+    image: "proj-1",
+    service: "Renovationen",
+    alt: "Heller Raum mit Holzfussboden, niedrigen Einbauten und grossem Fenster",
+    text: "Helle Wände, ein durchgehender Holzboden und zurückhaltende Einbauten lassen einen kompakten Raum ruhig wirken.",
+    question:
+      "Welche Einbauten bleiben? Wie nutzen Sie den Raum heute – und was soll sich verändern?",
+  },
+  {
+    title: "Ein frischer erster Eindruck.",
+    category: "Fassade & Farbe",
+    image: "proj-2",
+    service: "Fassade & Aussen",
+    alt: "Hausfassade als Inspiration für die Gestaltung von Aussenflächen",
+    text: "Die Farbgestaltung einer Fassade verbindet das Haus mit seiner Umgebung. Struktur und Details geben der Fläche ihren Charakter.",
+    question:
+      "Geht es um einen neuen Farbton, sichtbare Schäden oder eine umfassendere Erneuerung?",
+  },
+  {
+    title: "Platz für den Alltag.",
+    category: "Bad & Renovation",
+    image: "proj-3",
+    service: "Renovationen",
+    alt: "Bad mit hellen Fliesen, Badewanne und Waschtisch",
+    text: "Ein stimmiges Bad beginnt mit den täglichen Abläufen. Helle Oberflächen und eine klare Aufteilung bilden dafür die Grundlage.",
+    question:
+      "Was fehlt im bestehenden Bad? Welche Anschlüsse und welche Ausstattung sollen erhalten bleiben?",
+  },
+  {
+    title: "Natürlich von Grund auf.",
+    category: "Boden & Material",
+    image: "proj-4",
+    service: "Bodenbeläge",
+    alt: "Nahaufnahme einer hellen Holzoberfläche im Sonnenlicht",
+    text: "Maserung, Farbton und Haptik verändern das Raumgefühl. Eine Materialprobe im eigenen Licht hilft bei der Entscheidung.",
+    question:
+      "Wie stark wird der Boden beansprucht? Ist Aufarbeiten möglich oder wird ein neuer Belag gebraucht?",
+  },
+];
+const asset = (name: string) => `/demos/handwerk/${name}.webp`;
+export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [selection, setSelection] = useState<Selection>({
+    service: "Noch offen",
+    project: "",
+  });
+  const menuButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const query = matchMedia("(min-width: 900px)");
+    const resize = () => {
+      if (query.matches) setMenuOpen(false);
+    };
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && menuOpen) {
+        setMenuOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    query.addEventListener("change", resize);
+    document.addEventListener("keydown", escape);
+    return () => {
+      query.removeEventListener("change", resize);
+      document.removeEventListener("keydown", escape);
+    };
+  }, [menuOpen]);
+  function choose(
+    event: MouseEvent<HTMLAnchorElement>,
+    service: string,
+    project = "",
+  ) {
+    if (
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      event.button !== 0
+    )
+      return;
+    setSelection({ service, project });
+    requestAnimationFrame(() =>
+      document
+        .getElementById("inquiry-service")
+        ?.focus({ preventScroll: true }),
+    );
+  }
+  return (
+    <>
+      <a className="skip-link" href="#inhalt">
+        Zum Inhalt
+      </a>
+      <div className="demo-banner">
+        Ein fiktiver Handwerksbetrieb. Eine Website-Demo von{" "}
+        <a href="https://silvandigital.ch/work/">SilvanDigital ↗</a>
+      </div>
+      <header className="site-header">
+        <a
+          className="brand"
+          href="#start"
+          aria-label="Steiner Bau – zum Anfang"
+        >
+          <span className="brand-symbol" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span>
+            steiner<span className="brand-sub">Bau & Handwerk</span>
+          </span>
+        </a>
+        <button
+          ref={menuButton}
+          className="menu-toggle"
+          aria-expanded={menuOpen}
+          aria-controls="navigation"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? "Schliessen" : "Menü"}
+          <span aria-hidden="true">{menuOpen ? "−" : "+"}</span>
+        </button>
+        <nav
+          id="navigation"
+          aria-label="Hauptnavigation"
+          className={menuOpen ? "navigation is-open" : "navigation"}
+        >
+          {nav.map(([id, label]) => (
+            <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>
+              {label}
+            </a>
+          ))}
+        </nav>
+      </header>
+      <main id="inhalt">
+        <section id="start" className="hero section-wrap">
+          <div className="hero-heading">
+            <h1>
+              Gute Räume.
+              <br />
+              Für das <em>echte Leben.</em>
+            </h1>
+            <div className="hero-intro">
+              <p>
+                Renovieren. Auffrischen. Wieder wohlfühlen. Handwerk rund ums
+                Zuhause in Zürich und Umgebung.
+              </p>
+              <a className="button" href="#kontakt">
+                Ihr Projekt besprechen <span aria-hidden="true">↗</span>
+              </a>
+              <a className="text-link" href="#leistungen">
+                Leistungen entdecken <span aria-hidden="true">↓</span>
+              </a>
+            </div>
+          </div>
+          <figure className="hero-image">
+            <Image
+              src={asset("proj-1")}
+              alt="Lichtdurchfluteter Innenraum mit hellem Holzboden und passgenauen Einbauten"
+              width={1000}
+              height={667}
+              priority
+              sizes="90vw"
+            />
+            <figcaption>
+              <span>Aus Bestehendem wird Ihr Zuhause.</span>
+              <span>Bild zur Gestaltungsidee · kein Kundenprojekt</span>
+            </figcaption>
+          </figure>
+          <div className="intro-line">
+            <p>
+              Vom einzelnen Raum
+              <br />
+              bis zum neuen Wohngefühl.
+            </p>
+            <p>
+              Gutes Handwerk beginnt mit Zuhören. Was soll bleiben, was darf
+              sich verändern? Daraus entsteht ein Vorhaben, das zu Ihrem Zuhause
+              passt.
+            </p>
+          </div>
+        </section>
+        <section id="leistungen" className="section-wrap section-space">
+          <div className="section-heading">
+            <h2>
+              Was haben
+              <br />
+              Sie vor?
+            </h2>
+            <p>
+              Vier Leistungsbereiche, ein gemeinsamer Blick auf Ihr Zuhause.
+              Wählen Sie, wo die Veränderung beginnt.
+            </p>
+          </div>
+          <div className="services">
+            {services.map((s) => (
+              <article className="service" key={s.title}>
+                <h3>{s.title}</h3>
+                <div>
+                  <h4>{s.detail}</h4>
+                  <p>{s.text}</p>
+                  <p className="service-scope">{s.scope}</p>
+                </div>
+                <a
+                  className="service-link"
+                  href="#kontakt"
+                  onClick={(e) => choose(e, s.title)}
+                  aria-label={`${s.title} anfragen`}
+                >
+                  Projekt anfragen <span aria-hidden="true">↗</span>
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section id="projekte" className="projects-section section-space">
+          <div className="section-wrap">
+            <div className="section-heading">
+              <h2>
+                Eine Idee.
+                <br />
+                Viele Möglichkeiten.
+              </h2>
+              <div>
+                <p>
+                  Materialien, Farben und Räume als Inspiration für Ihr
+                  Vorhaben.
+                </p>
+                <p className="muted">
+                  Die folgenden Beispiele sind Gestaltungsideen dieser Demo,
+                  keine ausgeführten Kundenprojekte.
+                </p>
+              </div>
+            </div>
+            <div className="projects-grid">
+              {projects.map((p) => (
+                <article className="project" key={p.title}>
+                  <div className="project-image">
+                    <Image
+                      src={asset(p.image)}
+                      alt={p.alt}
+                      width={1000}
+                      height={p.image === "proj-4" ? 1500 : 667}
+                      loading="lazy"
+                      sizes="(max-width: 600px) 90vw, 45vw"
+                    />
+                  </div>
+                  <p className="project-category">{p.category}</p>
+                  <h3>{p.title}</h3>
+                  <p>{p.text}</p>
+                  <details>
+                    <summary>
+                      Was bei dieser Idee wichtig ist{" "}
+                      <span aria-hidden="true">+</span>
+                    </summary>
+                    <p>{p.question}</p>
+                  </details>
+                  <a
+                    className="text-link"
+                    href="#kontakt"
+                    onClick={(e) => choose(e, p.service, p.title)}
+                    aria-label={`Projektidee übernehmen: ${p.title}`}
+                  >
+                    Diese Idee besprechen <span aria-hidden="true">↗</span>
+                  </a>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section
+          id="ueber"
+          className="section-wrap section-space about-section"
+        >
+          <div className="about-copy">
+            <h2>
+              Handwerk beginnt
+              <br />
+              mit einem Gespräch.
+            </h2>
+            <p className="large-copy">
+              Ein Zuhause ist persönlich. Die Arbeit daran sollte es auch sein.
+            </p>
+            <p>
+              Steiner Bau steht in diesem Gestaltungskonzept für einen nahbaren
+              Handwerksbetrieb: verständliche Absprachen, ein sorgfältiger
+              Umgang mit Bestehendem und ein klarer Blick auf die nächsten
+              Schritte.
+            </p>
+            <p>
+              So wird aus einer ersten Idee ein besprechbares Vorhaben – mit
+              Raum für Ihre Fragen.
+            </p>
+            <a className="text-link" href="#ablauf">
+              So könnte Ihr Projekt starten <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+          <figure>
+            <Image
+              src={asset("hero-handwerk")}
+              alt="Ein Handwerker glättet eine Wand bei Renovationsarbeiten"
+              width={1800}
+              height={1200}
+              loading="lazy"
+              sizes="(max-width: 600px) 90vw, 45vw"
+            />
+            <figcaption>Einblick ins Handwerk · Symbolbild</figcaption>
+          </figure>
+        </section>
+        <section id="ablauf" className="process-section section-space">
+          <div className="section-wrap">
+            <div className="section-heading">
+              <h2>
+                Von der Idee
+                <br />
+                zum nächsten Schritt.
+              </h2>
+              <p>
+                Ein guter Ablauf schafft Orientierung. So könnte die
+                Zusammenarbeit mit einem Handwerksbetrieb aussehen.
+              </p>
+            </div>
+            <ol className="process-list">
+              <li>
+                <h3>Erst verstehen.</h3>
+                <p>
+                  Sie erzählen, was Sie verändern möchten. Wünsche, Bestand und
+                  offene Fragen bilden die Grundlage.
+                </p>
+              </li>
+              <li>
+                <h3>Gemeinsam planen.</h3>
+                <p>
+                  Umfang, Materialien, Kosten und Termine werden vor dem Start
+                  besprochen und im Angebot festgehalten.
+                </p>
+              </li>
+              <li>
+                <h3>Sorgfältig umsetzen.</h3>
+                <p>
+                  Die vereinbarten Arbeiten werden koordiniert. Zum Abschluss
+                  wird das Ergebnis gemeinsam angeschaut.
+                </p>
+              </li>
+            </ol>
+          </div>
+        </section>
+        <section
+          className="section-wrap section-space faq-section"
+          aria-labelledby="fragen-title"
+        >
+          <h2 id="fragen-title">
+            Vor dem
+            <br />
+            ersten Gespräch.
+          </h2>
+          <div className="faq-list">
+            <details>
+              <summary>
+                Was sollte ich für eine Anfrage wissen?
+                <span aria-hidden="true">+</span>
+              </summary>
+              <p>
+                Eine kurze Beschreibung reicht für den Anfang: Was soll gemacht
+                werden, wo liegt das Objekt und wann wäre die Umsetzung
+                gewünscht? Masse oder Materialwünsche können später ergänzt
+                werden.
+              </p>
+            </details>
+            <details>
+              <summary>
+                Kann ich mehrere Arbeiten kombinieren?
+                <span aria-hidden="true">+</span>
+              </summary>
+              <p>
+                Ja, beschreiben Sie die Arbeiten zusammen im Textfeld. Wählen
+                Sie den Schwerpunkt als Leistungsbereich oder «Noch offen», wenn
+                Sie sich noch nicht festlegen möchten.
+              </p>
+            </details>
+            <details>
+              <summary>
+                Kann ich hier einen Auftrag erteilen?
+                <span aria-hidden="true">+</span>
+              </summary>
+              <p>
+                Nein. Steiner Bau ist ein fiktiver Betrieb. Das Formular zeigt
+                lediglich eine lokale Vorschau Ihrer Angaben. Es wird nichts
+                gesendet oder gespeichert und es entsteht kein Auftrag.
+              </p>
+            </details>
+            <details>
+              <summary>
+                Warum stehen hier keine Preise?<span aria-hidden="true">+</span>
+              </summary>
+              <p>
+                Aufwand und Kosten hängen unter anderem von Zustand, Fläche und
+                Material ab. Für diese fiktive Website werden deshalb keine
+                Angebote oder verbindlichen Preisangaben gemacht.
+              </p>
+            </details>
+          </div>
+        </section>
+        <section id="kontakt" className="contact-section section-space">
+          <div className="section-wrap contact-grid">
+            <div className="contact-intro">
+              <h2>
+                Was darf sich
+                <br />
+                bei Ihnen verändern?
+              </h2>
+              <p>
+                Ein neuer Boden, frische Wände oder ein ganzer Raum: Halten Sie
+                Ihre Idee fest.
+              </p>
+              <p className="contact-demo">
+                Probieren Sie den Anfrageablauf aus. Ihre Angaben bleiben nur in
+                dieser geöffneten Seite. Bitte verwenden Sie Testdaten.
+              </p>
+              <a className="text-link" href="https://silvandigital.ch/contact/">
+                Eine solche Website für Ihren Betrieb?{" "}
+                <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <InquiryForm
+              selection={selection}
+              onSelectionChange={setSelection}
+            />
+          </div>
+        </section>
+      </main>
+      <footer className="site-footer section-wrap">
+        <a className="brand footer-brand" href="#start">
+          steiner<span className="brand-sub">Bau & Handwerk</span>
+        </a>
+        <p>
+          Fiktiver Betrieb · Zürich & Umgebung
+          <br />
+          Konzept und Umsetzung:{" "}
+          <a href="https://silvandigital.ch/">SilvanDigital</a>
+        </p>
+        <a className="text-link" href="https://silvandigital.ch/work/">
+          Weitere Webprojekte <span aria-hidden="true">↗</span>
+        </a>
+        <p className="footer-note">
+          Diese Website ist eine Portfolio-Demo. Die Bilder zeigen
+          Gestaltungsideen und Symbolmotive. Keine Kundenreferenzen, keine
+          Buchung, kein Versand von Formulardaten.
+        </p>
+      </footer>
+    </>
+  );
 }
