@@ -169,51 +169,79 @@ export default function Home() {
         </nav>
       </header>
       <main id="inhalt">
-        <section id="start" className="hero section-wrap">
-          <div className="hero-heading">
-            <h1>
-              Gute Räume.
-              <br />
-              Für das <em>echte Leben.</em>
-            </h1>
-            <div className="hero-intro">
+        <section id="start" className="hero-stage" aria-labelledby="hero-title">
+          <div className="hero-composition">
+            <div className="hero-copy">
+              <h1 id="hero-title">
+                Aus Räumen
+                <br />
+                wird <em>Zuhause.</em>
+              </h1>
               <p>
-                Renovieren. Auffrischen. Wieder wohlfühlen. Handwerk rund ums
-                Zuhause in Zürich und Umgebung.
+                Renovationen, Farben und Böden, die zu Ihrem Leben passen. Für
+                Ihr Zuhause in Zürich und Umgebung.
               </p>
-              <a className="button" href="#kontakt">
-                Ihr Projekt besprechen <span aria-hidden="true">↗</span>
-              </a>
-              <a className="text-link" href="#leistungen">
-                Leistungen entdecken <span aria-hidden="true">↓</span>
-              </a>
+              <div className="hero-actions">
+                <a className="button hero-primary" href="#kontakt">
+                  Projekt besprechen{" "}
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </a>
+                <a className="hero-secondary" href="#projekte">
+                  Ideen entdecken{" "}
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 4v16M6 14l6 6 6-6" />
+                  </svg>
+                </a>
+              </div>
+              <div className="hero-craft">
+                <span>Mit Blick fürs Ganze.</span>
+                <span>Und Gespür fürs Detail.</span>
+              </div>
             </div>
+            <figure className="hero-visual">
+              <Image
+                src={asset("hero-zuhause")}
+                alt="Gestaltungsidee eines warmen Wohnraums mit Eichenboden, Einbauten und grossen Fenstern im Sonnenlicht"
+                width={1536}
+                height={1024}
+                priority
+                sizes="(max-width: 700px) 100vw, 60vw"
+              />
+              <figcaption>KI-Gestaltungsidee · kein Kundenprojekt</figcaption>
+            </figure>
           </div>
-          <figure className="hero-image">
-            <Image
-              src={asset("proj-1")}
-              alt="Lichtdurchfluteter Innenraum mit hellem Holzboden und passgenauen Einbauten"
-              width={1000}
-              height={667}
-              priority
-              sizes="90vw"
-            />
-            <figcaption>
-              <span>Aus Bestehendem wird Ihr Zuhause.</span>
-              <span>Bild zur Gestaltungsidee · kein Kundenprojekt</span>
-            </figcaption>
-          </figure>
-          <div className="intro-line">
+          <div className="hero-foundation">
             <p>
-              Vom einzelnen Raum
+              Bestehendes bewahren.
               <br />
-              bis zum neuen Wohngefühl.
+              <strong>Neues möglich machen.</strong>
             </p>
-            <p>
-              Gutes Handwerk beginnt mit Zuhören. Was soll bleiben, was darf
-              sich verändern? Daraus entsteht ein Vorhaben, das zu Ihrem Zuhause
-              passt.
-            </p>
+            <a href="#leistungen">
+              Renovationen · Malerarbeiten · Böden · Fassaden
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </a>
           </div>
         </section>
         <section id="leistungen" className="section-wrap section-space">

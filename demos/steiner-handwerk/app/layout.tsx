@@ -1,5 +1,6 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import "./globals.css";
+import "./hero.css";
 export const metadata: Metadata = {
   title: "Steiner Bau | Gute Räume fürs echte Leben – Website-Demo",
   description:
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body>
-        <noscript><style>{`.menu-toggle{display:none!important}.navigation{display:flex!important;flex-wrap:wrap}.site-header{position:relative}`}</style></noscript>
+        <noscript>
+          <style>{`.menu-toggle{display:none!important}.navigation{display:flex!important;flex-wrap:wrap}.site-header{position:relative}`}</style>
+        </noscript>
         {children}
       </body>
     </html>

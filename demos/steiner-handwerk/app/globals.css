@@ -212,26 +212,8 @@ textarea:focus-visible {
 .menu-toggle {
   display: none;
 }
-.hero {
-  padding-top: 66px;
-}
-.hero-heading {
-  display: grid;
-  grid-template-columns: 1.7fr 1fr;
-  gap: 50px;
-  align-items: end;
-  padding-bottom: 50px;
-}
 h1 {
   font-size: clamp(56px, 6.5vw, 104px);
-}
-.hero-intro {
-  max-width: 360px;
-  justify-self: end;
-}
-.hero-intro p {
-  font-size: 21px;
-  margin-bottom: 24px;
 }
 .button {
   display: inline-flex;
@@ -274,46 +256,6 @@ h1 {
 .text-link span {
   font-size: 22px;
   text-decoration: none;
-}
-.hero-intro .text-link {
-  margin-top: 6px;
-}
-.hero-image {
-  position: relative;
-}
-.hero-image img {
-  height: clamp(320px, 38vw, 560px);
-  object-fit: cover;
-  object-position: center 57%;
-}
-.hero-image figcaption {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  padding: 16px 0;
-  font-size: 15px;
-  color: var(--muted);
-}
-.hero-image figcaption span:first-child {
-  font-weight: 500;
-  color: var(--ink);
-}
-.intro-line {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  border-top: 1px solid var(--line);
-  margin-top: 34px;
-  padding-top: 36px;
-}
-.intro-line p:first-child {
-  font-size: 28px;
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-}
-.intro-line p:last-child {
-  max-width: 550px;
-  color: var(--muted);
 }
 .section-heading {
   display: grid;
@@ -681,15 +623,7 @@ details[open] summary span {
   font-size: 13px;
 }
 @media (max-width: 1100px) {
-  .hero-heading {
-    grid-template-columns: 1.5fr 1fr;
-    gap: 30px;
-  }
-  .hero-intro p {
-    font-size: 19px;
-  }
   .section-heading,
-  .intro-line,
   .about-section,
   .faq-section {
     gap: 45px;
@@ -773,22 +707,6 @@ details[open] summary span {
     border-top: 1px solid var(--line);
     padding: 10px 0;
   }
-  .hero-heading {
-    grid-template-columns: 1fr;
-  }
-  .hero-intro {
-    max-width: 600px;
-    justify-self: start;
-  }
-  .hero-intro p {
-    max-width: 40ch;
-  }
-  .hero-intro .text-link {
-    margin: 0 0 0 24px;
-  }
-  .hero {
-    padding-top: 48px;
-  }
   h1 {
     font-size: clamp(54px, 8.2vw, 75px);
   }
@@ -849,41 +767,6 @@ details[open] summary span {
   }
   h2 {
     font-size: 40px;
-  }
-  .hero {
-    padding-top: 38px;
-  }
-  .hero-heading {
-    gap: 27px;
-    padding-bottom: 30px;
-  }
-  .hero-intro p {
-    font-size: 18px;
-    margin-bottom: 19px;
-  }
-  .hero-intro .text-link {
-    display: flex;
-    margin: 8px 0 0;
-    width: fit-content;
-  }
-  .hero-image img {
-    height: 340px;
-    object-position: 53% center;
-  }
-  .hero-image figcaption {
-    flex-direction: column;
-    gap: 5px;
-    font-size: 13px;
-    padding-top: 12px;
-  }
-  .intro-line {
-    grid-template-columns: 1fr;
-    gap: 19px;
-    margin-top: 25px;
-    padding-top: 26px;
-  }
-  .intro-line p:first-child {
-    font-size: 26px;
   }
   .section-space {
     padding-block: 64px;

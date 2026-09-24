@@ -14,12 +14,12 @@ There is no submission endpoint, email delivery, browser-storage persistence or 
 
 ## Truth and accessibility
 
-The banner, project introduction, image captions, enquiry and footer identify the fictional context. Images are existing local repository assets showing ideas and symbolic craft, not claimed completed customer work. No prices, testimonials or invented credentials supply false proof. External SilvanDigital links connect the demonstration to the real studio portfolio and contact page.
+The banner, project introduction, image captions, enquiry and footer identify the fictional context. The new opening image (`public/hero-zuhause.webp`) is AI-generated and explicitly captioned “KI-Gestaltungsidee · kein Kundenprojekt”. Existing local gallery and craft assets remain illustrative; none are claimed completed customer work. No prices, testimonials or invented credentials supply false proof. External SilvanDigital links connect the demonstration to the real studio portfolio and contact page.
 
 The document language is German. Metadata specifies `noindex, nofollow`. Local fonts avoid a remote font dependency. The implementation includes a skip link, visible focus, labelled controls, keyboard-operable native disclosures, responsive navigation, accessible error feedback and reduced-motion support.
 
 ## Presentation contract
 
-The chosen code-led visual direction is a Swiss architecture exhibition: limestone, forest green, sage, regular Barlow and large room imagery. Desktop places headline and actions above a wide image; mobile stacks these in the same reading order with a compact menu. Craft imagery appears later to explain the approach. Exact tokens and the 900px/600px responsive behavior are recorded in `DESIGN.md`.
+The chosen code-led visual direction is a Swiss architecture exhibition: limestone, forest green, sage, regular Barlow and large room imagery. The revised opening places “Aus Räumen wird Zuhause.” and its actions on a forest plane beside a warm furnished-room illustration, full bleed in a 42%/58% desktop composition. The primary action leads to the enquiry and the secondary link to project ideas. At 700px and below, compact copy and photo stack so the image begins within the reviewed mobile first viewport. Navigation still changes at 900px; lower-page grids stack at 600px. Craft imagery appears later to explain the approach. Exact tokens and responsive behavior are recorded in `DESIGN.md`.
 
-This record describes the implemented demo following a finish review disposition of “ship” with no material defects reported. Deployment evidence and operational checks belong in the repository's release records, not in this product description.
+This record includes the replacement opening following a fresh hero review disposition of “ship” with no material defects reported. Deployment evidence and operational checks belong in the repository's release records, not in this product description.
