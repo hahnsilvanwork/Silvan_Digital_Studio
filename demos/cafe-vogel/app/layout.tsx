@@ -5,15 +5,28 @@ import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
-  title: { default: "Café & Konditorei Vogel – Fiktives Café in Zürich", template: "%s | Café & Konditorei Vogel" },
-  description: "Fiktives Café-Konzept von SILVAN: Backwaren, Speisekarte, Öffnungszeiten und eine lokale Reservierungsdemo ohne Versand.",
+  title: {
+    default: "Café & Konditorei Vogel – Fiktives Café in Zürich",
+    template: "%s | Café & Konditorei Vogel",
+  },
+  description:
+    "Fiktives Café-Konzept von SILVAN: Backwaren, Speisekarte, Öffnungszeiten und eine lokale Reservierungsdemo ohne Versand.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="de">
       <body>
-        <a className="skip-link" href="#main-content">Zum Inhalt</a>
+        <noscript>
+          <style>{`.menu-toggle{display:none!important}.main-navigation{display:flex!important;flex-wrap:wrap}.site-header{position:relative}`}</style>
+        </noscript>
+        <a className="skip-link" href="#main-content">
+          Zum Inhalt
+        </a>
         <Navbar />
         <main id="main-content">{children}</main>
         <Footer />

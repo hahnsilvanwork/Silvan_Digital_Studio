@@ -1,97 +1,88 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-
-import { menuSections as sections } from "../data/menu";
-
-export const metadata: Metadata = { title: "Speisekarte", description: "Frühstück, Backwaren, Kaffee und Torten mit Beispielpreisen in CHF. Die Speisekarte des fiktiven Café & Konditorei Vogel." };
-
-export default function Speisekarte() {
+import { menuSections } from "../data/menu";
+import Arrow from "../components/Arrow";
+export const metadata: Metadata = {
+  title: "Speisekarte",
+  description:
+    "Frühstück, Patisserie, Kaffee und Torten: die übersichtliche Beispielkarte des fiktiven Café Vogel mit Preisen in CHF.",
+};
+const ids = ["fruehstueck", "backwaren", "kaffee", "torten"];
+const labels = ["Frühstück", "Backwaren", "Kaffee & Tee", "Torten"];
+export default function Menu() {
   return (
     <>
-      {/* Header */}
-      <section className="pt-20 md:pt-24 pb-0 bg-[#F2E8D5]">
-        <div className="max-w-5xl mx-auto px-6 pt-8">
-          <div className="border-2 border-[#1A1208] p-1 mb-0">
-            <div className="border border-[#1A1208]/30 px-8 md:px-16 py-10 text-center">
-              <p className="text-[#755031] text-[11px] tracking-[0.4em] uppercase mb-3" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-                ✦ Café & Konditorei Vogel · Zürich ✦
-              </p>
-              <h1 className="text-4xl md:text-6xl font-black text-[#1A1208] mb-2" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-                Speisekarte
-              </h1>
-              <div className="flex items-center gap-3 justify-center mt-4">
-                <div className="h-px flex-1 bg-[#8B6040]/50" />
-                <span className="text-[#755031] text-xs">✦ ✦ ✦</span>
-                <div className="h-px flex-1 bg-[#8B6040]/50" />
-              </div>
-              <p className="text-sm text-[#1A1208]/75 mt-4 tracking-wide" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-                Fiktive Beispielpreise in CHF inkl. MwSt. · Saisonale Änderungen vorbehalten
-              </p>
-            </div>
-          </div>
-        </div>
+      <section className="page-intro wrap menu-intro">
+        <h1>
+          Für jeden Appetit
+          <br />
+          <em>ein kleines Glück.</em>
+        </h1>
+        <p>
+          Vom ersten Kaffee bis zum letzten Krümel: Entdecken Sie die
+          Speisekarte von Vogel.
+        </p>
+        <p className="small-note">
+          Alle Angaben sind Teil des fiktiven Konzepts. Beispielpreise in CHF,
+          inkl. MwSt.
+        </p>
       </section>
-
-      {/* Speisekarte Sektionen */}
-      <section className="bg-[#F2E8D5] py-12 md:py-16">
-        <div className="max-w-5xl mx-auto px-6 space-y-14">
-          {sections.map(({ title, subtitle, items }) => (
-            <div key={title}>
-              {/* Sektions-Header im Zeitungsstil */}
-              <div className="text-center mb-8 pb-4 border-b-2 border-t border-[#1A1208]/20 pt-4">
-                <h2 className="text-2xl md:text-3xl font-black text-[#1A1208]" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-                  {title}
-                </h2>
-                <p className="text-xs text-[#755031] tracking-[0.2em] uppercase mt-1" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-                  {subtitle}
-                </p>
-              </div>
-
-              {/* Items im 2-Spalten-Layout */}
-              <div className="grid md:grid-cols-2 gap-0 divide-y md:divide-y-0 divide-[#1A1208]/10">
-                {items.map(({ name, desc, price }, i) => (
-                  <div
-                    key={name}
-                    className={`flex justify-between gap-4 py-5 px-4 ${
-                      i % 2 === 0 ? "md:border-r md:border-[#1A1208]/10 md:pr-8" : "md:pl-8"
-                    } border-b border-[#1A1208]/10`}
-                  >
-                    <div className="flex-1">
-                      <h3 className="text-base font-bold italic text-[#1A1208] mb-1" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-                        {name}
-                      </h3>
-                      <p className="text-sm text-[#1A1208]/75 leading-relaxed" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-                        {desc}
-                      </p>
-                    </div>
-                    <div className="shrink-0 text-right">
-                      <span className="text-sm font-bold text-[#755031]" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-                        {price.startsWith("ab") || price === "auf Anfrage" ? price : `${price}`}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+      <div className="menu-navigation">
+        <nav className="wrap" aria-label="Kategorien der Speisekarte">
+          {ids.map((id, i) => (
+            <a href={`#${id}`} key={id}>
+              {labels[i]}
+              <Arrow />
+            </a>
           ))}
-        </div>
-      </section>
-
-      {/* Hinweis-Box */}
-      <section className="bg-[#1A1208] py-12 md:py-16">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <p className="text-[#755031] text-[11px] tracking-[0.4em] uppercase mb-4" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>✦ Bitte beachten ✦</p>
-          <p className="text-base text-[#F2E8D5]/70 leading-relaxed mb-8" style={{ fontFamily: "'EB Garamond', Georgia, serif" }}>
-            Wir arbeiten mit frischen Zutaten und bevorzugen regionale Produkte, wo es möglich ist. Unser Angebot ändert sich saisonal.
-            Allergene auf Anfrage — wir beraten Sie gerne persönlich.
-          </p>
-          <Link
-            href="/kontakt"
-            className="border border-[#F2E8D5]/40 text-[#F2E8D5] text-xs tracking-[0.25em] uppercase px-8 py-3 hover:border-[#F2E8D5] transition-colors duration-200 inline-block"
-            style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
-          >
-            Reservierungsdemo
-          </Link>
+        </nav>
+      </div>
+      <div className="wrap menu-sections">
+        {menuSections.map((section, i) => (
+          <section key={section.title} id={ids[i]} className="menu-section">
+            <div className="menu-section-heading">
+              <h2>{section.title}</h2>
+              <p>{section.subtitle}</p>
+            </div>
+            <div className="menu-list">
+              {section.items.map((item) => (
+                <article className="menu-item" key={item.name}>
+                  <div>
+                    <h3>{item.name}</h3>
+                    <p>{item.desc}</p>
+                  </div>
+                  <span className="menu-price">
+                    {item.price === "auf Anfrage"
+                      ? item.price
+                      : `${item.price} CHF`}
+                  </span>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
+      <section className="menu-note section-space">
+        <div className="wrap note-grid">
+          <div>
+            <h2>Gut zu wissen.</h2>
+            <p>
+              Diese Karte zeigt ein mögliches Angebot. Sie ist keine
+              verbindliche Auskunft zu Zutaten oder Allergenen. In einem echten
+              Café klären Sie besondere Ernährungsbedürfnisse bitte direkt mit
+              dem Team.
+            </p>
+          </div>
+          <div>
+            <h3>Lust auf einen Platz am Fenster?</h3>
+            <p>
+              Testen Sie eine Tischanfrage mit Datum, Wunschzeit und
+              Personenzahl. Es wird nichts versendet.
+            </p>
+            <Link prefetch={false} href="/kontakt" className="cafe-button">
+              Tischdemo ausprobieren <Arrow />
+            </Link>
+          </div>
         </div>
       </section>
     </>

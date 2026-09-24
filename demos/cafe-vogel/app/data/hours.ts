@@ -9,11 +9,19 @@ export const openingHours = [
 export function reservationTimes(date: string, holiday = false): string[] {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return [];
   const parsed = new Date(date + "T12:00:00Z");
-  if (Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== date) return [];
+  if (
+    Number.isNaN(parsed.getTime()) ||
+    parsed.toISOString().slice(0, 10) !== date
+  )
+    return [];
   const day = parsed.getUTCDay();
   const hours = openingHours[holiday ? 3 : day === 0 ? 2 : day === 6 ? 1 : 0];
   return Array.from({ length: (hours.close - hours.open) * 2 }, (_, index) => {
     const minutes = hours.open * 60 + index * 30;
-    return String(Math.floor(minutes / 60)).padStart(2, "0") + ":" + String(minutes % 60).padStart(2, "0");
+    return (
+      String(Math.floor(minutes / 60)).padStart(2, "0") +
+      ":" +
+      String(minutes % 60).padStart(2, "0")
+    );
   });
 }
