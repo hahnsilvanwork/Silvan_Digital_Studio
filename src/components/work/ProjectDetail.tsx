@@ -47,7 +47,8 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
         </p>
         <div className={pageStyles.heroActions}>
           <ButtonLink href={locale === "en" ? project.demoUrlEn ?? project.demoUrl : project.demoUrl} externalHint={locale === "de" ? " (neuer Tab)" : " (new tab)"}>
-            {locale === "de" ? "Demo-Website öffnen ↗" : project.demoUrlEn ? "Open demo website ↗" : "Open demo website (German) ↗"}
+            {locale === "de" ? "Demo-Website öffnen" : project.demoUrlEn ? "Open demo website" : "Open demo website (German)"}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false" style={{ flexShrink: 0 }}><path d="M7 17 17 7M7 7h10v10" /></svg>
           </ButtonLink>
         </div>
       </header>
@@ -121,6 +122,7 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
         <div className={pageStyles.sectionBody} data-reveal="rise">
           <ButtonLink href={localizePath("/contact", locale)}>
             {content.work.ctaLabel}
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false" style={{ flexShrink: 0 }}><path d="M7 17 17 7M7 7h10v10" /></svg>
           </ButtonLink>
         </div>
       </div>
