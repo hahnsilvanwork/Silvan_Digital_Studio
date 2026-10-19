@@ -51,12 +51,12 @@ export function timeSlots(value: string, duration: number): string[] {
 
 export function validateAppointment(data: Appointment, duration: number, now = new Date()): AppointmentErrors {
   const errors: AppointmentErrors = {};
-  if (!data.name.trim() || data.name.length > 100) errors.name = 'Bitte einen Namen mit höchstens 100 Zeichen eingeben.';
-  if (data.email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) errors.email = 'Bitte eine gültige E-Mail-Adresse mit höchstens 254 Zeichen eingeben.';
+  if (!data.name.trim() || data.name.length > 100) errors.name = 'Bitte geben Sie einen Namen mit höchstens 100 Zeichen ein.';
+  if (data.email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) errors.email = 'Bitte geben Sie eine gültige E-Mail-Adresse mit höchstens 254 Zeichen ein.';
   const date = parsedDate(data.desiredDate);
-  if (!date || data.desiredDate <= swissDate(now)) errors.desiredDate = 'Bitte ein zukünftiges Datum wählen (Schweizer Zeit).';
-  else if (date.getUTCDay() === 0) errors.desiredDate = 'Sonntags ist geschlossen. Bitte einen anderen Tag wählen.';
-  if (!timeSlots(data.desiredDate, duration).includes(data.desiredTime)) errors.desiredTime = 'Bitte eine passende Uhrzeit innerhalb der Öffnungszeiten wählen.';
+  if (!date || data.desiredDate <= swissDate(now)) errors.desiredDate = 'Bitte wählen Sie ein Datum ab morgen. Es gilt die Schweizer Zeit.';
+  else if (date.getUTCDay() === 0) errors.desiredDate = 'Sonntags ist im Beispiel geschlossen. Bitte wählen Sie einen anderen Tag.';
+  if (!timeSlots(data.desiredDate, duration).includes(data.desiredTime)) errors.desiredTime = 'Bitte wählen Sie eine der angebotenen Beispielzeiten.';
   if (data.message.length > 1000) errors.message = 'Die Nachricht darf höchstens 1000 Zeichen enthalten.';
   return errors;
 }

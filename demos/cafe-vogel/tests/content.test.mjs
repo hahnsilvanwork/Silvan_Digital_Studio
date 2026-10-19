@@ -8,5 +8,5 @@ test('every homepage specialty retains the same name, description and price on t
   for (const item of featuredMenu) assert.ok(fullMenu.includes(item), item.name);
   assert.equal(featuredMenu.find((item) => item.name === 'Buttergebäck').price, '2.80');
   assert.equal(featuredMenu.find((item) => item.name === 'Sauerteigbrot').price, '5.80');
-  assert.match(featuredMenu.find((item) => item.name === 'Frühstückskorb für Zwei').desc, /Saisonfrüchte/);
+  assert.match(featuredMenu.find((item) => item.name === 'Frühstückskorb für zwei').desc, /Früchte der Saison/);
 });

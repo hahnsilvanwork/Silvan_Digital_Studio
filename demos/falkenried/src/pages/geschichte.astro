@@ -8,11 +8,11 @@ import { people } from "../data/company";
 
 const lang = "de";
 const values = [{"title": "Persönlich", "text": "Klare Ansprechpersonen helfen dabei, ein Anliegen schnell dem passenden Bereich zuzuordnen."}, {"title": "Verständlich", "text": "Leistungen, nächste Schritte und wichtige Angaben sollen auf einen Blick nachvollziehbar sein."}, {"title": "Regional gedacht", "text": "Das Zürcher Unterland bildet den Rahmen für ein Konzept mit kurzen Wegen und alltagsnahen Angeboten."}];
-const divisions = [{"number": "01", "title": "Mobilität", "text": "Eine Werkstatt mit übersichtlichen Leistungen für Wartung, Reparatur und Fahrzeugpflege."}, {"number": "02", "title": "Garten", "text": "Gestaltung, Unterhalt und Transporte als zusammenhängendes Angebot für den Aussenraum."}, {"number": "03", "title": "Immobilien", "text": "Eine klare Übersicht zu Mietobjekten und ein direkter Weg zur passenden Anfrage."}];
+const divisions = [{"number": "01", "title": "Mobilität", "text": "Eine Werkstatt mit übersichtlichen Leistungen für Wartung, Reparatur und Fahrzeugpflege."}, {"number": "02", "title": "Garten", "text": "Gärten gestalten, pflegen und passende Transporte organisieren."}, {"number": "03", "title": "Immobilien", "text": "Eine klare Übersicht zu Mietobjekten und ein direkter Weg zur passenden Anfrage."}];
 const contacts = [{"title": "Autowerkstatt & Service", "keys": ["jonas-lindberg"], "accent": "--color-bmw-text"}, {"title": "Gartenbau & Unterhalt", "keys": ["lukas-falkenried"], "accent": "--color-garden"}, {"title": "Immobilien & Verwaltung", "keys": ["mara-linden", "nora-feldmann"], "accent": "--color-realestate"}] as const;
 ---
 <BaseLayout lang={lang} route="geschichte" title="Über das Konzept | Falkenried Gruppe" description="Drei Bereiche, ein gemeinsamer Auftritt: die Idee hinter dem fiktiven Falkenried Unternehmenskonzept.">
-  <Hero variant="full" title={"Drei Bereiche. <span class=\"italic font-light\">Eine gemeinsame Idee.</span>"} subtitle="Falkenried ist ein fiktives Unternehmen im Zürcher Unterland. Dieses Designkonzept verbindet Autowerkstatt, Gartenbau und Immobilien in einem gemeinsamen Auftritt." image={heroImage} imageAlt="Fahrzeug auf einer Hebebühne in einer Werkstatt" primaryCta={{ label: "Bereiche entdecken", href: routes.bmw[lang] }} secondaryCta={{ label: "Unsere Leitgedanken", href: '#zeitreise' }} />
+  <Hero variant="full" title={"Drei Bereiche. <span class=\"italic font-light\">Eine gemeinsame Idee.</span>"} subtitle="Falkenried ist ein fiktives Unternehmen im Zürcher Unterland. Dieses Designkonzept verbindet Autowerkstatt, Gartenbau und Immobilien in einem gemeinsamen Auftritt." image={heroImage} imageAlt="Klassischer BMW bei einer Fahrzeugausstellung" primaryCta={{ label: "Autowerkstatt entdecken", href: routes.bmw[lang] }} secondaryCta={{ label: "Unsere Leitgedanken", href: '#zeitreise' }} />
 
   <section id="zeitreise" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
@@ -39,6 +39,6 @@ const contacts = [{"title": "Autowerkstatt & Service", "keys": ["jonas-lindberg"
   </section>
 
   <section class="py-[var(--spacing-section-gap)] bg-[var(--color-inverse-surface)] text-white text-center">
-    <div class="max-w-2xl mx-auto px-6"><h2 class="font-display text-3xl font-semibold mb-6">Den Kontaktweg ausprobieren</h2><p class="text-white/85 mb-10 leading-relaxed">Wählen Sie einen Bereich und erkunden Sie die Anfrage mit fiktiven Testdaten.</p><a href={routes.kontakt[lang]} class="btn-primary">Demo-Kontakt öffnen</a></div>
+    <div class="max-w-2xl mx-auto px-6"><h2 class="font-display text-3xl font-semibold mb-6">Eine Anfrage ausprobieren</h2><p class="text-white/85 mb-10 leading-relaxed">Wählen Sie einen Bereich, tragen Sie erfundene Testdaten ein und prüfen Sie die Zusammenfassung.</p><a href={routes.kontakt[lang]} class="btn-primary">Demo-Anfrage öffnen</a></div>
   </section>
 </BaseLayout>

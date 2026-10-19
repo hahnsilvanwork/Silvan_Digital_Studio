@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./hero.css";
 export const metadata: Metadata = {
-  title: "Steiner Bau | Gute Räume fürs echte Leben – Website-Demo",
+  title: "Steiner Bau | Renovationen für Ihr Zuhause | Website-Demo",
   description:
-    "Website-Demo für einen fiktiven Handwerksbetrieb: Renovationen, Malerarbeiten und Bodenbeläge in Zürich.",
+    "Gestaltungskonzept für einen fiktiven Handwerksbetrieb in Zürich: Renovationen, Malerarbeiten, Bodenbeläge und Fassaden. Mit Projektideen und einem Formular zum Ausprobieren.",
   robots: { index: false, follow: false },
 };
 export default function RootLayout({

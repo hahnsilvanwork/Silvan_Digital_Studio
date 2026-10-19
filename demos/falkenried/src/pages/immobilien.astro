@@ -22,26 +22,26 @@ const accent = "--color-realestate" as const;
 <BaseLayout
   lang={lang}
   route="immobilien"
-  title="Immobilien | Mietwohnungen & Gewerbeflächen – Falkenried Gruppe"
-  description="Falkenried Gruppe vermietet und verwaltet ausschliesslich eigene Immobilien im Zürcher Unterland: Wohnungen, Gewerbeflächen und Parkplätze."
+  title="Immobilien | Wohnungen, Gewerbe und Parkplätze | Falkenried Gruppe"
+  description="Beispielobjekte im Falkenried-Konzept: Wohnungen, Gewerberäume und Parkplätze. Filtern Sie die Übersicht und probieren Sie eine Objektanfrage aus."
   jsonLd={realEstateSchema(lang)}
 >
   <Hero
     variant="full"
-    eyebrow="REAL ESTATE PORTFOLIO"
-    title={`Zeitlose Räume <span class="italic font-light">für Generationen.</span>`}
+    eyebrow="IMMOBILIEN IM ÜBERBLICK"
+    title={`Raum zum Wohnen. <span class="italic font-light">Platz zum Arbeiten.</span>`}
     subtitle="Wohnungen, Gewerberäume und Parkplätze: Entdecken Sie die Beispielobjekte und probieren Sie eine unverbindliche Demo-Anfrage aus."
     image={heroImage}
     imageAlt="Modernes Wohninterieur mit grossen Fenstern"
     primaryCta={{ label: "Objekte ansehen", href: "#objekte" }}
-    secondaryCta={{ label: "Mietprozess", href: "#mietprozess" }}
+    secondaryCta={{ label: "Anfrageablauf", href: "#mietprozess" }}
   />
 
   <section id="objekte" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
       <div class="mb-10">
         <span class="label-caps mb-4 block" style={`color: var(${accent})`}>Beispielobjekte</span>
-        <h2 class="font-display text-3xl font-semibold">Sorgfältig gepflegte Wohn- und Gewerberäume</h2>
+        <h2 class="font-display text-3xl font-semibold">Wohnungen, Gewerberäume und Parkplätze</h2>
       </div>
       <PropertyFilter
         gridId="property-grid"
@@ -55,7 +55,7 @@ const accent = "--color-realestate" as const;
       <div id="property-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <PropertyCard
           image={apartmentImg}
-          imageAlt="Wohnung im Chlupf Zürcher Unterland"
+          imageAlt="Heller Wohnraum als Symbolbild für ein Beispielobjekt"
           status="Auf Anfrage"
           statusTone="neutral"
           category="wohnungen"
@@ -63,11 +63,11 @@ const accent = "--color-realestate" as const;
           address="Beispiellage im Zürcher Unterland"
           price="Preis auf Anfrage"
           priceLabel="Monatsmiete"
-          detailsLabel="Details anfragen"
+          detailsLabel="Demo-Anfrage"
         />
         <PropertyCard
           image={officeImg}
-          imageAlt="Gewerbefläche Steinbruggstrasse Zürcher Unterland"
+          imageAlt="Moderner Büroraum als Symbolbild für eine Gewerbefläche"
           status="Auf Anfrage"
           statusTone="neutral"
           category="gewerbe"
@@ -75,11 +75,11 @@ const accent = "--color-realestate" as const;
           address="Beispiellage nahe einem Bahnhof im Zürcher Unterland"
           price="Preis auf Anfrage"
           priceLabel="Monatsmiete"
-          detailsLabel="Details anfragen"
+          detailsLabel="Demo-Anfrage"
         />
         <PropertyCard
           image={parkingImg}
-          imageAlt="Einstellhallenplatz Zürcher Unterland"
+          imageAlt="Tiefgarage als Symbolbild für einen Einstellhallenplatz"
           status="Auf Anfrage"
           statusTone="neutral"
           category="parkplatz"
@@ -87,11 +87,11 @@ const accent = "--color-realestate" as const;
           address="Zürcher Unterland Chlupf"
           price="Preis auf Anfrage"
           priceLabel="Monatsmiete"
-          detailsLabel="Details anfragen"
+          detailsLabel="Demo-Anfrage"
         />
       </div>
       <p class="text-sm text-[var(--color-ink-muted)] mt-8">
-        Aktuelle Verfügbarkeit ändert sich laufend. Kontaktieren Sie uns für die aktuellste Übersicht freier Objekte.
+        Die Objekte und Preise gehören zum Designkonzept. Es werden keine tatsächlich verfügbaren Räume oder Parkplätze angeboten. Über «Demo-Anfrage» übernehmen Sie das gewählte Objekt in das Formular.
       </p>
     </div>
   </section>
@@ -99,14 +99,14 @@ const accent = "--color-realestate" as const;
   <section id="mietprozess" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
       <div class="text-center mb-16">
-        <span class="label-caps" style={`color: var(${accent})`}>Wissenswertes zum Mietprozess</span>
-        <h2 class="font-display text-3xl font-semibold mt-4">Gut zu wissen</h2>
+        <span class="label-caps" style={`color: var(${accent})`}>Anfrage zum Ausprobieren</span>
+        <h2 class="font-display text-3xl font-semibold mt-4">Vom Beispielobjekt zur Demo-Anfrage</h2>
       </div>
       <ProcessSteps
         steps={[
-          { number: "1", title: "Besichtigung", description: "Vereinbaren Sie einen Termin für eine private Besichtigung – wir nehmen uns Zeit für alle Details." },
-          { number: "2", title: "Bewerbung", description: "Reichen Sie das Anmeldedossier inkl. aktuellem Betreibungsauszug ein – diskret und unkompliziert." },
-          { number: "3", title: "Vertragsabschluss", description: "Nach positivem Bescheid erstellen wir den Mietvertrag, die Schlüsselübergabe erfolgt persönlich." },
+          { number: "1", title: "Objekt auswählen", description: "Filtern Sie die Übersicht und öffnen Sie bei einem Beispielobjekt die Demo-Anfrage." },
+          { number: "2", title: "Angaben ergänzen", description: "Das gewählte Objekt steht bereits im Formular. Ergänzen Sie Ihr Beispielanliegen mit erfundenen Testdaten." },
+          { number: "3", title: "Übersicht prüfen", description: "Sehen Sie Ihre Angaben zusammengefasst. Sie können sie bearbeiten oder löschen; es wird nichts versendet." },
         ]}
       />
     </div>
@@ -115,13 +115,13 @@ const accent = "--color-realestate" as const;
   <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
       <div class="lg:col-span-4">
-        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Ihre Ansprechperson</span>
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Ansprechpersonen im Beispiel</span>
         <div class="space-y-4">
           <ContactPerson name={people["mara-linden"].name} roles={people["mara-linden"].roles[lang]} accentVar={accent} />
           <ContactPerson name={people["nora-feldmann"].name} roles={people["nora-feldmann"].roles[lang]} accentVar={accent} />
         </div>
         <p class="text-sm text-[var(--color-ink-muted)] mt-6 leading-relaxed">
-          Kontaktieren Sie uns direkt oder nutzen Sie das Formular für Ihre spezifische Objektanfrage.
+          Die Namen und Rollen zeigen beispielhafte Ansprechpersonen. Im Formular können Sie den Ablauf einer Objektanfrage ausprobieren.
         </p>
       </div>
       <div id="property-enquiry" class="lg:col-span-8">
@@ -130,13 +130,13 @@ const accent = "--color-realestate" as const;
           area="real-estate"
           source="/immobilien/"
           subject="Neue Anfrage – Immobilien"
-          submitLabel="Anfrage senden"
-          successMessage="Danke für Ihre Anfrage! Wir melden uns in Kürze."
-          errorMessage="Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder rufen Sie uns an."
+          submitLabel="Demo-Anfrage prüfen"
+          successMessage="Ihre Beispielangaben sind bereit zur Prüfung. Es wurde nichts versendet."
+          errorMessage="Bitte prüfen Sie die markierten Angaben."
           fields={[
-            { type: "text", name: "name", label: "Vorname & Name", placeholder: "Max Mustermann" },
-            { type: "email", name: "email", label: "E-Mail Adresse", placeholder: "max@beispiel.ch" },
-            { type: "select", name: "objekt", label: "Interesse an Objekt", options: ["Wohnung", "Gewerbe", "Parkplatz", "Noch unsicher"] },
+            { type: "text", name: "name", label: "Vorname und Nachname", placeholder: "Max Mustermann" },
+            { type: "email", name: "email", label: "E-Mail-Adresse", placeholder: "max@beispiel.ch" },
+            { type: "select", name: "objekt", label: "Gewünschtes Objekt", options: ["Wohnung", "Gewerbe", "Parkplatz", "Noch unsicher"] },
             { type: "textarea", name: "message", label: "Ihre Nachricht", placeholder: "Wie können wir Ihnen helfen?" },
           ]}
         />
@@ -149,8 +149,8 @@ const accent = "--color-realestate" as const;
       <h2 class="font-display text-2xl font-semibold mb-10 text-center">Häufige Fragen</h2>
       <FaqAccordion
         items={[
-          { question: "Sind Haustiere in Ihren Wohnungen erlaubt?", answer: "Grundsätzlich sind Haustiere nach vorheriger Absprache willkommen. Wir prüfen dies im Einzelfall unter Berücksichtigung des Hauses und des spezifischen Objekts." },
-          { question: "Wie hoch ist die Mietkaution?", answer: "In der Regel wird eine Kaution von zwei bis drei Monatsmieten verlangt, hinterlegt auf einem Sperrkonto oder via Kautionsversicherung." },
+          { question: "Kann ich eine Wohnung besichtigen oder mieten?", answer: "Nein. Die Objekte sind Beispiele für den Aufbau einer Immobilienwebsite. Das Demoformular zeigt eine Anfrageübersicht, vereinbart aber keinen Termin und nimmt keine Mietbewerbung entgegen." },
+          { question: "Gehören die Fotos zu den Beispielobjekten?", answer: "Die Fotos sind Symbolbilder für Wohnungen, Gewerberäume und Parkplätze. Sie zeigen keine nachgewiesenen Falkenried-Objekte. Die Angaben dienen dem Designkonzept und sind kein Mietangebot." },
         ]}
       />
       <div class="text-center mt-10">

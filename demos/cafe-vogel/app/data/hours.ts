@@ -1,5 +1,5 @@
 export const openingHours = [
-  { day: "Montag – Freitag", time: "07:00 – 18:00", open: 7, close: 18 },
+  { day: "Montag bis Freitag", time: "07:00 – 18:00", open: 7, close: 18 },
   { day: "Samstag", time: "08:00 – 17:00", open: 8, close: 17 },
   { day: "Sonntag", time: "08:00 – 16:00", open: 8, close: 16 },
   { day: "Feiertage", time: "09:00 – 14:00", open: 9, close: 14 },

@@ -93,7 +93,7 @@ export default function ReservationForm() {
         aria-labelledby="summary-title"
       >
         <h3 id="summary-title">Ihre Angaben im Überblick</h3>
-        <p>Unversendet: Dies ist nur eine Vorschau Ihrer Eingaben.</p>
+        <p>Ihre Angaben wurden nicht versendet. Dies ist nur eine Vorschau.</p>
         <dl>
           <div>
             <dt>Name</dt>
@@ -110,7 +110,7 @@ export default function ReservationForm() {
           <div>
             <dt>Personen</dt>
             <dd>
-              {form.persons === "more" ? "Mehr als 8 (Anfrage)" : form.persons}
+              {form.persons === "more" ? "Mehr als 8 Personen" : form.persons}
             </dd>
           </div>
           <div>
@@ -158,12 +158,12 @@ export default function ReservationForm() {
     >
       <noscript>
         <p>
-          Zum Ausprobieren bitte JavaScript aktivieren. Das Formular bleibt
-          sonst deaktiviert.
+          Zum Ausprobieren muss JavaScript in Ihrem Browser aktiviert sein.
+          Sonst können Sie das Formular nicht ausfüllen.
         </p>
       </noscript>
-      <fieldset disabled={!ready} aria-label="Besuch ausprobieren">
-        <p>* Pflichtfelder</p>
+      <fieldset disabled={!ready} aria-label="Tischanfrage ausprobieren">
+        <p>Felder mit * sind erforderlich.</p>
         {Object.keys(errors).some(
           (key) => errors[key as keyof Reservation],
         ) && (
@@ -177,7 +177,7 @@ export default function ReservationForm() {
               id: "name",
               label: "Name *",
               type: "text",
-              placeholder: "Beispielname",
+              placeholder: "Anna Beispiel",
             },
             {
               id: "email",
@@ -230,7 +230,7 @@ export default function ReservationForm() {
                   {number} {number === 1 ? "Person" : "Personen"}
                 </option>
               ))}
-              <option value="more">Mehr als 8 (Anfrage)</option>
+              <option value="more">Mehr als 8 Personen</option>
             </select>
             {error("persons")}
           </div>
@@ -287,7 +287,7 @@ export default function ReservationForm() {
               {!form.date
                 ? "Zuerst Datum wählen"
                 : !times.length
-                  ? "Keine Zeiten – anderes Datum wählen"
+                  ? "Keine Zeiten: anderes Datum wählen"
                   : "Uhrzeit wählen"}
             </option>
             {times.map((time) => (
@@ -297,8 +297,10 @@ export default function ReservationForm() {
             ))}
           </select>
           <p id="time-help">
-            Wunschzeiten gemäss Öffnungszeiten in Zürich. Feiertage wählen Sie
-            manuell; freie Plätze werden nicht geprüft.
+            Die Zeiten richten sich nach den Beispiel-Öffnungszeiten und der
+            Uhrzeit in Zürich. Feiertage wählen Sie selbst aus; die Demo
+            erkennt sie nicht automatisch. Ob ein Tisch frei ist, wird nicht
+            geprüft.
           </p>
           {error("time")}
         </div>

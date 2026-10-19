@@ -15,7 +15,7 @@ test("company exposes the clearly fictional contact data", () => {
   assert.equal(company.address.street, "Musterweg 12");
   assert.equal(company.address.postalCode, "8165");
   assert.equal(company.address.locality, "Zürcher Unterland");
-  assert.equal(company.phone.display, "Telefon auf Anfrage");
+  assert.equal(company.phone.display, "Keine reale Telefonnummer in dieser Demo");
   assert.equal(company.phone.href, "#demo-hinweis");
   assert.equal(company.email, "info@falkenried.example");
 });

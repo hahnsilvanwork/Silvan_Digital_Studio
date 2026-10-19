@@ -54,7 +54,7 @@ export default function Navbar() {
   return (
     <header className="salon-header" ref={header}>
       <div className="salon-nav salon-shell">
-        <Link prefetch={false} href="/" className="salon-brand" ref={brand} aria-label="Salon Lumière – Startseite" onClick={() => setOpen(false)}>
+        <Link prefetch={false} href="/" className="salon-brand" ref={brand} aria-label="Salon Lumière: Startseite" onClick={() => setOpen(false)}>
           <span>Salon Lumière<span className="brand-period" aria-hidden="true">.</span></span>
         </Link>
         <nav className="salon-desktop-nav" aria-label="Hauptnavigation">
@@ -72,7 +72,7 @@ export default function Navbar() {
         <div className="salon-shell">
           {links.map(({ href, label }) => <Link prefetch={false} key={href} href={href} onClick={() => setOpen(false)} aria-current={pathname === href ? "page" : undefined}>{label}</Link>)}
           <Link prefetch={false} href="/kontakt" className="salon-button" onClick={() => setOpen(false)} aria-current={pathname === "/kontakt" ? "page" : undefined}>Termin anfragen</Link>
-          <p>Fiktives Salonkonzept · Keine echte Buchung</p>
+          <p>Fiktiver Salon · Keine echte Buchung</p>
         </div>
       </nav>
     </header>

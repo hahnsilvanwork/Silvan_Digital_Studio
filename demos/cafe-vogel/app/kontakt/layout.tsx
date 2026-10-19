@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Kontakt & Reservierungsdemo",
+  title: "Tischanfrage ausprobieren",
   description:
-    "Öffnungszeiten und fiktiver Standort. Eine Tischanfrage mit Datum, Wunschzeit und Personenzahl lokal ausprobieren – ohne Versand oder Speicherung.",
+    "Eine Tischanfrage für das fiktive Café Vogel ausprobieren: Datum, Wunschzeit und Personenzahl prüfen. Kein Versand, keine Reservierung oder dauerhafte Speicherung.",
 };
 
 export default function ContactLayout({

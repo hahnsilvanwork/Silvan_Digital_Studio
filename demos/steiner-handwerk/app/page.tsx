@@ -11,26 +11,26 @@ const nav = [
 const services = [
   {
     title: "Renovationen",
-    detail: "Bestehendes neu denken.",
-    text: "Ein Raum soll mehr können? Beim Umbau greifen Grundriss, Oberflächen und Einbauten ineinander. Am Anfang stehen Ihre Wünsche und der Blick auf das, was bereits da ist.",
+    detail: "Mehr Raum für Ihren Alltag.",
+    text: "Sie möchten Ihre Küche erneuern, das Bad umbauen oder einen Raum anders nutzen? Am Anfang steht die Frage, was bleiben kann und welche Arbeiten nötig sind.",
     scope: "Innenausbau · Küche · Bad",
   },
   {
     title: "Malerarbeiten",
-    detail: "Frische, die bleibt.",
-    text: "Ein neuer Anstrich verändert einen ganzen Raum. Farbton, Licht und Untergrund gehören dabei zusammen – vom sorgfältigen Abdecken bis zur passenden Oberfläche.",
+    detail: "Neue Farbe für Ihre Räume.",
+    text: "Ein neuer Anstrich lässt einen Raum anders wirken. Dazu gehören der passende Farbton, sorgfältig vorbereitete Wände und sauber ausgeführte Arbeiten. Auch Türen und andere lackierte Flächen können aufgefrischt werden.",
     scope: "Wände · Decken · Lackierarbeiten",
   },
   {
     title: "Bodenbeläge",
     detail: "Ein gutes Gefühl unter den Füssen.",
-    text: "Warm, robust oder besonders pflegeleicht: Der richtige Boden passt zu Ihrem Alltag. Material, Aufbau und Übergänge werden gemeinsam betrachtet.",
-    scope: "Parkett · Vinyl · Fliesen",
+    text: "Ein Boden soll gut aussehen und zu Ihrem Alltag passen. Wie stark wird er genutzt, wie viel Pflege braucht er und wie fühlt er sich an? Diese Fragen helfen bei der Materialwahl.",
+    scope: "Parkett · Vinyl · Platten",
   },
   {
     title: "Fassade & Aussen",
     detail: "Ein Haus mit Ausstrahlung.",
-    text: "Aussenflächen prägen den ersten Eindruck und schützen das Gebäude. Vor einer Erneuerung werden Zustand, Beanspruchung und Material aufeinander abgestimmt.",
+    text: "Eine gepflegte Fassade schützt das Haus und prägt seinen ersten Eindruck. Ob neuer Anstrich, sichtbare Schäden oder eine Erneuerung: Vor der Planung wird der Zustand geprüft. Auch Balkone und Terrassen gehören dazu.",
     scope: "Fassaden · Balkone · Terrassen",
   },
 ];
@@ -40,18 +40,18 @@ const projects = [
     category: "Wohnen & Innenausbau",
     image: "proj-1",
     service: "Renovationen",
-    alt: "Heller Raum mit Holzfussboden, niedrigen Einbauten und grossem Fenster",
-    text: "Helle Wände, ein durchgehender Holzboden und zurückhaltende Einbauten lassen einen kompakten Raum ruhig wirken.",
+    alt: "Heller Raum mit einem Boden in Holzoptik, eingebauten Regalen und grossem Fenster",
+    text: "Helle Wände, ein durchgehender Boden und platzsparende Einbauten zeigen, wie sich ein kleiner Raum übersichtlich gestalten lässt.",
     question:
-      "Welche Einbauten bleiben? Wie nutzen Sie den Raum heute – und was soll sich verändern?",
+      "Wie nutzen Sie den Raum heute, und was soll sich verändern? Welche Regale oder Einbauten möchten Sie behalten?",
   },
   {
     title: "Ein frischer erster Eindruck.",
     category: "Fassade & Farbe",
     image: "proj-2",
     service: "Fassade & Aussen",
-    alt: "Hausfassade als Inspiration für die Gestaltung von Aussenflächen",
-    text: "Die Farbgestaltung einer Fassade verbindet das Haus mit seiner Umgebung. Struktur und Details geben der Fläche ihren Charakter.",
+    alt: "Helle Hausfassade mit gelben Farbbändern und weissem Balkongeländer",
+    text: "Farben können Balkone, Fenster und Gebäudekanten betonen. Sie sollten zum Haus und seiner Umgebung passen, wie die hellen Flächen und gelben Akzente in diesem Beispiel.",
     question:
       "Geht es um einen neuen Farbton, sichtbare Schäden oder eine umfassendere Erneuerung?",
   },
@@ -60,8 +60,8 @@ const projects = [
     category: "Bad & Renovation",
     image: "proj-3",
     service: "Renovationen",
-    alt: "Bad mit hellen Fliesen, Badewanne und Waschtisch",
-    text: "Ein stimmiges Bad beginnt mit den täglichen Abläufen. Helle Oberflächen und eine klare Aufteilung bilden dafür die Grundlage.",
+    alt: "Bad mit hellen Wandplatten, Badewanne, WC und Waschtisch",
+    text: "Was brauchen Sie morgens und abends im Bad? Gut erreichbare Ablagen, passende Staumöglichkeiten und eine klare Aufteilung helfen im Alltag. Helle Oberflächen lassen den Raum freundlich wirken.",
     question:
       "Was fehlt im bestehenden Bad? Welche Anschlüsse und welche Ausstattung sollen erhalten bleiben?",
   },
@@ -71,7 +71,7 @@ const projects = [
     image: "proj-4",
     service: "Bodenbeläge",
     alt: "Nahaufnahme einer hellen Holzoberfläche im Sonnenlicht",
-    text: "Maserung, Farbton und Haptik verändern das Raumgefühl. Eine Materialprobe im eigenen Licht hilft bei der Entscheidung.",
+    text: "Farbton und Maserung prägen die Wirkung eines Holzbodens. Eine Materialprobe zeigt, wie der Boden bei Ihnen zu Hause aussieht und wie sich die Oberfläche anfühlt.",
     question:
       "Wie stark wird der Boden beansprucht? Ist Aufarbeiten möglich oder wird ein neuer Belag gebraucht?",
   },
@@ -175,11 +175,11 @@ export default function Home() {
               <h1 id="hero-title">
                 Aus Räumen
                 <br />
-                wird <em>Zuhause.</em>
+                wird ein <em>Zuhause.</em>
               </h1>
               <p>
-                Renovationen, Farben und Böden, die zu Ihrem Leben passen. Für
-                Ihr Zuhause in Zürich und Umgebung.
+                Renovationen, Malerarbeiten und neue Böden für ein Zuhause,
+                das zu Ihrem Alltag passt. In Zürich und Umgebung.
               </p>
               <div className="hero-actions">
                 <a className="button hero-primary" href="#kontakt">
@@ -252,8 +252,8 @@ export default function Home() {
               Sie vor?
             </h2>
             <p>
-              Vier Leistungsbereiche, ein gemeinsamer Blick auf Ihr Zuhause.
-              Wählen Sie, wo die Veränderung beginnt.
+              Vom neuen Anstrich bis zur Renovation: Finden Sie den Bereich,
+              der zu Ihrem Vorhaben passt.
             </p>
           </div>
           <div className="services">
@@ -287,12 +287,12 @@ export default function Home() {
               </h2>
               <div>
                 <p>
-                  Materialien, Farben und Räume als Inspiration für Ihr
-                  Vorhaben.
+                  Lassen Sie sich von Räumen, Farben und Materialien für Ihr
+                  eigenes Vorhaben inspirieren.
                 </p>
                 <p className="muted">
-                  Die folgenden Beispiele sind Gestaltungsideen dieser Demo,
-                  keine ausgeführten Kundenprojekte.
+                  Die Bilder zeigen Gestaltungsideen dieser Demo und keine
+                  ausgeführten Kundenprojekte.
                 </p>
               </div>
             </div>
@@ -314,7 +314,7 @@ export default function Home() {
                   <p>{p.text}</p>
                   <details>
                     <summary>
-                      Was bei dieser Idee wichtig ist{" "}
+                      Fragen für die Planung{" "}
                       <span aria-hidden="true">+</span>
                     </summary>
                     <p>{p.question}</p>
@@ -343,17 +343,19 @@ export default function Home() {
               mit einem Gespräch.
             </h2>
             <p className="large-copy">
-              Ein Zuhause ist persönlich. Die Arbeit daran sollte es auch sein.
+              Ihr Zuhause soll zu Ihnen passen. Deshalb stehen Ihre Wünsche
+              am Anfang.
             </p>
             <p>
-              Steiner Bau steht in diesem Gestaltungskonzept für einen nahbaren
-              Handwerksbetrieb: verständliche Absprachen, ein sorgfältiger
-              Umgang mit Bestehendem und ein klarer Blick auf die nächsten
-              Schritte.
+              Steiner Bau ist in dieser Demo ein fiktiver Handwerksbetrieb.
+              Das Konzept zeigt, wie verständliche Absprachen und ein
+              sorgfältiger Umgang mit dem Bestehenden eine Renovation
+              begleiten können.
             </p>
             <p>
-              So wird aus einer ersten Idee ein besprechbares Vorhaben – mit
-              Raum für Ihre Fragen.
+              Was soll sich verändern? Was möchten Sie behalten? Daraus
+              entsteht ein Plan, der Ihre Fragen, Wünsche und Möglichkeiten
+              berücksichtigt.
             </p>
             <a className="text-link" href="#ablauf">
               So könnte Ihr Projekt starten <span aria-hidden="true">↓</span>
@@ -380,30 +382,33 @@ export default function Home() {
                 zum nächsten Schritt.
               </h2>
               <p>
-                Ein guter Ablauf schafft Orientierung. So könnte die
-                Zusammenarbeit mit einem Handwerksbetrieb aussehen.
+                Sie sollen wissen, was als Nächstes passiert. So könnte die
+                Zusammenarbeit mit einem Handwerksbetrieb ablaufen.
               </p>
             </div>
             <ol className="process-list">
               <li>
                 <h3>Erst verstehen.</h3>
                 <p>
-                  Sie erzählen, was Sie verändern möchten. Wünsche, Bestand und
-                  offene Fragen bilden die Grundlage.
+                  Sie beschreiben Ihre Wünsche. Gemeinsam wird geklärt, was
+                  bereits vorhanden ist, was bleiben soll und welche Fragen
+                  noch offen sind.
                 </p>
               </li>
               <li>
                 <h3>Gemeinsam planen.</h3>
                 <p>
-                  Umfang, Materialien, Kosten und Termine werden vor dem Start
-                  besprochen und im Angebot festgehalten.
+                  Die geplanten Arbeiten, Materialien, Kosten und Termine
+                  werden vor dem Start besprochen und in einer Offerte
+                  festgehalten.
                 </p>
               </li>
               <li>
                 <h3>Sorgfältig umsetzen.</h3>
                 <p>
-                  Die vereinbarten Arbeiten werden koordiniert. Zum Abschluss
-                  wird das Ergebnis gemeinsam angeschaut.
+                  Die Arbeiten werden aufeinander abgestimmt und nach dem
+                  vereinbarten Plan ausgeführt. Zum Abschluss wird das Ergebnis
+                  gemeinsam geprüft.
                 </p>
               </li>
             </ol>
@@ -421,14 +426,14 @@ export default function Home() {
           <div className="faq-list">
             <details>
               <summary>
-                Was sollte ich für eine Anfrage wissen?
+                Was gehört in eine erste Anfrage?
                 <span aria-hidden="true">+</span>
               </summary>
               <p>
-                Eine kurze Beschreibung reicht für den Anfang: Was soll gemacht
-                werden, wo liegt das Objekt und wann wäre die Umsetzung
-                gewünscht? Masse oder Materialwünsche können später ergänzt
-                werden.
+                Eine kurze Beschreibung reicht: Was möchten Sie verändern,
+                wo soll gearbeitet werden und wann wünschen Sie die Umsetzung?
+                Sie müssen noch keine genauen Masse oder Materialien kennen.
+                Diese Angaben können später ergänzt werden.
               </p>
             </details>
             <details>
@@ -437,9 +442,9 @@ export default function Home() {
                 <span aria-hidden="true">+</span>
               </summary>
               <p>
-                Ja, beschreiben Sie die Arbeiten zusammen im Textfeld. Wählen
-                Sie den Schwerpunkt als Leistungsbereich oder «Noch offen», wenn
-                Sie sich noch nicht festlegen möchten.
+                Ja. Beschreiben Sie die gewünschten Arbeiten gemeinsam im
+                Textfeld. Wählen Sie den wichtigsten Bereich als Leistung
+                oder «Noch offen», wenn Sie sich noch nicht festlegen möchten.
               </p>
             </details>
             <details>
@@ -449,8 +454,9 @@ export default function Home() {
               </summary>
               <p>
                 Nein. Steiner Bau ist ein fiktiver Betrieb. Das Formular zeigt
-                lediglich eine lokale Vorschau Ihrer Angaben. Es wird nichts
-                gesendet oder gespeichert und es entsteht kein Auftrag.
+                eine Vorschau Ihrer Beispielanfrage. Die Angaben bleiben nur
+                in der geöffneten Seite. Es wird nichts versendet oder
+                dauerhaft gespeichert, und es entsteht kein Auftrag.
               </p>
             </details>
             <details>
@@ -458,9 +464,10 @@ export default function Home() {
                 Warum stehen hier keine Preise?<span aria-hidden="true">+</span>
               </summary>
               <p>
-                Aufwand und Kosten hängen unter anderem von Zustand, Fläche und
-                Material ab. Für diese fiktive Website werden deshalb keine
-                Angebote oder verbindlichen Preisangaben gemacht.
+                Der Aufwand hängt vom Zustand der Räume, den Flächen und den
+                gewünschten Materialien ab. Ein echter Betrieb würde die Kosten
+                nach der Abklärung in einer Offerte festhalten. Diese fiktive
+                Demo macht keine verbindlichen Preisangaben.
               </p>
             </details>
           </div>
@@ -474,12 +481,13 @@ export default function Home() {
                 bei Ihnen verändern?
               </h2>
               <p>
-                Ein neuer Boden, frische Wände oder ein ganzer Raum: Halten Sie
-                Ihre Idee fest.
+                Ein neuer Boden, frisch gestrichene Wände oder ein renoviertes
+                Bad: Beschreiben Sie Ihre Idee in wenigen Sätzen.
               </p>
               <p className="contact-demo">
-                Probieren Sie den Anfrageablauf aus. Ihre Angaben bleiben nur in
-                dieser geöffneten Seite. Bitte verwenden Sie Testdaten.
+                Probieren Sie das Formular mit Beispieldaten aus. Die Anfrage
+                wird nicht versendet. Ihre Angaben bleiben nur in dieser
+                geöffneten Seite.
               </p>
               <a className="text-link" href="https://silvandigital.ch/contact/">
                 Eine solche Website für Ihren Betrieb?{" "}
@@ -498,7 +506,7 @@ export default function Home() {
           steiner<span className="brand-sub">Bau & Handwerk</span>
         </a>
         <p>
-          Fiktiver Betrieb · Zürich & Umgebung
+          Fiktiver Betrieb · Zürich und Umgebung
           <br />
           Konzept und Umsetzung:{" "}
           <a href="https://silvandigital.ch/">SilvanDigital</a>
@@ -507,9 +515,10 @@ export default function Home() {
           Weitere Webprojekte <span aria-hidden="true">↗</span>
         </a>
         <p className="footer-note">
-          Diese Website ist eine Portfolio-Demo. Die Bilder zeigen
-          Gestaltungsideen und Symbolmotive. Keine Kundenreferenzen, keine
-          Buchung, kein Versand von Formulardaten.
+          Diese Website zeigt ein Gestaltungskonzept für einen fiktiven Betrieb.
+          Die Bilder dienen als Inspiration und zeigen keine Kundenreferenzen.
+          Aufträge oder Buchungen sind hier nicht möglich. Das Formular
+          versendet keine Daten.
         </p>
       </footer>
     </>

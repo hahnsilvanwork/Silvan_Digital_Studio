@@ -22,22 +22,22 @@ const formatRanges = (ranges: readonly (readonly [string, string])[]) => ranges.
 <BaseLayout
   lang={lang}
   route="bmw"
-  title="Autowerkstatt | Service, Verkauf & Tankstelle – Falkenried Gruppe"
-  description="Offizieller Fahrzeugservice in Zürcher Unterland: Wartung, Reparaturen, Neu- und Occasionswagen, eigene Tankstelle mit E-Ladestationen und Waschanlage."
+  title="Autowerkstatt | Service und Fahrzeugpflege | Falkenried Gruppe"
+  description="Ein Werkstattkonzept mit Wartung, Reparaturen, Occasionen, Tankstelle und Fahrzeugpflege. Entdecken Sie die Beispielangebote von Falkenried."
   jsonLd={automotiveBusinessSchema(lang)}
 >
   <Hero
     variant="full"
     eyebrow="BMW SERVICE · DESIGNKONZEPT"
     title={`Präzision in <span class="italic font-light">jeder Drehung.</span>`}
-    subtitle="Schweizer Werkstattkompetenz und die Innovationskraft von BMW – für ein Fahrzeug, das Ihre volle Aufmerksamkeit verdient."
+    subtitle="Wartung, Reparaturen und Fahrzeugpflege: Finden Sie das passende Thema für Ihren BMW und probieren Sie den Weg zur Serviceanfrage aus."
     image={heroImage}
     imageAlt="BMW vor der Garage"
     primaryCta={{ label: "Demo-Serviceanfrage", href: externalLinks.bmwAppointment }}
     secondaryCta={{ label: "Leistungen ansehen", href: "#leistungen" }}
   />
 
-  <SectionNav label="BMW Bereich" activePath={routes.bmw[lang]} accentVar="--color-bmw-text" items={[
+  <SectionNav label="Werkstattbereich" activePath={routes.bmw[lang]} accentVar="--color-bmw-text" items={[
     { label: "Übersicht", href: routes.bmw[lang] },
     { label: "Service", href: routes.bmwService[lang] },
     { label: "Occasionen", href: routes.bmwOccasions[lang] },
@@ -49,25 +49,25 @@ const formatRanges = (ranges: readonly (readonly [string, string])[]) => ranges.
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
       <div class="text-center mb-16">
         <span class="label-caps" style={`color: var(${accent})`}>Unsere Leistungen</span>
-        <h2 class="font-display text-3xl lg:text-4xl font-semibold mt-4">Service-Exzellenz</h2>
+        <h2 class="font-display text-3xl lg:text-4xl font-semibold mt-4">Rund um Ihr Fahrzeug</h2>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
         <div class="card p-8 border-t-4" style={`border-top-color: var(${accent})`}>
-          <h3 class="font-semibold text-lg mb-3">Meisterhafte Reparaturen</h3>
+          <h3 class="font-semibold text-lg mb-3">Wartung und Reparaturen</h3>
           <p class="text-[var(--color-ink-muted)] text-sm leading-relaxed">
-            Modernste Diagnosetechnik, Original-BMW-Ersatzteile und zertifizierte Techniker für jede Service- und Reparaturarbeit.
+            Von der Fehlersuche bis zur Reparatur: Die Leistungsübersicht erklärt mögliche Werkstattarbeiten und zeigt, welche Angaben für eine Anfrage helfen.
           </p>
         </div>
         <div class="card p-8 border-t-4" style={`border-top-color: var(${accent})`}>
-          <h3 class="font-semibold text-lg mb-3"><a href={routes.bmwOccasions[lang]}>Geprüfte BMW Occasionen</a></h3>
+          <h3 class="font-semibold text-lg mb-3"><a href={routes.bmwOccasions[lang]}>Occasionen im Konzept</a></h3>
           <p class="text-[var(--color-ink-muted)] text-sm leading-relaxed">
-            Persönliche Beratung beim Kauf Ihres nächsten BMW – vom aktuellen Modell bis zur geprüften Occasion.
+            Die Occasionenseite zeigt, wie eine Fahrzeugübersicht aufgebaut sein könnte. In dieser Demo werden keine Fahrzeuge zum Verkauf angeboten.
           </p>
         </div>
         <div class="card p-8 border-t-4" style={`border-top-color: var(${accent})`}>
           <h3 class="font-semibold text-lg mb-3">Tankstelle & Waschanlage</h3>
           <p class="text-[var(--color-ink-muted)] text-sm leading-relaxed">
-            24/7 Selbstbedienungstankstelle für Diesel und Benzin, zwei E-Ladestationen sowie eine Selbstbedienungs-Waschanlage.
+            Tanken und laden rund um die Uhr, dazu eine Waschanlage mit eigenen Öffnungszeiten. Die Servicestation zeigt die Beispielzeiten und Zahlungsmöglichkeiten.
           </p>
         </div>
       </div>
@@ -78,29 +78,29 @@ const formatRanges = (ranges: readonly (readonly [string, string])[]) => ranges.
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         <div class="order-2 lg:order-1">
-          <span class="label-caps mb-6 block" style={`color: var(${accent})`}>AUTOMOTIVE EXCELLENCE</span>
-          <h2 class="font-display text-3xl font-semibold mb-8">Ihr BMW in besten Händen</h2>
+          <span class="label-caps mb-6 block" style={`color: var(${accent})`}>WERKSTATT IM ÜBERBLICK</span>
+          <h2 class="font-display text-3xl font-semibold mb-8">Das passende Angebot für Ihr Anliegen</h2>
           <p class="text-lg text-[var(--color-ink-muted)] mb-10 leading-relaxed">
-            Seit Jahrzehnten sind wir Ihr Ansprechpartner für BMW im Zürcher Unterland. Unser spezialisiertes
-            Team nutzt modernste Diagnosetechnik für alle Service- und Reparaturarbeiten – persönlich und zuverlässig.
+            Steht ein Service an, möchten Sie einen Schaden klären oder suchen Sie Zubehör?
+            Die einzelnen Bereiche führen Sie zu den passenden Leistungen und einer Beispielanfrage.
           </p>
           <ServiceList
             accentVar={accent}
             items={[
-              "Zertifizierter BMW Service & Reparaturen",
-              "Verkauf von Neuwagen & Premium Occasionen",
-              "Eigene Tankstelle, E-Ladestationen & Waschanlage",
+              "Wartung und Reparaturen im Werkstattkonzept",
+              "Beispiel einer übersichtlichen Occasionenseite",
+              "Tankstelle, Ladepunkte und Waschanlage",
             ]}
           />
           <a href={externalLinks.bmwAppointment} class="btn-primary mt-10 inline-flex">Demo-Serviceanfrage</a>
         </div>
         <div class="order-1 lg:order-2 relative">
           <div class="aspect-[4/3] rounded-xl overflow-hidden">
-            <Image src={detailImage} alt="BMW Fahrzeuge – Tradition trifft Moderne" class="w-full h-full object-cover" widths={[400, 800, 1200]} sizes="(min-width: 1024px) 45vw, 90vw" />
+            <Image src={detailImage} alt="Klassische BMW-Fahrzeuge in einem Ausstellungsraum" class="w-full h-full object-cover" widths={[400, 800, 1200]} sizes="(min-width: 1024px) 45vw, 90vw" />
           </div>
           <div class="absolute -bottom-8 -right-8 bg-[var(--color-surface)] p-8 hidden lg:block rounded-lg border border-[var(--color-outline-variant)]/40">
-            <span class="block font-display text-[var(--color-primary)] text-5xl font-bold mb-1">100%</span>
-            <span class="block label-caps text-[var(--color-ink-muted)]">Originalteile</span>
+            <span class="block font-display text-[var(--color-primary)] text-5xl font-bold mb-1">BMW</span>
+            <span class="block label-caps text-[var(--color-ink-muted)]">Werkstattkonzept</span>
           </div>
         </div>
       </div>
@@ -111,13 +111,13 @@ const formatRanges = (ranges: readonly (readonly [string, string])[]) => ranges.
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
       <div class="text-center mb-16">
         <span class="label-caps" style={`color: var(${accent})`}>Ablauf</span>
-        <h2 class="font-display text-3xl font-semibold mt-4">Ihr Weg zum Service-Termin</h2>
+        <h2 class="font-display text-3xl font-semibold mt-4">So funktioniert die Demo-Anfrage</h2>
       </div>
       <ProcessSteps
         steps={[
           { number: "1", title: "Anfrage formulieren", description: "Beschreiben Sie Ihr Anliegen im Demoformular. Es wird kein Termin reserviert und nichts versendet." },
-          { number: "2", title: "Fahrzeug bringen", description: "Bringen Sie Ihr Fahrzeug vorbei oder nutzen Sie unseren Bring-Service." },
-          { number: "3", title: "Abholen & losfahren", description: "Wir informieren Sie, sobald Ihr Fahrzeug gepflegt und servicebereit ist." },
+          { number: "2", title: "Angaben prüfen", description: "Das Formular zeigt Ihre Eingaben in einer Übersicht. Es wurde nichts gesendet und kein Termin gebucht." },
+          { number: "3", title: "Bearbeiten oder löschen", description: "Sie können zur Eingabe zurückkehren oder die Beispielangaben löschen." },
         ]}
       />
     </div>
@@ -125,20 +125,20 @@ const formatRanges = (ranges: readonly (readonly [string, string])[]) => ranges.
 
   <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
     <div class="max-w-3xl mx-auto px-6 lg:px-16">
-      <h2 class="font-display text-3xl font-semibold mb-8">Öffnungszeiten Garage</h2>
+      <h2 class="font-display text-3xl font-semibold mb-8">Beispielöffnungszeiten der Werkstatt</h2>
       <dl class="divide-y divide-[var(--color-outline-variant)]/40">
         <div class="flex justify-between py-4 gap-6"><dt>Mo.–Do.</dt><dd>{formatRanges(bmwOpeningHours.monday)}</dd></div>
         <div class="flex justify-between py-4 gap-6"><dt>Fr.</dt><dd>{formatRanges(bmwOpeningHours.friday)}</dd></div>
         <div class="flex justify-between py-4 gap-6"><dt>Sa.</dt><dd>{formatRanges(bmwOpeningHours.saturday)}</dd></div>
         <div class="flex justify-between py-4 gap-6"><dt>So.</dt><dd>geschlossen</dd></div>
       </dl>
-      <p class="text-sm text-[var(--color-ink-muted)] mt-5">Jeweils am letzten Samstag im Monat geschlossen. Sonderöffnungszeiten bitte vor dem Besuch prüfen.</p>
+      <p class="text-sm text-[var(--color-ink-muted)] mt-5">Im Beispiel bleibt die Werkstatt am letzten Samstag des Monats geschlossen. Die Zeiten gehören zur Demo und sind keine Besuchszeiten eines realen Betriebs.</p>
     </div>
   </section>
 
   <section class="py-[var(--spacing-section-gap)] bg-[var(--color-primary)] text-white">
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
-      <h2 class="font-display text-2xl font-semibold mb-12">Ihr persönliches Serviceteam</h2>
+      <h2 class="font-display text-2xl font-semibold mb-12">Ihre Ansprechperson im Beispiel</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl">
         <ContactPerson name={people["jonas-lindberg"].name} roles={people["jonas-lindberg"].roles[lang]} accentVar={accent} dark />
       </div>
@@ -149,16 +149,16 @@ const formatRanges = (ranges: readonly (readonly [string, string])[]) => ranges.
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-16">
       <Testimonial
         accentVar={accent}
-        quote="Die Sorgfalt bei Falkenried Gruppe war unübertroffen. Sie kümmern sich nicht nur um Autos, sondern um Menschen."
-        name="M. W."
-        role="Kunde, Zürich"
+        quote="Leistungen verständlich erklären und den nächsten Schritt einfach machen."
+        name="Leitgedanke"
+        role="Werkstattkonzept"
       />
       <div>
         <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Häufige Fragen</span>
         <FaqAccordion
           items={[
-            { question: "Bleibt meine BMW Werksgarantie bei einem Service erhalten?", answer: "Ja. Als offizieller Fahrzeugservice arbeiten wir ausschliesslich nach den Herstellervorgaben und mit Originalteilen – Ihre Werksgarantie bleibt vollumfänglich bestehen." },
-            { question: "Bieten Sie Ersatzwagen während des Werkstattaufenthalts an?", answer: "Sprechen Sie uns bei der Terminvereinbarung an – wir organisieren nach Verfügbarkeit gerne eine Mobilitätslösung für Sie." },
+            { question: "Ist Falkenried eine offizielle BMW Vertretung?", answer: "Nein. Falkenried ist ein fiktives Unternehmen. BMW dient als Fahrzeugbeispiel; die Demo weist keine Herstellerpartnerschaft oder Zertifizierung nach." },
+            { question: "Bieten Sie Ersatzwagen während des Werkstattaufenthalts an?", answer: "Bei einer echten Serviceanfrage müssten Bedarf, Verfügbarkeit und Kosten eines Ersatzwagens geklärt werden. Sie können diesen Wunsch im Demoformular beschreiben; es wird kein Fahrzeug reserviert." },
           ]}
         />
         <a href={routes.faq[lang]} class="label-caps mt-8 inline-block" style={`color: var(${accent})`}>Alle Fragen ansehen →</a>

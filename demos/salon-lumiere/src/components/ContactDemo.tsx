@@ -55,7 +55,7 @@ export default function Kontakt() {
     setErrors(nextErrors);
     const firstError = Object.keys(nextErrors)[0];
     if (firstError) {
-      setNotice("Bitte die markierten Angaben prüfen.");
+      setNotice("Bitte prüfen Sie die markierten Angaben.");
       document.getElementById(firstError)?.focus();
     } else {
       setNotice("");
@@ -92,17 +92,17 @@ export default function Kontakt() {
       <section className="page-intro">
         <div className="salon-shell">
           <h1>Ihr Terminwunsch.</h1>
-          <p>Leistung wählen, Wunschzeit ergänzen und Angaben prüfen. Probieren Sie den Ablauf mit Beispieldaten aus.</p>
+          <p>Wählen Sie eine Leistung, ergänzen Sie Datum und Wunschzeit und prüfen Sie Ihre Angaben. Bitte verwenden Sie zum Ausprobieren nur Beispieldaten.</p>
         </div>
       </section>
       <section className={`salon-shell salon-section ${styles.layout}`}>
         <div id="demo-form" className={styles.formColumn}>
-          <h2>{submitted ? "Ihr Wunsch im Überblick" : "Anfrage ausprobieren"}</h2>
-          <p className={styles.intro}>Dies ist eine Konzeptwebsite. Es wird nichts versendet oder dauerhaft gespeichert und kein Termin gebucht.</p>
+          <h2>{submitted ? "Ihre Beispielanfrage im Überblick" : "Terminanfrage ausprobieren"}</h2>
+          <p className={styles.intro}>Der Salon ist fiktiv. Ihre Angaben werden nicht versendet oder dauerhaft gespeichert. Es wird kein Termin gebucht.</p>
           <p role="status" aria-live="polite" className={styles.notice}>{notice}</p>
           {submitted ? (
             <div ref={statusRef} tabIndex={-1} className={styles.summary} aria-label="Zusammenfassung Ihrer Beispielanfrage">
-              <p>Ihre Angaben bleiben nur in dieser Browseransicht. Es wurde keine Verfügbarkeit geprüft.</p>
+              <p>Dies ist nur eine Vorschau. Ihre Angaben bleiben in dieser Browseransicht. Es wurde nicht geprüft, ob ein Termin frei ist.</p>
               <dl data-testid="inquiry-summary">
                 <div><dt>Leistung</dt><dd>{selected?.name ?? "Beratung zur passenden Leistung"}{selected ? <span>{selected.price} · {selected.duration}</span> : <span>Preis und Dauer noch offen</span>}</dd></div>
                 <div><dt>Wunschdatum</dt><dd>{localizedDate(formData.desiredDate)}</dd></div>
@@ -118,16 +118,16 @@ export default function Kontakt() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} noValidate autoComplete="off">
-              <noscript><p>Zum Ausprobieren bitte JavaScript aktivieren. Das Formular bleibt sonst deaktiviert.</p></noscript>
-              <fieldset disabled={!ready} className={styles.fields} aria-label="Demo-Anfrage">
-                <p className={styles.hint}>Name, E-Mail, Wunschdatum und Wunschzeit sind erforderlich. Ohne Leistungswahl wird eine Beratung angefragt.</p>
+              <noscript><p>Zum Ausprobieren muss JavaScript in Ihrem Browser aktiviert sein. Sonst können Sie das Formular nicht ausfüllen.</p></noscript>
+              <fieldset disabled={!ready} className={styles.fields} aria-label="Terminanfrage zum Ausprobieren">
+                <p className={styles.hint}>Name, E-Mail, Wunschdatum und Wunschzeit sind erforderlich. Wenn Sie keine Leistung wählen, wird eine Beratung in die Beispielanfrage übernommen.</p>
                 <div className={styles.field}>
                   <label htmlFor="service">Gewünschte Leistung</label>
                   <select id="service" name="service" value={service} aria-describedby="service-detail" onChange={event => { setChosenService(event.target.value); setFormData(prev => ({ ...prev, desiredTime: "" })); setErrors(prev => ({ ...prev, desiredTime: undefined })); }}>
                     <option value="">Beratung zur passenden Leistung</option>
                     {allServices.map(({ id, name }) => <option key={id} value={id}>{name}</option>)}
                   </select>
-                  <p id="service-detail" className={styles.serviceDetail} aria-live="polite">{selected ? `${selected.price} · ${selected.duration}` : "Preis und Dauer werden erst mit der passenden Leistung festgelegt."}</p>
+                  <p id="service-detail" className={styles.serviceDetail} aria-live="polite">{selected ? `${selected.price} · ${selected.duration}` : "Preis und Dauer werden bei der Beratung geklärt."}</p>
                 </div>
                 <div className={styles.pair}>
                   <div className={styles.field}>
@@ -144,7 +144,7 @@ export default function Kontakt() {
                     {error("desiredTime")}
                   </div>
                 </div>
-                <p id="date-time-note" className={styles.hint}>Bitte ab morgen wählen; sonntags geschlossen. Die Beispielzeiten berücksichtigen die Öffnungszeiten und bei gewählter Leistung die längste angegebene Dauer. Sie zeigen keine echte Verfügbarkeit.</p>
+                <p id="date-time-note" className={styles.hint}>Wählen Sie einen Tag ab morgen. Sonntags ist im Beispiel geschlossen. Die Zeiten passen zu den Öffnungszeiten; bei einer gewählten Leistung wird die längste angegebene Dauer berücksichtigt. Freie Termine werden nicht geprüft.</p>
                 <div className={styles.field}>
                   <label htmlFor="name">Name</label>
                   <input id="name" name="name" type="text" required maxLength={100} value={formData.name} onChange={change} placeholder="Anna Beispiel" aria-invalid={!!errors.name} aria-describedby={describedBy("name")} />
@@ -171,8 +171,8 @@ export default function Kontakt() {
         </div>
         <aside className={styles.visit} aria-label="Beispieladresse und Öffnungszeiten">
           <div>
-            <h2>Ein Salon in Zürich.</h2>
-            <p>So könnten die Besuchsinformationen eines Salons aussehen. Adresse und Öffnungszeiten gehören zu dieser fiktiven Demo.</p>
+            <h2>Ein fiktiver Salon in Zürich.</h2>
+            <p>So könnte ein Salon seine Besuchsinformationen zeigen. Die Adresse und die Öffnungszeiten sind erfundene Beispiele.</p>
             <address>Salon Lumière<br />Beispieladresse 42<br />8001 Zürich</address>
             <p className={styles.hint}>Keine reale Kontaktadresse.</p>
           </div>

@@ -36,8 +36,8 @@ interface Props {
 
 const { lang, subject, fields, source, objectId } = Astro.props;
 const demoMessage = lang === "de"
-  ? "Demoformular: Sie können die Eingabe ausprobieren. Ihre Daten werden weder übertragen noch gespeichert."
-  : "Demo form: Try the interaction. Your details are neither transmitted nor stored.";
+  ? "Demoformular zum Ausprobieren. Nutzen Sie erfundene Angaben. Ihre Eingaben bleiben auf dieser Seite und werden weder gesendet noch dauerhaft gespeichert."
+  : "Try the demo form with fictional details. Your entries stay on this page and are neither sent nor saved permanently.";
 const formId = `form-${subject.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 ---
 
@@ -122,8 +122,8 @@ const formId = `form-${subject.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
   </button>
   </fieldset>
   <section class="form-summary" hidden aria-labelledby={`${formId}-review-title`}>
-    <h3 id={`${formId}-review-title`} tabindex="-1">{lang === "de" ? "Ihre Demo-Anfrage – nicht versendet" : "Your demo enquiry – not sent"}</h3>
-    <p>{lang === "de" ? "Prüfen Sie Ihre Angaben. Es wurde nichts versendet oder gespeichert." : "Review your details. Nothing has been sent or stored."}</p>
+    <h3 id={`${formId}-review-title`} tabindex="-1">{lang === "de" ? "Ihre Demo-Anfrage: nur als Vorschau" : "Your demo enquiry: preview only"}</h3>
+    <p>{lang === "de" ? "Hier sehen Sie Ihre Angaben zusammengefasst. Sie können sie noch bearbeiten oder löschen. Es wurde nichts versendet oder dauerhaft gespeichert." : "Here is a summary of your details. You can still edit or clear them. Nothing has been sent or saved permanently."}</p>
     <dl></dl>
     <div class="form-review-actions">
       <button type="button" class="btn-primary" data-form-edit>{lang === "de" ? "Angaben bearbeiten" : "Edit details"}</button>

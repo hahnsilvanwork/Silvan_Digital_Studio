@@ -5,7 +5,7 @@ import Arrow from "../components/Arrow";
 export const metadata: Metadata = {
   title: "Über Vogel",
   description:
-    "Die Idee hinter Café Vogel: ein warmer Treffpunkt für Kaffee, Konditorei und kleine Pausen. Fiktives Gestaltungskonzept von SilvanDigital.",
+    "Die Idee hinter dem fiktiven Café Vogel: Kaffee, Gebäck und Zeit füreinander. Eine Beispiel-Website von SilvanDigital.",
 };
 export default function About() {
   return (
@@ -17,8 +17,9 @@ export default function About() {
           <em>Pausen im Leben.</em>
         </h1>
         <p>
-          Vogel ist die Idee eines Cafés, das zum Bleiben einlädt. Mit dem Duft
-          von Kaffee, Freude am Backhandwerk und Platz für Begegnungen.
+          Kaffeeduft, feines Gebäck und Zeit füreinander. Vogel ist die Idee
+          eines Quartiercafés, in dem aus einer kurzen Pause gerne ein
+          längerer Besuch wird.
         </p>
       </section>
       <section className="wrap about-story section-space">
@@ -32,7 +33,7 @@ export default function About() {
             sizes="(max-width:700px) 90vw, 50vw"
           />
           <figcaption>
-            Handwerk als Inspiration · Symbolbild, kein Teamfoto
+            Backhandwerk als Inspiration. Symbolbild, kein Teamfoto.
           </figcaption>
         </figure>
         <div>
@@ -45,15 +46,15 @@ export default function About() {
             Wärme. Sorgfalt. Und etwas Zeit füreinander.
           </p>
           <p>
-            Das Konzept verbindet eine klassische Konditorei mit einem
-            unkomplizierten Quartiercafé. Auf der Beispielkarte treffen Gipfeli
-            und Sauerteigbrot auf Cappuccino, Linzer Torte und einen
-            Frühstückskorb zum Teilen.
+            Die Idee verbindet eine klassische Konditorei mit einem
+            unkomplizierten Quartiercafé. Die Beispiel-Speisekarte reicht von
+            Gipfeli und Sauerteigbrot über Cappuccino und Linzer Torte bis zum
+            Frühstückskorb für zwei.
           </p>
           <p>
-            Vogel ist eine fiktive Café-Idee von SilvanDigital. Die gezeigten
-            Bilder veranschaulichen die Atmosphäre und das Handwerk, für die
-            dieses Konzept steht.
+            Vogel ist ein fiktives Café von SilvanDigital. Die Bilder
+            zeigen, welche Atmosphäre und welches Handwerk zu dieser Idee
+            passen könnten.
           </p>
         </div>
       </section>
@@ -68,25 +69,25 @@ export default function About() {
             <article>
               <h3>Freude am Handwerk.</h3>
               <p>
-                Die Backstube ist das Herz der Idee. Gebäck, Brot und Patisserie
-                geben dem Café seinen Charakter und der Speisekarte ihren
-                Schwerpunkt.
+                Eine eigene Backstube steht im Mittelpunkt der Café-Idee.
+                Brot, Gebäck und feine Süssigkeiten geben der Speisekarte
+                ihren Schwerpunkt.
               </p>
             </article>
             <article>
               <h3>Platz für den Alltag.</h3>
               <p>
                 Ein Espresso vor der Arbeit, Frühstück zu zweit oder Kuchen am
-                Nachmittag: Das Konzept lässt Raum für verschiedene Arten von
-                Pause.
+                Nachmittag. Vogel ist als Ort für kleine und grosse Pausen
+                gedacht.
               </p>
             </article>
             <article>
               <h3>Nähe statt Eile.</h3>
               <p>
-                Warme Materialien und eine persönliche Atmosphäre stehen für
-                einen Treffpunkt, an dem man sich gerne noch einen Moment Zeit
-                nimmt.
+                Warme Materialien und gemütliche Sitzplätze sollen zum Bleiben
+                einladen. Ein Treffpunkt, an dem ein gutes Gespräch genauso
+                Platz hat wie ein zweiter Kaffee.
               </p>
             </article>
           </div>
@@ -100,15 +101,16 @@ export default function About() {
             <em>Lieblingsmoment?</em>
           </h2>
           <p>
-            Beginnen Sie mit der Speisekarte. Oder probieren Sie aus, wie eine
-            Tischanfrage auf einer solchen Website funktioniert.
+            Sehen Sie sich die Speisekarte an oder probieren Sie eine
+            Tischanfrage aus. Sie können Ihre Angaben prüfen und ändern;
+            die Demo versendet nichts.
           </p>
           <div className="hero-actions">
             <Link prefetch={false} href="/speisekarte" className="cafe-button">
               Zur Speisekarte <Arrow />
             </Link>
             <Link prefetch={false} href="/kontakt" className="cafe-text-link">
-              Zur Tischdemo <Arrow />
+              Tischanfrage ausprobieren <Arrow />
             </Link>
           </div>
         </div>
@@ -122,7 +124,7 @@ export default function About() {
             sizes="(max-width:700px) 90vw, 45vw"
           />
           <figcaption>
-            So könnte ein Lieblingsplatz aussehen. · Symbolbild
+            So könnte Ihr Lieblingsplatz aussehen. Symbolbild.
           </figcaption>
         </figure>
       </section>

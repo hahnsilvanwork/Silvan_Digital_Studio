@@ -6,11 +6,11 @@ import Footer from "./components/Footer";
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
   title: {
-    default: "Café & Konditorei Vogel – Fiktives Café in Zürich",
+    default: "Café & Konditorei Vogel: Fiktives Café in Zürich",
     template: "%s | Café & Konditorei Vogel",
   },
   description:
-    "Fiktives Café-Konzept von SILVAN: Backwaren, Speisekarte, Öffnungszeiten und eine lokale Reservierungsdemo ohne Versand.",
+    "Ein fiktives Café von SilvanDigital: Gebäck, Speisekarte und Beispiel-Öffnungszeiten entdecken. Eine Tischanfrage ausprobieren, ohne Versand oder Reservierung.",
 };
 
 export default function RootLayout({

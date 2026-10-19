@@ -1,11 +1,11 @@
 import service from "../assets/images/bmw/subpages/service.jpg";
-import occasions from "../assets/images/bmw/subpages/occasions.jpg";
+import occasions from "../assets/images/bmw/workshop-detail.jpg";
 import station from "../assets/images/bmw/workshop-hero.jpg";
 import accessories from "../assets/images/bmw/subpages/accessories.jpg";
 
 export const bmwHeroImages = {
-  service: { image: service, alt: { de: "BMW Servicearbeiten in der Werkstatt der Falkenried Gruppe", en: "BMW service work in the Falkenried Gruppe workshop" } },
-  occasions: { image: occasions, alt: { de: "BMW Occasion vor moderner Architektur", en: "Used BMW in front of modern architecture" } },
-  station: { image: station, alt: { de: "Servicestation der Falkenried Gruppe mit Tankstelle und Ladeangebot", en: "Falkenried Gruppe service station with fuel and charging facilities" } },
-  accessories: { image: accessories, alt: { de: "Auswahl an Original BMW Zubehör", en: "Selection of Original BMW accessories" } },
+  service: { image: service, alt: { de: "Mechaniker arbeitet am Motorraum eines Fahrzeugs", en: "Mechanic working under the bonnet of a car" } },
+  occasions: { image: occasions, alt: { de: "Klassische BMW-Fahrzeuge in einem Ausstellungsraum", en: "Classic BMW cars in a showroom" } },
+  station: { image: station, alt: { de: "Weisser BMW vor einem Garagentor als Symbolbild für den Fahrzeugbereich", en: "White BMW outside a garage, illustrating the motoring section" } },
+  accessories: { image: accessories, alt: { de: "Frau legt eine Tasche auf den Rücksitz eines BMW", en: "Woman placing a bag on the rear seat of a BMW" } },
 } as const;

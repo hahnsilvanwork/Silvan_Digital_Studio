@@ -5,9 +5,9 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
-  title: "Salon Lumière – Fiktives Salonkonzept",
+  title: "Salon Lumière: Fiktiver Salon",
   description:
-    "Fiktives Salonkonzept mit beispielhaften Leistungen und einer lokalen Demo-Terminanfrage ohne Versand.",
+    "Ein fiktiver Salon mit zwölf Leistungen, Richtpreisen und einer Terminanfrage zum Ausprobieren. Die Demo versendet nichts und bucht keine Termine.",
 };
 
 export default function RootLayout({

@@ -7,21 +7,21 @@ export default function Kontakt() {
       <section className="page-intro wrap">
         <h1>Ein Platz für Ihre Auszeit.</h1>
         <p>
-          Ein Kaffee zu zweit oder ein Frühstück in guter Gesellschaft: Planen
-          Sie hier Ihren beispielhaften Besuch.
+          Kaffee zu zweit oder Frühstück in guter Gesellschaft: Probieren Sie
+          aus, wie Sie einen Tisch für Ihren Besuch anfragen würden.
         </p>
       </section>
       <section className="wrap section-space contact-grid">
         <div className="contact-info">
           <div>
-            <h2>Mitten in Zürich gedacht.</h2>
+            <h2>Ein fiktives Café in Zürich.</h2>
             <p>
-              Café &amp; Konditorei Vogel ist ein fiktives Café in Zürich. Diese
-              Beispielwebsite hat keinen realen Standort.
+              Café &amp; Konditorei Vogel ist erfunden. Die Website zeigt eine
+              mögliche Café-Idee für Zürich, ohne realen Standort.
             </p>
           </div>
           <div>
-            <h2>Unsere Öffnungszeiten</h2>
+            <h2>Beispiel-Öffnungszeiten</h2>
             <dl className="hours-list">
               {openingHours.map(({ day, time }) => (
                 <div key={day}>
@@ -33,10 +33,11 @@ export default function Kontakt() {
           </div>
         </div>
         <div>
-          <h2>Besuch ausprobieren</h2>
+          <h2>Tischanfrage ausprobieren</h2>
           <p className="form-note" id="demo-note">
-            Demoformular: Bitte verwenden Sie Beispieldaten. Nichts wird
-            versendet oder gespeichert; es entsteht keine Reservierung.
+            Bitte verwenden Sie Beispieldaten. Ihre Angaben bleiben in dieser
+            Browseransicht und werden nicht dauerhaft gespeichert. Es wird
+            nichts versendet und kein Tisch reserviert.
           </p>
           <ReservationForm />
         </div>

@@ -76,9 +76,9 @@ export function validateReservation(input: Reservation, now = new Date()) {
   if (!reservationTimes(value.date).length)
     errors.date = "Bitte wählen Sie ein gültiges Datum.";
   else if (value.date < zurichClock(now).date)
-    errors.date = "Bitte wählen Sie heute oder einen zukünftigen Tag.";
+    errors.date = "Bitte wählen Sie heute oder einen späteren Tag.";
   if (!availableTimes(value.date, value.holiday, now).includes(value.time))
-    errors.time = "Bitte wählen Sie eine verfügbare Wunschzeit.";
+    errors.time = "Bitte wählen Sie eine der angebotenen Beispielzeiten.";
   if (value.message.length > limits.message)
     errors.message = "Bitte verwenden Sie höchstens 1000 Zeichen.";
   return { value, errors, valid: Object.keys(errors).length === 0 };

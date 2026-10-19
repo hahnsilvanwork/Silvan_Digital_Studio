@@ -32,8 +32,8 @@ export function organizationSchema(lang: Lang) {
     "@type": "Organization",
     description:
       lang === "de"
-        ? "Familienunternehmen in Zürcher Unterland seit 1969: Fahrzeugservice, Gartenbau und Immobilienverwaltung."
-        : "Family business in Zürcher Unterland since 1969: vehicle service, landscaping, and real estate management.",
+        ? "Fiktives Unternehmenskonzept im Zürcher Unterland mit Beispielen für Autowerkstatt, Gartenbau und Immobilienverwaltung."
+        : "Fictional business concept in the Zürcher Unterland with examples of car servicing, landscaping and property management.",
   };
 }
 
@@ -44,8 +44,8 @@ export function automotiveBusinessSchema(lang: Lang) {
     "@id": "https://falkenried.example",
     description:
       lang === "de"
-        ? "Offizieller Fahrzeugservice in Zürcher Unterland: Service, Reparaturen, Verkauf, Tankstelle und Waschanlage."
-        : "Official vehicle service in Zürcher Unterland: service, repairs, sales, fuel station and car wash.",
+        ? "Fiktives Werkstattkonzept im Zürcher Unterland mit Beispielen für Service, Reparaturen, Fahrzeugverkauf und eine Servicestation."
+        : "Fictional workshop concept in the Zürcher Unterland with examples of servicing, repairs, vehicle sales and a service station.",
   };
 }
 
@@ -56,8 +56,8 @@ export function realEstateSchema(lang: Lang) {
     "@id": "https://falkenried.example",
     description:
       lang === "de"
-        ? "Vermietung und Verwaltung eigener Wohn- und Gewerbeimmobilien im Zürcher Unterland."
-        : "Rental and management of privately owned residential and commercial properties in the Zürcher Unterland.",
+        ? "Fiktives Immobilienkonzept mit beispielhaften Wohn- und Gewerberäumen im Zürcher Unterland."
+        : "Fictional property concept with example homes and commercial spaces in the Zürcher Unterland.",
   };
 }
 

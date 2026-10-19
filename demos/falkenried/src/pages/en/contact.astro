@@ -8,27 +8,27 @@ import { company, externalLinks, people } from "../../data/company";
 const lang = "en";
 const divisions = [
   {
-    name: "Auto Workshop",
+    name: "Car servicing",
     person: "jonas-lindberg",
     accent: "--color-bmw-text",
-    description: "Service & Sales",
-    cta: "Try a Service Enquiry",
+    description: "Servicing & sales",
+    cta: "Try a service enquiry",
     href: routes.kontakt[lang] + "#general-inquiry",
   },
   {
     name: "Landscaping",
     person: "lukas-falkenried",
     accent: "--color-garden",
-    description: "Design & Care",
-    cta: "Request a Consultation",
+    description: "Design & maintenance",
+    cta: "Try a garden enquiry",
     href: "#general-inquiry",
   },
   {
-    name: "Real Estate",
+    name: "Property",
     person: "mara-linden",
     accent: "--color-realestate",
-    description: "Rental & Management",
-    cta: "View Properties",
+    description: "Rental & management",
+    cta: "View example properties",
     href: routes.immobilien[lang],
   },
 ] as const;
@@ -37,23 +37,23 @@ const divisions = [
 <BaseLayout
   lang={lang}
   route="kontakt"
-  title="Contact | Falkenried Gruppe in Zürcher Unterland"
-  description="Contact Falkenried Gruppe: Auto Workshop, Landscaping, and Real Estate in Zürcher Unterland. No real phone service in this demo."
+  title="Demo contact | Falkenried Gruppe"
+  description="Try an enquiry about car servicing, landscaping or property. The Falkenried demo sends no messages."
   jsonLd={organizationSchema(lang)}
 >
   <section class="pt-40 pb-16 bg-[var(--color-surface)]">
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
-      <span class="label-caps text-[var(--color-primary)] mb-4 block">TRADITION MEETS MODERNITY</span>
-      <h1 class="font-display text-4xl font-bold mb-6 max-w-2xl">Contact Us</h1>
+      <span class="label-caps text-[var(--color-primary)] mb-4 block">THREE AREAS. ONE CONTACT PAGE.</span>
+      <h1 class="font-display text-4xl font-bold mb-6 max-w-2xl">What would you like to ask?</h1>
       <p class="text-lg text-[var(--color-ink-muted)] max-w-xl leading-relaxed">
-        Whether it's servicing your BMW, redesigning your garden, or finding a first-class property – our
-        experts are here to help.
+        A question about your car, an idea for the garden or interest in a rental property?
+        Choose the relevant area and try the enquiry process.
       </p>
     </div>
   </section>
 
   <section class="pb-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
-    <h2 class="sr-only">Your Contacts by Division</h2>
+    <h2 class="sr-only">Example contacts by area</h2>
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 md:grid-cols-3 gap-8">
       {divisions.map((division) => (
         <div class="card p-8 border-t-4" style={`border-top-color: var(${division.accent})`}>
@@ -76,13 +76,13 @@ const divisions = [
   <section id="general-inquiry" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
       <div class="lg:col-span-4">
-        <h2 class="font-display text-2xl font-semibold mb-6">General Inquiry</h2>
+        <h2 class="font-display text-2xl font-semibold mb-6">General enquiry</h2>
         <p class="text-[var(--color-ink-muted)] leading-relaxed mb-10">
-          Try the local form for a general enquiry. Use fictional test details only; nothing is sent and no reply will follow.
+          Describe an enquiry and select an area. If you are unsure, choose “General information”. Use fictional test details only. Nothing is sent.
         </p>
         <div class="space-y-6 text-sm">
           <div>
-            <p class="label-caps text-[var(--color-ink-muted)] mb-2">Head Office</p>
+            <p class="label-caps text-[var(--color-ink-muted)] mb-2">Example address</p>
             <p>{company.address.street}, {company.address.postalCode} {company.address.locality}</p>
           </div>
           <div>
@@ -105,14 +105,14 @@ const divisions = [
           area="general"
           source="/en/contact/"
           subject="General Inquiry – Contact Form"
-          submitLabel="Send Message"
-          successMessage="Thank you for your message! We'll be in touch shortly."
-          errorMessage="Something went wrong. Please try again or call us."
+          submitLabel="View summary"
+          successMessage="Your details are shown as a preview. Nothing has been sent."
+          errorMessage="Please check the highlighted fields."
           fields={[
-            { type: "text", name: "name", label: "Name", placeholder: "Enter your name" },
+            { type: "text", name: "name", label: "Name", placeholder: "Enter a fictional name" },
             { type: "email", name: "email", label: "Email", placeholder: "email@example.com" },
-            { type: "select", name: "betreff", label: "Subject", options: ["General Information", "Auto Workshop", "Landscaping", "Real Estate"] },
-            { type: "textarea", name: "message", label: "Message", placeholder: "How can we help you?" },
+            { type: "select", name: "betreff", label: "Subject", options: ["General information", "Car servicing", "Landscaping", "Property"] },
+            { type: "textarea", name: "message", label: "Message", placeholder: "Describe an example enquiry." },
           ]}
         />
       </div>
@@ -121,11 +121,11 @@ const divisions = [
 
   <section class="py-20 bg-[var(--color-primary)] text-white text-center">
     <div class="max-w-xl mx-auto px-6 lg:px-16">
-      <h2 class="font-display text-2xl font-semibold mb-4">Have Quick Questions?</h2>
+      <h2 class="font-display text-2xl font-semibold mb-4">Looking for a particular answer?</h2>
       <p class="text-white/70 mb-8 leading-relaxed">
-        Visit our FAQ page for instant answers to the most common questions about our services.
+        The questions page explains the three areas and how the demo works.
       </p>
-      <a href={routes.faq[lang]} class="btn-secondary !border-white !text-white hover:!bg-white hover:!text-[var(--color-primary)]">View FAQs →</a>
+      <a href={routes.faq[lang]} class="btn-secondary !border-white !text-white hover:!bg-white hover:!text-[var(--color-primary)]">View common questions →</a>
     </div>
   </section>
 </BaseLayout>

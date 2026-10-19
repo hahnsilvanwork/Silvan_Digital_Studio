@@ -28,27 +28,27 @@ export const bmwServices: readonly BMWService[] = [
     id: "holiday-check",
     title: { de: "Feriencheck", en: "Holiday check" },
     summary: {
-      de: "Kontrolle der wichtigsten sicherheits- und reise­relevanten Fahrzeugbereiche.",
-      en: "Inspection of the key safety and travel-related areas of your vehicle.",
+      de: "Vor einer längeren Fahrt werden Bremsen, Batterie, Flüssigkeiten und weitere Fahrzeugbereiche geprüft.",
+      en: "Checks of brakes, battery, fluids and other parts of your vehicle before a longer journey.",
     },
     audience: { de: "Für sämtliche Automarken", en: "For all vehicle brands" },
     price: { de: "CHF 87.–", en: "CHF 87" },
     details: {
-      de: ["Bremsanlage und Prüfstand", "Batterie, Flüssigkeiten und Kühlsystem", "Lenkung, Spur und Unterbodenschutz", "Scheibenwischer und Wagenwäsche"],
-      en: ["Brake system and test bench", "Battery, fluids and cooling system", "Steering, alignment and underbody protection", "Wipers and vehicle wash"],
+      de: ["Bremsen auf dem Prüfstand kontrollieren", "Batterie, Flüssigkeiten und Kühlung prüfen", "Lenkung, Spur und Unterbodenschutz ansehen", "Scheibenwischer prüfen und Fahrzeug waschen"],
+      en: ["Check the brakes on a test bench", "Check the battery, fluids and cooling system", "Inspect steering, alignment and underbody protection", "Check the wipers and wash the vehicle"],
     },
   },
   {
     id: "climate-service",
     title: { de: "Klimaservice", en: "Air-conditioning service" },
     summary: {
-      de: "Kältemittelservice oder Desinfektion für angenehme und zuverlässige Kühlung.",
-      en: "Refrigerant servicing or disinfection for comfortable, reliable cooling.",
+      de: "Die Klimaanlage warten und bei unangenehmen Gerüchen eine Desinfektion prüfen.",
+      en: "Service the air conditioning and consider disinfection if there are unpleasant odours.",
     },
     audience: { de: "Für sämtliche Automarken", en: "For all vehicle brands" },
     details: {
-      de: ["Absaugen, Evakuieren und Neubefüllen", "Desinfektion gegen unangenehme Gerüche"],
-      en: ["Extraction, evacuation and refilling", "Disinfection to address unpleasant odours"],
+      de: ["Kältemittel absaugen und die Anlage neu befüllen", "Anlage bei Bedarf desinfizieren"],
+      en: ["Remove the refrigerant and refill the system", "Disinfect the system if needed"],
     },
   },
   {
@@ -67,32 +67,32 @@ export const bmwServices: readonly BMWService[] = [
     id: "body-damage",
     title: { de: "Blechschäden", en: "Body damage" },
     summary: {
-      de: "Koordination von Reparatur, Versicherung und Mobilität nach einem Karosserieschaden.",
-      en: "Coordination of repairs, insurance and mobility after body damage.",
+      de: "Nach einem Karosserieschaden die Reparatur, Versicherungsfragen und eine mögliche Ersatzmobilität klären.",
+      en: "After body damage, discuss the repair, insurance questions and possible replacement transport.",
     },
     details: {
-      de: ["Unterstützung bei Versicherungsangelegenheiten", "Mobilitätslösung nach Verfügbarkeit", "BMW Pannendienst ausserhalb der Öffnungszeiten"],
-      en: ["Support with insurance matters", "Mobility solution subject to availability", "BMW roadside assistance outside opening hours"],
+      de: ["Versicherungsfragen zur Reparatur besprechen", "Ersatzmobilität nach Verfügbarkeit klären", "Pannenhilfe ausserhalb der Öffnungszeiten separat organisieren"],
+      en: ["Discuss insurance questions about the repair", "Check replacement transport, subject to availability", "Arrange roadside assistance separately outside opening hours"],
     },
   },
   {
     id: "rbv",
     title: { de: "Reparaturbestätigung (RBV)", en: "Repair confirmation (RBV)" },
     summary: {
-      de: "RBV-Fachbetrieb für im Kanton Zürich eingelöste Fahrzeuge nach der Fahrzeugprüfung.",
-      en: "Authorised RBV workshop for vehicles registered in the Canton of Zurich after inspection.",
+      de: "Ein Beispiel für die Reparatur von Mängeln, die bei einer Fahrzeugprüfung festgestellt wurden. Die Demo weist keine behördliche Anerkennung nach.",
+      en: "An example of repairs for faults identified during a vehicle inspection. This demo does not represent an officially authorised inspection workshop.",
     },
     details: {
-      de: ["Termin innert 30 Tagen vereinbaren", "Fahrzeugausweis und Prüfbescheid mitbringen"],
-      en: ["Arrange an appointment within 30 days", "Bring the registration document and inspection report"],
+      de: ["Nötige Reparaturen anhand des Prüfbescheids klären", "Fahrzeugausweis und Prüfbescheid berücksichtigen"],
+      en: ["Use the inspection report to identify the required repairs", "Refer to the registration document and inspection report"],
     },
   },
   {
     id: "bmw-i",
     title: { de: "BMW i Service", en: "BMW i service" },
     summary: {
-      de: "Ausrüstung und Fachkompetenz für Servicearbeiten an BMW Elektrofahrzeugen.",
-      en: "Equipment and expertise for servicing BMW electric vehicles.",
+      de: "Diagnose und Wartung von BMW Elektrofahrzeugen als Teil des beispielhaften Werkstattangebots.",
+      en: "Diagnostics and maintenance for BMW electric vehicles in the example workshop services.",
     },
     details: { de: ["Diagnose und Wartung für BMW i"], en: ["Diagnostics and maintenance for BMW i"] },
   },
@@ -100,8 +100,8 @@ export const bmwServices: readonly BMWService[] = [
     id: "service-plus",
     title: { de: "BMW Service Plus", en: "BMW Service Plus" },
     summary: {
-      de: "Abwicklung der von BMW Service Plus gedeckten Inklusivleistungen als offizielle BMW Servicestelle.",
-      en: "Processing of covered BMW Service Plus benefits as an official BMW service centre.",
+      de: "Bei einem echten Serviceauftrag müsste zuerst geprüft werden, welche Arbeiten durch ein bestehendes BMW Service Plus Paket gedeckt sind.",
+      en: "For a real service appointment, the first step would be to check which work an existing BMW Service Plus package covers.",
     },
     details: {
       de: ["Gültigkeit und Deckung werden fahrzeugbezogen geprüft"],
@@ -146,7 +146,7 @@ export const stationFeatures: readonly StationFeature[] = [
   },
   {
     id: "vacuum",
-    title: { de: "Staubsauger", en: "Vacuum" },
+    title: { de: "Staubsauger", en: "Vacuum cleaner" },
     eyebrow: { de: "Selbstbedienung", en: "Self service" },
     description: {
       de: "Selbstbedienungs-Staubsauger direkt bei der Servicestation.",
@@ -160,15 +160,15 @@ export const stationFeatures: readonly StationFeature[] = [
 export const bmwFaqs = [
   {
     question: { de: "Welche Automarken betreuen Sie?", en: "Which vehicle brands do you service?" },
-    answer: { de: "Der BMW Service ist unser Schwerpunkt. Feriencheck, Klimaservice und RBV bieten wir gemäss veröffentlichtem Leistungsumfang auch für andere Marken an.", en: "BMW service is our main focus. According to our published scope, we also offer holiday checks, air-conditioning service and RBV for other brands." },
+    answer: { de: "Das Werkstattkonzept legt den Schwerpunkt auf BMW. Feriencheck und Klimaservice sind als Beispiele für alle Marken beschrieben. Die Angaben zeigen ein mögliches Angebot und keine bestätigte Herstellerpartnerschaft.", en: "The workshop concept focuses on BMW. Holiday checks and air-conditioning services are examples intended for all brands. These details illustrate possible services, not a confirmed manufacturer partnership." },
   },
   {
     question: { de: "Kann ich online einen Servicetermin buchen?", en: "Can I book a service appointment online?" },
-    answer: { de: "In dieser Demo können Sie eine Serviceanfrage im lokalen Kontaktformular ausprobieren. Es werden keine Termine angezeigt, reserviert oder übermittelt.", en: "This demo lets you try a service enquiry in the local contact form. No appointments are shown, reserved or transmitted." },
+    answer: { de: "Sie können im Demoformular eine Serviceanfrage vorbereiten und Ihre Angaben prüfen. Es wird nichts gesendet und kein Termin gebucht.", en: "You can prepare a service enquiry in the demo form and review your details. Nothing is sent and no appointment is booked." },
   },
   {
     question: { de: "Kann ich rund um die Uhr tanken und laden?", en: "Can I refuel and charge around the clock?" },
-    answer: { de: "Ja. Tankstelle und die zwei markenoffenen Ladestationen sind rund um die Uhr zugänglich. Für Waschanlage und Staubsauger gelten separate Zeiten.", en: "Yes. The fuel station and two brand-independent charge points are accessible around the clock. Separate hours apply to the car wash and vacuum." },
+    answer: { de: "Im Beispiel sind die Tankstelle und zwei Ladepunkte für alle Marken rund um die Uhr zugänglich. Für Waschanlage und Staubsauger gelten die separat genannten Zeiten.", en: "In the example, the fuel station and two charge points for all brands are accessible around the clock. The car wash and vacuum cleaner have their own opening hours." },
   },
 ] as const;
 

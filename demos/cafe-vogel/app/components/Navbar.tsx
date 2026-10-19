@@ -6,7 +6,7 @@ const links = [
   ["/", "Startseite"],
   ["/speisekarte", "Speisekarte"],
   ["/ueber-uns", "Über Vogel"],
-  ["/kontakt", "Kontakt & Tischdemo"],
+  ["/kontakt", "Tischanfrage"],
 ];
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -38,7 +38,7 @@ export default function Navbar() {
   return (
     <>
       <div className="demo-banner">
-        Ein fiktives Café-Konzept von{" "}
+        Ein fiktives Café von{" "}
         <a href="https://silvandigital.ch/work/">SilvanDigital</a>
       </div>
       <header className="site-header">
@@ -47,7 +47,7 @@ export default function Navbar() {
             prefetch={false}
             className="brand"
             href="/"
-            aria-label="Café Vogel – Startseite"
+            aria-label="Café Vogel: Startseite"
           >
             <span>
               Vogel<span className="brand-dot">.</span>

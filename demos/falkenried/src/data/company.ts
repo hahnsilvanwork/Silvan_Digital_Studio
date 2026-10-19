@@ -12,12 +12,12 @@ export const company = {
     country: "CH",
   },
   phone: {
-    display: "Telefon auf Anfrage",
+    display: "Keine reale Telefonnummer in dieser Demo",
     international: "DEMO",
     href: "#demo-hinweis",
   },
   fax: {
-    display: "Nicht verfügbar",
+    display: "Kein Faxdienst in dieser Demo",
     international: "DEMO",
   },
   email: "info@falkenried.example",
@@ -35,16 +35,16 @@ export const people = {
     id: "jonas-lindberg",
     name: "Jonas Lindberg",
     roles: {
-      de: ["Geschäftsführer", "Verkäufer", "Serviceberater BMW"],
-      en: ["Managing Director", "Sales Consultant", "BMW Service Advisor"],
+      de: ["Geschäftsführer", "Verkäufer", "Serviceberater"],
+      en: ["Managing director", "Sales adviser", "Service adviser"],
     },
   },
   "lukas-falkenried": {
     id: "lukas-falkenried",
     name: "Lukas Falkenried",
     roles: {
-      de: ["Gartenbau", "Technischer Unterhalt Immobilien"],
-      en: ["Landscaping", "Technical Property Maintenance"],
+      de: ["Gartenbau", "Technischer Immobilienunterhalt"],
+      en: ["Landscaping", "Property maintenance"],
     },
   },
   "mara-linden": {
@@ -52,7 +52,7 @@ export const people = {
     name: "Mara Linden",
     roles: {
       de: ["Geschäftsführerin", "Immobilien"],
-      en: ["Managing Director", "Real Estate"],
+      en: ["Managing director", "Property"],
     },
   },
   "nora-feldmann": {
@@ -60,7 +60,7 @@ export const people = {
     name: "Nora Feldmann",
     roles: {
       de: ["Sachbearbeiterin Immobilien"],
-      en: ["Real Estate Administrator"],
+      en: ["Property administrator"],
     },
   },
 } as const;

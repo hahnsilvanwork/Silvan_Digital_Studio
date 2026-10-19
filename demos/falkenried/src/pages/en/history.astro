@@ -7,12 +7,12 @@ import heroImage from "../../assets/images/bmw/workshop-lift.jpg";
 import { people } from "../../data/company";
 
 const lang = "en";
-const values = [{"title": "Personal", "text": "Clear points of contact help visitors find the right person for their enquiry."}, {"title": "Understandable", "text": "Services, next steps and essential details should be easy to understand at a glance."}, {"title": "Locally focused", "text": "The Zürcher Unterland provides the setting for a concept built around local services and everyday needs."}];
-const divisions = [{"number": "01", "title": "Mobility", "text": "A workshop with a clear overview of maintenance, repairs and vehicle care."}, {"number": "02", "title": "Gardens", "text": "Design, maintenance and transport brought together in one outdoor services offering."}, {"number": "03", "title": "Property", "text": "A clear overview of rental properties and a direct route to a relevant enquiry."}];
-const contacts = [{"title": "Auto Workshop & Service", "keys": ["jonas-lindberg"], "accent": "--color-bmw-text"}, {"title": "Landscaping & Maintenance", "keys": ["lukas-falkenried"], "accent": "--color-garden"}, {"title": "Real Estate & Management", "keys": ["mara-linden", "nora-feldmann"], "accent": "--color-realestate"}] as const;
+const values = [{"title": "Personal", "text": "Clear points of contact help visitors find the right person for their enquiry."}, {"title": "Clear", "text": "Services, next steps and essential details should be easy to understand at a glance."}, {"title": "Locally focused", "text": "The Zürcher Unterland provides the setting for a concept built around local services and everyday needs."}];
+const divisions = [{"number": "01", "title": "Mobility", "text": "A workshop with a clear overview of maintenance, repairs and vehicle care."}, {"number": "02", "title": "Gardens", "text": "Garden design, maintenance and the transport needed to support them."}, {"number": "03", "title": "Property", "text": "A clear overview of rental properties and a direct route to a relevant enquiry."}];
+const contacts = [{"title": "Car servicing", "keys": ["jonas-lindberg"], "accent": "--color-bmw-text"}, {"title": "Landscaping & maintenance", "keys": ["lukas-falkenried"], "accent": "--color-garden"}, {"title": "Property & management", "keys": ["mara-linden", "nora-feldmann"], "accent": "--color-realestate"}] as const;
 ---
 <BaseLayout lang={lang} route="geschichte" title="About the concept | Falkenried Gruppe" description="Three divisions, one shared identity: the idea behind the fictional Falkenried company concept.">
-  <Hero variant="full" title={"Three divisions. <span class=\"italic font-light\">One shared idea.</span>"} subtitle="Falkenried is a fictional company in the Zürcher Unterland. This design concept brings a workshop, landscaping and property management together under one identity." image={heroImage} imageAlt="Vehicle on a lift in a workshop" primaryCta={{ label: "Explore the divisions", href: routes.bmw[lang] }} secondaryCta={{ label: "Our guiding ideas", href: '#timeline' }} />
+  <Hero variant="full" title={"Three divisions. <span class=\"italic font-light\">One shared idea.</span>"} subtitle="Falkenried is a fictional company in the Zürcher Unterland. This design concept brings a workshop, landscaping and property management together under one identity." image={heroImage} imageAlt="A classic BMW at a vehicle exhibition" primaryCta={{ label: "Explore car servicing", href: routes.bmw[lang] }} secondaryCta={{ label: "Our guiding ideas", href: '#timeline' }} />
 
   <section id="timeline" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
@@ -39,6 +39,6 @@ const contacts = [{"title": "Auto Workshop & Service", "keys": ["jonas-lindberg"
   </section>
 
   <section class="py-[var(--spacing-section-gap)] bg-[var(--color-inverse-surface)] text-white text-center">
-    <div class="max-w-2xl mx-auto px-6"><h2 class="font-display text-3xl font-semibold mb-6">Try the contact journey</h2><p class="text-white/85 mb-10 leading-relaxed">Choose a division and explore the enquiry form using fictional test details.</p><a href={routes.kontakt[lang]} class="btn-primary">Open demo contact</a></div>
+    <div class="max-w-2xl mx-auto px-6"><h2 class="font-display text-3xl font-semibold mb-6">Try an enquiry</h2><p class="text-white/85 mb-10 leading-relaxed">Choose an area, enter fictional test details and review your summary.</p><a href={routes.kontakt[lang]} class="btn-primary">Try a demo enquiry</a></div>
   </section>
 </BaseLayout>

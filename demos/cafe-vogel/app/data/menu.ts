@@ -1,11 +1,11 @@
 export const menuSections = [
   {
-    title: "Frühstück & Morgen",
-    subtitle: "Bis 11:00 Uhr · Mo–Fr ab 07:00, Sa–So ab 08:00",
+    title: "Frühstück",
+    subtitle: "Frühstück ab Öffnung bis 11:00 Uhr",
     items: [
       {
-        name: "Frühstückskorb für Zwei",
-        desc: "Frischgebackenes Brot, Gipfeli, Butter, hausgemachte Konfitüre, Käse, Aufschnitt, Saisonfrüchte, Orangensaft",
+        name: "Frühstückskorb für zwei",
+        desc: "Frisches Brot, Gipfeli, Butter, hausgemachte Konfitüre, Käse, Aufschnitt, Früchte der Saison und Orangensaft",
         price: "28.00",
       },
       {
@@ -31,12 +31,12 @@ export const menuSections = [
     items: [
       {
         name: "Gipfeli",
-        desc: "Butterig, zart, nach Hausrezept",
+        desc: "Nach Hausrezept mit Butter gebacken, zart im Biss",
         price: "2.50",
       },
       {
         name: "Buttergebäck",
-        desc: "Täglich frisch, butterig & zart",
+        desc: "Täglich frisch gebacken, mit feinem Buttergeschmack",
         price: "2.80",
       },
       {
@@ -56,7 +56,7 @@ export const menuSections = [
       },
       {
         name: "Éclair au Chocolat",
-        desc: "Brandteig, Schokoladencreme, Ganache-Glasur",
+        desc: "Brandteig mit Schokoladencreme und Schokoladenglasur (Ganache)",
         price: "5.80",
       },
       {
@@ -66,7 +66,7 @@ export const menuSections = [
       },
       {
         name: "Pralinés (6 Stück)",
-        desc: "Hausgemachte Pralinen, sortiert, wechselnde Kreationen",
+        desc: "Sechs hausgemachte Pralinés in wechselnder Auswahl",
         price: "14.00",
       },
     ],
@@ -88,7 +88,7 @@ export const menuSections = [
       },
       {
         name: "Latte Macchiato",
-        desc: "Grosse Tasse, Hafermilch auf Wunsch",
+        desc: "In der grossen Tasse, auf Wunsch mit Hafermilch",
         price: "5.50",
       },
       {
@@ -98,7 +98,7 @@ export const menuSections = [
       },
       {
         name: "Tee (Auswahl)",
-        desc: "Schwarztee, Kräuter, Grüntee — alle Sorten täglich frisch",
+        desc: "Schwarztee, Kräutertee oder Grüntee, frisch zubereitet",
         price: "4.20",
       },
     ],
@@ -114,17 +114,17 @@ export const menuSections = [
       },
       {
         name: "Käsekuchen",
-        desc: "Cremig, leicht, mit Mürbteigboden",
+        desc: "Cremig und leicht, auf einem Mürbteigboden",
         price: "6.50",
       },
       {
         name: "Geburtstagstorte (Bestellung)",
-        desc: "Individuell gestaltet, ab 6 Personen",
+        desc: "Nach Ihren Wünschen gestaltet, für mindestens 6 Personen",
         price: "ab 55.00",
       },
       {
         name: "Hochzeitstorte (Bestellung)",
-        desc: "Mehlspeiskunst nach Mass",
+        desc: "Individuell für Ihre Hochzeit gestaltet",
         price: "auf Anfrage",
       },
     ],
@@ -137,7 +137,7 @@ export const featuredMenu = [
   "Buttergebäck",
   "Linzer Torte",
   "Sauerteigbrot",
-  "Frühstückskorb für Zwei",
+  "Frühstückskorb für zwei",
 ].map((name) => {
   const item = menuSections
     .flatMap((section) => section.items)

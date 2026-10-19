@@ -11,7 +11,7 @@ export default function Footer() {
           <p>
             Kleine Pausen. Grosse Vorfreude.
             <br />
-            Ein fiktives Café-Konzept für Zürich.
+            Ein fiktives Café in Zürich.
           </p>
         </div>
         <nav aria-label="Seitennavigation">
@@ -22,7 +22,7 @@ export default function Footer() {
             Über Vogel
           </Link>
           <Link prefetch={false} href="/kontakt">
-            Kontakt & Tischdemo
+            Tischanfrage ausprobieren
           </Link>
         </nav>
         <div className="footer-studio">
@@ -33,8 +33,8 @@ export default function Footer() {
         </div>
         <div className="footer-bottom">
           <p>
-            Portfolio-Demo · Keine echten Reservierungen, Bestellungen oder
-            Kundenbewertungen.
+            Fiktives Website-Beispiel. Keine echten Reservierungen,
+            Bestellungen oder Kundenbewertungen.
           </p>
           <div>
             <a href="https://silvandigital.ch/work/">SilvanDigital</a>

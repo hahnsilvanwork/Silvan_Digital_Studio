@@ -14,21 +14,21 @@ export default function Home() {
             <em>Ein Stück Glück.</em>
           </h1>
           <p className="hero-description">
-            Der Duft von Kaffee. Ein Gipfeli auf dem Teller. Und ein
-            Lieblingsplatz, an dem der Morgen etwas länger bleiben darf.
+            Kaffeeduft, ein frisches Gipfeli und ein Platz zum Durchatmen.
+            Vogel ist die Idee eines Cafés für die kleinen Pausen im Alltag.
           </p>
           <div className="hero-actions">
             <Link prefetch={false} href="/speisekarte" className="cafe-button">
-              Speisekarte entdecken <Arrow />
+              Speisekarte ansehen <Arrow />
             </Link>
             <Link prefetch={false} href="/kontakt" className="cafe-text-link">
-              Tischdemo ausprobieren <Arrow />
+              Tischanfrage ausprobieren <Arrow />
             </Link>
           </div>
           <p className="hero-signature">
             Kaffee, Kuchen & kleine Pausen.
             <br />
-            Das Café-Konzept für Zürich.
+            Ein fiktives Café in Zürich.
           </p>
         </div>
         <figure className="hero-photo">
@@ -40,7 +40,7 @@ export default function Home() {
             priority
             sizes="(max-width: 700px) 90vw, 48vw"
           />
-          <figcaption>So könnte Vogel aussehen. · Symbolbild</figcaption>
+          <figcaption>So könnte Vogel aussehen. Symbolbild.</figcaption>
         </figure>
       </section>
       <section className="specialties section-space">
@@ -53,10 +53,10 @@ export default function Home() {
             </h2>
             <div>
               <p>
-                Etwas Süsses, etwas Herzhaftes oder einfach einen richtig guten
-                Kaffee. Eine kleine Auswahl aus unserer Beispielkarte.
+                Etwas Süsses, etwas Herzhaftes oder ein guter Kaffee.
+                Hier sehen Sie eine Auswahl aus unserer Beispiel-Speisekarte.
               </p>
-              <p className="small-note">Fiktive Beispielpreise in CHF.</p>
+              <p className="small-note">Fiktives Angebot mit Beispielpreisen in CHF.</p>
             </div>
           </div>
           <div className="featured-menu">
@@ -85,25 +85,25 @@ export default function Home() {
             loading="lazy"
             sizes="(max-width:700px) 90vw, 45vw"
           />
-          <figcaption>Atmosphäre als Inspiration · Symbolbild</figcaption>
+          <figcaption>Ein Eindruck der gewünschten Atmosphäre. Symbolbild.</figcaption>
         </figure>
         <div>
           <h2>
             Hier darf die Zeit
             <br />
-            <em>langsamer gehen.</em>
+            <em>langsamer vergehen.</em>
           </h2>
           <p className="large-copy">
-            Ein Tisch am Fenster. Ein zweiter Kaffee. Ein Gespräch, das bleiben
-            darf.
+            Ein Tisch am Fenster. Ein zweiter Kaffee. Zeit für ein gutes
+            Gespräch.
           </p>
           <p>
-            Vogel ist die Idee eines Quartiercafés mit Konditorei: persönlich,
-            warm und voller kleiner Genussmomente. Ein Ort für den schnellen
-            Espresso genauso wie für den langen Sonntagsmorgen.
+            Ein Quartiercafé mit Konditorei, in dem man gerne eine Pause macht:
+            Das ist die Idee hinter Vogel. Für den Espresso vor der Arbeit,
+            das Frühstück zu zweit oder ein Stück Kuchen am Nachmittag.
           </p>
           <Link prefetch={false} href="/ueber-uns" className="cafe-text-link">
-            Das Café-Konzept kennenlernen <Arrow />
+            Die Idee hinter Vogel <Arrow />
           </Link>
         </div>
       </section>
@@ -116,15 +116,15 @@ export default function Home() {
               <em>passt immer.</em>
             </h2>
             <p>
-              Entdecken Sie, wie ein Besuch bei Vogel aussehen könnte. Die
-              Tischanfrage lässt sich direkt auf dieser Website ausprobieren.
+              Wie würde Ihre nächste Café-Pause aussehen? Wählen Sie Datum,
+              Wunschzeit und Personenzahl in unserer Beispielanfrage.
             </p>
             <Link prefetch={false} href="/kontakt" className="cafe-button">
-              Zur Reservierungsdemo <Arrow />
+              Tischanfrage ausprobieren <Arrow />
             </Link>
           </div>
           <div>
-            <h3>Öffnungszeiten im Konzept</h3>
+            <h3>Beispiel-Öffnungszeiten</h3>
             <dl className="hours-list">
               {openingHours.map((h) => (
                 <div key={h.day}>
@@ -134,8 +134,8 @@ export default function Home() {
               ))}
             </dl>
             <p className="small-note">
-              Fiktives Café in Zürich · kein realer Standort und keine echten
-              Reservierungen.
+              Vogel ist ein fiktives Café in Zürich. Es gibt keinen realen
+              Standort; die Demo reserviert keine Tische.
             </p>
           </div>
         </div>

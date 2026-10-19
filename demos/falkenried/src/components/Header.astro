@@ -24,11 +24,11 @@ const langSwitchHref = routes[route][otherLang];
 
 <header id="site-header" class="fixed top-0 inset-x-0 z-50 bg-white/90 backdrop-blur-xl border-b border-[var(--color-outline-variant)]/40">
   <div id="header-row" class="max-w-[var(--container-max)] mx-auto flex items-center justify-between px-6 py-5 lg:grid lg:grid-cols-[minmax(12rem,1fr)_auto_minmax(12rem,1fr)] lg:gap-3 lg:px-8 xl:gap-6 xl:px-12 2xl:px-16">
-    <a href={routes.home[lang]} class="block shrink-0 lg:justify-self-start" aria-label="Falkenried Gruppe – Startseite">
+    <a href={routes.home[lang]} class="block shrink-0 lg:justify-self-start" aria-label={lang === "de" ? "Falkenried Gruppe: Startseite" : "Falkenried Gruppe: home page"}>
       <span class="brand-wordmark"><span class="brand-symbol" aria-hidden="true">F.</span><span>FALKENRIED<small>GRUPPE · ZÜRCHER UNTERLAND</small></span></span>
     </a>
 
-    <nav id="desktop-nav" class="hidden lg:flex items-center justify-self-center gap-3 whitespace-nowrap xl:gap-6" aria-label="Hauptnavigation">
+    <nav id="desktop-nav" class="hidden lg:flex items-center justify-self-center gap-3 whitespace-nowrap xl:gap-6" aria-label={lang === "de" ? "Hauptnavigation" : "Main navigation"}>
       {links.map((link) => (
         <a
           href={routes[link.key][lang]}
@@ -60,7 +60,7 @@ const langSwitchHref = routes[route][otherLang];
     </button>
   </div>
 
-  <nav id="mobile-menu" class="hidden lg:hidden border-t border-[var(--color-outline-variant)]/40 bg-white px-6 py-6" aria-label="Mobile Navigation">
+  <nav id="mobile-menu" class="hidden lg:hidden border-t border-[var(--color-outline-variant)]/40 bg-white px-6 py-6" aria-label={lang === "de" ? "Mobile Navigation" : "Mobile navigation"}>
     <ul class="flex flex-col gap-5">
       {links.map((link) => (
         <li>

@@ -135,14 +135,15 @@ export default function InquiryForm({
   return (
     <div className="inquiry-form">
       <p className="form-note" id="inquiry-privacy">
-        <strong>Dies ist eine fiktive Demo.</strong> Ihre Angaben werden nur
-        hier zur Prüfung angezeigt. Es wird nichts versendet oder in einem
-        Browser-Speicher gespeichert. Bitte verwenden Sie Beispieldaten.
+        <strong>Dieses Formular gehört zu einer fiktiven Demo.</strong> Bitte
+        verwenden Sie Beispieldaten. Sie können Ihre Angaben hier prüfen.
+        Es wird nichts versendet oder dauerhaft gespeichert. Beim Neuladen
+        werden die Angaben gelöscht.
       </p>
       <noscript>
         <p className="form-note">
-          Für die lokale Vorschau benötigen Sie JavaScript. Das Formular ist
-          deshalb deaktiviert.
+          Die Vorschau benötigt JavaScript. Aktivieren Sie es in Ihrem Browser,
+          um das Formular auszuprobieren.
         </p>
       </noscript>
       {review ? (
@@ -156,14 +157,14 @@ export default function InquiryForm({
         >
           <h3>Ihre Beispielanfrage im Überblick</h3>
           <p className="form-note">
-            Nur eine Vorschau. Diese Anfrage wurde nicht versendet.
+            Dies ist eine Vorschau Ihrer Beispielanfrage. Sie wurde nicht versendet.
           </p>
           <dl>
             <dt>Leistung</dt>
             <dd>{selection.service || "Noch offen"}</dd>
             {selection.project && (
               <>
-                <dt>Projekt als Inspiration</dt>
+                <dt>Ausgewählte Projektidee</dt>
                 <dd>{selection.project}</dd>
               </>
             )}
@@ -179,7 +180,7 @@ export default function InquiryForm({
             )}
             {review.timeframe && (
               <>
-                <dt>Zeitraum</dt>
+                <dt>Gewünschter Zeitraum</dt>
                 <dd>{review.timeframe}</dd>
               </>
             )}
@@ -239,7 +240,7 @@ export default function InquiryForm({
             {selection.project && (
               <div className="selection-note">
                 <p>
-                  Projekt als Inspiration: <strong>{selection.project}</strong>
+                  Ausgewählte Projektidee: <strong>{selection.project}</strong>
                 </p>
                 <button
                   type="button"
@@ -257,7 +258,7 @@ export default function InquiryForm({
               {field("email", "E-Mail", true)}
             </div>
             <div className="field-pair">
-              {field("location", "Ort des Vorhabens")}
+              {field("location", "Ort der geplanten Arbeiten")}
               {field("timeframe", "Gewünschter Zeitraum")}
             </div>
             <div className="field">
@@ -277,7 +278,7 @@ export default function InquiryForm({
                 }
               />
               <p id="inquiry-message-hint" className="form-note">
-                Maximal 2000 Zeichen. Ein paar Sätze zu Ihrem Vorhaben genügen.
+                Ein paar Sätze genügen. Sie können bis zu 2000 Zeichen eingeben.
               </p>
               {errors.message && (
                 <p className="field-error" id="inquiry-message-error">

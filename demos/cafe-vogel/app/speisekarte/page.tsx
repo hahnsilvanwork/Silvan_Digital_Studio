@@ -5,7 +5,7 @@ import Arrow from "../components/Arrow";
 export const metadata: Metadata = {
   title: "Speisekarte",
   description:
-    "Frühstück, Patisserie, Kaffee und Torten: die übersichtliche Beispielkarte des fiktiven Café Vogel mit Preisen in CHF.",
+    "Frühstück, Gebäck, Kaffee und Torten: die Beispiel-Speisekarte des fiktiven Cafés Vogel mit Preisen in CHF und einer Tischanfrage zum Ausprobieren.",
 };
 const ids = ["fruehstueck", "backwaren", "kaffee", "torten"];
 const labels = ["Frühstück", "Backwaren", "Kaffee & Tee", "Torten"];
@@ -19,12 +19,12 @@ export default function Menu() {
           <em>ein kleines Glück.</em>
         </h1>
         <p>
-          Vom ersten Kaffee bis zum letzten Krümel: Entdecken Sie die
-          Speisekarte von Vogel.
+          Frühstück zu zweit, eine Kaffeepause oder Kuchen zum Teilen:
+          Entdecken Sie das Beispielangebot von Vogel.
         </p>
         <p className="small-note">
-          Alle Angaben sind Teil des fiktiven Konzepts. Beispielpreise in CHF,
-          inkl. MwSt.
+          Fiktives Angebot. Alle Preise sind Beispiele in CHF, inklusive
+          Mehrwertsteuer.
         </p>
       </section>
       <div className="menu-navigation">
@@ -67,20 +67,21 @@ export default function Menu() {
           <div>
             <h2>Gut zu wissen.</h2>
             <p>
-              Diese Karte zeigt ein mögliches Angebot. Sie ist keine
-              verbindliche Auskunft zu Zutaten oder Allergenen. In einem echten
-              Café klären Sie besondere Ernährungsbedürfnisse bitte direkt mit
-              dem Team.
+              Diese Speisekarte zeigt ein fiktives Angebot. Die Angaben zu
+              Zutaten und Allergenen sind nicht verbindlich. Wenn Sie bestimmte
+              Lebensmittel nicht vertragen oder meiden möchten, fragen Sie in
+              einem echten Café bitte direkt beim Team nach.
             </p>
           </div>
           <div>
             <h3>Lust auf einen Platz am Fenster?</h3>
             <p>
-              Testen Sie eine Tischanfrage mit Datum, Wunschzeit und
-              Personenzahl. Es wird nichts versendet.
+              Probieren Sie eine Tischanfrage mit Datum, Wunschzeit und
+              Personenzahl aus. Die Demo versendet nichts und reserviert
+              keinen Tisch.
             </p>
             <Link prefetch={false} href="/kontakt" className="cafe-button">
-              Tischdemo ausprobieren <Arrow />
+              Tischanfrage ausprobieren <Arrow />
             </Link>
           </div>
         </div>

@@ -22,26 +22,26 @@ const accent = "--color-realestate" as const;
 <BaseLayout
   lang={lang}
   route="immobilien"
-  title="Real Estate | Rental Apartments & Commercial Space – Falkenried Gruppe"
-  description="Falkenried Gruppe rents and manages only its own properties in the Zürcher Unterland: apartments, commercial space, and parking."
+  title="Property | Apartments, commercial space and parking | Falkenried Gruppe"
+  description="Example properties in the Falkenried concept: apartments, commercial spaces and parking. Filter the listings and try a property enquiry."
   jsonLd={realEstateSchema(lang)}
 >
   <Hero
     variant="full"
-    eyebrow="REAL ESTATE PORTFOLIO"
-    title={`Timeless Spaces <span class="italic font-light">for Generations.</span>`}
+    eyebrow="PROPERTY OVERVIEW"
+    title={`A place to live. <span class="italic font-light">Room to work.</span>`}
     subtitle="Apartments, commercial spaces and parking: explore the example properties and try a demo enquiry."
     image={heroImage}
     imageAlt="Modern living space with large windows"
-    primaryCta={{ label: "View Properties", href: "#objekte" }}
-    secondaryCta={{ label: "Rental Process", href: "#mietprozess" }}
+    primaryCta={{ label: "View properties", href: "#objekte" }}
+    secondaryCta={{ label: "How the enquiry works", href: "#mietprozess" }}
   />
 
   <section id="objekte" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
       <div class="mb-10">
-        <span class="label-caps mb-4 block" style={`color: var(${accent})`}>Currently Available</span>
-        <h2 class="font-display text-3xl font-semibold">Carefully Maintained Homes & Commercial Space</h2>
+        <span class="label-caps mb-4 block" style={`color: var(${accent})`}>Example properties</span>
+        <h2 class="font-display text-3xl font-semibold">Apartments, commercial spaces and parking</h2>
       </div>
       <PropertyFilter
         gridId="property-grid"
@@ -55,43 +55,43 @@ const accent = "--color-realestate" as const;
       <div id="property-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <PropertyCard
           image={apartmentImg}
-          imageAlt="Apartment in Zürcher Unterland Chlupf"
-          status="On Request"
+          imageAlt="Bright living room illustrating an example apartment"
+          status="On request"
           statusTone="neutral"
           category="wohnungen"
           title="Apartment, Zürcher Unterland Chlupf"
           address="Example location in the Zürcher Unterland"
           price="Price on request"
-          priceLabel="Monthly Rent"
-          detailsLabel="Request Details"
+          priceLabel="Monthly rent"
+          detailsLabel="Try an enquiry"
         />
         <PropertyCard
           image={officeImg}
-          imageAlt="Commercial space, Steinbruggstrasse Zürcher Unterland"
-          status="On Request"
+          imageAlt="Modern office illustrating an example commercial space"
+          status="On request"
           statusTone="neutral"
           category="gewerbe"
-          title="Commercial Space, Steinbruggstrasse"
+          title="Commercial space, Steinbruggstrasse"
           address="Example location near a station in the Zürcher Unterland"
           price="Price on request"
-          priceLabel="Monthly Rent"
-          detailsLabel="Request Details"
+          priceLabel="Monthly rent"
+          detailsLabel="Try an enquiry"
         />
         <PropertyCard
           image={parkingImg}
-          imageAlt="Underground parking space in Zürcher Unterland"
-          status="On Request"
+          imageAlt="Underground car park illustrating an example parking space"
+          status="On request"
           statusTone="neutral"
           category="parkplatz"
-          title="Underground Parking Space"
+          title="Underground parking space"
           address="Zürcher Unterland Chlupf"
           price="Price on request"
-          priceLabel="Monthly Rent"
-          detailsLabel="Request Details"
+          priceLabel="Monthly rent"
+          detailsLabel="Try an enquiry"
         />
       </div>
       <p class="text-sm text-[var(--color-ink-muted)] mt-8">
-        Current availability changes regularly. Contact us for the latest overview of available properties.
+        These properties and prices are part of the design concept. No spaces are actually offered for rent. Choose “Try an enquiry” to take the selected property into the form.
       </p>
     </div>
   </section>
@@ -99,14 +99,14 @@ const accent = "--color-realestate" as const;
   <section id="mietprozess" class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16">
       <div class="text-center mb-16">
-        <span class="label-caps" style={`color: var(${accent})`}>Good to Know</span>
-        <h2 class="font-display text-3xl font-semibold mt-4">The Rental Process</h2>
+        <span class="label-caps" style={`color: var(${accent})`}>Try the enquiry process</span>
+        <h2 class="font-display text-3xl font-semibold mt-4">From an example property to a demo enquiry</h2>
       </div>
       <ProcessSteps
         steps={[
-          { number: "1", title: "Viewing", description: "Arrange an appointment for a private viewing – we take the time to show you everything." },
-          { number: "2", title: "Application", description: "Submit your application dossier including a current debt collection extract – discreet and straightforward." },
-          { number: "3", title: "Signing", description: "Once approved, we prepare the lease and hand over the keys in person." },
+          { number: "1", title: "Choose a property", description: "Filter the listings and open a demo enquiry for an example property." },
+          { number: "2", title: "Add your details", description: "The selected property is already in the form. Add a sample request using fictional details." },
+          { number: "3", title: "Review the summary", description: "See your details brought together. You can edit or clear them; nothing is sent." },
         ]}
       />
     </div>
@@ -115,13 +115,13 @@ const accent = "--color-realestate" as const;
   <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface)]">
     <div class="max-w-[var(--container-max)] mx-auto px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
       <div class="lg:col-span-4">
-        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Your Contact</span>
+        <span class="label-caps mb-6 block" style={`color: var(${accent})`}>Example contacts</span>
         <div class="space-y-4">
           <ContactPerson name={people["mara-linden"].name} roles={people["mara-linden"].roles[lang]} accentVar={accent} />
           <ContactPerson name={people["nora-feldmann"].name} roles={people["nora-feldmann"].roles[lang]} accentVar={accent} />
         </div>
         <p class="text-sm text-[var(--color-ink-muted)] mt-6 leading-relaxed">
-          Contact us directly or use the form for your specific property inquiry.
+          The names and roles illustrate possible points of contact. Use the form to try a property enquiry.
         </p>
       </div>
       <div id="property-enquiry" class="lg:col-span-8">
@@ -130,14 +130,14 @@ const accent = "--color-realestate" as const;
           area="real-estate"
           source="/en/immobilien/"
           subject="New Inquiry – Real Estate"
-          submitLabel="Send Inquiry"
-          successMessage="Thank you for your inquiry! We'll be in touch shortly."
-          errorMessage="Something went wrong. Please try again or call us."
+          submitLabel="Review demo enquiry"
+          successMessage="Your example details are ready to review. Nothing has been sent."
+          errorMessage="Please check the highlighted details."
           fields={[
-            { type: "text", name: "name", label: "First & Last Name", placeholder: "Jane Doe" },
-            { type: "email", name: "email", label: "Email Address", placeholder: "jane@example.com" },
-            { type: "select", name: "objekt", label: "Interested In", options: ["Apartment", "Commercial", "Parking", "Not sure yet"] },
-            { type: "textarea", name: "message", label: "Your Message", placeholder: "How can we help you?" },
+            { type: "text", name: "name", label: "First and last name", placeholder: "Jane Doe" },
+            { type: "email", name: "email", label: "Email address", placeholder: "jane@example.com" },
+            { type: "select", name: "objekt", label: "Property of interest", options: ["Apartment", "Commercial", "Parking", "Not sure yet"] },
+            { type: "textarea", name: "message", label: "Your message", placeholder: "How can we help you?" },
           ]}
         />
       </div>
@@ -146,11 +146,11 @@ const accent = "--color-realestate" as const;
 
   <section class="py-[var(--spacing-section-gap)] bg-[var(--color-surface-low)]">
     <div class="max-w-3xl mx-auto px-6 lg:px-16">
-      <h2 class="font-display text-2xl font-semibold mb-10 text-center">Frequently Asked Questions</h2>
+      <h2 class="font-display text-2xl font-semibold mb-10 text-center">Frequently asked questions</h2>
       <FaqAccordion
         items={[
-          { question: "Are pets allowed in your apartments?", answer: "Pets are generally welcome by prior arrangement. We review this on a case-by-case basis considering the building and the specific unit." },
-          { question: "How much is the security deposit?", answer: "Typically a deposit of two to three months' rent is required, held in a blocked account or via a deposit insurance." },
+          { question: "Can I view or rent an apartment?", answer: "No. These are examples of how a property website could work. The demo form shows an enquiry summary but does not arrange viewings or accept rental applications." },
+          { question: "Do the photographs show the example properties?", answer: "The photographs illustrate apartments, commercial spaces and parking. They are not verified Falkenried properties. The details are part of the design concept, not rental offers." },
         ]}
       />
       <div class="text-center mt-10">

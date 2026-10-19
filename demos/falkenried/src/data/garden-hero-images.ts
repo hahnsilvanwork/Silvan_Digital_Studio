@@ -5,9 +5,9 @@ import references from "../assets/images/garden/subpages/references.jpg";
 import tips from "../assets/images/garden/subpages/tips.jpg";
 
 export const gardenHeroImages = {
-  design: { image: design, alt: { de: "Von Falkenried Gruppe gestaltete Gartenanlage", en: "Garden designed by Falkenried Gruppe" } },
-  maintenance: { image: maintenance, alt: { de: "Gartenunterhalt und Bepflanzung durch Falkenried Gruppe", en: "Garden maintenance and planting by Falkenried Gruppe" } },
-  transport: { image: transport, alt: { de: "Kranlastwagen der Falkenried Gruppe im Transporteinsatz", en: "Falkenried Gruppe crane truck during transport work" } },
-  references: { image: references, alt: { de: "Ausgeführtes Wasserspiel aus Granit und Stahl", en: "Completed water feature made of granite and steel" } },
-  tips: { image: tips, alt: { de: "Blühender Rhododendron in einer gepflegten Gartenanlage", en: "Flowering rhododendron in a maintained garden" } },
+  design: { image: design, alt: { de: "Garten mit Steinmauer, Sitzplatz und dekorativen Stahlelementen", en: "Garden with a stone wall, seating area and decorative steel features" } },
+  maintenance: { image: maintenance, alt: { de: "Gepflegtes Beet mit Bodendeckern und blühenden Sträuchern", en: "A maintained border with ground cover and flowering shrubs" } },
+  transport: { image: transport, alt: { de: "Blühende Rosen und Stauden in einem Gartenbeet", en: "Flowering roses and perennials in a garden border" } },
+  references: { image: references, alt: { de: "Gestuftes Wasserspiel mit Steinbecken und einer Wasserwand", en: "A stepped water feature with stone pools and a water wall" } },
+  tips: { image: tips, alt: { de: "Bunt blühende Sträucher und Stauden neben einem Gartenweg", en: "Colourful flowering shrubs and perennials beside a garden path" } },
 } as const;

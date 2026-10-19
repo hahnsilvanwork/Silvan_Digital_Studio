@@ -17,7 +17,7 @@ test("browser script reviews the enquiry without sending, storing, or resetting 
   const source = await readSource("src/components/ContactForm.astro");
   assert.match(source, /event\.preventDefault\(\)/);
   assert.doesNotMatch(source, /fetch\(|XMLHttpRequest|localStorage|sessionStorage/);
-  assert.match(source, /Nothing has been sent or stored/);
+  assert.match(source, /Nothing has been sent or saved permanently\./);
   assert.doesNotMatch(source, /form\.reset\(\)/);
   assert.match(source, /description\.textContent = value/);
   assert.match(source, /control\.dataset\.label/);
