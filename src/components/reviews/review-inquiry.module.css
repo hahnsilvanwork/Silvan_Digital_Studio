@@ -5,7 +5,7 @@
   max-inline-size: 46rem;
   padding: var(--space-sm);
   border: var(--hairline) solid var(--color-line);
-  border-radius: 0.75rem;
+  border-radius: 4px;
   background: var(--color-paper-raised);
 }
 
@@ -146,9 +146,9 @@
 .fieldMessages:empty { display: none; }
 
 .label {
-  font-size: var(--text-label);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: normal;
+  text-transform: none;
   line-height: 1.4;
 }
 
@@ -204,10 +204,10 @@ textarea.control {
   font-family: inherit;
   font-size: var(--text-action);
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: normal;
   text-align: center;
   text-decoration: none;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .submit,
@@ -305,3 +305,11 @@ textarea.control {
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
 }
+
+/* 2026-10-19: enquiry in the shared editorial language. */
+.editButton { border-radius: 4px; }
+.disclosure > summary { position: relative; list-style: none; padding-inline-end: 2.25rem; font-weight: 600; }
+.disclosure > summary::-webkit-details-marker { display: none; }
+.disclosure > summary::after { content: ''; position: absolute; inset-inline-end: .5rem; inset-block-start: 50%; inline-size: .55rem; block-size: .55rem; margin-block-start: -.4rem; border-inline-end: 1.5px solid currentColor; border-block-end: 1.5px solid currentColor; transform: rotate(45deg); }
+.disclosure[open] > summary::after { transform: rotate(225deg); margin-block-start: -.1rem; }
+.hint { font-size: .9375rem; }

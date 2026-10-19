@@ -25,14 +25,13 @@ const ROUTES: readonly InternalPath[] = [
 ];
 
 /**
- * Bump this when the published copy of the site actually changes. It is the
- * date every entry reports, so it has to mean something.
+ * Record significant content changes per route; never use the build clock.
  */
 const CONTENT_REVISIONS: Readonly<Record<string, string>> = {
-  '/': '2026-09-18', '/websites': '2026-09-09', '/reviews': '2026-09-18',
-  '/presence': '2026-09-09', '/automation': '2026-09-09', '/work': '2026-09-09',
-  '/about': '2026-09-09', '/contact': '2026-09-18', '/privacy': '2026-09-18',
-  '/imprint': '2026-09-07',
+  '/': '2026-10-02', '/websites': '2026-10-02', '/reviews': '2026-09-18',
+  '/presence': '2026-09-09', '/automation': '2026-09-09', '/work': '2026-10-02',
+  '/about': '2026-09-09', '/contact': '2026-10-02', '/privacy': '2026-10-02',
+  '/imprint': '2026-10-02', '/work/spurwerk': '2026-10-02',
 };
 
 /** The service pages are what a visitor is meant to land on from a search. */

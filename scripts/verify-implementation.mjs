@@ -30,7 +30,7 @@ try {
     await expect(page.locator('#contact-tier')).toHaveValue('premium');
     const allMail=await page.locator('a[href^="mailto:"]').evaluateAll(links=>links.map(link=>link.href));
     if(!allMail.some(href=>decodeURIComponent(href).includes('2,000')||decodeURIComponent(href).includes("2'000"))) throw new Error('Tier price missing from message');
-    for(const route of ['/presence','/work/falkenried','/work/steiner-handwerk']) {
+    for(const route of ['/presence','/work/falkenried','/work/spurwerk']) {
       await page.goto(base+prefix+route);
       await page.screenshot({path:`${folder}/${route.replaceAll('/','-')}-${locale}-${width}.png`,fullPage:true});
       const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1);

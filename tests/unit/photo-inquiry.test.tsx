@@ -17,11 +17,13 @@ describe("photographed product inquiry selection", () => {
     const card = photoImports.find((product) => product.kind === "card")!;
     act(() => setCatalogueSelection(card.category, card.id));
     await act(() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())));
-    await user.click(screen.getByRole('button', { name: 'Adjust selection' }));
+    await user.click(screen.getByRole('button', { name: 'Change selection' }));
     expect(screen.getByLabelText("Shape")).toHaveValue("rectangle");
     expect(screen.getByLabelText("Size")).toHaveValue("confirm");
     expect(within(screen.getByLabelText("Size")).queryByRole("option", { name: "100 × 100 mm" })).toBeNull();
-    expect(screen.getByLabelText("Product")).toHaveValue("standard-card");
+    expect(screen.getByLabelText("Product")).toHaveValue("compact-card");
+    expect(within(screen.getByLabelText("Shape")).queryByRole("option", {name: "Round"})).toBeNull();
+    await user.selectOptions(screen.getByLabelText("Product"), "standard-card");
     await user.selectOptions(screen.getByLabelText("Shape"), "round");
     expect(screen.getByLabelText("Size")).toHaveValue("");
   });

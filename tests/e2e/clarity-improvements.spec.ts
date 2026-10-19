@@ -13,8 +13,8 @@ test('reload restores product choices but excludes personal details', async ({ p
   await expect(page.locator('[name="size"]')).toHaveValue('100');
   await expect(page.locator('[name="businessName"]')).toHaveValue('');
   await expect(page.locator('[name="destinationUrl"]')).toHaveValue('');
-  await expect(page.getByText(/selection restored/i)).toBeVisible();
-  await page.getByRole('button', { name: 'Start again', exact: true }).click();
+  await expect(page.getByText(/selection has been restored/i)).toBeVisible();
+  await page.getByRole('button', { name: 'Start a new enquiry', exact: true }).click();
   await expect(page.getByTestId('inquiry-model')).toHaveCount(0);
   await expect(page.locator('[name="product"]')).toHaveValue('');
 });
@@ -53,8 +53,9 @@ test('contact offers direct channels before the optional enquiry fields', async 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/contact');
   await expect(page.locator('#contact-reason')).not.toBeVisible();
-  await expect(page.locator('main a[href^="mailto:"]')).toBeInViewport();
-  await expect(page.locator('main a[href^="https://wa.me/"]')).toBeInViewport();
+  const direct = page.getByRole('group', { name: 'Direktkontakt', exact: true });
+  await expect(direct.locator('a[href^="mailto:"]')).toBeInViewport();
+  await expect(direct.locator('a[href^="https://wa.me/"]')).toBeInViewport();
   await page.getByText('Anfrage vorbereiten (optional)', { exact: true }).click();
   await expect(page.locator('#contact-reason')).toBeVisible();
   await expect(page.locator('#contact-brief')).toBeVisible();

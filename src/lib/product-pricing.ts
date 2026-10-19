@@ -2,6 +2,7 @@ import type { Locale } from '../content/types';
 import { isPositiveInteger } from './validation';
 
 export const PRODUCT_RATES = {
+  'compact-card': { first: 29, pair: 40, additional: 15 },
   'standard-card': { first: 49, pair: 80, additional: 20 },
   'nfc-chip': { first: 15, pair: 25, additional: 5 },
   'personalized-card': { first: 69, pair: 100, additional: 25 },

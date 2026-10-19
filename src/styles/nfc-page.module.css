@@ -1,0 +1,20 @@
+/* NFC and QR cards page: the film inside the navy opening and the enquiry block.
+   Everything else uses the shared editorial sections. */
+.film { justify-content: flex-start; }
+/* The film was built for a subgrid hero; inside the shared opening it is a plain block. */
+.film :global(figure[data-nfc-motion]) { display: block; inline-size: 100%; }
+.film :global(figure[data-nfc-motion] > div) { block-size: auto; aspect-ratio: 16 / 9; border-color: rgb(255 255 255 / .2); border-radius: 6px; }
+
+.film :global(figure[data-nfc-motion] > figcaption) { min-block-size: 3.5rem; padding-block-start: 1rem; color: var(--hero-muted); font-size: .9375rem; }
+
+.catalogue { min-inline-size: 0; }
+
+.support { display: grid; grid-template-areas: 'intro' 'channels' 'save'; gap: 1.5rem; align-items: start; margin-block-end: 2rem; }
+.supportIntro { grid-area: intro; display: grid; gap: 1rem; }
+.supportIntro p { max-inline-size: 46ch; color: var(--color-ink-muted); font-size: 1.125rem; line-height: 1.55; }
+.supportChannels { grid-area: channels; min-inline-size: 0; }
+.supportSave { grid-area: save; min-inline-size: 0; }
+
+@media (min-width: 48rem) {
+  .support { grid-template-columns: var(--home-split); grid-template-rows: auto 1fr; grid-template-areas: 'intro channels' 'save channels'; gap: 1.25rem var(--home-gap); }
+}

@@ -31,7 +31,7 @@ test.describe("NFC solution configurator", () => {
   });
 
   test("reports relevant missing fields and focuses the destination", async ({ page }) => {
-    await page.getByRole("button", { name: "Angaben prüfen" }).click();
+    await page.getByRole("button", { name: "Anfrage prüfen" }).click();
     await expect(page.getByText("Bitte füllen Sie dieses Feld aus.")).toHaveCount(6);
     expect(await activeElement(page)).toMatchObject({ name: "destination" });
   });
@@ -44,20 +44,20 @@ test.describe("NFC solution configurator", () => {
 
   test("distinguishes an invalid quantity", async ({ page }) => {
     await fillInquiry(page, "0");
-    await page.getByRole("button", { name: "Angaben prüfen" }).click();
-    await expect(page.getByText("Bitte geben Sie eine ganze Menge von 1 bis 999 ein. Grössere Mengen können Sie in der Nachricht anfragen.")).toBeVisible();
+    await page.getByRole("button", { name: "Anfrage prüfen" }).click();
+    await expect(page.getByText("Bitte geben Sie eine ganze Zahl von 1 bis 999 ein. Grössere Mengen können Sie im Nachrichtenfeld anfragen.")).toBeVisible();
     expect(await activeElement(page)).toMatchObject({ name: "quantity" });
   });
 
   test("builds a complete non-binding menu inquiry and preserves values on edit", async ({ page }) => {
     await fillInquiry(page);
-    await page.getByRole("button", { name: "Angaben prüfen" }).click();
+    await page.getByRole("button", { name: "Anfrage prüfen" }).click();
 
     const link = page.getByRole("link", { name: /Anfrage in WhatsApp öffnen/ });
     await expect(link).toBeVisible();
     await expect(page.getByRole("heading", { name: "Bitte prüfen Sie Ihre Angaben" })).toBeFocused();
     const message = decodeURIComponent((await link.getAttribute("href")) ?? "");
-    for (const expected of ["Digitales Menü", "Personalized Card", "Rund", "Ø 100 mm", "Beispiel AG", "https://beispiel.ch/menu", "Mengenrabatt"]) {
+    for (const expected of ["Digitale Speisekarte", "Karte mit Ihrem Logo", "Rund", "Ø 100 mm", "Beispiel AG", "https://beispiel.ch/menu", "Mengenrabatt"]) {
       expect(message).toContain(expected);
     }
 
@@ -72,7 +72,7 @@ test.describe("NFC solution configurator", () => {
       if (request.method() === "POST" || decodeURIComponent(request.url()).includes("Beispiel AG")) leaked.push(request.url());
     });
     await fillInquiry(page);
-    await page.getByRole("button", { name: "Angaben prüfen" }).click();
+    await page.getByRole("button", { name: "Anfrage prüfen" }).click();
     await expect(page.getByRole("link", { name: /Anfrage in WhatsApp öffnen/ })).toBeVisible();
     expect(leaked).toEqual([]);
     expect(new URL(page.url()).search).toBe("");

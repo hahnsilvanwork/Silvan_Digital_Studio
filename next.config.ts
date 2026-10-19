@@ -41,22 +41,25 @@ const nextConfig: NextConfig = {
     };
   },
   async redirects() {
-    const legacy = { archa: "falkenried", lumen: "cafe-vogel", "architech-studio": "steiner-handwerk", "vanguard-apparel": "salon-lumiere" };
-    return Object.entries(legacy).flatMap(([oldSlug, slug]) => [
+    const legacy = { archa: "falkenried", lumen: "cafe-vogel", "architech-studio": "spurwerk", "steiner-handwerk": "spurwerk", "vanguard-apparel": "salon-lumiere" };
+    return [...Object.entries(legacy).flatMap(([oldSlug, slug]) => [
       { source: `/work/${oldSlug}`, destination: `/work/${slug}`, permanent: true },
       { source: `/en/work/${oldSlug}`, destination: `/en/work/${slug}`, permanent: true },
-    ]);
+    ]),
+      { source: "/demos/handwerk/:path*", destination: "https://silvan-demo-spurwerk.vercel.app/", permanent: true },
+    ];
   },
   images: {
     localPatterns: [
       { pathname: "/**", search: "" },
       // Only these refreshed screenshots use a cache version. Arbitrary image
       // query strings remain disallowed.
-      ...["falkenried", "cafe-vogel", "steiner-handwerk", "salon-lumiere"].flatMap(project =>
+      ...["falkenried", "cafe-vogel", "salon-lumiere"].flatMap(project =>
         ["", "-en"].map(locale => ({
           pathname: `/images/projects/${project}-retina${locale}.webp`,
-          search: "?v=20260924",
+          search: "?v=20260930",
         }))),
+      { pathname: "/images/projects/spurwerk-retina.webp", search: "?v=20261002" },
     ],
     qualities: [75, 90],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 2880, 3840],

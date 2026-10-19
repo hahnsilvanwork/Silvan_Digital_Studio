@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Fragment } from "react";
+import { BrandLogo } from "../brand/BrandLogo";
 
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
@@ -19,7 +19,7 @@ interface NavigationProps {
 export function Navigation({ locale, currentPath }: NavigationProps) {
   const content = getContent(locale);
   const links = getPrimaryLinks(locale, currentPath);
-  const supportingLinks = links.filter(link => ['/presence', '/automation', '/about'].some(route => link.href === localizePath(route, locale)));
+  const serviceLinks = links.filter(link => ['/websites', '/reviews', '/presence', '/automation'].some(route => link.href === localizePath(route, locale)));
 
   return (
     <header className={styles.header}>
@@ -29,10 +29,7 @@ export function Navigation({ locale, currentPath }: NavigationProps) {
 
       <div className={styles.bar}>
         <Link className={styles.wordmark} href={localizePath("/", locale)}>
-          <span className={styles.wordmarkName}>{content.brand.name}</span>
-          <span className={styles.wordmarkDescriptor}>
-            {content.brand.descriptor}
-          </span>
+          <BrandLogo className={styles.headerLogo} priority />
         </Link>
 
         <nav
@@ -40,9 +37,9 @@ export function Navigation({ locale, currentPath }: NavigationProps) {
           className={styles.primaryNav}
         >
           <ul className={styles.primaryList}>
-            {links.filter(link => !supportingLinks.includes(link)).map((link, index) => (
-              <Fragment key={link.href}>
-              <li>
+            <li><ServiceNavigation locale={locale} links={serviceLinks} /></li>
+            {links.filter(link => !serviceLinks.includes(link)).map(link => (
+              <li key={link.href}>
                 <Link
                   aria-current={link.isCurrent ? "page" : undefined}
                   className={`${styles.primaryLink} hoverUnderline${link.href === localizePath('/contact', locale) ? ` ${styles.contactLink}` : ''}`}
@@ -50,16 +47,15 @@ export function Navigation({ locale, currentPath }: NavigationProps) {
                   href={link.href}
                 >
                   {link.label}
+                  {link.href === localizePath('/contact', locale) && <svg className={styles.contactArrow} aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 12h17M13 5l7 7-7 7" stroke="currentColor" strokeWidth="1.5" /></svg>}
                 </Link>
               </li>
-              {index === 2 ? <li><ServiceNavigation locale={locale} links={supportingLinks} /></li> : null}
-              </Fragment>
             ))}
           </ul>
         </nav>
 
         <div className={styles.actions}>
-          <LanguageSwitcher currentPath={currentPath} locale={locale} />
+          <div className={styles.desktopLanguages}><LanguageSwitcher currentPath={currentPath} locale={locale} /></div>
           <MobileMenu currentPath={currentPath} locale={locale} />
         </div>
       </div>

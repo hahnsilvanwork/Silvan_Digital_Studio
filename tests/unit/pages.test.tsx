@@ -57,44 +57,50 @@ describe("RootDocument", () => {
 });
 
 describe("HomePage", () => {
-  it("leads with the approved hero and both calls to action", () => {
+  it("leads with the headline, a free consultation and a direct phone call", () => {
     render(<HomePage locale="de" />);
 
     const main = screen.getByRole("main");
+    const hero = main.querySelector('section')!;
 
-    // Testing Library normalizes the rendered text, and \s matches U+00A0, so the
-    // expected string has to be normalized the same way to line up with it.
-    expect(
-      within(main).getByText(homeCopy.de.byline),
-    ).toBeInTheDocument();
-    expect(
-      within(main).getByRole("heading", {
-        level: 1,
-        name: de.home.hero.headline,
-      }),
-    ).toBeInTheDocument();
-    expect(
-      within(main).getAllByRole("link", { name: de.home.hero.primaryCta })[0],
-    ).toHaveAttribute("href", "/contact");
-    expect(
-      within(main).getAllByRole("link", { name: de.home.hero.secondaryCta })[0],
-    ).toHaveAttribute("href", "#services");
+    expect(within(main).getByRole("heading", { level: 1, name: de.home.hero.headline })).toBeInTheDocument();
+    expect(within(hero).getByRole("link", { name: homeCopy.de.primaryCta })).toHaveAttribute("href", "/contact");
+    expect(within(hero).getByRole("link", { name: `${homeCopy.de.callLabel}: 078 900 85 00` })).toHaveAttribute("href", de.contact.details.phoneHref);
+    for (const fact of homeCopy.de.facts) expect(within(hero).getByText(fact.value)).toBeInTheDocument();
+    expect(within(hero).getByText(homeCopy.de.byline)).toBeInTheDocument();
   });
 
-  it("shows every service with its starting price without interaction", () => {
+  it("shows the four services once, each with a price and a link", () => {
+    render(<HomePage locale="de" />);
+
+    const services = within(screen.getByRole("main").querySelector('#services') as HTMLElement);
+    expect(services.getAllByRole('link')).toHaveLength(4);
+    for (const service of de.home.services) {
+      const item = services.getByRole('link', { name: new RegExp(`^${homeCopy.de.services.find(entry => entry.href === service.href)!.name}:`) });
+      expect(item).toHaveAttribute('href', service.href);
+      expect(item.closest('li')!.textContent).toMatch(/CHF|Anfrage/);
+    }
+  });
+
+  it("lists every website package with its price and the VAT note", () => {
+    render(<HomePage locale="de" />);
+
+    const prices = within(screen.getByRole("main").querySelector('#prices') as HTMLElement);
+    expect(prices.getByRole('heading', { name: homeCopy.de.costTitle })).toBeVisible();
+    for (const tier of de.websites.priceTiers) {
+      expect(prices.getByText(tier.name)).toBeVisible();
+      expect(prices.getByText(tier.price)).toBeVisible();
+    }
+    expect(prices.getByText(homeCopy.de.costVat)).toBeVisible();
+    expect(prices.getByText(homeCopy.de.costIntro)).toBeVisible();
+  });
+
+  it("shows the process and answers the common questions", () => {
     render(<HomePage locale="de" />);
 
     const main = screen.getByRole("main");
-
-    expect(within(main).getByText(de.home.services[0].price)).toBeVisible();
-    for (const service of de.home.services) {
-      expect(within(main).getByText(service.price)).toBeVisible();
-      expect(
-        within(main).getByRole("link", {
-          name: new RegExp(service.title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
-        }),
-      ).toHaveAttribute("href", service.href);
-    }
+    for (const step of homeCopy.de.steps) expect(within(main).getByRole('heading', { name: step.title })).toBeVisible();
+    for (const item of homeCopy.de.faq) expect(within(main).getByText(item.question)).toBeInTheDocument();
   });
 
   it("labels the concept projects as concepts and never claims a client", () => {
@@ -103,8 +109,10 @@ describe("HomePage", () => {
     const main = screen.getByRole("main");
     const conceptLabels = within(main).getAllByText(en.work.conceptLabel);
 
-    expect(conceptLabels).toHaveLength(2);
-    expect(within(main).getByText(homeCopy.en.workIntro)).toHaveTextContent('Fictional businesses, not client commissions.');
+    // The featured hero demo and both example projects carry the same label.
+    expect(conceptLabels).toHaveLength(3);
+    expect(homeCopy.en.demoLabel).toBe(en.work.conceptLabel);
+    expect(within(main).getByRole('heading', { name: homeCopy.en.workTitle })).toBeVisible();
   });
 
   it("localizes every internal destination under /en", () => {
@@ -112,13 +120,44 @@ describe("HomePage", () => {
 
     const main = screen.getByRole("main");
 
-    for (const link of within(main).getAllByRole("link")) {
+    for (const link of within(main).getAllByRole("link", { hidden: true })) {
       const href = link.getAttribute("href") ?? "";
 
       if (href.startsWith("/")) {
         expect(href).toMatch(/^\/en(\/|$)/);
       }
     }
+  });
+
+  it.each(['de', 'en'] as const)('puts contact before the labelled demo and the services in %s reading order', locale => {
+    render(<HomePage locale={locale} />);
+    const main = screen.getByRole('main');
+    const copy = homeCopy[locale];
+    const contact = within(main).getByRole('link', { name: copy.primaryCta });
+    const services = main.querySelector('#services')!;
+    const demo = within(main).getByRole('link', { name: `Spurwerk Veloatelier ${copy.exampleCta}` });
+    const demoLabel = within(demo).getByText(copy.demoLabel);
+
+    expect(contact).toHaveAccessibleDescription(copy.facts.map(fact => `${fact.value} ${fact.label}`).join(' '));
+    expect(contact.compareDocumentPosition(services) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(demo.compareDocumentPosition(services) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(demo).toHaveAccessibleDescription(copy.demoLabel);
+    expect(demo).toContainElement(demoLabel);
+    const image = within(demo).getByRole('img');
+    const featured = projects.find(project => project.slug === 'spurwerk')!;
+    // The preview frame scrolls through a full-page capture of the same demo.
+    expect(decodeURIComponent(image.getAttribute('src')!)).toContain('/images/home/spurwerk-scroll.webp');
+    expect(main.querySelectorAll('img[alt="' + featured.copy[locale].imageAlt + '"]')).toHaveLength(1);
+    expect(image).toHaveAttribute('width', '960');
+    expect(image).toHaveAttribute('height', '3411');
+  });
+
+  it("keeps the phone shortcut bar hidden until the hero has scrolled away", () => {
+    render(<HomePage locale="de" />);
+
+    const bar = screen.getByRole('main').querySelector('[data-visible]')!;
+    expect(bar).toHaveAttribute('data-visible', 'false');
+    expect(bar).toHaveAttribute('aria-hidden', 'true');
   });
 });
 
@@ -129,7 +168,7 @@ describe("Service pages", () => {
     const main = screen.getByRole("main");
 
     for (const tier of de.websites.priceTiers) {
-      expect(within(main).getByRole("heading", { name: tier.name })).toBeVisible();
+      expect(within(main.querySelector('#packages')!).getByRole("heading", { name: tier.name })).toBeVisible();
       expect(within(main).getAllByText(tier.price).length).toBeGreaterThan(0);
     }
   });
@@ -151,7 +190,7 @@ describe("Service pages", () => {
 
     const main = screen.getByRole("main");
 
-    expect(main.textContent).toContain("Google Business Profile");
+    expect(main.textContent).toContain("Google-Unternehmensprofil");
     expect(within(main).getAllByText("ab CHF 249").length).toBeGreaterThan(0);
   });
 
@@ -181,40 +220,33 @@ describe("ReviewsPage", () => {
     ).toBeTruthy();
     expect(main.querySelector("spline-viewer")).toBeNull();
     expect(main.querySelector("[data-product-3d-dialog]")).toBeNull();
-    expect(heroImage).toHaveTextContent("Produktbeispiele mit fiktiven Profilen.");
-    expect(heroImage.querySelectorAll('img[src*="products%2Fmain"], img[src*="products/main"]')).toHaveLength(5);
+    expect(heroImage).toHaveTextContent("Kurzfilm: die Karten aus der Nähe.");
+    expect(heroImage.querySelector('img')).toHaveAttribute('src', '/videos/nfc-cards-poster.webp');
+    expect(heroImage.querySelector('video')).toHaveAttribute('preload', 'none');
+    expect(heroImage.querySelectorAll('[data-index]')).toHaveLength(0);
   });
 
-  it("places every product price before the process section", () => {
+  it("keeps every NFC base price visible outside optional details", () => {
     render(<ReviewsPage locale="de" />);
-
-    const text = screen.getByRole("main").textContent ?? "";
-    const processIndex = text.indexOf(de.reviews.processTitle);
-
+    const prices = screen.getByRole('main').querySelector('#prices')!;
     for (const product of de.reviews.products) {
-      const priceIndex = text.indexOf(product.price);
-
-      expect(priceIndex).toBeGreaterThanOrEqual(0);
-      expect(priceIndex).toBeLessThan(processIndex);
-    }
-
-    expect(de.reviews.products).toHaveLength(4);
-    for (const product of de.reviews.products) {
-      expect(
-        screen.getByRole("heading", { level: 3, name: product.name }),
-      ).toBeVisible();
+      const price = within(prices as HTMLElement).getByText(product.price);
+      expect(price).toBeVisible();
+      expect(price.closest('details')).toBeNull();
+      expect(within(prices as HTMLElement).getByText(product.name)).toBeVisible();
+      for (const feature of product.features) expect(prices.textContent).toContain(feature);
     }
   });
 
-  it("keeps the TAP / OPEN / ACT process visible without opening a disclosure", () => {
+  it("explains using the product before model selection without a disclosure", () => {
     render(<ReviewsPage locale="de" />);
-
-    const main = screen.getByRole("main");
-
-    for (const label of ["TAP", "OPEN", "ACT"]) {
-      const step = within(main).getByText(label);
-      expect(step).toBeVisible();
-      expect(step.closest("details")).toBeNull();
+    const main = screen.getByRole('main');
+    const process = main.querySelector('#how-it-works')!;
+    expect(process.compareDocumentPosition(main.querySelector('#products')!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    for (const step of de.reviews.process) {
+      const heading = within(process as HTMLElement).getByRole('heading', {name: step.title});
+      expect(heading).toBeVisible();
+      expect(heading.closest('details')).toBeNull();
     }
   });
 
@@ -222,7 +254,8 @@ describe("ReviewsPage", () => {
     render(<ReviewsPage locale="de" />);
 
     const main = screen.getByRole("main");
-    expect(main.querySelectorAll('[data-product-card]')).toHaveLength(7);
+    expect(main.querySelectorAll('[data-product-card]')).toHaveLength(3);
+    expect(within(main).getByRole('button', {name: 'Alle 7 ausgewählten Modelle anzeigen'})).toBeVisible();
     for (const category of de.reviews.categories) {
       expect(
           within(within(main).getByRole('combobox', {name:de.reviews.categoryPrompt})).getByRole("option", {
@@ -319,19 +352,20 @@ describe("ContactPage", () => {
     render(<ContactPage locale="de" />);
 
     const main = screen.getByRole("main");
+    const direct = within(main).getByRole('group', { name: 'Direktkontakt' });
 
     expect(
-      within(main).getByRole("link", { name: /WhatsApp/ }),
+      within(direct).getByRole("link", { name: /WhatsApp/ }),
     ).toHaveAttribute("href", "https://wa.me/41789008500");
-    expect(within(main).getByRole("link", { name: /E-Mail/ })).toHaveAttribute(
+    expect(within(direct).getByRole("link", { name: /E-Mail/ })).toHaveAttribute(
       "href",
       "mailto:hahn.silvan.work@gmail.com",
     );
-    expect(within(main).getByRole("link", { name: /Anrufen/ })).toHaveAttribute(
+    expect(within(direct).getByRole("link", { name: /Anrufen/ })).toHaveAttribute(
       "href",
       "tel:+41789008500",
     );
-    expect(within(main).getByRole("link", { name: /LinkedIn/ })).toHaveAttribute(
+    expect(within(direct).getByRole("link", { name: /LinkedIn/ })).toHaveAttribute(
       "href",
       "https://www.linkedin.com/in/silvan-hahn-dev",
     );
@@ -372,3 +406,6 @@ describe("NotFoundPage", () => {
     ).toHaveAttribute("href", "/");
   });
 });
+
+
+

@@ -18,7 +18,7 @@ test.describe("global navigation", () => {
 
     await expect(page).toHaveURL(/\/$/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
-      "Websites für kleine Unternehmen",
+      "Ihr Betrieb. Digital gut aufgestellt.",
     );
   });
 
@@ -71,7 +71,7 @@ test.describe("global navigation", () => {
       "/hello",
       "/imprint",
       "/privacy",
-      "/work/archa",
+      "/work/falkenried",
     ];
 
     for (const route of routes) {
@@ -190,7 +190,7 @@ test.describe("mobile drawer", () => {
     await page.getByRole("button", { name: "Menü öffnen" }).click();
     await page
       .getByRole("dialog", { name: "Menü" })
-      .getByRole("link", { name: "NFC & QR", exact: true })
+      .getByRole("link", { name: /^NFC & QR/ })
       .click();
 
     await expect(page).toHaveURL(/\/reviews$/);

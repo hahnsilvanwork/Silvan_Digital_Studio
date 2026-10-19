@@ -3,3 +3,8 @@
 .topics ul { display: flex; flex-wrap: wrap; gap: 0.25rem 1.5rem; margin: 0.25rem 0 0; padding: 0; list-style: none; }
 .topics a { display: inline-flex; align-items: center; min-block-size: 2.75rem; font-size: 1rem; text-underline-offset: 0.25em; }
 .topics a:hover { text-decoration-thickness: 2px; }
+
+/* A visible rule provides an exact alignment edge, independent of font underlining. */
+.topics a { text-decoration: none; }
+.topics a > span { border-block-end: 1px solid currentColor; line-height: 1.5; }
+.topics a:hover > span { border-block-end-width: 2px; }

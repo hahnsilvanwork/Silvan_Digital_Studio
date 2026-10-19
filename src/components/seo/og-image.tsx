@@ -2,15 +2,17 @@ import { ImageResponse } from "next/og";
 
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
+import { homeCopy } from "../../content/home-copy";
+import { brandImageData } from "./brand-data";
 
 /** The size every platform crops from; 1200x630 is the safe common ground. */
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 export const OG_CONTENT_TYPE = "image/png";
 
-const PAPER = "#f9f8f6";
-const INK = "#1a1a1a";
-const MUTED = "#676561";
-const ACCENT = "#1a1a1a";
+const PAPER = "#ffffff";
+const INK = "#081b3c";
+const MUTED = "#627198";
+const ACCENT = "#081b3c";
 
 /**
  * The share card. Rendered from the same palette and the same approved headline
@@ -40,25 +42,9 @@ export function renderOgImage(locale: Locale) {
         }}
       >
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div
-            style={{
-              fontSize: 34,
-              fontWeight: 600,
-              letterSpacing: 12,
-            }}
-          >
-            SILVAN
-          </div>
-          <div
-            style={{
-              fontSize: 20,
-              letterSpacing: 6,
-              color: MUTED,
-              marginTop: 6,
-            }}
-          >
-            DIGITAL STUDIO
-          </div>
+          {/* ImageResponse embeds the approved logo directly in the share card. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img alt="SILVAN Digital Studio" src={brandImageData('silvan-logo-navy.png')} width={300} height={90} />
         </div>
 
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -71,7 +57,7 @@ export function renderOgImage(locale: Locale) {
               maxWidth: 940,
             }}
           >
-            {hero.headline}
+            {homeCopy[locale].headline}
           </div>
           <div
             style={{

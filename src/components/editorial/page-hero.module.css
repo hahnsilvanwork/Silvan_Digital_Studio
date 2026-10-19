@@ -1,0 +1,182 @@
+/* Shared navy page opening for the homepage and every service page.
+   One grid: the eyebrow and the visual share the top line, the buttons and the
+   visual caption share the bottom line, and a full-width strip with a drawn
+   horizon, facts and the byline closes the block. */
+.opening {
+  --hero-ink: #0b203d;
+  --hero-text: #ffffff;
+  --hero-muted: #c9d4e5;
+  --hero-rule: rgb(255 255 255 / .2);
+  --gold: #dda055;
+}
+.hero {
+  inline-size: var(--content-width);
+  margin: .5rem auto 0;
+  padding: 2rem 1.25rem 1.5rem;
+  display: grid;
+  gap: 2.5rem;
+  color: var(--hero-text);
+  background: var(--hero-ink);
+  border-radius: 8px;
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+.intro, .visual, .strip, .introText { min-inline-size: 0; }
+.intro { display: flex; flex-direction: column; gap: 2rem; container-type: inline-size; }
+.eyebrow { color: var(--hero-muted); font-size: .9375rem; font-weight: 500; line-height: 1.4; }
+.title {
+  margin-block-start: 1.75rem;
+  /* Sized from the column; --title-fit is tuned per headline so each sentence keeps one line. */
+  font-size: clamp(2.5rem, var(--title-fit, 9.4cqi), 5rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -.045em;
+  text-wrap: balance;
+}
+.titleLine { display: block; }
+.lead { margin-block-start: 1.5rem; max-inline-size: 44ch; color: #e3e9f2; font-size: 1.125rem; line-height: 1.6; }
+.heroList { display: grid; gap: 0 2rem; margin: 1.75rem 0 0; padding: 0; list-style: none; }
+.heroList, .facts { max-inline-size: 44rem; }
+.heroList li { display: flex; flex-direction: column; gap: .125rem; padding-block: .625rem; border-block-start: 1px solid var(--hero-rule); line-height: 1.4; }
+.heroList strong { font-size: 1.125rem; font-weight: 650; letter-spacing: -.01em; }
+.heroList span { color: var(--hero-muted); font-size: 1rem; }
+.heroNames li { padding-block: .75rem; }
+.heroNames strong { font-size: clamp(1.0625rem, 1.3vw, 1.1875rem); font-weight: 600; }
+.actions { display: grid; gap: .75rem; }
+.primary, .call {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-block-size: 3.5rem;
+  padding: .875rem 1.125rem;
+  border-radius: 4px;
+  font-size: 1.0625rem;
+  font-weight: 550;
+  text-decoration: none;
+}
+.primary { background: #fff; color: var(--color-ink); }
+.primary:hover { background: #e7edf5; }
+.call { justify-content: flex-start; gap: .75rem; color: #fff; border: 1px solid rgb(255 255 255 / .4); font-variant-numeric: tabular-nums; letter-spacing: .01em; }
+.call:hover { border-color: #fff; background: rgb(255 255 255 / .06); }
+.primary svg, .call svg, .captionAction svg { inline-size: 1.25rem; block-size: 1.25rem; flex: none; transition: transform 220ms var(--ease-out); }
+.primary:active, .call:active { transform: translateY(1px); }
+
+/* Visual column: any media on top, a caption row on the bottom line. */
+.visual { margin: 0; display: flex; flex-direction: column; }
+.visualLink, .visualBody { display: flex; flex: 1; flex-direction: column; gap: 1rem; color: inherit; text-decoration: none; }
+.screens { position: relative; display: block; padding-inline-end: 9%; padding-block-end: 9%; }
+.previewStage { display: block; overflow: hidden; border: 1px solid #aab5b1; border-radius: 6px; background: #f2f0e7; box-shadow: 0 18px 40px rgb(0 0 0 / .22); transition: transform 260ms var(--ease-out); }
+.previewStage img { display: block; inline-size: 100%; block-size: auto; aspect-ratio: 36 / 25; }
+.mobilePreview { position: absolute; inset-inline-end: 0; inset-block-end: 0; display: block; inline-size: 23%; overflow: hidden; border: 1px solid #63756c; border-radius: 9px; background: #f2f0e7; box-shadow: 0 10px 26px rgb(0 0 0 / .28); transition: transform 260ms var(--ease-out); }
+.mobilePreview img { display: block; inline-size: 100%; block-size: auto; }
+.media { display: block; overflow: hidden; border-radius: 6px; background: #f2f0e7; }
+.media img, .media video { display: block; inline-size: 100%; block-size: auto; }
+.visualTitle { color: var(--hero-muted); font-size: .9375rem; font-weight: 500; }
+.visualList { margin: 0; padding: 0; list-style: none; border-block-start: 1px solid rgb(255 255 255 / .55); }
+.visualList li { display: flex; align-items: baseline; gap: .875rem; padding-block: .875rem; border-block-end: 1px solid var(--hero-rule); font-size: clamp(1.125rem, 1.5vw, 1.3125rem); font-weight: 550; letter-spacing: -.01em; }
+.visualList li span { flex: none; white-space: nowrap; color: var(--hero-muted); font-size: .9375rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+.caption { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .25rem 1rem; margin-block-start: auto; min-block-size: 3.5rem; font-size: .9375rem; line-height: 1.45; }
+.captionIdentity { display: flex; flex-direction: column; }
+.captionLabel { color: var(--hero-muted); font-size: .9375rem; }
+.captionAction { display: inline-flex; align-items: center; gap: .5rem; min-block-size: 44px; font-size: .9375rem; text-decoration: underline; text-underline-offset: .35em; text-decoration-thickness: 1px; }
+
+.strip { display: grid; gap: 1.5rem; }
+/* The divider is a drawn horizon; its flat line is the top edge of the strip. */
+.horizon { grid-column: 1 / -1; display: block; inline-size: 100%; block-size: auto; overflow: visible; }
+.horizonLine { stroke: rgb(255 255 255 / .28); stroke-width: 1; }
+.horizonVillage { fill: var(--hero-ink); stroke: rgb(255 255 255 / .6); stroke-width: 1; stroke-linejoin: round; }
+.horizonTree { stroke: var(--gold); stroke-width: 1; }
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+.facts li { display: flex; flex-direction: column; gap: .125rem; line-height: 1.35; min-inline-size: 0; }
+.facts strong { font-size: 1.1875rem; font-weight: 650; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.facts span { color: var(--hero-muted); font-size: .9375rem; }
+.byline { display: flex; align-items: center; gap: .875rem; color: inherit; text-decoration: none; line-height: 1.4; }
+.avatar { flex: none; inline-size: 3rem; block-size: 3rem; border-radius: 50%; object-fit: cover; object-position: center 22%; }
+.byline > span { display: flex; flex-direction: column; }
+.bylineName { font-size: .9375rem; font-weight: 600; }
+.bylineRole { color: var(--hero-muted); font-size: .9375rem; }
+.byline:hover .bylineName { text-decoration: underline; text-underline-offset: .2em; }
+
+.opening a:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 4px; border-radius: 3px; }
+.hero a:focus-visible { outline-color: #fff; }
+
+@media (min-width: 30rem) {
+  /* Facts share the two list columns above them. */
+  .heroList, .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2rem; }
+  .primary, .call { padding-inline: 1.375rem; }
+  .primary { gap: 1.5rem; }
+  .actions { display: flex; flex-wrap: wrap; }
+}
+@media (min-width: 48rem) {
+  .hero { padding: 3rem 2.5rem 2rem; }
+  .visual { max-inline-size: 36rem; }
+}
+@media (min-width: 72rem) {
+  /* Side by side only once both buttons fit on one line beside the visual. */
+  .hero {
+    grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr);
+    grid-template-rows: 1fr auto;
+    column-gap: clamp(3rem, 5vw, 5rem);
+    row-gap: clamp(1rem, 2vw, 1.75rem);
+    padding: clamp(3rem, 4.5vw, 4.5rem) clamp(3rem, 4.5vw, 4.5rem) clamp(2rem, 3vw, 2.75rem);
+  }
+  .intro { justify-content: space-between; }
+  .visual { max-inline-size: none; }
+  .visualLink, .visualBody { gap: 1.25rem; }
+  .lead { font-size: clamp(1.125rem, 1.3vw, 1.25rem); }
+  /* column-gap: normal lets the subgrid inherit the hero gap, so the byline starts with the visual. */
+  .strip { grid-column: 1 / -1; grid-template-columns: subgrid; align-items: center; column-gap: normal; row-gap: 1.5rem; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .primary:hover svg { transform: translateX(3px); }
+  .visualLink:hover .captionAction svg { transform: translateX(3px); }
+  .visualLink:hover .previewStage { transform: translateY(-3px); }
+  .visualLink:hover .mobilePreview { transform: translateY(-6px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .primary svg, .call svg, .captionAction svg, .previewStage, .mobilePreview { transition-duration: 0s; }
+  .primary:active, .call:active, .primary:hover svg, .visualLink:hover .captionAction svg, .visualLink:hover .previewStage, .visualLink:hover .mobilePreview { transform: none; }
+}
+
+/* One quiet entrance for the preview: desktop screen first, phone a beat later. */
+@keyframes hero-settle { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .screens .previewStage { animation: hero-settle 700ms var(--ease-out) 120ms backwards; }
+  .screens .mobilePreview { animation: hero-settle 700ms var(--ease-out) 300ms backwards; }
+}
+
+/* ---------- Opening choreography (CSS only, so text never waits for JavaScript) ---------- */
+.titleLine { overflow: hidden; padding-block-end: .08em; margin-block-end: -.08em; }
+.titleInner { display: block; }
+@keyframes hero-line { from { transform: translateY(108%); } to { transform: none; } }
+@keyframes hero-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  .eyebrow { animation: hero-rise 600ms var(--ease-out) 40ms backwards; }
+  .titleInner { animation: hero-line 900ms var(--ease-out) calc(120ms + var(--i, 0) * 120ms) backwards; }
+  .lead { animation: hero-rise 700ms var(--ease-out) 420ms backwards; }
+  .heroList li { animation: hero-rise 600ms var(--ease-out) calc(420ms + var(--i, 0) * 70ms) backwards; }
+  .actions { animation: hero-rise 700ms var(--ease-out) 640ms backwards; }
+  .strip { animation: hero-rise 800ms var(--ease-out) 820ms backwards; }
+}
+
+/* Pointer light: a faint radial glow that follows the cursor across the navy. */
+.glow { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; background: radial-gradient(34rem circle at var(--gx, 50%) var(--gy, 30%), rgb(120 160 230 / .13), transparent 62%); transition: opacity 500ms var(--ease-out); }
+.glow[data-active='true'] { opacity: 1; }
+
+/* ---------- Browser frame with a slow scroll through the real example site ---------- */
+.browser { display: flex; flex-direction: column; background: #fff; }
+.browserBar { display: flex; align-items: center; gap: .75rem; padding: .5rem .75rem; background: #eef1f5; border-block-end: 1px solid #d8dee8; }
+.browserDots { display: flex; gap: .3rem; }
+.browserDots i { inline-size: .5rem; block-size: .5rem; border-radius: 50%; background: #c3cad6; }
+.browserUrl { flex: 1; overflow: hidden; padding: .2rem .625rem; border-radius: 4px; background: #fff; color: #5d6b84; font-size: .75rem; line-height: 1.3; text-align: center; text-overflow: ellipsis; white-space: nowrap; }
+/* 16:10 window onto a page about 3.55 times as tall as it is wide. */
+.browserView { position: relative; display: block; overflow: hidden; aspect-ratio: 16 / 10; }
+.previewStage .browserPage { position: absolute; inset-inline: 0; inset-block-start: 0; inline-size: 100%; block-size: auto; aspect-ratio: auto; }
+@keyframes browse { 0%, 8% { transform: none; } 92%, 100% { transform: translateY(calc(var(--scroll-end, -80) * 1%)); } }
+@media (prefers-reduced-motion: no-preference) {
+  /* Down the page and back once, then it rests at the top. Hover or focus pauses it. */
+  .browserPage { animation: browse 13s cubic-bezier(.45, 0, .2, 1) 1.8s 2 alternate both; }
+  .visualLink:hover .browserPage, .visualLink:focus-visible .browserPage { animation-play-state: paused; }
+}

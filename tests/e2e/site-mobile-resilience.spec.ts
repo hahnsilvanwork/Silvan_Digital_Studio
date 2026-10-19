@@ -26,7 +26,7 @@ for (const locale of ["", "/en"]) {
     await page.goto(`${locale}/reviews`);
     await page.getByRole("button", { name: locale ? "Open menu" : "Menü öffnen" }).click();
     const dialog = page.getByRole("dialog");
-    const last = dialog.getByRole("link").last();
+    const last = dialog.getByRole("link", { name: locale ? "About me" : "Über mich", exact: true });
     await last.scrollIntoViewIfNeeded();
     await expect(last).toBeInViewport();
     await expect(dialog.getByRole("button")).toBeInViewport();

@@ -1,17 +1,25 @@
-.intro { display: grid; gap: 1.5rem; padding-block: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
-.introCopy { display: grid; gap: 1rem; }
-.title { font-size: clamp(2.25rem, 4.5vw, 4rem); line-height: 1.06; letter-spacing: -0.03em; max-inline-size: 17ch; }
-.lead { max-inline-size: 42ch; font-size: var(--text-body); color: var(--color-ink-muted); }
-.portrait { margin: 0; inline-size: 100%; }
-.portrait img { inline-size: 100%; block-size: auto; }
-.body { padding-block: clamp(1.5rem, 4vw, 3rem); border-block-start: var(--hairline) solid var(--color-line); display: grid; gap: 1rem; }
-.body p { max-inline-size: 60ch; }
-.proof { display: grid; gap: 1rem; padding-block: clamp(2rem, 5vw, 4rem); border-block-start: var(--hairline) solid var(--color-line); }
-.proof h2 { font-size: var(--text-item); }
-.proof p { max-inline-size: 65ch; }
-.proof a { justify-self: start; }
+/* About page head: text and portrait on the shared split, buttons ending on the portrait's lower edge. */
+.intro { inline-size: var(--content-width); margin-inline: auto; padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(2.5rem, 4.5vw, 4rem); display: grid; gap: 2.5rem; }
+.intro > * { min-inline-size: 0; }
+.introText { display: flex; flex-direction: column; gap: 1.5rem; }
+.introTop, .introBottom { display: grid; gap: 1.5rem; }
+.actions { display: grid; gap: .75rem; margin-block-start: .5rem; }
+.primary, .call { display: inline-flex; align-items: center; gap: 1rem; min-block-size: 3.5rem; padding: .875rem 1.375rem; border-radius: 4px; font-size: 1.0625rem; font-weight: 550; text-decoration: none; }
+.primary { justify-content: space-between; background: var(--color-ink); color: #fff; }
+.primary:hover { background: #142c52; }
+.call { color: var(--color-ink); border: 1px solid var(--color-ink); font-variant-numeric: tabular-nums; }
+.call:hover { background: var(--color-stone); }
+.primary svg, .call svg { inline-size: 1.25rem; block-size: 1.25rem; flex: none; }
+.portrait { margin: 0; max-inline-size: 22rem; }
+.portrait img { inline-size: 100%; block-size: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 6px; }
+.portrait figcaption { padding-block-start: .75rem; color: var(--color-ink-muted); font-size: .9375rem; }
+
+@media (min-width: 30rem) {
+  .actions { display: flex; flex-wrap: wrap; }
+}
 @media (min-width: 48rem) {
-  .intro { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
-  .portrait { justify-self: end; }
-  .body { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; }
+  /* Title starts on the portrait's top edge, buttons end on its caption line. The portrait keeps its uncropped 4:5 frame. */
+  .intro { grid-template-columns: var(--home-split); column-gap: var(--home-gap); align-items: stretch; }
+  .introText { justify-content: space-between; }
+  .introTop h1 { margin-block-start: 0; }
 }

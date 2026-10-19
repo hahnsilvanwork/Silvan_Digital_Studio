@@ -1,32 +1,38 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
+
+async function chooseLanguage(page: Page, name: string) {
+  const menu = page.getByRole('button', { name: /^(Menü öffnen|Open menu)$/ });
+  if (await menu.isVisible()) await menu.click();
+  await page.getByRole('link', { name, exact: true }).click();
+}
 
 test.describe("language switching", () => {
   test("keeps the visitor on the equivalent route", async ({ page }) => {
     await page.goto("/reviews");
-    await page.getByRole("link", { name: "Englisch" }).click();
+    await chooseLanguage(page, "Englisch");
 
     await expect(page).toHaveURL(/\/en\/reviews$/);
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
 
-    await page.getByRole("link", { name: "German" }).click();
+    await chooseLanguage(page, "German");
     await expect(page).toHaveURL(/\/reviews$/);
     await expect(page.locator("html")).toHaveAttribute("lang", "de");
   });
 
   test("keeps the project slug on a detail page", async ({ page }) => {
-    await page.goto("/work/steiner-handwerk");
-    await page.getByRole("link", { name: "Englisch" }).click();
+    await page.goto("/work/spurwerk");
+    await chooseLanguage(page, "Englisch");
 
-    await expect(page).toHaveURL(/\/en\/work\/steiner-handwerk$/);
+    await expect(page).toHaveURL(/\/en\/work\/spurwerk$/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-      "Steiner Bau",
+      "Spurwerk Veloatelier",
     );
   });
 
-  test("marks the active language and works without client JavaScript", async ({
+  test("desktop language links mark the active language and work without client JavaScript", async ({
     browser,
   }) => {
-    const context = await browser.newContext({ javaScriptEnabled: false });
+    const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 1280, height: 900 } });
     const page = await context.newPage();
 
     await page.goto("/about");
@@ -46,7 +52,7 @@ test.describe("language switching", () => {
     await page.goto("/en");
 
     await expect(page.getByRole("heading", { level: 1 })).toContainText(
-      "Websites for small businesses",
+      "Your business. At its best online.",
     );
     await expect(page.getByRole("link", { name: "Skip to content" })).toHaveCount(1);
   });

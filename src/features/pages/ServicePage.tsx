@@ -21,6 +21,8 @@ import { localizePath } from "../../lib/routes";
 import { getServiceReason } from "../../lib/contact-inquiry";
 import layoutStyles from "../../styles/layout.module.css";
 import pageStyles from "../../styles/pages.module.css";
+import websiteStyles from '../../styles/websites.module.css';
+import { SaveContact } from '../../components/contact/SaveContact';
 
 interface ServicePageProps {
   readonly locale: Locale;
@@ -37,41 +39,62 @@ export function ServicePage({
   children,
 }: ServicePageProps) {
   const content = getContent(locale);
+  const refined = route === "/websites" || route === "/presence" || route === "/automation";
+  const pageTopics = <PageTopics locale={locale} items={[
+          { href: '#packages', label: locale === 'de' ? 'Leistungen & Preise' : 'Services & prices' },
+          { href: '#examples', label: locale === 'de' ? 'Beispiele & Details' : 'Examples & details' },
+          { href: '#process', label: locale === 'de' ? 'Ablauf' : 'How it works' },
+          { href: '#questions', label: locale === 'de' ? 'Fragen' : 'Questions' },
+        ]} />;
   const sequence = revealSequence(service.title);
   const reason = getServiceReason(new URLSearchParams({ service: route.slice(1) }));
   const contactHref = `${service.ctaHref}${service.ctaHref === "/contact" && reason ? `?service=${reason}` : ""}`;
 
   return (
     <SiteShell currentPath={localizePath(route, locale)} locale={locale}>
-      <div className={pageStyles.page}>
-        <section className={`${layoutStyles.container} ${pageStyles.pageHeader} ${pageStyles.serviceHeader}${route === '/websites' ? ` ${pageStyles.websiteHeader}` : ''}`}>
-          <div className={pageStyles.serviceCopy}>
+      <div className={`${pageStyles.page}${refined ? ` ${websiteStyles.websitePage}` : ''}`}>
+        <section className={`${layoutStyles.container} ${pageStyles.pageHeader} ${pageStyles.serviceHeader}${route !== '/websites' ? ` ${pageStyles.compactServiceHeader}` : ''}${route === '/websites' ? ` ${pageStyles.websiteHeader} ${websiteStyles.hero}` : ''}`}>
+          <div className={`${pageStyles.serviceCopy}${refined ? ` ${websiteStyles.copy}` : ''}`}>
           <div className={pageStyles.serviceHeading}>
-          <SplitText
+          {refined ? <h1 className={`${pageStyles.pageTitle} ${websiteStyles.title}`}>{service.title}</h1> : <SplitText
             as="h1"
             className={pageStyles.pageTitle}
             startIndex={sequence.titleStartIndex}
             text={service.title}
-          />
+          />}
           </div>
-          <div className={pageStyles.serviceSummary}>
+          <div className={`${pageStyles.serviceSummary}${route === '/websites' ? ` ${websiteStyles.summary}` : ''}`}>
           <p
             className={pageStyles.editorialTight}
-            data-reveal="rise"
+            data-reveal={refined ? undefined : 'rise'}
             style={{ "--reveal-index": sequence.introIndex } as CSSProperties}
           >
             {service.intro}
           </p>
+          {route === '/websites' ? <p className={websiteStyles.startingPrice}>
+            <strong>{locale === 'de' ? 'Websites ab CHF 300' : 'Websites from CHF 300'}</strong>
+            <span>{locale === 'de' ? 'Einmaliger Preis für die Umsetzung. Internetadresse und Betrieb der Website kosten separat.' : 'A one-off price for the build. Your web address and keeping the site online cost extra.'}</span>
+          </p> : null}
+          {route === '/automation' ? <p className={websiteStyles.startingPrice}>
+            <strong>{service.priceTiers[0]?.price}</strong>
+            <span>{locale === 'de' ? 'Zuerst klären wir, ob sich die Aufgabe sinnvoll vereinfachen lässt. Leistungen und Preis vereinbaren wir vor dem Start.' : 'First, we check whether simplifying the task is worthwhile. We agree on the work and price before starting.'}</span>
+          </p> : null}
+          {route === '/presence' ? <p className={websiteStyles.startingPrice}>
+            <strong>{service.priceTiers[0]?.price}</strong>
+            <span>{locale === 'de' ? 'Für meine Arbeit an Ihrem Profil. Das Google-Unternehmensprofil selbst ist kostenlos.' : 'For my work on your profile. Google Business Profile itself is free.'}</span>
+          </p> : null}
           <div
-            className={pageStyles.serviceActions}
-            data-reveal="rise"
+            className={`${pageStyles.serviceActions}${route === '/websites' ? ` ${websiteStyles.actions}` : ''}`}
+            data-reveal={refined ? undefined : 'rise'}
             style={{ "--reveal-index": sequence.actionsIndex } as CSSProperties}
           >
             <ButtonLink href={localizePath(contactHref, locale)}>
               {service.ctaLabel}
             </ButtonLink>
+            {route === '/websites' ? <a className={websiteStyles.priceLink} href="#packages">{locale === 'de' ? 'Leistungen und Preise ansehen' : 'View services and prices'}</a> : null}
           </div>
           </div>
+          {route !== '/websites' ? <div className={pageStyles.headingTopics}>{pageTopics}</div> : null}
           </div>
           {route === "/websites" ? (
             <Link className={pageStyles.serviceVisual} href={localizePath(`/work/${projects[0].slug}`, locale)}>
@@ -81,18 +104,13 @@ export function ServicePage({
           ) : null}
         </section>
 
-        <div className={layoutStyles.container}><PageTopics locale={locale} items={[
-          { href: '#packages', label: locale === 'de' ? 'Leistungen & Preise' : 'Services & prices' },
-          { href: '#examples', label: locale === 'de' ? 'Beispiele & Details' : 'Examples & details' },
-          { href: '#process', label: locale === 'de' ? 'Ablauf' : 'Process' },
-          { href: '#questions', label: locale === 'de' ? 'Fragen' : 'Questions' },
-        ]} /></div>
+        {route === '/websites' ? <div className={layoutStyles.container}>{pageTopics}</div> : null}
         <section id="packages" className={`${layoutStyles.container} ${pageStyles.section}`}>
-          <SectionHeading
-            eyebrow={service.priceLabel}
-            title={service.benefitsTitle}
+          <SectionHeading immediate
+              title={service.benefitsTitle}
           />
           <div className={pageStyles.sectionBody}>
+            {route === '/websites' ? <p className={pageStyles.note} data-testid="website-package-scope">{auditCopy[locale].websiteScope.beforePackages}</p> : null}
             <PriceTierList
               recommendedLabel={content.common.recommended}
               tiers={service.priceTiers}
@@ -107,7 +125,7 @@ export function ServicePage({
               </div>
             ) : null}
 
-            <ul className={pageStyles.benefitList}>
+            {route !== '/presence' ? <ul className={pageStyles.benefitList}>
               {service.benefits.map((benefit, index) => (
                 <li
                   className={pageStyles.benefit}
@@ -118,7 +136,7 @@ export function ServicePage({
                   {benefit}
                 </li>
               ))}
-            </ul>
+            </ul> : null}
           </div>
         </section>
 
@@ -126,7 +144,7 @@ export function ServicePage({
 
         <section id="process" className={pageStyles.darkBand}>
           <div className={layoutStyles.container}>
-            <SectionHeading title={service.processTitle} />
+            <SectionHeading immediate title={service.processTitle} />
             <div className={pageStyles.sectionBody}>
               <ProcessSteps steps={service.process} />
             </div>
@@ -135,7 +153,7 @@ export function ServicePage({
 
         <section id="questions" className={`${layoutStyles.container} ${pageStyles.section}`}>
           <FaqSchema items={service.faq.items} />
-          <SectionHeading title={service.faq.title} />
+          <SectionHeading immediate title={service.faq.title} />
           <div className={pageStyles.sectionBody}>
             <FaqList items={service.faq.items} locale={locale} />
           </div>
@@ -143,13 +161,14 @@ export function ServicePage({
 
         <section className={pageStyles.contactBand}>
           <div className={`${layoutStyles.container} ${pageStyles.contactLayout}`}>
-          <SectionHeading
+          <SectionHeading immediate
             eyebrow={content.contact.eyebrow}
-            intro={content.contact.intro}
+            intro={refined ? (locale === 'de' ? 'Erzählen Sie mir von Ihrem Vorhaben: per Telefon, E-Mail oder WhatsApp. Sie brauchen keine technischen Vorkenntnisse, und Ihre Anfrage ist unverbindlich.' : 'Tell me about your project by phone, email or WhatsApp. You do not need any technical knowledge, and your enquiry carries no obligation.') : content.contact.intro}
             title={content.contact.title}
           />
           <div className={pageStyles.sectionBody}>
-            <ContactActions locale={locale} reason={reason ?? undefined} emphasize />
+            <ContactActions locale={locale} reason={reason ?? undefined} emphasize compact={refined} immediate={refined} includeLinkedIn={!refined} />
+            {refined ? <SaveContact locale={locale} /> : null}
           </div>
           </div>
         </section>

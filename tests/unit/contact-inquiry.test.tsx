@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import { ContactInquiry } from "../../src/components/contact/ContactInquiry";
 import { ContactActions } from "../../src/components/contact/ContactActions";
@@ -20,18 +20,27 @@ describe("public contact context", () => {
     window.history.replaceState({}, "", "/contact?service=automation&email=private@example.com");
     render(<ContactInquiry locale="en" />);
     expect(screen.getByRole("combobox")).toHaveValue("automation");
-    const email = screen.getByRole("link", { name: /E-?mail/i }).getAttribute("href")!;
-    expect(decodeURIComponent(email)).toContain("Automation");
+    const direct = within(screen.getByRole("group", { name: "Direct contact" }));
+    const email = direct.getByRole("link", { name: /E-?mail/i }).getAttribute("href")!;
+    expect(decodeURIComponent(email)).toContain("Automations");
     expect(decodeURIComponent(email)).not.toContain("private@example.com");
     fireEvent.change(screen.getByRole("combobox"), { target: { value: "websites" } });
-    expect(decodeURIComponent(screen.getByRole("link", { name: /WhatsApp/ }).getAttribute("href")!)).toContain("Website");
+    expect(decodeURIComponent(direct.getByRole("link", { name: /WhatsApp/ }).getAttribute("href")!)).toContain("Website");
     fireEvent.change(screen.getByRole("combobox", { name: 'What is your enquiry about?' }), { target: { value: "" } });
-    expect(screen.getByRole("link", { name: /E-?mail/i })).toHaveAttribute("href", "mailto:hahn.silvan.work@gmail.com");
+    expect(direct.getByRole("link", { name: /E-?mail/i })).toHaveAttribute("href", "mailto:hahn.silvan.work@gmail.com");
   });
   it("preserves direct destinations for default callers", () => {
     render(<ContactActions locale="de" />);
     expect(screen.getByRole("link", { name: /WhatsApp/ })).toHaveAttribute("href", "https://wa.me/41789008500");
     expect(screen.getByRole("link", { name: /Telefon/ })).toHaveAttribute("href", "tel:+41789008500");
+  });
+  it('lets visitors save the actual contact from the contact page without filling in a form', () => {
+    render(<ContactInquiry locale="de" />);
+    const link = screen.getByRole('link', { name: 'Silvans Kontaktdaten speichern' });
+    expect(link).toHaveAttribute('download', 'silvan-hahn.vcf');
+    const data = decodeURIComponent(link.getAttribute('href')!.split(',')[1]);
+    expect(data).toBe(createContactVCard(getContent('de').contact));
+    expect(screen.getAllByRole('link')[0]).toHaveAttribute('href', 'tel:+41789008500');
   });
   it("exports an importable CRLF vCard using existing name, phone and email", () => {
     const content = getContent("de");
@@ -43,6 +52,9 @@ describe("public contact context", () => {
     const markup = renderToStaticMarkup(<ContactInquiry locale="de" />);
     expect(markup).toContain('href="mailto:hahn.silvan.work@gmail.com"');
     expect(markup).not.toContain("secret");
+    const document = new DOMParser().parseFromString(markup, 'text/html');
+    expect(document.querySelector('details')?.hasAttribute('hidden')).toBe(true);
+    expect(document.querySelector('noscript')?.textContent).toContain('direkt');
   });
   it("retains only the public reason on language switch and tracks changes", () => {
     window.history.replaceState({}, "", "/contact?service=automation&email=private@example.com");

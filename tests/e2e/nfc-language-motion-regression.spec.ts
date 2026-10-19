@@ -16,7 +16,7 @@ for (const width of [390, 1280]) {
     await page.locator('[name=note]').fill('Please preserve this private note.');
     expect(await page.evaluate(()=>Object.keys(sessionStorage))).toEqual(['silvan:inquiry-selection:v1']);
     expect(await page.evaluate(()=>JSON.stringify(sessionStorage))).not.toMatch(/Private|https:|private note/);
-    await page.getByRole('button',{name:'Angaben prüfen',exact:true}).click();
+    await page.getByRole('button',{name:'Anfrage prüfen',exact:true}).click();
     for (const locale of ['en','de']) {
       await page.getByRole('link',{name:locale==='en'?'Englisch':'German',exact:true}).click();
       await expect(page.locator('html')).toHaveAttribute('lang',locale);
@@ -35,7 +35,7 @@ for (const width of [390, 1280]) {
     await page.getByRole('button',{name:'Angaben bearbeiten',exact:true}).click();
     for (const [name,value] of Object.entries({size:'100',quantity:'3',setup:'ready',destinationUrl:'https://g.page/r/example/review',businessName:'Private Company',contactPerson:'Private Visitor',note:'Please preserve this private note.'})) await expect(page.locator(`[name=${name}]`)).toHaveValue(value);
     await page.locator('[name=quantity]').fill('4');await expect(page.locator('[data-inquiry-summary]')).toHaveCount(0);
-    await page.getByRole('button',{name:'Angaben prüfen',exact:true}).click();await expect(page.getByTestId('inquiry-total')).toContainText('CHF 120');
+    await page.getByRole('button',{name:'Anfrage prüfen',exact:true}).click();await expect(page.getByTestId('inquiry-total')).toContainText('CHF 120');
   });
 }
 

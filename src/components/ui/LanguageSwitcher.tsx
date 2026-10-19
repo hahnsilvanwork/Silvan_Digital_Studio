@@ -104,6 +104,8 @@ export function LanguageSwitcher({ locale, currentPath }: LanguageSwitcherProps)
 
         <Link
 
+          aria-label={labels[option]}
+
           aria-current={option === locale ? "true" : undefined}
 
           className={styles.language}

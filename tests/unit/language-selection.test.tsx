@@ -35,10 +35,10 @@ it('restores the selected model in the target-language form without identity fie
   window.history.replaceState(null, '', href);
   render(<ReviewInquiryConfigurator locale="en" />);
   await act(() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())));
-  expect(screen.getByTestId('inquiry-model')).toHaveTextContent('NFC chip');
+  expect(screen.getByTestId('inquiry-model')).toHaveTextContent('NFC sticker');
   expect(screen.queryByLabelText('Product')).toBeNull();
   expect(screen.getByLabelText(/Business.*optional/i)).toHaveValue('');
-  expect(screen.getByText('Stick-on NFC chip')).toBeVisible();
+  expect(screen.getByText('NFC sticker')).toBeVisible();
 });
 
 it('preserves category-only selection and updates after browser history navigation', () => {
@@ -55,7 +55,7 @@ it('preserves category-only selection and updates after browser history navigati
 
 it.each(projects)('links the $slug demo to its available language', (project) => {
   render(<ProjectDetail project={project} next={projects[0]} locale="en" />);
-  const link = screen.getByRole('link', { name: /Open demo website/i });
+  const link = screen.getByRole('link', { name: /Open example website/i });
   if (project.slug === 'falkenried') expect(link).toHaveAttribute('href', `${project.demoUrl}/en/`);
   else {
     expect(link).toHaveAttribute('href', project.demoUrl);

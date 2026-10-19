@@ -1,5 +1,4 @@
 .page {
-  --text-lead: clamp(1rem, 0.85rem + 1vw, 1.75rem);
   position: relative;
   min-block-size: 100svh;
   background: var(--color-paper);
@@ -91,8 +90,8 @@
 }
 
 .darkBand {
-  --focus-ring-inner: #1a1a1a;
-  --focus-ring-outer: #f9f8f6;
+  --focus-ring-inner: #081b3c;
+  --focus-ring-outer: #ffffff;
 
   padding-block: var(--space-xl);
   background: var(--color-dark-band);
@@ -249,7 +248,7 @@
   text-decoration: underline;
   text-underline-offset: 0.25em;
 }
-.serviceHeader .pageTitle { max-inline-size: 16ch; font-size: clamp(2.5rem, 5vw, 4.75rem); line-height: 1.02; }
+.serviceHeader .pageTitle { max-inline-size: 16ch; font-size: var(--text-title); line-height: 1.06; font-weight: var(--weight-title); letter-spacing: var(--tracking-title); }
 
 .contactBand {
   padding-block: var(--space-xl);
@@ -276,7 +275,10 @@
     padding-block: 0;
   }
   .contactPageLayout .pageTitle {
-    font-size: clamp(3.5rem, 5.5vw, 5.5rem);
+    font-size: var(--text-title);
+    font-weight: var(--weight-title);
+    line-height: 1.06;
+    letter-spacing: var(--tracking-title);
   }
 }
 
@@ -291,8 +293,11 @@
   .pageHeader.websiteHeader { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .websiteHeader .serviceCopy { grid-template-columns: minmax(0, 1fr); gap: var(--space-md); }
   .serviceHeader .pageTitle {
-    font-size: clamp(3.5rem, 5.5vw, 5.5rem);
+    font-size: var(--text-title);
     max-inline-size: 16ch;
+    font-weight: var(--weight-title);
+    line-height: 1.06;
+    letter-spacing: var(--tracking-title);
   }
   .contactLayout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -467,6 +472,10 @@
 
   .pageTitle {
     max-inline-size: 15ch;
+    font-size: var(--text-title);
+    font-weight: var(--weight-title);
+    line-height: 1.06;
+    letter-spacing: var(--tracking-title);
   }
 }
 
@@ -537,7 +546,7 @@
 .pageHeader {
   display: grid;
   gap: var(--space-sm);
-  padding-block: clamp(2rem, 5vw, 5rem) var(--space-lg);
+  padding-block: var(--page-intro-space) var(--space-lg);
   margin-block-end: 0;
 }
 
@@ -573,14 +582,15 @@
   max-inline-size: 18ch;
   font-size: var(--text-title);
   letter-spacing: var(--tracking-title);
-  line-height: 0.96;
+  line-height: 1.06;
+  font-weight: var(--weight-title);
 }
 
 .editorialTight {
   max-inline-size: 44rem;
   color: var(--color-ink-muted);
   font-size: var(--text-lead);
-  line-height: 1.6;
+  line-height: 1.5;
   letter-spacing: var(--tracking-text);
 }
 
@@ -593,7 +603,7 @@
 
 .reviewsMotionProduct {
   inline-size: 100%;
-  max-inline-size: 36rem;
+  max-inline-size: 28rem;
   min-inline-size: 0;
   justify-self: end;
 }
@@ -606,7 +616,7 @@
   .reviewsHero { align-items: start; }
   .reviewsMotionProduct {
     align-self: stretch;
-    container-type: size;
+    container-type: normal;
   }
 }
 
@@ -628,6 +638,28 @@
 }
 
 .note {
+  max-inline-size: 75ch;
   color: var(--color-ink-muted);
   font-size: var(--text-body);
 }
+
+/* Topic navigation belongs to the heading, alongside the service explanation. */
+.headingTopics { margin-block-start: .5rem; }
+.headingTopics nav { padding-block: 0; }
+.compactServiceHeader .serviceActions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.compactServiceHeader .serviceActions > a { inline-size: fit-content; max-inline-size: 100%; font-weight: 500; min-block-size: 48px; padding: .75rem 1.25rem; }
+@media (min-width: 64rem) {
+  .compactServiceHeader .serviceCopy { grid-template-rows: auto 1fr; align-items: stretch; row-gap: 2rem; }
+  .compactServiceHeader .serviceHeading { grid-column: 1; grid-row: 1; }
+  .compactServiceHeader .serviceSummary { grid-column: 2; grid-row: 1 / 3; grid-template-rows: auto auto 1fr; }
+  .compactServiceHeader .serviceActions { align-self: end; }
+  .compactServiceHeader .headingTopics { grid-column: 1; grid-row: 2; align-self: end; margin-block-start: 0; }
+}
+
+@media (min-width: 64rem) {
+  .compactServiceHeader .headingTopics nav ul { align-items: end; }
+  .compactServiceHeader .headingTopics nav a { align-items: end; padding-block-end: 0; }
+}
+
+/* Adjacent introductions and content share one deliberate section gap. */
+.pageHeader + .section { padding-block-start: var(--space-md); }

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import type { CSSProperties } from "react";
 
 import type { Locale, RouteKey } from "../../content/types";
 import { localizePath } from "../../lib/routes";
@@ -24,23 +23,22 @@ interface ServiceDirectoryProps {
 export function ServiceDirectory({ services, locale }: ServiceDirectoryProps) {
   return (
     <ul className={styles.directory}>
-      {services.map((service, index) => (
+      {services.map((service) => (
         <li
           className={styles.directoryItem}
-          data-reveal="rise"
           key={service.href}
-          style={{ "--reveal-index": index } as CSSProperties}
         >
           <Link
             className={`${styles.directoryLink} rowLink`}
             data-touch-target
             href={localizePath(service.href, locale)}
           >
-            <span className={styles.directoryTitle}>{service.title}</span>
+            <h3 className={styles.directoryTitle}>{service.title}</h3>
             <span className={styles.directoryDescription}>
               {service.description}
             </span>
             <span className={styles.directoryPrice}>{service.price}</span>
+            <span className={styles.directoryAction}>{locale === 'de' ? 'Leistung ansehen' : 'Explore this service'}</span>
           </Link>
         </li>
       ))}

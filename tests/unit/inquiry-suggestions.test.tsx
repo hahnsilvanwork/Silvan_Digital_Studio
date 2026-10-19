@@ -39,5 +39,5 @@ it('keeps the chosen destination when adopting a neutral sticker', async () => {
   await user.click(within(screen.getByTestId('inquiry-suggestions')).getByRole('button'));
   await settle();
   expect(container.querySelector('[name=destination]')).toHaveValue('menu');
-  expect(screen.getByTestId('inquiry-model')).toHaveTextContent('Stick-on NFC chip');
+  expect(screen.getByTestId('inquiry-model')).toHaveTextContent('NFC sticker');
 });

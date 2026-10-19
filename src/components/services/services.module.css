@@ -8,33 +8,35 @@
   list-style: none;
 }
 
-.directoryItem + .directoryItem {
+.directoryItem {
   border-block-start: var(--hairline) solid var(--color-line);
 }
 
 .directory {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 0;
+  gap: 0 3rem;
 }
 
 .directoryLink {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto auto;
   gap: 0.5rem;
   align-items: baseline;
   block-size: 100%;
-  padding: 1.25rem 2rem 1.25rem 0;
+  padding: 1.5rem 2rem 1.5rem 0;
   text-decoration: none;
 }
 
 .directoryLink::after {
   inset-inline-end: var(--space-xs);
 }
-.directoryItem:first-child .directoryLink { padding-block-start: 0; }
+.directoryAction { margin-block-start: 0.5rem; font-size: 1rem; text-decoration: underline; text-underline-offset: 0.25em; }
 
 .directoryTitle {
-  font-size: clamp(1.375rem, 2.2vw, 2rem);
+  font-size: clamp(1.375rem, 2.2vw, 1.625rem);
+  font-weight: 500;
   letter-spacing: var(--tracking-item);
   line-height: 1.2;
 }
@@ -111,12 +113,19 @@
   .tiers:has(> :nth-child(4):last-child) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .tier:only-child {
+  .singleTier .tier {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     column-gap: var(--space-lg);
   }
-  .tier:only-child .tierFeatures { grid-column: 2; grid-row: 1 / span 3; }
+  .singleTier .tierFeatures { grid-column: 2; grid-row: 1 / span 3; }
 }
+
+/* A single offer belongs to the section's text edge. Its feature list groups
+   tightly at the top instead of stretching to the description's full height. */
+.singleTier .tier { padding-inline: 0; padding-block: var(--space-sm); gap: .75rem 3rem; }
+.singleTier .tierName { min-block-size: 0; }
+.singleTier .tierFeatures { align-content: start; gap: .75rem; }
+.singleTier .tierDescription { max-inline-size: 60ch; }
 
 .tierDescription {
   color: var(--color-ink-muted);
@@ -198,7 +207,7 @@
   }
 
   .directory {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
 }

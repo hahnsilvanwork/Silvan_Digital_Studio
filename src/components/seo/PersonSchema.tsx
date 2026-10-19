@@ -35,10 +35,7 @@ interface ServiceOffer {
  * Where the work reaches clients. Declared once because the studio node and
  * every service it offers have to agree -- they did not.
  */
-const AREA_SERVED = [
-  { "@type": "AdministrativeArea", name: "Kanton Zürich" },
-  { "@type": "Country", name: "Switzerland" },
-] as const;
+const AREA_SERVED = "Worldwide";
 
 const OFFERS: readonly ServiceOffer[] = [
   { route: "/websites", price: 300 },
@@ -111,21 +108,15 @@ export function PersonSchema({ locale, nonce }: { readonly locale: Locale; reado
         telephone,
         address,
         founder: { "@id": personId },
-        // The wordmark, not the portrait: a headshot is the person, and the
-        // business node needs a mark of its own.
-        // The 180px apple-icon, not the 64px favicon: Google's organization
-        // logo guidance asks for at least 112px, so the smaller one may simply
-        // not qualify.
+        // The approved full wordmark identifies the studio in structured data.
         logo: {
           "@type": "ImageObject",
-          url: absolute("/apple-icon"),
-          width: 180,
-          height: 180,
+          url: absolute("/images/brand/silvan-logo-navy.png"),
+          width: 1200,
+          height: 361,
         },
-        // A service-area business, not a shop: the work reaches clients across
-        // Switzerland rather than at this address. The canton is named too --
-        // country alone is the wrong granularity for a studio whose customers
-        // are local businesses.
+        // The postal address identifies the studio's location. The owner
+        // accepts projects from anywhere, as the visible copy also states.
         areaServed: AREA_SERVED,
         // A range, not a currency code: from the CHF 15 chip
         // to custom projects above CHF 5'000.

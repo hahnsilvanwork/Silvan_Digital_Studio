@@ -3,6 +3,7 @@ import type { Locale } from "./types";
 interface AuditCopy {
   readonly home: Readonly<Record<"heroProjectLabel" | "viewProject" | "intro" | "servicesIntro" | "workIntro" | "productTitle" | "productIntro" | "productCta" | "productAlt", string>>;
   readonly websiteScope: {
+    readonly beforePackages: string;
     readonly title: string;
     readonly costs: string;
     readonly agreement: string;
@@ -21,30 +22,31 @@ export const auditCopy = {
     home: {
       heroProjectLabel: "Falkenried-Konzept ansehen",
       viewProject: "Projekt ansehen",
-      intro: "Websites und digitale Lösungen für Schweizer KMU. Von Silvan Hahn in Boppelsen bei Zürich – persönlich gestaltet, einfach zu bedienen.",
-      servicesIntro: "Ein klarer Auftritt. Einfachere Abläufe. Finden Sie den passenden Einstieg für Ihr Unternehmen.",
-      workIntro: "Eigene Konzepte. Von der ersten Idee bis ins Detail.",
+      intro: "Websites und digitale Lösungen für Ihren Betrieb. Persönlich entwickelt von Silvan Hahn aus Boppelsen bei Zürich, für Betriebe in der ganzen Schweiz.",
+      servicesIntro: "Ihre Angebote verständlich zeigen und die Arbeit im Büro erleichtern. Finden Sie die passende Unterstützung für Ihren Betrieb.",
+      workIntro: "Selbst entwickelte Beispielwebsites für erfundene Unternehmen. Sehen Sie sich die Gestaltung an und probieren Sie die Abläufe aus.",
       productTitle: "Ein kleines Produkt. Ein direkter Weg zu Ihnen.",
-      productIntro: "Bewertungen, Speisekarten oder Buchungen: Ihre Kunden halten das Handy an die Karte oder scannen den QR-Code. Das richtige Ziel öffnet sich direkt.",
+      productIntro: "Bewertungen, Speisekarten oder Buchungen: Ihre Kunden halten ihr Handy an die Karte und öffnen den angezeigten Link. Bei Modellen mit QR-Code können sie diesen stattdessen scannen.",
       productCta: "NFC & QR entdecken",
       productAlt: "NFC-Karten und Aufsteller für Google-Bewertungen und digitale Speisekarten",
     },
     websiteScope: {
-      title: "Umfang und laufende Kosten",
-      costs: "Die Paketpreise sind Richtwerte für die einmalige Umsetzung. Domain und Hosting sind nicht enthalten und verursachen separate, laufende Kosten.",
-      agreement: "Seitenanzahl, Funktionen, Korrekturrunden, Texte und Bilder, Zeitplan sowie Wartung und Support nach dem Start halten wir vor Projektbeginn in der schriftlichen Offerte fest. Darin steht auch, welche Inhalte Sie liefern und welche ich erstelle. Zusätzliche Leistungen und allfällige laufende Kosten werden dort separat ausgewiesen.",
-      maintenanceTitle: "Wie ändern Sie später Ihre Inhalte?",
-      maintenanceIntro: "Öffnungszeiten gelegentlich anpassen oder regelmässig neue Angebote veröffentlichen: Wie oft sich Ihre Inhalte ändern und wer sie pflegt, gehört zur Planung Ihrer Website.",
-      maintenanceAgreement: "Wenn Sie Texte und Bilder selbst bearbeiten möchten, klären wir vorab die passende Bearbeitungslösung, etwa ein Content-Management-System (CMS). Ob und welche Lösung umgesetzt wird, welche Inhalte damit bearbeitbar sind und welche Einführung nötig ist, steht in der Offerte. Auch Aktualisierungen durch mich, technische Wartung und deren Kosten vereinbaren wir dort ausdrücklich.",
+      "beforePackages": "Die Paketpreise gelten für die einmalige Umsetzung. Internetadresse, Hosting und laufende Betreuung kosten separat. Den genauen Umfang und wer Texte und Bilder liefert, halten wir vor dem Start in Ihrer Offerte fest.",
+      "title": "Was einmalig und laufend kostet",
+      "costs": "Die angegebenen Preise sind Richtwerte für die einmalige Umsetzung. Ihre Domain, also die Internetadresse, und das Hosting, das Ihre Website online hält, bezahlen Sie separat. Dafür fallen laufende Kosten an.",
+      "agreement": "Vor dem Start halten wir alles in Ihrer schriftlichen Offerte fest: Seiten, Funktionen, Korrekturrunden und Zeitplan. Wir klären auch, wer Texte und Bilder liefert oder erstellt und welche Betreuung Sie später brauchen. Zusätzliche Leistungen und laufende Kosten werden separat aufgeführt.",
+      "maintenanceTitle": "Wer ändert später Ihre Inhalte?",
+      "maintenanceIntro": "Neue Öffnungszeiten, ein zusätzliches Angebot oder aktuelle Bilder: Wir besprechen schon bei der Planung, wie oft Sie Inhalte ändern möchten und wer das übernimmt.",
+      "maintenanceAgreement": "Möchten Sie Texte und Bilder selbst ändern, planen wir bei Bedarf ein einfaches Bearbeitungssystem. Die Offerte hält fest, was Sie damit bearbeiten können, welche Einführung Sie erhalten und was Einrichtung und Betrieb kosten. Änderungen durch mich und technische Wartung vereinbaren wir ebenfalls ausdrücklich."
     },
     nfcConditions: {
       title: "Einrichtung, Nutzung und Lieferung",
       items: [
-        { question: "Was wird eingerichtet?", answer: "Die Designstufen enthalten die Einrichtung des vereinbarten Links. Geben Sie ein vorhandenes Ziel an oder wählen Sie in der Anfrage, dass es noch eingerichtet werden muss. Ob dafür eine neue Website, ein Menü oder ein Buchungsdienst nötig ist und was dies kostet, klären wir in der schriftlichen Offerte." },
-        { question: "Welche Smartphones funktionieren?", answer: "Für NFC muss das Smartphone NFC-Links lesen können; je nach Gerät muss NFC aktiviert sein. Alternativ lässt sich der QR-Code mit einer geeigneten Kamera- oder Scanner-App öffnen. Zum Aufrufen der verlinkten Website ist eine Internetverbindung nötig. Nennen Sie besondere Geräteanforderungen in Ihrer Anfrage." },
-        { question: "Kann ich das Ziel später ändern?", answer: "Das hängt von der Einrichtung ab: Inhalte unter derselben Webadresse können Sie im jeweiligen Dienst ändern. Eine andere Zieladresse kann eine Weiterleitung oder eine neue Programmierung erfordern; ein gedruckter QR-Code bleibt unverändert. Wir klären vorab, welche Lösung zu Ihnen passt und welche Folgekosten entstehen." },
-        { question: "Wie sind Lieferung und Ersatz geregelt?", answer: "Standardprodukte ohne Personalisierung sind bei mir vor Ort verfügbar; Modell, Menge und Versandtermin bestätigen wir vor der Bestellung. Produkte mit Logo oder vollständiger Personalisierung sind nach Absprache in der Regel innerhalb von 3–5 Wochen eingerichtet bei Ihnen. Versandkosten, Liefertermin und das Vorgehen bei beschädigten oder defekten Produkten halten wir in der Offerte fest." },
-        { question: "Ist laufende Betreuung enthalten?", answer: "Google-Bewertungskarten benötigen keine laufende Betreuung durch mich; eine solche ist nicht enthalten. Besondere Anpassungen oder weitere Betreuung vereinbaren wir bei Bedarf ausdrücklich. Bei Websites werden Pflege, Support und Kosten vorab besprochen und schriftlich festgehalten." },
+        { question: "Was wird eingerichtet?", answer: "Die Produktpreise enthalten die Programmierung und Einrichtung des vereinbarten Links. Geben Sie den vorhandenen Link an oder wählen Sie «Ich brauche Hilfe bei der Einrichtung». Eine neue Website, Speisekarte oder ein Buchungsdienst können zusätzliche Leistungen erfordern. Den Umfang und die Kosten halten wir in der schriftlichen Offerte fest. Direkten WLAN-Zugang vereinbaren wir persönlich." },
+        { question: "Welche Smartphones funktionieren?", answer: "Das Handy muss NFC-Links lesen können. Bei manchen Geräten müssen Sie NFC zuerst einschalten. Bei Produkten mit QR-Code lässt sich der Code mit der Handykamera scannen. Zum Öffnen einer verlinkten Webseite ist eine Internetverbindung nötig. Besondere Geräteanforderungen besprechen wir vor Ihrer Bestellung." },
+        { question: "Kann ich die verlinkte Seite später ändern?", answer: "Texte oder Bilder auf derselben Webseite lassen sich im jeweiligen Dienst ändern. Soll eine andere Webadresse geöffnet werden, kann eine Weiterleitung oder neue Programmierung nötig sein. Ein gedruckter QR-Code bleibt unverändert. Vor Ihrer Bestellung klären wir, wie spätere Änderungen möglich sind und welche Kosten dafür anfallen." },
+        { question: "Wann erhalte ich mein Produkt und was gilt bei einem Defekt?", answer: "Standardprodukte ohne Ihr Logo oder Ihren Firmennamen sind bei mir an Lager. Modell, Menge und Versandtermin bestätige ich vor Ihrer Bestellung. Produkte mit Ihrem Logo oder individuellem Design erhalten Sie nach Absprache in der Regel innerhalb von 3–5 Wochen fertig eingerichtet. Versandkosten, Liefertermin und das Vorgehen bei Schäden oder Defekten halten wir in der Offerte fest." },
+        { question: "Ist laufende Betreuung enthalten?", answer: "Google-Bewertungskarten benötigen keine laufende Betreuung durch mich. Eine solche ist im Produktpreis nicht enthalten. Spätere Änderungen oder zusätzliche Unterstützung vereinbaren wir bei Bedarf separat. Bei Websites besprechen wir Pflege, Unterstützung und Kosten vorab und halten sie schriftlich fest." },
       ],
     },
   },
@@ -52,30 +54,31 @@ export const auditCopy = {
     home: {
       heroProjectLabel: "Explore the Falkenried concept",
       viewProject: "View project",
-      intro: "Websites and digital solutions for Swiss small businesses. By Silvan Hahn in Boppelsen near Zurich – personally designed, easy to use.",
-      servicesIntro: "A clearer presence. Simpler workflows. Find the right starting point for your business.",
-      workIntro: "Self-initiated concepts. From the first idea to the finest detail.",
+      intro: "Websites and practical digital support for your business. Created by Silvan Hahn, based near Zurich and working with businesses across Switzerland.",
+      servicesIntro: "Show customers what you offer and make everyday work easier. Find the right support for your business.",
+      workIntro: "Demo websites I created for fictional businesses. Explore the designs and try the enquiry process.",
       productTitle: "A small product. A direct connection to you.",
-      productIntro: "Reviews, menus or bookings: your customers tap the card or scan the QR code. The right destination opens straight away.",
+      productIntro: "Reviews, menus or bookings: customers hold their phone near the card, then open the link that appears. On models with a QR code, they can scan it instead.",
       productCta: "Explore NFC & QR",
       productAlt: "NFC cards and stands for Google reviews and digital menus",
     },
     websiteScope: {
-      title: "Scope and ongoing costs",
-      costs: "Package prices are estimates for the one-time build. Domain and hosting are excluded and incur separate, ongoing costs.",
-      agreement: "Before the project starts, the written quote sets out the page count, features, revision rounds, text and images, schedule, and maintenance and support after launch. It also specifies which content you provide and which I create. Additional services and any ongoing costs are listed separately.",
-      maintenanceTitle: "How will you update your content?",
-      maintenanceIntro: "Occasional opening-hours changes or regular new offers: how often your content changes and who updates it are part of planning your website.",
-      maintenanceAgreement: "If you want to edit text and images yourself, we first discuss a suitable editing solution, such as a content management system (CMS). The quote specifies whether and which solution will be built, which content it can edit and what introduction you need. Updates by me, technical maintenance and their costs are also explicitly agreed in the quote.",
+      "beforePackages": "Package prices cover the one-off build. Your web address, hosting and ongoing support cost extra. Before work begins, your quote sets out the exact scope and who provides the text and images.",
+      "title": "One-off and ongoing costs",
+      "costs": "The prices shown are estimates for the one-off build. Your domain, which is your web address, and hosting, which keeps your website online, are paid for separately. These have ongoing costs.",
+      "agreement": "Before work begins, your written quote sets out the pages, features, revision rounds and schedule. We also agree on who provides or creates the text and images, and what support you may need later. Additional services and ongoing costs are listed separately.",
+      "maintenanceTitle": "Who will update your content later?",
+      "maintenanceIntro": "New opening hours, an extra service or recent photographs: we discuss how often your content will change and who will update it while planning your website.",
+      "maintenanceAgreement": "If you want to change text and images yourself, we can plan a suitable editing tool. Your quote states what you will be able to edit, the training you will receive and the setup and running costs. Updates by me and technical maintenance are also agreed separately."
     },
     nfcConditions: {
       title: "Setup, use and delivery",
       items: [
-        { question: "What does setup include?", answer: "The design tiers include setting up the agreed link. Provide an existing destination or indicate in your inquiry that it still needs to be set up. The written quote will clarify whether a new website, menu or booking service is needed and what it costs." },
-        { question: "Which smartphones work?", answer: "For NFC, the smartphone must support reading NFC links; some devices require NFC to be enabled. Alternatively, the QR code can be opened with a suitable camera or scanner app. An internet connection is needed to open the linked website. Mention any specific device requirements in your inquiry." },
-        { question: "Can I change the destination later?", answer: "This depends on the setup: content at the same web address can be changed in the relevant service. A different destination address may require a redirect or reprogramming; a printed QR code stays unchanged. We will agree on a suitable setup and any ongoing costs beforehand." },
-        { question: "What are the delivery and replacement terms?", answer: "Standard products without personalisation are held locally; we confirm the model, quantity and dispatch date before ordering. Products with a logo or fully custom designs are normally delivered set up and ready within 3–5 weeks, as agreed. Shipping costs, the delivery date and the process for damaged or faulty products are recorded in your quote." },
-        { question: "Is ongoing support included?", answer: "Google review cards do not require ongoing support from me; it is not included. Special changes or further support are expressly agreed if needed. Website maintenance, support and costs are discussed and recorded in writing beforehand." },
+        { question: "What does setup include?", answer: "The product price includes programming and setting up the agreed link. Provide an existing link or choose “I need help with setup”. A new website, menu or booking service may involve additional work. The written quote sets out the scope and costs. Direct Wi-Fi access is arranged individually." },
+        { question: "Which smartphones work?", answer: "The phone must support NFC links. On some devices, NFC needs to be switched on first. On products with a QR code, customers can scan it with their phone camera. An internet connection is needed to open linked web pages. We discuss any specific device requirements before you order." },
+        { question: "Can I change the linked page later?", answer: "Text or images at the same web address can be changed in the relevant service. Opening a different web address may require a redirect or reprogramming. A printed QR code stays unchanged. Before you order, we agree how later changes can be made and what they will cost." },
+        { question: "When will my product arrive, and what happens if it is faulty?", answer: "Standard products without your logo or business name are held in stock. I confirm the model, quantity and dispatch date before you order. Products with your logo or a custom design are normally delivered ready to use within 3–5 weeks, as agreed. Your quote records shipping costs, the delivery date and what happens if a product is damaged or faulty." },
+        { question: "Is ongoing support included?", answer: "Google review cards do not need ongoing support from me. Ongoing support is not included in the product price. Later changes or additional support can be agreed separately if needed. For websites, maintenance, support and costs are discussed beforehand and recorded in writing." },
       ],
     },
   },

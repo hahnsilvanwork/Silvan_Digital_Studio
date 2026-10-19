@@ -7,6 +7,6 @@ export function PageTopics({ locale, items }: {
 }) {
   return <nav className={styles.topics} aria-label={locale === 'de' ? 'Auf dieser Seite' : 'On this page'}>
     <span className={styles.label}>{locale === 'de' ? 'Auf dieser Seite' : 'On this page'}</span>
-    <ul>{items.map(item => <li key={item.href}><a href={item.href}>{item.label}</a></li>)}</ul>
+    <ul>{items.map(item => <li key={item.href}><a href={item.href}><span>{item.label}</span></a></li>)}</ul>
   </nav>;
 }

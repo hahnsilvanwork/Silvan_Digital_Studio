@@ -6,22 +6,22 @@ import styles from './examples.module.css';
 
 const copy = {
   de: {
-    input: 'Ihre Aufgabenliste', output: 'Ihr Wochenbericht', status: 'Status', open: 'Offen', done: 'Erledigt',
+    input: 'Aufgaben', output: 'Wochenbericht', status: 'Bearbeitungsstand', open: 'Offen', done: 'Erledigt',
     tasks: ['Offerte vorbereiten', 'Lieferung abstimmen', 'Unterlagen prüfen'], owners: ['Alex', 'Sam', 'Alex'],
-    missing: 'Fehlende Zuständigkeit ausprobieren', generate: 'Bericht erstellen', approve: 'Als geprüft markieren', reset: 'Beispiel zurücksetzen',
-    initial: 'Ändern Sie einen Status und erstellen Sie den Bericht.', changed: 'Daten geändert – bitte einen neuen Bericht erstellen.',
-    draft: 'Entwurf bereit. Prüfen Sie die Angaben vor der Freigabe.', warning: 'Zuständigkeit fehlt. Bitte den markierten Eintrag zuerst klären.',
-    approved: 'Geprüft – in dieser Demonstration wird nichts versendet.', pending: 'Noch kein Bericht', note: 'Interaktive Demonstration mit fiktiven Aufgaben. Alle Änderungen bleiben in dieser Ansicht. Es werden keine Daten gespeichert oder versendet.',
-    missingOwner: 'Zuständigkeit fehlt', complete: 'erledigt', remaining: 'offen', review: 'Zur Prüfung', ready: 'Freigegebenes Beispiel',
+    missing: 'Fehler ausprobieren: Aufgabe ohne zuständige Person', generate: 'Bericht erstellen', approve: 'Freigeben', reset: 'Beispiel zurücksetzen',
+    initial: 'Ändern Sie eine Aufgabe und klicken Sie auf «Bericht erstellen».', changed: 'Aufgaben geändert. Erstellen Sie den Bericht neu.',
+    draft: 'Der Bericht ist bereit. Prüfen Sie ihn und geben Sie ihn frei.', warning: 'Zuständigkeit fehlt: Bei einer Aufgabe ist keine Person eingetragen. Entfernen Sie das Häkchen und erstellen Sie den Bericht neu.',
+    approved: 'Freigegeben. In diesem Beispiel wird nichts versendet.', pending: 'Noch kein Bericht. Klicken Sie auf «Bericht erstellen».', note: 'Erfundene Aufgaben. Es wird nichts gespeichert oder versendet.',
+    missingOwner: 'Keine Person zugeordnet', complete: 'erledigt', remaining: 'offen', review: 'Berichtsvorschau', ready: 'Geprüftes Beispiel',
   },
   en: {
-    input: 'Your task list', output: 'Your weekly report', status: 'Status', open: 'Open', done: 'Done',
+    input: 'Tasks', output: 'Weekly report', status: 'Task status', open: 'Open', done: 'Done',
     tasks: ['Prepare a quote', 'Coordinate delivery', 'Check documents'], owners: ['Alex', 'Sam', 'Alex'],
-    missing: 'Try a missing owner', generate: 'Create report', approve: 'Mark as reviewed', reset: 'Reset example',
-    initial: 'Change a status and create the report.', changed: 'Data changed – please create a new report.',
-    draft: 'Draft ready. Check the information before approving it.', warning: 'Owner missing. Resolve the flagged entry first.',
-    approved: 'Reviewed – nothing is sent in this demonstration.', pending: 'No report yet', note: 'Interactive demonstration with fictional tasks. Changes stay in this view. No data is saved or sent.',
-    missingOwner: 'Owner missing', complete: 'done', remaining: 'open', review: 'For review', ready: 'Approved example',
+    missing: 'Try an error: task with no assigned person', generate: 'Create report', approve: 'Approve', reset: 'Reset example',
+    initial: 'Change a task and click “Create report”.', changed: 'Tasks changed. Create the report again.',
+    draft: 'The report is ready. Check it and approve it.', warning: 'Owner missing: one task has no assigned person. Untick the box and create the report again.',
+    approved: 'Approved. This example does not send anything.', pending: 'No report yet. Click “Create report”.', note: 'Made-up tasks. Nothing is saved or sent.',
+    missingOwner: 'No person assigned', complete: 'done', remaining: 'open', review: 'Report preview', ready: 'Reviewed example',
   },
 } as const;
 
@@ -58,7 +58,7 @@ export function WorkflowExample({locale}: {readonly locale: Locale}) {
           <p className={styles.reportSummary}>{done} {c.complete}<span> / </span>{3 - done} {c.remaining}</p>
           <ul className={styles.reportList}>{c.tasks.map((task, index) => <li key={task}><span>{task}<small>{missingOwner && index === 1 ? c.missingOwner : c.owners[index]}</small></span><strong>{statuses[index] === 'done' ? c.done : c.open}</strong></li>)}</ul>
           <button type="button" className={styles.secondary} disabled={missingOwner || phase === 'approved'} onClick={() => setPhase('approved')}>{c.approve}</button>
-        </> : <div className={styles.empty}><span aria-hidden="true">—</span><p>{c.pending}</p></div>}
+        </> : <div className={styles.empty}><p>{c.pending}</p></div>}
       </section>
     </div>
     <div className={styles.feedback}><p role="status">{statusText}</p><button type="button" className={styles.reset} onClick={() => {setStatuses(['done','open','open']); setMissingOwner(false); setPhase('initial');}}>{c.reset}</button></div>

@@ -28,12 +28,13 @@ describe("NFC and QR product catalogue", () => {
     expect(content.reviews.products.map(({ id, price }) => [id, price])).toEqual(
       [
         ["nfc-chip", "CHF 15.–"],
+        ["compact-card", "CHF 29.–"],
         ["standard-card", "CHF 49.–"],
         ["personalized-card", "CHF 69.–"],
         ["fully-custom-card", "CHF 99.–"],
       ],
     );
-    expect(content.reviews.products).toHaveLength(4);
+    expect(content.reviews.products).toHaveLength(5);
     expect(
       content.reviews.catalog.find(({ id }) => id === "review-stand-white")
         ?.price,
@@ -101,7 +102,7 @@ describe("NFC and QR product catalogue", () => {
       .join(" ");
 
     expect(useCases).toMatch(/Google/);
-    expect(useCases).toMatch(/Menü|Menu/);
+    expect(useCases).toMatch(/Speisekarte|Menü|menu/i);
     expect(useCases).toMatch(/Booking|Reserv/);
     expect(useCases).toMatch(/WLAN|Wi-Fi/);
     expect(useCases).toMatch(/Visitenkarte|contact card/);

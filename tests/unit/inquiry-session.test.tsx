@@ -18,8 +18,8 @@ it('restores safe selections after remount but never personal details or preview
   expect(field('size')).toHaveValue('100'); expect(field('setup')).toHaveValue('ready'); expect(field('quantity')).toHaveValue('3');
   expect(field('businessName')).toHaveValue(''); expect(field('destinationUrl')).toHaveValue('');
   expect(document.querySelector('[data-inquiry-summary]')).toBeNull();
-  expect(screen.getByText(/selection restored/i)).toBeVisible();
-  fireEvent.click(screen.getByRole('button', {name:'Start again'})); await settle();
+  expect(screen.getByText(/selection has been restored/i)).toBeVisible();
+  fireEvent.click(screen.getByRole('button', {name:'Start a new enquiry'})); await settle();
   expect(field('product')).toHaveValue(''); expect(screen.queryByTestId('inquiry-model')).toBeNull();
   expect(sessionStorage.getItem(key)).toBeNull();
 });
@@ -30,13 +30,13 @@ it('respects an explicit different model and does not revive the previous draft'
   fireEvent.change(field('size'), {target:{value:'100'}}); first.unmount();
   window.history.replaceState(null, '', '/en/reviews?category=menu&model=menu-square-black');
   render(<ReviewInquiryConfigurator locale="en" />); await settle();
-  expect(field('size')).toHaveValue(''); expect(screen.getByTestId('inquiry-model')).toHaveTextContent('Menu · Square Black');
-  expect(screen.queryByText(/selection restored/i)).toBeNull();
+  expect(field('size')).toHaveValue(''); expect(screen.getByTestId('inquiry-model')).toHaveTextContent('Menu · Square, Black');
+  expect(screen.queryByText(/selection has been restored/i)).toBeNull();
 });
 
 it.each(['{', JSON.stringify({version:99}), 'x'.repeat(4000)])('ignores malformed session data', async raw => {
   sessionStorage.setItem(key,raw); render(<ReviewInquiryConfigurator locale="en" />); await settle();
-  expect(field('product')).toHaveValue(''); expect(screen.queryByText(/selection restored/i)).toBeNull();
+  expect(field('product')).toHaveValue(''); expect(screen.queryByText(/selection has been restored/i)).toBeNull();
 });
 
 it('works when access to session storage is denied', async () => {

@@ -22,55 +22,50 @@ test('cafe request uses opening hours, resets stale time and shows the chosen ti
   await page.locator('#email').fill('demo@example.test');
   await page.locator('#persons').selectOption({ index: 1 });
   await page.locator('button[type="submit"]').click();
-  await expect(page.getByRole('status')).toContainText('10:00');
-  await expect(page.getByRole('status')).toContainText('Feiertagszeiten');
-  await expect(page.getByRole('status')).toContainText(/nichts|keine/);
+  await expect(page.getByTestId('reservation-summary')).toContainText('10:00');
+  await expect(page.getByTestId('reservation-summary')).toContainText('Feiertagszeiten');
+  await expect(page.getByTestId('reservation-summary')).toContainText('nicht versendet');
 });
 
 test('salon carries only a known service and displays the demo appointment request', async ({ page }) => {
   await page.goto('/demos/salon/leistungen');
-  await page.getByRole('link', { name: 'Balayage / Ombré: Demo-Anfrage ausprobieren', exact: true }).click();
+  await page.getByRole('link', { name: 'Balayage / Ombré: Termin anfragen', exact: true }).click();
   await expect(page.locator('#service')).toHaveValue('balayage-ombre');
   await page.locator('#name').fill('Demo Test');
   await page.locator('#email').fill('demo@example.test');
   await page.locator('#desiredDate').fill('2027-12-20');
-  await page.locator('#desiredTime').fill('10:00');
+  await page.locator('#desiredTime').selectOption('10:00');
   await page.locator('#message').fill('Fiktive Farbanfrage.');
   await page.locator('button[type="submit"]').click();
   await expect(page.getByTestId('inquiry-summary')).toContainText('Balayage / Ombré');
   await expect(page.getByTestId('inquiry-summary')).toContainText('10:00');
-  await expect(page.getByRole('status')).toContainText('kein Termin gebucht');
+  await expect(page.getByText('Es wird kein Termin gebucht.', {exact: false})).toBeVisible();
   await page.goto('/demos/salon/kontakt?service=unbekannt&name=Private');
   await expect(page.locator('#service')).toHaveValue('');
   await expect(page.locator('#name')).toHaveValue('');
 });
 
-test('Steiner service selection and reset keep the demo enquiry coherent', async ({ page }) => {
-  await page.goto('/demos/handwerk');
-  await page.getByRole('link', { name: 'Malerarbeiten besprechen', exact: true }).click();
-  await expect(page).toHaveURL(/#kontakt$/);
-  await expect(page.locator('#service')).toHaveValue('Malerarbeiten');
-  await expect(page.locator('#service')).toBeFocused();
-  // Selecting again from the same fragment must retain the form handoff too.
-  await page.getByRole('link', { name: 'Renovationen besprechen', exact: true }).click();
-  await expect(page.locator('#service')).toHaveValue('Renovationen');
-  await expect(page.locator('#service')).toBeFocused();
-  await page.locator('#name').fill('Demo Test');
-  await page.locator('#email').fill('demo@example.test');
-  await page.locator('#message').fill('Fiktive Anfrage für eine Innenwand.');
-  await page.getByRole('button', { name: /Demo-Anfrage ausprobieren/ }).click();
-  await expect(page.getByRole('status')).toContainText('keine Daten versendet');
-  await page.getByRole('button', { name: 'Neue Demo-Anfrage' }).click();
-  await expect(page.locator('#name')).toHaveValue('');
-  await expect(page.locator('#service')).toHaveValue('');
-  await expect(page.locator('#name')).toBeFocused();
-  await expect(page.locator('.project-description')).toHaveCount(4);
-});
-
-test('the portfolio and actual Steiner demo use the same public name', async ({ page }) => {
-  await page.goto('/work/steiner-handwerk');
-  await expect(page.locator('main h1')).toHaveText('Steiner Bau');
-  await expect(page).toHaveTitle(/Steiner Bau/);
-  await page.goto('/demos/handwerk');
-  await expect(page.getByRole('link', { name: 'Steiner Bau – Startseite' })).toBeVisible();
+test('Spurwerk concept replaces Steiner and announces its German demo in English', async ({ page, request }) => {
+  for (const prefix of ['', '/en']) {
+    await page.goto(prefix + '/work/spurwerk');
+    await expect(page.locator('main h1')).toHaveText('Spurwerk Veloatelier');
+    await expect(page).toHaveTitle(/Spurwerk Veloatelier/);
+    const demo = page.locator('a[href="https://silvan-demo-spurwerk.vercel.app/"]');
+    await expect(demo).toBeVisible();
+    if (prefix) await expect(demo).toContainText(/German/);
+    const response = await request.get(prefix + '/work/steiner-handwerk', { maxRedirects: 0 });
+    expect(response.status()).toBe(308);
+    expect(response.headers().location).toBe(prefix + '/work/spurwerk');
+  }
+  for (const path of ['/demos/handwerk', '/demos/handwerk/index.html', '/demos/handwerk/kontakt']) {
+    const response = await request.get(path, { maxRedirects: 0 });
+    expect(response.status()).toBe(308);
+    expect(response.headers().location).toBe('https://silvan-demo-spurwerk.vercel.app/');
+  }
+  await page.goto('/work');
+  await expect(page.locator('a[href="/work/spurwerk"]')).toBeVisible();
+  await expect(page.getByText('Steiner Bau', { exact: true })).toHaveCount(0);
+  const sitemap = await request.get('/sitemap.xml');
+  expect(await sitemap.text()).toContain('/work/spurwerk');
+  expect(await sitemap.text()).not.toContain('steiner-handwerk');
 });

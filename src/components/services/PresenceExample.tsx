@@ -4,13 +4,13 @@ import styles from './examples.module.css';
 export function PresenceExample({locale}: {readonly locale: Locale}) {
   const de=locale === 'de';
   const c=de ? {
-    before:'Vor dem Abgleich', after:'Nach bestätigter Korrektur', source:'Angaben im Beispiel', name:'Velowerkstatt · fiktives Beispiel',
-    saturday:'Samstag', web:'Website', profile:'Google-Profil', service:'Veloreparatur', absent:'Leistung fehlt', appointment:'Nach Termin',
-    conflict:'Zwei Zeiten. Welche gilt?', aligned:'Die Angaben stimmen überein.', confirm:'Der Betrieb bestätigt: Samstag 09–12 Uhr. Veloreparaturen nach Termin.',
+    before:'Vor der Korrektur', after:'Nach der Korrektur', source:'Öffnungszeiten und Leistungen der fiktiven Velowerkstatt im Vergleich', name:'Velowerkstatt',
+    saturday:'Samstag', web:'Website', profile:'Google-Profil', service:'Veloreparatur', absent:'Nicht angegeben', appointment:'Nach Vereinbarung',
+    conflict:'Zwei Öffnungszeiten. Welche stimmen?', aligned:'Die Angaben stimmen überein.', confirm:'Die Werkstatt bestätigt: Samstag 09–12 Uhr. Veloreparaturen nach Vereinbarung.',
   } : {
-    before:'Before the review', after:'After the confirmed correction', source:'Details in this example', name:'Bike workshop · fictional example',
-    saturday:'Saturday', web:'Website', profile:'Google profile', service:'Bicycle repair', absent:'Service missing', appointment:'By appointment',
-    conflict:'Two times. Which is correct?', aligned:'The details now agree.', confirm:'The business confirms: Saturday 09:00–12:00. Bicycle repairs by appointment.',
+    before:'Before the correction', after:'After the correction', source:'Opening hours and services at a fictional bicycle workshop, before and after correction', name:'Bicycle workshop',
+    saturday:'Saturday', web:'Website', profile:'Google profile', service:'Bicycle repair', absent:'Not listed', appointment:'By appointment',
+    conflict:'Two sets of hours. Which is correct?', aligned:'The details now match.', confirm:'The workshop confirms: Saturday 09:00–12:00. Bicycle repairs by appointment.',
   };
   return <figure className={styles.presence} aria-label={c.source}>
     <div className={styles.comparison}>

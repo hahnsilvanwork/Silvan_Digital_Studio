@@ -1,5 +1,5 @@
 .header { padding-block: clamp(2rem, 5vw, 4rem) 1.5rem; }
-.title { max-inline-size: 18ch; margin-block: 0.4rem 1rem; font-size: clamp(2.1rem, 5vw, 4rem); font-weight: 500; line-height: 1.06; letter-spacing: -0.04em; }
+.title { max-inline-size: 18ch; margin-block: 0.4rem 1rem; font-size: var(--text-title); font-weight: var(--weight-title); line-height: 1.06; letter-spacing: var(--tracking-title); }
 .body { padding-block: 0 3rem; display: grid; gap: 2rem; }
 .reason { display: grid; gap: 0.75rem; margin-block-end: 1.5rem; }
 .reason label { font-weight: 600; }
@@ -15,15 +15,15 @@
 .save { display: inline-flex; align-items: center; min-block-size: 3rem; margin-block: 0 1rem; text-underline-offset: 0.25em; }
 .panel { min-inline-size: 0; }
 .next { margin-block-start: 1.5rem; max-inline-size: 60ch; }
-.next h2 { font-size: 1.1rem; }
+.next h2 { font-size: var(--text-heading); font-weight: var(--weight-heading); }
 .next p { line-height: 1.6; }
 @media (min-width: 56rem) { .body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4rem; } }
 
 /* Direct contact first; preparing a draft remains an optional secondary action. */
-.contactLayout { display: grid; grid-template-areas: "intro" "channels" "support"; gap: 1.75rem; padding-block: clamp(2rem, 5vw, 5rem) 4rem; }
+.contactLayout { display: grid; grid-template-areas: "intro" "channels" "support"; gap: 1.75rem; padding-block: var(--page-intro-space) var(--space-xl); }
 .contactLayout .header { grid-area: intro; padding: 0; }
-.contactLayout .title { margin-block: 0 1.25rem; }
-.intro { max-inline-size: 42ch; font-size: clamp(1.0625rem, 1.4vw, 1.25rem); line-height: 1.65; color: var(--color-ink-muted); }
+.contactLayout .title { margin-block: 0 1.25rem; font-size: var(--text-title); font-weight: var(--weight-title); line-height: 1.06; letter-spacing: var(--tracking-title); }
+.intro { max-inline-size: 42ch; font-size: var(--text-lead); line-height: 1.5; color: var(--color-ink-muted); }
 .contactPanel { grid-area: channels; }
 .support { grid-area: support; align-self: start; max-inline-size: 46ch; }
 .personal { font-size: 0.9375rem; color: var(--color-ink-muted); }
@@ -32,15 +32,20 @@
 .prepareDisclosure[open] > summary { margin-block-end: 0.75rem; }
 .prepareDisclosure .reason { margin-block-end: 0; }
 .prepareDisclosure .copyBlock { margin-block-start: 0.5rem; }
+.contactPanel, .reason, .briefDisclosure, .copyBlock { min-inline-size: 0; }
+.reason select { max-inline-size: 100%; }
+.characterCount { margin: 0; text-align: end; font-size: 0.9375rem; color: var(--color-ink-muted); font-variant-numeric: tabular-nums; }
+.selection { margin: 0; overflow-wrap: anywhere; font-size: 0.9375rem; line-height: 1.5; }
+.reason textarea:focus-visible, .reason select:focus-visible, .copyBlock textarea:focus-visible, .copyButton:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 3px; }
 .nextDisclosure > p { margin-block: 0.5rem 1rem; line-height: 1.65; color: var(--color-ink-muted); }
 .address { display: grid; font-style: normal; font-size: 0.9375rem; color: var(--color-ink-muted); }
 @media (min-width: 64rem) {
-  .contactLayout { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr; grid-template-areas: "intro channels" "support channels"; gap: 2rem 3rem; }
+  .contactLayout { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto 1fr; grid-template-areas: "intro channels" "support channels"; gap: 2rem 3rem; padding-block: var(--page-intro-space) var(--space-xl); }
 }
 
 /* A shorter introduction keeps both primary contact actions in the first phone viewport. */
-.contactLayout .title { max-inline-size: 13ch; margin-block-end: 1rem; }
-.contactLayout { gap: 1.5rem; }
+.contactLayout .title { max-inline-size: 13ch; margin-block-end: 1rem; font-size: var(--text-title); font-weight: var(--weight-title); line-height: 1.06; letter-spacing: var(--tracking-title); }
+.contactLayout { gap: 1.5rem; padding-block: var(--page-intro-space) var(--space-xl); }
 .prepareDisclosure { margin-block-start: 1.25rem; }
 .prepareDisclosure > summary, .nextDisclosure > summary {
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
@@ -54,17 +59,46 @@
 }
 .prepareDisclosure[open] > summary::after, .nextDisclosure[open] > summary::after { transform: rotate(225deg); }
 .prepareDisclosure > summary:focus-visible, .nextDisclosure > summary:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 3px; }
-  .contactLayout { max-inline-size: 38rem; padding-block: 1.75rem 2.5rem; }
-  .contactLayout .title { font-size: clamp(2rem, 7.5vw, 3rem); }
-  .intro { font-size: 1rem; line-height: 1.6; max-inline-size: 35ch; }
+  .contactLayout { padding-block: var(--page-intro-space) var(--space-xl); }
+  .contactLayout .title { font-size: var(--text-title); font-weight: var(--weight-title); line-height: 1.06; letter-spacing: var(--tracking-title); }
+  .intro { font-size: var(--text-lead); line-height: 1.5; max-inline-size: 35ch; }
   .support { max-inline-size: none; margin-block-start: 0.25rem; }
   .personal { font-size: 0.875rem; }
   .nextDisclosure > summary { color: var(--color-ink-muted); font-size: 0.9375rem; }
 @media (min-width: 64rem) {
-  .contactLayout { max-inline-size: none; padding-block: clamp(2rem, 5vw, 5rem) 4rem; gap: 2rem 3rem; }
-  .contactLayout .title { font-size: clamp(2.1rem, 5vw, 4rem); }
-  .intro { font-size: clamp(1.0625rem, 1.4vw, 1.25rem); line-height: 1.65; max-inline-size: 42ch; }
+  .contactLayout { padding-block: var(--page-intro-space) var(--space-xl); gap: 2rem 3rem; }
+  .contactLayout .title { font-size: var(--text-title); font-weight: var(--weight-title); line-height: 1.06; letter-spacing: var(--tracking-title); }
+  .intro { font-size: var(--text-lead); line-height: 1.5; max-inline-size: 42ch; }
   .support { max-inline-size: 46ch; margin-block-start: 0; }
   .personal { font-size: 0.9375rem; }
   .nextDisclosure > summary { color: inherit; font-size: 1rem; }
 }
+
+/* Contact page head on the shared split: promise and person left, channels and enquiry right. */
+.contactPage { inline-size: var(--content-width); margin-inline: auto; padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(2.5rem, 4.5vw, 4rem); display: grid; gap: 2.5rem; }
+.contactPage > * { min-inline-size: 0; }
+.contactSide { display: grid; gap: 1.5rem; align-content: start; }
+.contactHead { display: grid; gap: 1.5rem; align-content: start; }
+.personBlock { display: flex; align-items: center; gap: .875rem; padding-block-start: 1.25rem; border-block-start: 1px solid var(--color-line); line-height: 1.4; }
+.personBlock > span { display: flex; flex-direction: column; }
+.personBlock strong { font-size: 1rem; font-weight: 600; }
+.personBlock span span { color: var(--color-ink-muted); font-size: .9375rem; }
+.avatar { flex: none; inline-size: 3rem; block-size: 3rem; border-radius: 50%; object-fit: cover; object-position: center 22%; }
+@media (min-width: 48rem) {
+  .contactPage { grid-template-columns: var(--home-split); column-gap: var(--home-gap); }
+}
+@media (min-width: 64rem) {
+  .contactHead { position: sticky; inset-block-start: calc(var(--header-block-size) + 2rem); align-self: start; }
+}
+.contactHead h1 { margin-block-start: 1rem; }
+
+/* /hello: everything else one tap away, as a ruled two-column list. */
+.contactHead > .personBlock:first-child { padding-block-start: 0; border-block-start: 0; }
+.helloLinks { inline-size: var(--content-width); margin-inline: auto; padding-block: 0 clamp(3rem, 6vw, 5rem); }
+.helloLinks h2 { margin-block-end: 1.25rem; font-size: 1.3125rem; font-weight: 650; letter-spacing: -.02em; }
+.helloLinks ul { display: grid; margin: 0; padding: 0; list-style: none; border-block-start: 1px solid var(--color-ink); }
+.helloLinks li { border-block-end: 1px solid var(--color-line); }
+.helloLinks a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-block-size: 3.5rem; padding-block: .75rem; color: var(--color-ink); font-size: 1.1875rem; font-weight: 600; text-decoration: none; }
+.helloLinks a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.helloLinks svg { inline-size: 1.25rem; block-size: 1.25rem; flex: none; }
+@media (min-width: 48rem) { .helloLinks ul { grid-template-columns: var(--home-split); column-gap: var(--home-gap); } }

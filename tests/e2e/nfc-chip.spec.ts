@@ -9,12 +9,12 @@ for (const locale of ['de', 'en']) test(`adhesive chip image, 3D and tiered enqu
   await expect(page.locator('[data-model-ready=true]')).toBeVisible();
   await page.getByRole('button', {name: locale === 'en' ? 'Close 3D view' : '3D-Ansicht schliessen'}).click();
   await card.locator('a[href*="model=nfc-030-chip"]').first().click();
-  await expect(page.getByTestId('inquiry-model')).toContainText(locale === 'en' ? 'Stick-on NFC chip' : 'NFC-Chip zum Aufkleben');
+  await expect(page.getByTestId('inquiry-model')).toContainText(locale === 'en' ? 'NFC sticker' : 'NFC-Klebechip');
   await expect(page.locator('[name=product]')).toHaveCount(0);
   await page.locator('[name=quantity]').fill('3');
   await expect(page.getByTestId('inquiry-total')).toContainText('CHF 30');
   await page.locator('[name=setup]').selectOption('needs-setup');
-  await page.getByRole('button', {name: locale === 'en' ? 'Review details' : 'Angaben prüfen', exact:true}).click();
+  await page.getByRole('button', {name: locale === 'en' ? 'Review your enquiry' : 'Anfrage prüfen', exact:true}).click();
   await expect(page.getByTestId('inquiry-total')).toContainText('CHF 30');
   const email = page.getByRole('link', {name: locale === 'en' ? 'Enquire by email' : 'Per E-Mail anfragen'});
   await expect(email).toHaveAttribute('href', /CHF%2030/);

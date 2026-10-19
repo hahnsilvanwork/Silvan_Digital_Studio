@@ -1,12 +1,12 @@
 export const studioCopy = {
   de: {
-    proofTitle: "Ein Beispiel für meine Arbeitsweise",
-    proof: "Eine gute Website macht den nächsten Schritt einfach. Probieren Sie es hier aus: Wählen Sie eine NFC-Karte, passen Sie die Menge an und sehen Sie die Grundkosten. Vor dem Kontakt prüfen Sie Ihre Angaben in Ruhe. So wissen Sie, was Sie anfragen.",
-    proofLink: "Modellanfrage ausprobieren",
+    proofTitle: "Einfach auswählen, in Ruhe prüfen",
+    proof: "So soll eine Website ihren Besuchern helfen: Die Auswahl ist verständlich, die Kosten sind sichtbar und der nächste Schritt ist klar. Probieren Sie es mit einer NFC-Karte aus. Wählen Sie die Menge, sehen Sie den Grundpreis und prüfen Sie Ihre Angaben, bevor Sie eine Anfrage versenden.",
+    proofLink: "NFC-Anfrage ausprobieren",
   },
   en: {
-    proofTitle: "An example of how I work",
-    proof: "A good website makes the next step easy. Try it here: choose an NFC card, adjust the quantity and see the base cost. Review your details before making contact, so you know exactly what you are asking about.",
-    proofLink: "Try the model enquiry",
+    proofTitle: "Easy to choose. Time to check.",
+    proof: "A website should help visitors understand their options, see the costs and know what to do next. Try it with an NFC card: choose the quantity, see the base price and review your details before sending an enquiry.",
+    proofLink: "Try an NFC enquiry",
   },
 } as const;

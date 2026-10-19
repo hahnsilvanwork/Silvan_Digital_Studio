@@ -1,0 +1,32 @@
+.signature {
+  inline-size: min(100%, 22rem);
+  margin-block-start: .5rem;
+}
+
+.stage {
+  position: relative;
+  /* The supplied 880x336 film and its matching poster share 90px of empty
+     space on each side. Show the same 700x200 window for both media. */
+  aspect-ratio: 7 / 2;
+  overflow: clip;
+  background: #fff;
+  display: grid;
+  align-items: center;
+}
+
+.logo, .film {
+  position: absolute;
+  inset-inline-start: -12.857143%;
+  inset-block-start: -35%;
+  display: block;
+  inline-size: 125.714286%;
+  max-inline-size: none;
+  block-size: 168%;
+  object-fit: fill;
+}
+
+.film {
+  opacity: 0;
+}
+
+.film[data-visible="true"] { opacity: 1; }

@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 for (const locale of ['de', 'en']) {
   const prefix = locale === 'en' ? '/en' : '';
-  const review = locale === 'en' ? 'Review details' : 'Angaben prüfen';
+  const review = locale === 'en' ? 'Review your enquiry' : 'Anfrage prüfen';
   for (const model of ['review-round-black', 'nfc-001-google', 'review-stand-white']) {
     test(`${locale}: selected ${model} needs only remaining choices`, async ({ page }) => {
       await page.goto(`${prefix}/reviews?category=reviews&model=${model}#inquiry`);
@@ -26,7 +26,7 @@ for (const locale of ['de', 'en']) {
   }
   test(`${locale}: adjusted model can become two personalized cards without stale model details`, async ({ page }) => {
     await page.goto(`${prefix}/reviews?category=reviews&model=review-round-black#inquiry`);
-    await page.getByRole('button', { name: locale === 'en' ? 'Adjust selection' : 'Auswahl anpassen' }).click();
+    await page.getByRole('button', { name: locale === 'en' ? 'Change selection' : 'Auswahl ändern' }).click();
     await expect(page.locator('[name=destination]')).toBeFocused();
     await page.locator('[name=product]').selectOption('personalized-card');
     await expect(page.getByTestId('inquiry-model')).toHaveCount(0);
@@ -47,7 +47,7 @@ for (const locale of ['de', 'en']) {
     await expect(image).toBeVisible();
     const box = await image.boundingBox();
     expect(box!.y).toBeLessThan(page.viewportSize()!.height);
-    for (const slug of ['falkenried', 'cafe-vogel', 'steiner-handwerk', 'salon-lumiere']) {
+    for (const slug of ['falkenried', 'cafe-vogel', 'spurwerk', 'salon-lumiere']) {
       await page.goto(`${prefix}/work/${slug}`);
       await expect(page.getByRole('heading', { name: locale === 'en' ? 'Implemented in the concept' : 'Im Konzept umgesetzt' })).toBeVisible();
       await expect(page.getByRole('heading', { name: locale === 'en' ? 'Scope of this case study' : 'Rahmen der Fallstudie' })).toBeVisible();

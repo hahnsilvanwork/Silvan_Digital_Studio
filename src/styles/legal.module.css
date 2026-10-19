@@ -18,10 +18,11 @@
 }
 
 .title {
-  font-size: clamp(2rem, 4.5vw, 3.75rem);
-  line-height: 1.08;
-  letter-spacing: var(--tracking-display);
+  font-size: var(--text-title);
+  line-height: 1.06;
+  letter-spacing: var(--tracking-title);
   overflow-wrap: anywhere;
+  font-weight: var(--weight-title);
 }
 
 .intro {

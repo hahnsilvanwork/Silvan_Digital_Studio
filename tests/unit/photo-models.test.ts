@@ -4,8 +4,8 @@ import photoProducts from '../../src/content/nfc-import.json';
 
 describe('photo model exports', () => {
   it('accounts for both batches and the corrected WhatsApp number', () => {
-    expect(photoProducts).toHaveLength(31);
-    expect(new Set(photoProducts.map(p => p.id)).size).toBe(31);
+    expect(photoProducts).toHaveLength(32);
+    expect(new Set(photoProducts.map(p => p.id)).size).toBe(32);
     expect(photoProducts.filter(p => p.number === '022').map(p => p.platform)).toEqual(['tiktok']);
     expect(photoProducts.filter(p => p.number === '009').map(p => p.platform)).toEqual(['whatsapp']);
   });

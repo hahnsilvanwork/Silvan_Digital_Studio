@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-01T13:48:58Z",
+  "title": "Existing NFC introduction — supplied card film",
+  "scope": {
+    "routes": [
+      "/reviews",
+      "/en/reviews"
+    ],
+    "designEntry": "DESIGN.md — October 1 — existing NFC introduction with supplied film",
+    "surfaceBrief": "src-components-products-nfcmotionhero-tsx.md",
+    "source": [
+      "src/features/pages/ReviewsPage.tsx",
+      "src/components/products/NfcMotionHero.tsx",
+      "src/components/products/nfc-motion.module.css",
+      "src/styles/nfc-page.module.css"
+    ],
+    "authority": "Retained September 30 production identity; the owner's latest homepage screenshot explicitly governs the balanced left/right NFC hero and supersedes prior full-width-title compositions.",
+    "contract": ".impeccable/review/nfc-home-reference/contract.md"
+  },
+  "extensions": {
+    "shadows": [],
+    "motion": [
+      {
+        "name": "supplied-card-film",
+        "value": "12s silent loop; sequence-specific speed with smooth transitions",
+        "purpose": "Demonstrate the physical card in the existing NFC introduction."
+      },
+      {
+        "name": "visibility-suspension",
+        "value": "IntersectionObserver threshold 0.1 and document.visibilityState",
+        "purpose": "Suspend playback outside the viewport or in a hidden tab without clearing the user's pause."
+      },
+      {
+        "name": "static-preferences",
+        "value": "prefers-reduced-motion: reduce or navigator.connection.saveData",
+        "purpose": "Retain the matched first-frame poster and avoid video download."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "hero-desktop",
+        "value": "75rem",
+        "purpose": "At 1200px, equal columns share upper and metadata rows through subgrid. Complete title belongs to the left upper group; title/stage tops and action/stage bottoms align. Below it, the film fills the shared stacked width."
+      }
+    ],
+    "layout": {
+      "desktop": "At 1200px and above, two equal columns share upper and metadata rows through subgrid; 16px row gap and 48px column gap. Complete H1, intro and actions occupy the upper left group, with title/stage top and action/stage bottom identical. Title scales 40–60px; intro scales 17–20px/1.55. Upper-group gaps are 20px and only residual space before actions flexes through an automatic margin. Prices occupy the lower left metadata row, vertically centered with the right caption and 44px-minimum playback control.",
+      "stage": "The film stage uses its 16:9 geometry when it fits and grows with taller text when necessary. Contain fitting preserves the entire 16:9 source with modest neutral letterboxing; no crop or stretched video.",
+      "stacked": "Below 1200px, visual order remains title, intro, price, actions, full shared-width film, with unchanged mobile typography.",
+      "preserved": "ReviewsPage.tsx groups the full unchanged H1 with intro/actions and separates price metadata; the two CSS modules implement shared rows. DE/EN copy, complete 16:9 variably paced 12-second media, models, prices, catalogue and inquiry behavior remain unchanged."
+    },
+    "media": {
+      "film": "/videos/nfc-cards-fast.mp4?v=12s",
+      "poster": "/videos/nfc-cards-poster.webp",
+      "codec": "H.264",
+      "width": 1280,
+      "height": 720,
+      "framesPerSecond": 24,
+      "frameCount": 288,
+      "durationSeconds": 12,
+      "filmBytes": 2795619,
+      "posterBytes": 44980,
+      "fitting": "contain",
+      "fallbacks": [
+        "before first playback frame",
+        "reduced motion",
+        "data saving",
+        "no JavaScript",
+        "video error"
+      ]
+    },
+    "verification": {
+      "review": ".impeccable/review/nfc-home-reference/verdict-review.md",
+      "initialReview": ".impeccable/review/nfc-home-reference/initial-review.md",
+      "mediaReview": ".impeccable/review/nfc-video/finish-review.md",
+      "disposition": "ship",
+      "reviewScope": "Bounded DE/EN NFC hero correction against the owner homepage reference; all four initial material fixes resolved. No whole-site approval is asserted.",
+      "materialFindings": 0,
+      "captureCount": 16,
+      "captureWidths": [
+        320,
+        390,
+        1024,
+        1200,
+        1280,
+        1440,
+        1516,
+        1600
+      ],
+      "captureTypes": [
+        "hero"
+      ],
+      "captureLocales": "All 16 final production-build captures opened: DE and EN at all eight widths.",
+      "geometry": ".impeccable/review/nfc-home-reference/geometry.json — identical title/stage top and action/stage bottom anchors, aligned metadata centers, complete film and overflow=false at all supplied widths.",
+      "localChecks": "Parent validation reports build/types, hardening/scoped ESLint, detector [] and asset-provenance scan with zero missing assets passing.",
+      "browserChecks": "Initial 108 scoped checks: 107 passed; one WebKit early-click catalogue case failed. After waiting for network idle before the button click, that single failed case passed three consecutive targeted reruns. No clean 108-test first pass is asserted.",
+      "production": "READY: dpl_C7HCaX5ngbmtUFCFWzqweoHnY3gW at https://silvandigital.ch. All 16 live browser flows passed; see docs/audits/2026-10-01-nfc-home-reference.md."
+    }
+  },
+  "components": [
+    {
+      "name": "NFC film pause/resume control",
+      "kind": "button",
+      "description": "16px pause/play icon inside the video bottom right, 44px target, DE/EN accessible name and persistent pause.",
+      "html": "<button type=\"button\" class=\"ds-nfc-motion-control\" aria-pressed=\"false\" aria-label=\"Animation pausieren\"><svg aria-hidden=\"true\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"currentColor\"><path d=\"M4 3h3v10H4zm5 0h3v10H9z\"/></svg></button>",
+      "css": ".ds-nfc-motion-control { position:absolute; right:8px; bottom:8px; width:44px; height:44px; display:grid; place-items:center; border:0; border-radius:50%; color:#081b3c; background:rgb(255 255 255 / 88%); cursor:pointer; } .ds-nfc-motion-control:hover { background:#fff; } .ds-nfc-motion-control:focus-visible { outline:2px solid #081b3c; outline-offset:2px; }"
+    }
+  ],
+  "pacingRelease": {
+    "audit": "docs/audits/2026-10-01-nfc-video-pacing.md",
+    "deployment": "dpl_FjQfrj2js5nRsmt7bxFqNR4ZSJuq",
+    "status": "READY; all 16 live Chromium/WebKit DE/EN flows passed, exact 12-second duration verified; accepted layout unchanged."
+  },
+  "narrative": {
+    "overview": "The owner rejects NFC 2 and restores the September 30 production website. The supplied card film demonstrates the physical product inside the existing NFC introduction on `/reviews` and `/en/reviews`. The owner's latest homepage screenshot is the visual authority for the balanced two-column hero, superseding the preceding full-width-title arrangements. Preserve the approved page, original headings, catalogue, prices, contact and inquiry. This is an extension of the existing white, Geist and navy identity.",
+    "dos": [
+      "Do preserve the restored production page, shared gutters and homepage-reference column balance.",
+      "Do show the full supplied 16:9 film and retain its matched first frame as fallback.",
+      "Do retain silent playback, persistent pause, visibility suspension and static preference handling."
+    ],
+    "donts": [
+      "Don't crop the film, restore NFC 2 or add a new scroll page.",
+      "Don't turn the film's material palette into a new site identity or change copy, catalogue, prices or inquiry behavior."
+    ]
+  },
+  "controlRefinement": {
+    "date": "2026-10-01",
+    "placement": "Inside video, bottom right, inset 8px",
+    "iconSize": 16,
+    "touchSize": 44,
+    "homepage": "No playback controls; one automatic playback with static preference fallback",
+    "audit": "docs/audits/2026-10-01-motion-controls.md",
+    "production": "READY: dpl_9BQ45BXPmdXUJdRBEYa1EdmHU6h1; live DE/EN Chromium/WebKit mobile/desktop controls checked. See audit for initial Safari start timeout and successful isolated confirmation."
+  }
+}

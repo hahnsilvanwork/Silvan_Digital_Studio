@@ -11,6 +11,7 @@ import type {
   PriceTier,
   ProcessStep,
   RouteKey,
+  NavigationItem,
   ServiceContent,
 } from "../../src/content/types";
 
@@ -18,7 +19,7 @@ const returnedWebsites: ServiceContent = getContent("de").websites;
 const returnedTier: PriceTier = returnedWebsites.priceTiers[0];
 const returnedStep: ProcessStep = returnedWebsites.process[0];
 const returnedCtaPath: RouteKey = returnedWebsites.ctaHref;
-const returnedNavigationPath: RouteKey = getContent("de").navigation.primary[0].href;
+const returnedNavigationPath: NavigationItem['href'] = getContent("de").navigation.primary[0].href;
 
 void returnedTier;
 void returnedStep;
@@ -108,19 +109,19 @@ describe("locale content", () => {
     {
       locale: "de" as const,
       hero: {
-        serviceLine: "Online-Präsenz für Schweizer KMU",
-        headline: "Online-Präsenz, die zu Ihnen passt.",
+        serviceLine: "Websites, Google-Unternehmensprofil, NFC- und QR-Karten und Automationen",
+        headline: "Mehr Kunden. Weniger Büroarbeit.",
         supporting:
-          "Ich bin Silvan Hahn. Ich entwickle Websites, mache Ihr Unternehmen online sichtbar und vereinfache wiederkehrende Aufgaben. Direkt mit Ihnen, von der Idee bis zum Start.",
+          "Ich bin Silvan Hahn. Ich entwickle Websites, unterstütze Ihren Auftritt auf Google und vereinfache wiederkehrende Aufgaben. Aus Boppelsen bei Zürich, für Betriebe in der ganzen Schweiz.",
       },
     },
     {
       locale: "en" as const,
       hero: {
-        serviceLine: "Online presence for Swiss businesses",
-        headline: "An online presence that fits your business.",
+        serviceLine: "Websites, Google Business Profile, NFC and QR cards and automations",
+        headline: "More customers. Less office work.",
         supporting:
-          "I'm Silvan Hahn. I build websites, help people find your business online and simplify recurring tasks. You work directly with me, from the first idea to launch.",
+          "I’m Silvan Hahn. I build websites, help customers find your business on Google and simplify recurring tasks. Based near Zurich, working with businesses across Switzerland.",
       },
     },
   ])("preserves the approved $locale hero copy", ({ locale, hero }) => {
@@ -224,7 +225,7 @@ describe("locale content", () => {
         "from CHF 5,000",
       ],
       presencePrice: "from CHF 249",
-      nonBinding: /no-obligation/i,
+      nonBinding: /no[ -]obligation/i,
       quantityDiscount: /quantity discount/i,
     },
   ])(
@@ -241,12 +242,14 @@ describe("locale content", () => {
       );
       expect(content.reviews.products.map(({ price }) => price)).toEqual([
         "CHF 15.–",
+        "CHF 29.–",
         "CHF 49.–",
         "CHF 69.–",
         "CHF 99.–",
       ]);
       expect(content.reviews.products.map(({ id }) => id)).toEqual([
         "nfc-chip",
+        "compact-card",
         "standard-card",
         "personalized-card",
         "fully-custom-card",

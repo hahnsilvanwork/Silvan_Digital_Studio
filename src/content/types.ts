@@ -48,7 +48,7 @@ export type DeepReadonly<T> = T extends Primitive
 
 export interface NavigationItem {
   readonly label: string;
-  readonly href: RouteKey;
+  readonly href: RouteKey | "/#prices";
 }
 
 export interface Navigation {
@@ -237,6 +237,7 @@ export interface ProductScene {
 }
 
 export interface NfcProduct {
+  readonly packageId?: string;
   readonly personalized?: boolean;
   readonly platform?: string;
   readonly kind?: "card" | "square" | "round" | "stand";

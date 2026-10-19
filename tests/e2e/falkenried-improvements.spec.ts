@@ -26,14 +26,15 @@ for (const lang of ['de', 'en'] as const) {
     await form.locator('[name="name"]').fill('Demo Test');
     await form.locator('[name="email"]').fill('demo@example.test');
     await form.getByRole('button').click();
-    await expect(form.locator('[role="status"]')).toContainText(lang === 'de' ? 'nichts versendet' : 'Nothing has been sent');
+    await expect(form.locator('.form-summary')).toBeVisible();
+    await expect(form.locator('.form-summary')).toContainText(lang === 'de' ? 'Es wurde nichts versendet oder dauerhaft gespeichert.' : 'Nothing has been sent or saved permanently.');
     expect(submissions).toEqual([]);
   });
 
   test(`${lang} demo actions have honest destinations`, async ({ page }) => {
     await page.goto(`${base}${prefix}/${lang === 'de' ? 'aktuelles' : 'news'}/`);
     await expect(page.locator('a[href="https://falkenried.example"]')).toHaveCount(0);
-    await expect(page.getByText(lang === 'de' ? 'Demo-Beitrag · kein externer Originalartikel' : 'Example post · no external original article')).toHaveCount(3);
+    await expect(page.getByText(lang === 'de' ? 'Beispielbeitrag' : 'Sample post', { exact: true })).toHaveCount(3);
     await page.goto(`${base}${prefix}/${lang === 'de' ? 'partner' : 'partners'}/`);
     const action = page.getByRole('link', { name: lang === 'de' ? 'Demo-Kontakt öffnen' : 'Open demo contact' }).first();
     await action.click();
@@ -45,13 +46,13 @@ for (const lang of ['de', 'en'] as const) {
   });
 }
 
-test('English portrait and service routes stay English', async ({ page }) => {
+test('English concept and service routes stay English', async ({ page }) => {
   await page.goto(`${base}/en/`);
-  await expect(page.locator('.portrait-panel')).toContainText('Three perspectives.');
-  await page.locator('.portrait-panel a').click();
+  await expect(page.locator('.group-about')).toContainText('Three services. One shared idea.');
+  await page.locator('.group-about').getByRole('link', { name: 'The idea behind Falkenried' }).click();
   await expect(page).toHaveURL(/\/en\/history\/?$/);
   await page.goto(`${base}/en/bmw-garage/`);
-  await page.getByRole('link', { name: 'Try a Service Enquiry' }).first().click();
+  await page.getByRole('link', { name: 'Try a service enquiry' }).first().click();
   await expect(page).toHaveURL(/\/en\/contact\/?#general-inquiry$/);
-  await expect(page.locator('#general-inquiry')).toContainText('nothing is sent');
+  await expect(page.locator('#general-inquiry')).toContainText('Nothing is sent.');
 });

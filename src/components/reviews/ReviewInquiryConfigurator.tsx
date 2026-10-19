@@ -300,8 +300,7 @@ export function ReviewInquiryConfigurator({
 
     if (name === "product") return inquiry.productOptions;
 
-    if (name === "shape") return inquiry.shapeOptions;
-
+    if (name === "shape") return values.product === "compact-card" ? inquiry.shapeOptions.filter(option => option.value === "rectangle") : inquiry.shapeOptions;
     if (name === "size") return values.shape === "rectangle" || values.product === 'nfc-chip'
 
       ? inquiry.sizeOptions.filter((option) => option.value === "confirm")
@@ -336,7 +335,7 @@ export function ReviewInquiryConfigurator({
 
     setValues((current) => ({ ...current, [name]: value,
 
-      ...(name === 'product' ? { shape: '', size: value === 'nfc-chip' ? 'confirm' : '' } : {}),
+      ...(name === 'product' ? { shape: value === 'compact-card' ? 'rectangle' : '', size: ['nfc-chip', 'compact-card'].includes(value) ? 'confirm' : '' } : {}),
 
       ...(name === "shape" ? { size: value === "rectangle" || current.product === 'nfc-chip' ? "confirm" : "" } : {}) }));
 

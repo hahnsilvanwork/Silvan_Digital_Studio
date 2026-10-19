@@ -7,6 +7,8 @@ import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
 import { getPrimaryLinks } from "./nav-links";
 import { SITE_CONTENT_ID } from "./site-regions";
+import { LanguageSwitcher } from '../ui/LanguageSwitcher';
+import { BrandLogo } from '../brand/BrandLogo';
 import styles from "./navigation.module.css";
 
 const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled])';
@@ -19,8 +21,11 @@ interface MobileMenuProps {
 export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
   const content = getContent(locale);
   const links = getPrimaryLinks(locale, currentPath);
-  const supportingLinks = links.filter(link => ['/presence', '/automation', '/about'].some(route => link.href === localizePath(route, locale)));
+  const supportingLinks = links.filter(link => ['/websites', '/reviews', '/presence', '/automation'].some(route => link.href === localizePath(route, locale)));
   const mainLinks = links.filter(link => !supportingLinks.includes(link));
+  const explanations = locale === 'de'
+    ? ['Klar, modern und fürs Handy gemacht', 'Gefunden werden auf Google und Maps', 'Google-Bewertungen mit einem Antippen', 'Weniger wiederkehrende Büroarbeit']
+    : ['Clear, modern and made for phones', 'Get found on Google and Maps', 'Google reviews with a single tap', 'Less repetitive office work'];
   const dialogId = useId();
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -155,6 +160,7 @@ export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
         type="button"
       >
         <span aria-hidden="true" className={styles.menuTriggerIcon} />
+        <span>{locale === 'de' ? 'Menü' : 'Menu'}</span>
       </button>
 
       {open ? (
@@ -177,7 +183,7 @@ export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
             role="dialog"
           >
             <div className={styles.panelHeader}>
-              <span className={styles.panelBrand}>{content.brand.name}</span>
+              <BrandLogo className={styles.headerLogo} />
               <button
                 className={styles.menuClose}
                 data-touch-target
@@ -189,7 +195,16 @@ export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
               </button>
             </div>
 
+            <div className={styles.panelContent}>
+            <p className={styles.panelGroupLabel}>{locale === 'de' ? 'Leistungen' : 'Services'}</p>
             <ul className={styles.panelList}>
+              {supportingLinks.map((link, index) => <li className={styles.panelItem} key={link.href}>
+                <a aria-current={link.isCurrent ? 'page' : undefined} className={`${styles.panelLink} ${styles.panelSecondaryLink}`} data-touch-target href={link.href} onClick={close}>
+                  <span>{link.label}<span className={styles.menuDescription}>{explanations[index]}</span></span>
+                </a>
+              </li>)}
+            </ul>
+            <ul className={`${styles.panelList} ${styles.panelMainLinks}`}>
               {mainLinks.map((link) => (
                 <li className={styles.panelItem} key={link.href}>
                   <a
@@ -204,12 +219,8 @@ export function MobileMenu({ locale, currentPath }: MobileMenuProps) {
                 </li>
               ))}
             </ul>
-            <p className={styles.panelGroupLabel}>{locale === 'de' ? 'Weiteres' : 'More'}</p>
-            <ul className={styles.panelList}>
-              {supportingLinks.map(link => <li className={styles.panelItem} key={link.href}>
-                <a aria-current={link.isCurrent ? 'page' : undefined} className={`${styles.panelLink} ${styles.panelSecondaryLink}`} data-touch-target href={link.href} onClick={close}>{link.label}</a>
-              </li>)}
-            </ul>
+            <div className={styles.menuLanguages}><LanguageSwitcher currentPath={currentPath} locale={locale} /></div>
+            </div>
           </div>
         </div>
       ) : null}

@@ -1,196 +1,113 @@
-import type { CSSProperties } from "react";
-
-import { ContactActions } from "../../components/contact/ContactActions";
-import { SiteShell } from "../../components/layout/SiteShell";
-import { revealSequence } from "../../components/motion/reveal-sequence";
-import { SplitText } from "../../components/motion/SplitText";
-import { ProductCatalog } from "../../components/products/ProductCatalog";
-import { NfcMotionHero } from "../../components/products/NfcMotionHero";
-import { ReviewInquiryConfigurator } from "../../components/reviews/ReviewInquiryConfigurator";
-import { FaqList } from "../../components/services/FaqList";
-import { PriceTierList } from "../../components/services/PriceTierList";
-import { ProcessSteps } from "../../components/services/ProcessSteps";
-import { FaqSchema } from "../../components/seo/FaqSchema";
-import { ButtonLink } from "../../components/ui/ButtonLink";
-import { SectionHeading } from "../../components/ui/SectionHeading";
-import { PageTopics } from "../../components/ui/PageTopics";
-import type { Locale } from "../../content/types";
-import { getContent } from "../../lib/locales";
-import { localizePath } from "../../lib/routes";
-import layoutStyles from "../../styles/layout.module.css";
-import pageStyles from "../../styles/pages.module.css";
-import { inquiryCopy } from "../../content/inquiry-copy";
-import { auditCopy } from "../../content/audit-copy";
+import { ContactActions } from '../../components/contact/ContactActions';
+import { SaveContact } from '../../components/contact/SaveContact';
+import { localPhone } from '../../components/editorial/icons';
+import { PageHero, heroStyles } from '../../components/editorial/PageHero';
+import { EditorialPage, FaqSection, PriceBand, RuledList, Section, SectionHead, Steps, editorialStyles } from '../../components/editorial/Sections';
+import { StickyCallBar } from '../../components/editorial/StickyCallBar';
+import { SiteShell } from '../../components/layout/SiteShell';
+import { NfcMotionHero } from '../../components/products/NfcMotionHero';
+import { ProductCatalog } from '../../components/products/ProductCatalog';
+import { InquiryDisclosure } from '../../components/reviews/InquiryDisclosure';
+import { ReviewInquiryConfigurator } from '../../components/reviews/ReviewInquiryConfigurator';
+import { auditCopy } from '../../content/audit-copy';
+import { inquiryCopy } from '../../content/inquiry-copy';
+import { reviewsPageCopy, serviceCommon } from '../../content/service-pages-copy';
+import type { Locale } from '../../content/types';
 import { STARTER_PRODUCT_IDS } from '../../lib/catalogue-groups';
-import inquiryStyles from "../../components/reviews/review-inquiry.module.css";
+import { getContent } from '../../lib/locales';
+import { localizePath } from '../../lib/routes';
+import styles from '../../styles/nfc-page.module.css';
 
-interface ReviewsPageProps {
-  readonly locale: Locale;
-}
-
-export function ReviewsPage({ locale }: ReviewsPageProps) {
+export function ReviewsPage({ locale }: { readonly locale: Locale }) {
   const content = getContent(locale);
   const { reviews } = content;
-  const sequence = revealSequence(reviews.title);
+  const copy = reviewsPageCopy[locale];
+  const common = serviceCommon[locale];
+  const { phoneDisplay, phoneHref } = content.contact.details;
+  // Device compatibility is already covered by the main FAQ, including the QR exception for stickers.
+  const [setup, , ...remainingConditions] = auditCopy[locale].nfcConditions.items;
+  const faqItems = [...reviews.faq.items, setup, ...remainingConditions];
 
-  return (
-    <SiteShell currentPath={localizePath("/reviews", locale)} locale={locale}>
-      <div className={pageStyles.page}>
-        <section
-          className={`${layoutStyles.container} ${pageStyles.pageHeader} ${pageStyles.reviewsHero}`}
-        >
-            <div className={pageStyles.reviewsHeroCopy} data-reviews-hero-copy>
-              <p className={pageStyles.heroLabel} data-reveal="rise">
-                {reviews.eyebrow}
-              </p>
-              <SplitText
-                as="h1"
-                className={pageStyles.pageTitle}
-                startIndex={sequence.titleStartIndex}
-                text={reviews.title}
-              />
-              <p
-                className={pageStyles.editorialTight}
-                data-reveal="rise"
-                style={
-                  { "--reveal-index": sequence.introIndex } as CSSProperties
-                }
-              >
-                {reviews.intro}
-              </p>
-              <div
-                className={pageStyles.heroActions}
-                data-reveal="rise"
-                style={
-                  { "--reveal-index": sequence.actionsIndex } as CSSProperties
-                }
-              >
-                <ButtonLink href="#products">{locale === "de" ? "Modelle auswählen" : "Choose a model"}</ButtonLink>
-                <ButtonLink href="#inquiry" variant="secondary">
-                  {reviews.ctaLabel}
-                </ButtonLink>
-              </div>
-            </div>
+  return <SiteShell currentPath={localizePath('/reviews', locale)} locale={locale}>
+    <EditorialPage>
+      <PageHero
+        id="reviews"
+        eyebrow={reviews.eyebrow}
+        title={reviews.title}
+        titleFit="8.4cqi"
+        lead={reviews.intro}
+        primary={{ href: '#inquiry', label: reviews.ctaLabel }}
+        call={{ href: phoneHref, display: localPhone(phoneDisplay, locale), label: common.callLabel }}
+        facts={copy.facts}
+        byline={{ href: localizePath('/about', locale), name: common.bylineName, role: common.bylineRole }}
+        visual={<div className={`${heroStyles.visualBody} ${styles.film}`}><NfcMotionHero locale={locale} /></div>}
+      />
 
-            <div className={pageStyles.reviewsMotionProduct}>
-              <NfcMotionHero locale={locale} />
-            </div>
-        </section>
+      <Section id="how-it-works" labelledBy="reviews-how-title">
+        <SectionHead id="reviews-how-title" title={copy.howTitle} intro={copy.howIntro} />
+        <Steps steps={reviews.process} />
+      </Section>
 
-        <div className={layoutStyles.container}><PageTopics locale={locale} items={[
-          { href: '#products', label: locale === 'de' ? 'Modelle' : 'Models' },
-          { href: '#how-it-works', label: locale === 'de' ? 'So funktioniert’s' : 'How it works' },
-          { href: '#inquiry', label: locale === 'de' ? 'Anfrage' : 'Enquiry' },
-          { href: '#questions', label: locale === 'de' ? 'Fragen' : 'Questions' },
-        ]} /></div>
-        <section
-          className={`${layoutStyles.container} ${inquiryStyles.catalogueSection}`}
-          id="products"
-        >
-            <SectionHeading
-              eyebrow={reviews.eyebrow}
-              title={reviews.catalogLabel}
-            />
-            <div className={inquiryStyles.contentBlock}>
-              <ProductCatalog
-                locale={locale}
-                starterProductIds={STARTER_PRODUCT_IDS}
-                categories={reviews.categories}
-                labels={{
-                  category: reviews.catalogLabel,
-                  categoryPrompt: reviews.categoryPrompt,
-                  productSingular: reviews.productSingular,
-                  productPlural: reviews.productPlural,
-                  previousProduct: reviews.previousProductLabel,
-                  nextProduct: reviews.nextProductLabel,
-                  productPosition: reviews.productPositionLabel,
-                  productPositionOf: reviews.productPositionOfLabel,
-                  view3d: reviews.view3dLabel,
-                  comingSoon: reviews.comingSoonLabel,
-                  close: reviews.close3dLabel,
-                  loading: reviews.loading3dLabel,
-                  error: reviews.error3dLabel,
-                  retry: reviews.retry3dLabel,
-                  interact: reviews.interact3dLabel,
-                  requestModel: inquiryCopy[locale].requestModel,
-                  external3d: inquiryCopy[locale].external3d,
-                }}
-                products={reviews.catalog}
-              />
-            </div>
+      <Section id="uses" labelledBy="reviews-uses-title" band>
+        <SectionHead id="reviews-uses-title" title={reviews.useCasesTitle} />
+        <RuledList items={reviews.useCases.map(useCase => ({ title: useCase.title, text: useCase.description }))} />
+      </Section>
 
-            <div className={inquiryStyles.pricingBlock}>
-              <p className={pageStyles.sectionLabel} data-reveal="rise">
-                {reviews.priceLabel}
-              </p>
-              <PriceTierList tiers={reviews.products} />
-              <p className={pageStyles.note}>
-                {locale === "de"
-                  ? "Preise in CHF inklusive der beschriebenen Einrichtung und allfälliger gesetzlicher Abgaben. Versand wird abhängig von Lieferort und Menge separat offeriert. Den Gesamtpreis und Liefertermin erhalten Sie vor einer Bestellung; die Anfrage ist unverbindlich."
-                  : "Prices in CHF include the setup described and any legally applicable charges. Shipping is quoted separately based on destination and quantity. You receive the total price and delivery date before ordering; enquiries are non-binding."}
-              </p>
-              <p className={pageStyles.note} data-reveal="rise">
-                {reviews.quantityDiscount}
-              </p>
-              <div><ButtonLink href="#inquiry">{reviews.ctaLabel}</ButtonLink></div>
-              <div className={inquiryStyles.conditionsBlock}>
-              <h3 className={inquiryStyles.conditionsTitle}>{auditCopy[locale].nfcConditions.title}</h3>
-              <FaqList items={auditCopy[locale].nfcConditions.items} locale={locale} />
-              </div>
-            </div>
-        </section>
+      <Section id="products" labelledBy="reviews-catalogue-title" className={styles.catalogue}>
+        <SectionHead id="reviews-catalogue-title" title={copy.catalogueTitle} intro={copy.catalogueIntro} />
+        <ProductCatalog
+          locale={locale}
+          starterProductIds={STARTER_PRODUCT_IDS}
+          categories={reviews.categories}
+          labels={{
+            category: reviews.catalogLabel,
+            categoryPrompt: reviews.categoryPrompt,
+            productSingular: reviews.productSingular,
+            productPlural: reviews.productPlural,
+            previousProduct: reviews.previousProductLabel,
+            nextProduct: reviews.nextProductLabel,
+            productPosition: reviews.productPositionLabel,
+            productPositionOf: reviews.productPositionOfLabel,
+            view3d: reviews.view3dLabel,
+            comingSoon: reviews.comingSoonLabel,
+            close: reviews.close3dLabel,
+            loading: reviews.loading3dLabel,
+            error: reviews.error3dLabel,
+            retry: reviews.retry3dLabel,
+            interact: reviews.interact3dLabel,
+            requestModel: inquiryCopy[locale].requestModel,
+            external3d: inquiryCopy[locale].external3d,
+          }}
+          products={reviews.catalog}
+        />
+      </Section>
 
-        <section id="how-it-works" className={`${layoutStyles.container} ${inquiryStyles.compactSection}`}>
-          <SectionHeading title={reviews.processTitle} />
-          <div className={inquiryStyles.contentBlock}>
-            <ProcessSteps steps={reviews.process} />
+      <PriceBand
+        id="prices"
+        titleId="reviews-prices-title"
+        title={copy.pricesTitle}
+        intro={copy.pricesIntro}
+        vat={copy.vat}
+        rows={reviews.products.map(product => ({ id: product.id, name: product.name, price: product.price, text: product.description, more: <>{product.features.join(' · ')}</> }))}
+        box={{ title: copy.deliveryTitle, text: `${copy.deliveryText} ${reviews.quantityDiscount}` }}
+      />
+
+      <Section id="inquiry" labelledBy="reviews-inquiry-title">
+        <div className={styles.support}>
+          <div className={styles.supportIntro}>
+            <h2 id="reviews-inquiry-title">{reviews.inquiry.title}</h2>
+            <p>{copy.inquiryIntro}</p>
           </div>
-          <details className={inquiryStyles.disclosure}>
-            <summary>{reviews.useCasesTitle}</summary>
-            <ul className={`${inquiryStyles.contentBlock} ${pageStyles.useCaseGrid}`}>
-              {reviews.useCases.map((useCase) => (
-                <li className={pageStyles.useCase} key={useCase.title}>
-                  <h3>{useCase.title}</h3>
-                  <p>{useCase.description}</p>
-                </li>
-              ))}
-            </ul>
-          </details>
-        </section>
+          <div className={styles.supportChannels}><ContactActions locale={locale} compact immediate emphasize includeLinkedIn={false} /></div>
+          <div className={styles.supportSave}><SaveContact locale={locale} /></div>
+        </div>
+        <InquiryDisclosure locale={locale}><ReviewInquiryConfigurator locale={locale} /></InquiryDisclosure>
+        <p className={editorialStyles.note}>{copy.inquiryNote}</p>
+      </Section>
 
-        <section
-          className={`${layoutStyles.container} ${inquiryStyles.compactSection}`}
-          id="inquiry"
-        >
-          <SectionHeading
-            eyebrow={reviews.ctaLabel}
-            title={reviews.inquiry.title}
-          />
-          <div className={pageStyles.sectionBody}>
-            <ReviewInquiryConfigurator locale={locale} />
-          </div>
-        </section>
+      <FaqSection locale={locale} id="questions" title={reviews.faq.title} items={faqItems} />
 
-        <section id="questions" className={`${layoutStyles.container} ${pageStyles.section}`}>
-          <FaqSchema items={reviews.faq.items} />
-          <SectionHeading title={reviews.faq.title} />
-          <div className={pageStyles.sectionBody}>
-            <FaqList items={reviews.faq.items} locale={locale} />
-          </div>
-        </section>
-
-        <section className={pageStyles.contactBand}>
-          <div className={`${layoutStyles.container} ${pageStyles.contactLayout}`}>
-          <SectionHeading
-            eyebrow={content.contact.eyebrow}
-            title={content.contact.title}
-          />
-          <div className={pageStyles.sectionBody}>
-            <ContactActions locale={locale} />
-          </div>
-          </div>
-        </section>
-      </div>
-    </SiteShell>
-  );
+      <StickyCallBar callLabel={common.stickyCall} callHref={phoneHref} enquiryLabel={copy.stickyEnquiry} enquiryHref="#inquiry" watch={['reviews-hero-actions', 'inquiry']} />
+    </EditorialPage>
+  </SiteShell>;
 }

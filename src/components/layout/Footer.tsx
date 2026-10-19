@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { BrandLogo } from "../brand/BrandLogo";
 
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
+import { localPhone } from "../editorial/icons";
 import styles from "./navigation.module.css";
 
 interface FooterProps {
@@ -16,20 +18,20 @@ export function Footer({ locale }: FooterProps) {
 
   const contactActions = [
     {
+      label: content.contact.phoneLabel,
+      value: localPhone(details.phoneDisplay, locale),
+      href: details.phoneHref,
+      external: false,
+    },
+    {
       label: content.contact.emailLabel,
       value: details.email,
       href: `mailto:${details.email}`,
       external: false,
     },
     {
-      label: content.contact.phoneLabel,
-      value: details.phoneDisplay,
-      href: details.phoneHref,
-      external: false,
-    },
-    {
       label: content.contact.whatsappLabel,
-      value: details.whatsappNumber,
+      value: localPhone(details.whatsappNumber, locale),
       href: details.whatsappHref,
       external: true,
     },
@@ -40,15 +42,17 @@ export function Footer({ locale }: FooterProps) {
       external: true,
     },
   ];
+  const serviceHrefs = ['/websites', '/presence', '/reviews', '/automation'];
+  const navGroups = [
+    { title: locale === 'de' ? 'Leistungen' : 'Services', items: content.navigation.primary.filter(item => serviceHrefs.includes(item.href)) },
+    { title: 'Studio', items: content.navigation.primary.filter(item => !serviceHrefs.includes(item.href)) },
+  ];
 
   return (
     <footer className={styles.footer}>
       <div className={styles.footerInner}>
         <div className={styles.footerBrand}>
-          <span className={styles.footerWordmark}>{content.brand.name}</span>
-          <span className={styles.footerDescriptor}>
-            {content.brand.descriptor}
-          </span>
+          <BrandLogo className={styles.footerLogo} tone="white" />
         </div>
 
         <section className={styles.footerContact}>
@@ -61,6 +65,7 @@ export function Footer({ locale }: FooterProps) {
           <address className={styles.footerAddress}>
             {content.contact.address.join(", ")}
           </address>
+          <p className={styles.footerAddress}>{locale === 'de' ? 'Für Betriebe in der ganzen Schweiz. Antwort innert 24 Stunden.' : 'For businesses across Switzerland. Reply within 24 hours.'}</p>
 
           <ul className={styles.footerContactList}>
             {contactActions.map((action) => (
@@ -92,19 +97,22 @@ export function Footer({ locale }: FooterProps) {
         </section>
 
         <nav aria-label={content.footer.navLabel} className={styles.footerNav}>
-          <ul className={styles.footerNavList}>
-            {content.navigation.primary.map((item) => (
-              <li key={item.href}>
-                <Link
-                  className={`${styles.footerNavLink} hoverUnderline`}
-                  data-touch-target
-                  href={localizePath(item.href, locale)}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          {navGroups.map(group => <div key={group.title} className={styles.footerNavGroup}>
+            <h2 className={styles.footerHeading}>{group.title}</h2>
+            <ul className={styles.footerNavList}>
+              {group.items.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    className={`${styles.footerNavLink} hoverUnderline`}
+                    data-touch-target
+                    href={localizePath(item.href, locale)}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>)}
         </nav>
 
         <nav

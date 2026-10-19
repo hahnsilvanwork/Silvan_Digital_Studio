@@ -1,81 +1,89 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Locale } from "../../content/types";
 import styles from "./nfc-motion.module.css";
-import { NfcDemoScreen } from "./NfcDemoScreen";
 
-const scenes = [
-  { name: "Menu", image: "menu-round-black-78746a65bfe4.png", detail: ["Karte antippen. Menü öffnen.", "Tap the card. Open the menu."], kind: "menu" },
-  { name: "Google", image: "review-round-black-4554e8ac3153.png", detail: ["Der kurze Weg zur Bewertung.", "A direct link to leave a review."], kind: "review" },
-  { name: "Instagram", image: "nfc-014-instagram-e94ce06a2966.png", detail: ["Ihr Profil. Direkt erreichbar.", "Your profile. One tap away."], kind: "instagram" },
-  { name: "Facebook", image: "nfc-020-facebook-10ab09650ef7.png", detail: ["Ihre Seite direkt auf dem Handy.", "Your page, right on their phone."], kind: "facebook" },
-  { name: "Airbnb", image: "nfc-032-airbnb-87be1722e571.png", detail: ["Alle Infos zum Aufenthalt.", "Everything about their stay."], kind: "stay" },
-] as const;
+type DataConnection = EventTarget & { readonly saveData?: boolean };
 
-/** A local, silent motion composition: original photography + illustrative HTML screens. */
+/** The owner's card film, paced by sequence into a 12-second loop. */
 export function NfcMotionHero({ locale }: { readonly locale: Locale }) {
   const root = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [available, setAvailable] = useState(false);
-  const [reduced, setReduced] = useState(true);
+  const [staticMotion, setStaticMotion] = useState(true);
   const [paused, setPaused] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [hasFrame, setHasFrame] = useState(false);
+  const [failed, setFailed] = useState(false);
   const de = locale === "de";
 
   useEffect(() => {
-    const media = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    const preference = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    const connection = (navigator as Navigator & { connection?: DataConnection }).connection;
     let inView = true;
     const update = () => {
-      setReduced(media?.matches ?? true);
+      setStaticMotion((preference?.matches ?? true) || Boolean(connection?.saveData));
       setAvailable(inView && document.visibilityState !== "hidden");
     };
     const observer = typeof IntersectionObserver === "undefined" ? null : new IntersectionObserver(([entry]) => {
       inView = entry.isIntersecting;
       update();
-    }, { threshold: 0.05 });
+    }, { threshold: 0.1 });
     if (root.current) observer?.observe(root.current);
-    media?.addEventListener("change", update);
+    preference?.addEventListener("change", update);
+    connection?.addEventListener("change", update);
     document.addEventListener("visibilitychange", update);
     update();
-
-  return () => {
+    return () => {
       observer?.disconnect();
-      media?.removeEventListener("change", update);
+      preference?.removeEventListener("change", update);
+      connection?.removeEventListener("change", update);
       document.removeEventListener("visibilitychange", update);
     };
   }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    let disposed = false;
+    if (available && !staticMotion && !paused && !failed) {
+      video.muted = true;
+      video.defaultMuted = true;
+      if (!video.getAttribute("src")) video.src = "/videos/nfc-cards-fast.mp4?v=12s";
+      video.play().catch((error: unknown) => {
+        if (!disposed && !(error instanceof DOMException && error.name === "AbortError")) setPaused(true);
+      });
+    } else {
+      if (!video.paused) video.pause();
+    }
+    return () => { disposed = true; if (!video.paused) video.pause(); };
+  }, [available, staticMotion, paused, failed]);
+
+  const showVideo = hasFrame && !staticMotion && !failed;
   return (
-    <figure ref={root} className={styles.film} data-nfc-motion data-running={available && !reduced && !paused} data-static={reduced}>
-      <div className={styles.stage} aria-hidden="true">
-        <div className={styles.topline}><span className={styles.signature}>{de ? "Vom Produkt aufs Handy" : "From product to phone"}</span><span>NFC</span></div>
-        {scenes.map((scene, index) => (
-          <div className={styles.scene} data-index={index} key={scene.name} style={{ "--delay": `${index * 7.5}s` } as CSSProperties}>
-            <div className={styles.phase}><span>{de ? "Handy hinhalten" : "Hold your phone near"}</span><span>{de ? "Link erkannt" : "Link detected"}</span><span>{de ? "Antippen. Öffnen." : "Tap. Open."}</span></div>
-            <div className={styles.product}>
-              <Image src={`/images/products/main/${scene.image}`} alt="" fill sizes="(min-width: 1024px) 340px, 65vw" loading={index === 0 ? "eager" : "lazy"} className={styles.photo} />
-            </div>
-            <div className={styles.signal} data-nfc-target><span /><span /></div>
-            <div className={styles.phone} data-nfc-phone>
-              <span className={styles.reader} data-nfc-reader />
-              <span className={styles.sideKey} /><span className={styles.volumeKeys} /><div className={styles.island}><i /></div>
-              <div className={styles.status}><span>9:41</span><span className={styles.statusIcons}><svg viewBox="0 0 40 12" fill="currentColor"><path d="M0 9h2v3H0zm4-3h2v6H4zm4-3h2v9H8zm4-3h2v12h-2z"/><path d="M18 3q7-6 14 0l-2 2q-5-4-10 0zm4 4q3-3 6 0l-3 4z"/><rect x="35" y="2" width="4" height="8" rx="1"/></svg></span></div>
-              <div className={styles.lockScreen}><svg className={styles.lockIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><small>{de ? "Ihr nächster Kontakt" : "Your next connection"}</small><strong>9:41</strong></div>
-              <div className={styles.notification} data-nfc-notification><b>NFC</b><span>{de ? "Link erkannt" : "Link detected"}<small>{de ? "Antippen zum Öffnen" : "Tap to open"}</small></span></div>
-              <span className={styles.tap} data-nfc-tap />
-              <div className={styles.screen} data-nfc-screen>
-                <NfcDemoScreen kind={scene.kind} de={de} />
-              </div>
-              <span className={styles.homeBar} />
-            </div>
-            <div className={styles.sceneLabel}><strong>{scene.name === "Menu" && de ? "Speisekarte" : scene.name}</strong><span>{scene.detail[de ? 0 : 1]}</span></div>
-          </div>
-        ))}
+    <figure ref={root} className={styles.film} data-nfc-motion data-running={playing && available && !staticMotion && !paused && !failed} data-static={staticMotion || failed}>
+      <div className={styles.stage}>
+        <Image src="/videos/nfc-cards-poster.webp" alt="" width={1280} height={720} priority unoptimized className={styles.poster} data-visible={!showVideo} />
+        <video ref={videoRef} className={styles.video} data-visible={showVideo} muted playsInline loop preload="none" tabIndex={-1} aria-hidden="true"
+          onPlaying={() => { setHasFrame(true); setPlaying(true); }}
+          onPause={() => setPlaying(false)}
+          onError={() => { setFailed(true); setPlaying(false); }}
+        />
+        {!staticMotion && !failed && <button type="button" className={styles.motionControl} data-touch-target aria-pressed={paused}
+          aria-label={paused ? (de ? "Animation fortsetzen" : "Resume animation") : (de ? "Animation pausieren" : "Pause animation")}
+          title={paused ? (de ? "Animation fortsetzen" : "Resume animation") : (de ? "Animation pausieren" : "Pause animation")}
+          onClick={() => setPaused(current => !current)}>
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            {paused ? <path d="m5 3 8 5-8 5z" /> : <path d="M4 3h3v10H4zm5 0h3v10H9z" />}
+          </svg>
+        </button>}
       </div>
       <figcaption className={styles.caption}>
-        <span>{de ? "Produktbeispiele mit fiktiven Profilen." : "Product examples with fictional profiles."}</span>
-      {!reduced ? <button type="button" className={styles.motionControl} data-touch-target aria-pressed={paused} aria-label={paused ? (de ? "Animation fortsetzen" : "Resume animation") : (de ? "Animation pausieren" : "Pause animation")} onClick={() => setPaused(current => !current)}>
-          {paused ? (de ? "Weiter" : "Resume") : "Pause"}
-        </button> : null}
+        <span>{failed
+          ? (de ? "Standbild der Karten." : "Still image of the cards.")
+          : (de ? "Kurzfilm: die Karten aus der Nähe." : "Short film: the cards up close.")}</span>
       </figcaption>
     </figure>
   );

@@ -8,7 +8,7 @@ test.describe("contact actions", () => {
   }) => {
     await page.goto("/contact");
 
-    const actions = page.locator("main a[href]");
+    const actions = page.getByRole('group', { name: 'Direktkontakt', exact: true }).locator('a[href]');
 
     await expect(
       actions.filter({ hasText: CONTACT.email }),
@@ -16,7 +16,7 @@ test.describe("contact actions", () => {
     // Phone and WhatsApp now print the same number in the same format, so the
     // number alone no longer identifies a row -- match on the label as well.
     await expect(
-      actions.filter({ hasText: "Telefon" }).filter({
+      actions.filter({ hasText: "Anrufen" }).filter({
         hasText: CONTACT.phoneDisplay,
       }),
     ).toHaveAttribute("href", CONTACT.phoneHref);
@@ -27,7 +27,7 @@ test.describe("contact actions", () => {
         .first(),
     ).toHaveAttribute("href", /^https:\/\/wa\.me\/41789008500/);
     await expect(
-      actions.filter({ hasText: "silvan-hahn-dev" }).first(),
+      page.getByRole('contentinfo').locator('a').filter({ hasText: "silvan-hahn-dev" }).first(),
     ).toHaveAttribute("href", CONTACT.linkedIn);
   });
 
@@ -66,7 +66,7 @@ test.describe("contact actions", () => {
   test("every contact row is a comfortable target", async ({ page }) => {
     await page.goto("/contact");
 
-    const rows = page.locator("main a[href]");
+    const rows = page.locator("main a[href]:visible");
     const count = await rows.count();
 
     for (let index = 0; index < count; index += 1) {

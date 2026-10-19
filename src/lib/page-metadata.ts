@@ -5,11 +5,10 @@ import { getContent, SUPPORTED_LOCALES } from "./locales";
 import { localizePath } from "./routes";
 import { getSiteOrigin } from "./site-url";
 
-/** Open Graph wants a territory, and this studio sells into Switzerland. */
+/** These territory codes describe spelling conventions, not service coverage. */
 const OG_LOCALE: Readonly<Record<Locale, string>> = {
   de: "de_CH",
-  // en_GB, not en_US: the English copy is written in British spelling for a
-  // European audience, and nothing here is aimed at the United States.
+  // The English content uses British spelling consistently.
   en: "en_GB",
 };
 

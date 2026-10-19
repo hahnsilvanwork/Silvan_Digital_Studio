@@ -11,7 +11,7 @@ import { Product3DDialog, type Product3DLabels } from "./Product3DDialog";
 import { ProductCard } from "./ProductCard";
 import styles from "./products.module.css";
 import { useCatalogueSelection, setCatalogueSelection } from "../reviews/use-catalogue-selection";
-import { catalogueGroup } from '../../lib/catalogue-groups';
+import { catalogueGroup, isInCatalogueGroup, customExamplesFirst } from '../../lib/catalogue-groups';
 
 interface ProductCatalogLabels extends Product3DLabels {
   readonly category: string;
@@ -52,10 +52,11 @@ export function ProductCatalog({
     : starterProductIds && ['tripadvisor', 'contact'].includes(selection.category ?? '') ? 'custom' : selection.category;
   const activeCategory = categories.find((category) => category.id === requestedCategory)?.id ?? (starterProductIds ? 'selection' : categories[0]?.id ?? 'reviews');
   const de = locale === "de";
-  const choices = starterProductIds ? [{ id: 'selection' as const, label: de ? 'Startauswahl' : 'Start here' }, ...categories] : categories;
+  const [showAllStarters, setShowAllStarters] = useState(false);
+  const choices = starterProductIds ? [{ id: 'selection' as const, label: de ? 'Ausgewählte Modelle' : 'Selected models' }, ...categories] : categories;
   const productsFor = (category: string) => category === 'selection'
     ? (starterProductIds ?? []).flatMap(id => products.find(product => product.id === id) ?? [])
-    : products.filter(product => (starterProductIds ? catalogueGroup(product) : product.category) === category);
+    : products.filter(product => starterProductIds ? isInCatalogueGroup(product, category) : product.category === category).sort(category === 'custom' ? customExamplesFirst : () => 0);
   const railKey = activeCategory;
   const [selectedProduct, setSelectedProduct] = useState<NfcProduct | null>(
     null,
@@ -87,7 +88,7 @@ export function ProductCatalog({
     [...headings, ...descriptions].forEach(element => observer.observe(element));
     measure();
     return () => observer.disconnect();
-  }, [railKey, locale, products]);
+  }, [railKey, locale, products, showAllStarters]);
 
   useEffect(() => {
     if (selectedProduct === null && returnFocusRef.current) {
@@ -96,7 +97,9 @@ export function ProductCatalog({
     }
   }, [selectedProduct]);
 
-  const visibleProducts = productsFor(activeCategory);
+  const categoryProducts = productsFor(activeCategory);
+  const canExpandStarters = activeCategory === 'selection' && !showAllStarters && categoryProducts.length > 3;
+  const visibleProducts = canExpandStarters ? categoryProducts.slice(0, 3) : categoryProducts;
   const activeCategoryLabel =
     choices.find(({ id }) => id === activeCategory)?.label ?? "";
   const countLabel = (count: number) =>
@@ -160,6 +163,7 @@ export function ProductCatalog({
 
 
 
+      {activeCategory === 'custom' ? <p className={styles.catalogDescription}>{de ? 'Die Karten mit individuellem Design ab CHF 99 sind Beispiele. Sie bestimmen die Gestaltung selbst oder lassen sie von mir entwerfen. Darunter finden Sie Modelle für weitere Anwendungen.' : 'The custom cards from CHF 99 show example designs. Choose your own design or let me create it for you. You will also find models for other uses below.'}</p> : null}
       <h3 aria-live="polite" className={styles.catalogResult}>
         {activeCategoryLabel} · {countLabel(visibleProducts.length)}
       </h3>
@@ -203,7 +207,7 @@ export function ProductCatalog({
             product={product}
             view3dLabel={labels.view3d}
             requestModelLabel={labels.requestModel}
-            detailsLabel={de ? "Details & Masse" : "Details & dimensions"}
+            detailsLabel={de ? "Ausführung und Masse" : "Design and dimensions"}
             actionLabel={de ? "Anfragen" : "Enquire"}
           />
         ))}
@@ -242,10 +246,14 @@ export function ProductCatalog({
         ) : null}
       </div>
 
+      {canExpandStarters ? <button className={styles.showMoreModels} type="button" onClick={() => setShowAllStarters(true)}>
+        {de ? `Alle ${categoryProducts.length} ausgewählten Modelle anzeigen` : `Show all ${categoryProducts.length} selected models`}
+      </button> : null}
+
       <details className={styles.deliveryFacts}>
         <summary>{de ? "Verfügbarkeit, Lieferung und Betreuung" : "Availability, delivery and support"}</summary>
-        <p>{de ? "Standardprodukte ohne Personalisierung sind bei mir vor Ort an Lager. Logo-, personalisierte und individuelle Produkte erhalten Sie nach Absprache innerhalb von 3–5 Wochen fertig konfiguriert und einsatzbereit." : "Standard products without personalisation are stocked at my location. Logo, personalised and custom products arrive configured and ready to use within 3–5 weeks after agreement."}</p>
-        <p>{de ? "Google-Bewertungskarten benötigen keine laufende Betreuung durch mich. Besondere Wünsche oder spätere Anpassungen vereinbaren wir separat." : "Google review cards require no ongoing support from me. Special requests or later changes are agreed separately."}</p>
+        <p>{de ? "Standardprodukte ohne Ihr Logo oder Ihren Firmennamen sind bei mir an Lager. Modell, Menge und Versandtermin bestätige ich vor Ihrer Bestellung. Produkte mit Ihrem Logo oder individuellem Design erhalten Sie nach Absprache in der Regel innerhalb von 3–5 Wochen fertig eingerichtet." : "Standard products without your logo or business name are held in stock. I confirm the model, quantity and dispatch date before you order. Products with your logo or a custom design are normally delivered ready to use within 3–5 weeks, as agreed."}</p>
+        <p>{de ? "Google-Bewertungskarten brauchen keine laufende Betreuung. Spätere Änderungen oder zusätzliche Hilfe vereinbaren wir bei Bedarf separat." : "Google review cards need no ongoing support. Later changes or extra help can be agreed separately if needed."}</p>
       </details>
 
       {selectedProduct ? (

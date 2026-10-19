@@ -1,0 +1,43 @@
+/* Homepage after the shared opening: the four services as a calm index, then the village. */
+.opening {
+  --color-ink-muted: #46557a;
+  color: var(--color-ink);
+  background: var(--color-paper);
+}
+.opening a:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 4px; border-radius: 3px; }
+
+.services { inline-size: var(--content-width); margin: clamp(5rem, 10vw, 9rem) auto 0; }
+.servicesTitle { margin-block-end: clamp(1.75rem, 3vw, 2.75rem); font-size: var(--text-heading); font-weight: 650; line-height: 1.1; letter-spacing: -.03em; text-wrap: balance; }
+
+/* One row per service: name on the left column, one line, price and arrow on the right column. */
+.index { margin: 0; padding: 0; list-style: none; border-block-start: 1px solid var(--color-ink); }
+.index li { border-block-end: 1px solid var(--color-line); }
+.indexRow { position: relative; display: grid; gap: .5rem; padding-block: 1.5rem; color: inherit; text-decoration: none; }
+.indexRow::after { content: ''; position: absolute; inset-inline: 0; inset-block-end: -1px; block-size: 1px; background: var(--color-ink); transform: scaleX(0); transform-origin: left; transition: transform 320ms var(--ease-out); }
+.serviceName { font-size: clamp(1.5rem, 2.4vw, 2rem); font-weight: 650; line-height: 1.15; letter-spacing: -.025em; }
+.indexRight { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .375rem 1.5rem; align-items: baseline; }
+.serviceText { grid-column: 1 / -1; color: var(--color-ink-muted); font-size: 1.125rem; line-height: 1.5; }
+.servicePrice { font-size: 1.0625rem; font-weight: 650; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.servicePrice > span { display: block; }
+.indexArrow { justify-self: end; display: grid; place-items: center; }
+.indexArrow svg { inline-size: 1.5rem; block-size: 1.5rem; transition: transform 260ms var(--ease-out); }
+
+/* The decorative scene owns its full-width block rather than escaping the content grid. */
+.landscape { display: block; inline-size: min(100%, 100rem); max-inline-size: 100%; block-size: clamp(4.75rem, 8vw, 8rem); margin: clamp(3rem, 6vw, 5rem) auto 0; overflow: hidden; color: var(--color-ink); }
+.landscape svg { display: block; inline-size: 190%; max-inline-size: none; block-size: 100%; margin-inline-start: -88%; }
+
+@media (min-width: 48rem) {
+  .indexRow { grid-template-columns: var(--home-split); column-gap: var(--home-gap); align-items: center; padding-block: 2rem; }
+  .indexRight { grid-template-columns: minmax(0, 1fr) 11rem 1.5rem; column-gap: 2rem; align-items: center; }
+  .serviceText { grid-column: auto; }
+  .servicePrice { text-align: end; }
+  .landscape svg { inline-size: 100%; margin-inline-start: 0; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .indexRow:hover::after, .indexRow:focus-visible::after { transform: scaleX(1); }
+  .indexRow:hover .indexArrow svg { transform: translateX(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .indexRow::after, .indexArrow svg { transition-duration: 0s; }
+  .indexRow:hover .indexArrow svg { transform: none; }
+}

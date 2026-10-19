@@ -135,7 +135,7 @@ describe("page metadata", () => {
       });
 
       expect(metadata.title).toMatch(/NFC.*QR/);
-      expect(metadata.description).toMatch(/Menü|menu/i);
+      expect(metadata.description).toMatch(/Speisekarte|Menü|menu/i);
     }
   });
 

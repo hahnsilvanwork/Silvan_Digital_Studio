@@ -1,4 +1,4 @@
-const PATHS = new Set(["/", "/websites", "/reviews", "/presence", "/automation", "/work", "/about", "/contact", "/hello", "/imprint", "/privacy", "/work/falkenried", "/work/cafe-vogel", "/work/steiner-handwerk", "/work/salon-lumiere"]);
+const PATHS = new Set(["/", "/websites", "/reviews", "/presence", "/automation", "/work", "/about", "/contact", "/hello", "/imprint", "/privacy", "/work/falkenried", "/work/cafe-vogel", "/work/spurwerk", "/work/salon-lumiere"]);
 
 export function sanitizeTelemetryUrl(value: string): string | null {
   try {

@@ -4,17 +4,16 @@ import { projects } from '../../src/content/projects';
 const demos = [
   ['falkenried', 'falkenried'],
   ['cafe-vogel', 'cafe'],
-  ['steiner-handwerk', 'handwerk'],
   ['salon-lumiere', 'salon'],
 ];
 
-test('four real projects lead to working static demos', async ({ page }) => {
+test('bundled concept projects lead to working static demos', async ({ page }) => {
   await page.goto('/work');
   for (const [project, demo] of demos) {
     await expect(page.locator(`a[href="/work/${project}"]`)).toBeVisible();
     await page.goto(`/work/${project}`);
     await expect(page.locator(`a[href="${projects.find(item => item.slug === project)!.demoUrl}"]`)).toBeVisible();
-    const image = page.locator(`img[src*="${project}"]`);
+    const image = page.locator(`main img[src*="${project}-retina"]`);
     await expect(image).toBeVisible();
     await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.naturalWidth)).toBeGreaterThan(0);
     const response = await page.goto(`/demos/${demo}`);
@@ -30,7 +29,7 @@ test('four real projects lead to working static demos', async ({ page }) => {
 });
 
 test('legacy project links resolve to their replacement', async ({ page }) => {
-  for (const [old, replacement] of [['archa', 'falkenried'], ['lumen', 'cafe-vogel'], ['architech-studio', 'steiner-handwerk'], ['vanguard-apparel', 'salon-lumiere']]) {
+  for (const [old, replacement] of [['archa', 'falkenried'], ['lumen', 'cafe-vogel'], ['architech-studio', 'spurwerk'], ['steiner-handwerk', 'spurwerk'], ['vanguard-apparel', 'salon-lumiere']]) {
     await page.goto(`/work/${old}`);
     await expect(page).toHaveURL(new RegExp(`/work/${replacement}$`));
   }

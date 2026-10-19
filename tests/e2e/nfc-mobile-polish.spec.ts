@@ -19,7 +19,7 @@ for (const locale of ['de', 'en']) {
     expect(await setup.evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector('[name=businessName]')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
     await page.locator('[name=quantity]').fill('2');
     await expect(page.getByTestId('inquiry-total')).toContainText('CHF 80');
-    const action = page.getByRole('button', { name: locale === 'de' ? 'Angaben prüfen' : 'Review details', exact: true });
+    const action = page.getByRole('button', { name: locale === 'de' ? 'Anfrage prüfen' : 'Review your enquiry', exact: true });
     expect((await action.boundingBox())!.width).toBeGreaterThan(300);
     for (const width of [320, 390]) {
       await page.setViewportSize({ width, height: 844 });

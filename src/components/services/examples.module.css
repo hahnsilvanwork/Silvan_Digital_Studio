@@ -50,3 +50,19 @@
 .tableRegion th, .tableRegion td { text-align: start; vertical-align: top; padding: 1rem; border-block-end: 1px solid var(--color-line); max-inline-size: 15rem; }
 .tableRegion th { font-weight: 500; background: var(--color-stone); }
 @media (min-width: 56rem) { .workbench, .comparison { grid-template-columns: repeat(2,minmax(0,1fr)); } .tableHint { display: none; } }
+
+/* Presence comparison on the shared column split: two equal panels with the homepage gap. */
+.presence .comparison { gap: 2rem; background: none; }
+.presence .before, .presence .after { padding: 1.5rem 0 0; background: none; border: 0; border-block-start: 1px solid var(--color-ink); }
+.presence .comparison h3 { font-weight: 650; }
+.presence figcaption { font-size: 1.0625rem; color: var(--color-ink); }
+@media (min-width: 48rem) { .presence .comparison { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3rem; } }
+
+/* Workflow demo on the shared split: input left, report starting on the shared right column. */
+.example .workbench { gap: 1.5rem; background: none; }
+.example .input { padding-inline: 0; }
+.example .input h3, .example .output h3 { font-weight: 650; }
+.check input { inline-size: 1.25rem; block-size: 1.25rem; min-block-size: 0; min-inline-size: 0; flex: 0 0 1.25rem; }
+.tasks select { max-inline-size: none; min-inline-size: 8.5rem; }
+.disclaimer, .feedback p, .reset { font-size: 1rem; }
+@media (min-width: 56rem) { .example .workbench { column-gap: 3rem; } }

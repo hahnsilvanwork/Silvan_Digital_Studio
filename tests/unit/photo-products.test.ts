@@ -38,7 +38,7 @@ describe("photographed NFC catalogue", () => {
     for (const product of createPhotoProducts(locale)) {
       const source = photoImports.find((item) => item.id === product.id)!;
       expect(product.personalized).toBe(source.personalized);
-      expect(product.price).toBe(source.packageId === 'nfc-chip' ? 'CHF 15.–' : source.packageId === 'fully-custom-card' ? 'CHF 99.–' : source.personalized ? 'CHF 69.–' : 'CHF 49.–');
+      expect(product.price).toBe(source.packageId === 'compact-card' ? 'CHF 29.–' : source.packageId === 'nfc-chip' ? 'CHF 15.–' : source.packageId === 'fully-custom-card' ? 'CHF 99.–' : source.personalized ? 'CHF 69.–' : 'CHF 49.–');
       if (source.packageId !== 'nfc-chip' && ['round', 'square'].includes(source.kind)) {
         expect(product.details).toContain(source.kind === 'round' ? (locale === 'de' ? 'Wahlweise Ø 80 oder Ø 100 mm' : 'Choice of Ø 80 or Ø 100 mm') : (locale === 'de' ? 'Wahlweise 80 × 80 oder 100 × 100 mm' : 'Choice of 80 × 80 or 100 × 100 mm'));
       } else if (!source.dimensionsConfirmed) {

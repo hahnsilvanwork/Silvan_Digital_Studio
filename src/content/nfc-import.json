@@ -55,7 +55,7 @@
     ],
     "dimensionsConfirmed": false,
     "personalized": false,
-    "packageId": "standard-card",
+    "packageId": "compact-card",
     "modelUrl": "/models/nfc/nfc-001-google.glb",
     "imageUrl": "/images/products/nfc/nfc-001-google.png"
   },
@@ -1254,5 +1254,65 @@
     "packageId": "fully-custom-card",
     "modelUrl": "/models/nfc/nfc-032-airbnb.glb",
     "imageUrl": "/images/products/nfc/nfc-032-airbnb.png"
+  },
+  {
+    "id": "nfc-033-google",
+    "number": "033",
+    "platform": "google",
+    "kind": "card",
+    "color": "black",
+    "category": "reviews",
+    "front": {
+      "file": "033 product.png",
+      "quad": [
+        [
+          320,
+          149
+        ],
+        [
+          933,
+          149
+        ],
+        [
+          933,
+          1113
+        ],
+        [
+          320,
+          1113
+        ]
+      ]
+    },
+    "back": {
+      "file": "033-blackcard google review-back.png",
+      "quad": [
+        [
+          18,
+          37
+        ],
+        [
+          982,
+          37
+        ],
+        [
+          982,
+          1555
+        ],
+        [
+          18,
+          1555
+        ]
+      ]
+    },
+    "dimensionsMm": [
+      54,
+      85.6,
+      0.8
+    ],
+    "dimensionsConfirmed": false,
+    "personalized": false,
+    "packageId": "compact-card",
+    "modelUrl": "/models/nfc/nfc-033-google.glb",
+    "imageUrl": "/images/products/nfc/nfc-033-google.png"
   }
 ]

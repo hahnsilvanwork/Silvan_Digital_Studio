@@ -1,104 +1,172 @@
 import type { FaqItem, Locale } from './types';
 
+type ServiceHref = '/websites' | '/presence' | '/reviews' | '/automation';
+
 interface HomeCopy {
+  readonly eyebrow: string;
   readonly headline: string;
   readonly intro: string;
+  readonly heroServices: readonly { name: string; text: string }[];
   readonly primaryCta: string;
+  /** Kept for the shared hero content (`home.hero.secondaryCta`). */
   readonly secondaryCta: string;
+  readonly callLabel: string;
+  readonly facts: readonly { value: string; label: string }[];
+  readonly demoLabel: string;
+  readonly exampleCta: string;
   readonly byline: string;
-  readonly featuredProof: string;
-  readonly offerTitle: string;
-  readonly offerIntro: string;
-  readonly offerPoints: readonly string[];
-  readonly priceNote: string;
-  readonly pricesCta: string;
-  readonly workTitle: string;
-  readonly workIntro: string;
-  readonly challenge: string;
-  readonly outcome: string;
-  readonly projectCta: string;
-  readonly demoCta: string;
+  readonly bylineRole: string;
+  readonly servicesTitle: string;
+  readonly servicesIntro: string;
+  readonly services: readonly { href: ServiceHref; name: string; text: string; action: string; price?: string }[];
   readonly processTitle: string;
   readonly processIntro: string;
   readonly steps: readonly { title: string; description: string }[];
-  readonly servicesTitle: string;
-  readonly servicesIntro: string;
+  readonly costTitle: string;
+  readonly costIntro: string;
+  readonly costVat: string;
+  readonly runningTitle: string;
+  readonly runningText: string;
+  readonly costCta: string;
+  readonly allWork: string;
+  readonly faqHint: string;
+  readonly workTitle: string;
+  readonly workIntro: string;
+  readonly projectCta: string;
+  readonly studioTitle: string;
+  readonly studioCopy: string;
+  readonly studioPoints: readonly string[];
+  readonly studioCta: string;
   readonly faqTitle: string;
   readonly faq: readonly FaqItem[];
   readonly contactTitle: string;
   readonly contactIntro: string;
   readonly contactCta: string;
+  readonly stickyCall: string;
+  readonly stickyEnquiry: string;
 }
 
 export const homeCopy = {
   de: {
-    headline: 'Online-Präsenz, die zu Ihnen passt.',
-    intro: 'Website, Google-Auftritt und NFC & QR: Ich verbinde die passenden Bausteine für Ihr Unternehmen. Persönlich, klar und aus einer Hand.',
-    primaryCta: 'Vorhaben besprechen', secondaryCta: 'Leistungen entdecken',
-    byline: 'Silvan Hahn · Digital Studio in Boppelsen, Zürich',
-    featuredProof: 'Drei Geschäftsbereiche, ein gemeinsamer Auftritt. Die Demo übernimmt ein gewähltes Immobilienangebot direkt in die Anfrage – auf Deutsch und Englisch.',
-    offerTitle: 'So viel Website, wie Sie brauchen.',
-    offerIntro: 'Eine kompakte Seite für den Einstieg oder ein mehrseitiger Auftritt für Ihren Betrieb: Wir legen den Umfang fest, bevor die Umsetzung beginnt.',
-    offerPoints: ['Gestaltung passend zu Ihrem Unternehmen', 'Gut bedienbar auf Smartphone und Computer', 'Umfang und Preis vorab in einer schriftlichen Offerte'],
-    priceNote: 'Einmalige Umsetzung. Domain und Hosting separat.',
-    pricesCta: 'Pakete und Preise vergleichen',
-    workTitle: 'Nicht nur ansehen. Ausprobieren.',
-    workIntro: 'Diese selbst entwickelten Konzeptprojekte zeigen Gestaltung und funktionierende Abläufe. Fiktive Unternehmen, keine Kundenaufträge.',
-    challenge: 'Die Aufgabe', outcome: 'In der Demo umgesetzt',
-    projectCta: 'Konzept im Detail', demoCta: 'Demo ausprobieren',
-    processTitle: 'Vom ersten Gespräch zur fertigen Website.',
-    processIntro: 'Sie bringen Ihr Unternehmen ein. Ich kümmere mich um Gestaltung und Entwicklung. Entscheidungen treffen wir gemeinsam.',
+    eyebrow: 'Für kleine Betriebe in der ganzen Schweiz',
+    headline: 'Mehr Kunden. Weniger Büroarbeit.',
+    intro: 'Ich erstelle Ihre Website, sorge dafür, dass man Sie auf Google findet, und nehme Ihnen wiederkehrende Büroarbeit ab. Persönlich, verständlich und zum festen Preis.',
+    heroServices: [
+      { name: 'Websites', text: 'klar, modern und fürs Handy gemacht' },
+      { name: 'Google-Unternehmensprofil', text: 'gefunden werden auf Google und Maps' },
+      { name: 'NFC- und QR-Karten', text: 'Google-Bewertungen mit einem Antippen' },
+      { name: 'Automationen', text: 'weniger wiederkehrende Büroarbeit' },
+    ],
+    primaryCta: 'Kostenloses Erstgespräch',
+    secondaryCta: 'Beispiele ansehen',
+    callLabel: 'Anrufen',
+    facts: [{ value: 'ab CHF 300', label: 'Website inkl. MWST' }, { value: 'Fixpreis', label: 'in der schriftlichen Offerte' }],
+    demoLabel: 'Fiktives Beispielprojekt',
+    exampleCta: 'Beispiel ansehen',
+    byline: 'Silvan Hahn · Boppelsen bei Zürich',
+    bylineRole: 'Persönlich erreichbar, Antwort innert 24 Stunden',
+    servicesTitle: 'Was ich für Ihren Betrieb mache',
+    servicesIntro: 'Sie können jede Leistung einzeln buchen oder mehrere kombinieren.',
+    services: [
+      { href: '/websites', name: 'Websites', text: 'Ihr Betrieb klar im Netz, gemacht fürs Handy.', action: 'Pakete und Preise' },
+      { href: '/presence', name: 'Google-Unternehmensprofil', text: 'Richtige Öffnungszeiten, Adresse und Fotos auf Google und Maps.', action: 'Mehr zu Google' },
+      { href: '/reviews', name: 'NFC- und QR-Karten', text: 'Handy hinhalten, Google-Bewertung schreiben. Auch ohne Website.', action: 'Karten ansehen', price: 'Sticker ab CHF 15 · Karten ab CHF 29' },
+      { href: '/automation', name: 'Automationen', text: 'Wiederkehrende Büroarbeit läuft von selbst.', action: 'Beispiele für Automationen' },
+    ],
+    processTitle: 'So läuft die Zusammenarbeit ab',
+    processIntro: 'Sie kennen Ihren Betrieb, ich kümmere mich um die Technik. Sie wissen bei jedem Schritt, was als Nächstes passiert.',
     steps: [
-      { title: 'Ziel und Umfang klären', description: 'Wir besprechen Ihr Angebot, vorhandene Inhalte und die gewünschten Funktionen. Sie erhalten eine Offerte mit Umfang, Preis und Zeitplan.' },
-      { title: 'Gestalten und umsetzen', description: 'Ich entwickle die Seitenstruktur und das Design. Ihr Feedback fliesst in die vereinbarten Korrekturrunden ein.' },
-      { title: 'Gemeinsam prüfen und starten', description: 'Wir prüfen Inhalte, Darstellung und Kontaktwege. Danach geht die Website online. Pflege und spätere Änderungen vereinbaren wir passend zu Ihrem Bedarf.' },
+      { title: 'Kostenloses Erstgespräch', description: 'Am Telefon, per Video oder vor Ort.' },
+      { title: 'Offerte mit Fixpreis', description: 'Erst nach Ihrer Zusage geht es los.' },
+      { title: 'Online in 2–4 Wochen', description: 'Sobald Texte und Bilder bereit sind.' },
     ],
-    servicesTitle: 'Was braucht Ihr Auftritt?',
-    servicesIntro: 'Entdecken Sie die Leistungen. Umfang, Beispiele und Preise finden Sie auf der jeweiligen Seite.',
-    faqTitle: 'Vor dem ersten Gespräch.',
+    costTitle: 'Was kostet eine Website?',
+    costIntro: 'Einmalig, als Fixpreis in Ihrer Offerte. Internetadresse und Hosting kosten jährlich zusätzlich, je nach Grösse.',
+    costVat: 'Alle Preise inkl. MWST.',
+    runningTitle: 'Was jedes Jahr dazukommt',
+    runningText: 'Für Ihre Internetadresse (zum Beispiel www.ihr-betrieb.ch) und das Hosting, das Ihre Website online hält, kommen jährliche Kosten dazu. Der Betrag hängt von Grösse und Wünschen ab. Sie sehen ihn in Ihrer Offerte, bevor Sie zusagen.',
+    costCta: 'Alle Pakete im Detail',
+    allWork: 'Alle Beispiele ansehen',
+    faqHint: 'Ihre Frage ist nicht dabei? Rufen Sie mich an:',
+    workTitle: 'Beispiele zum Ausprobieren',
+    workIntro: 'Diese Websites habe ich für erfundene Betriebe entwickelt. Klicken Sie sich durch und sehen Sie, wie Ihre Kunden ein Angebot finden und eine Anfrage vorbereiten.',
+    projectCta: 'Beispiel ansehen',
+    studioTitle: 'Ihr Ansprechpartner: Silvan Hahn',
+    studioCopy: 'Von der ersten Frage bis nach dem Start sprechen Sie immer mit mir. Verständlich erklärt, auch ohne Technikwissen.',
+    studioPoints: ['Boppelsen bei Zürich', 'Treffen vor Ort möglich', 'Ganze Schweiz'],
+    studioCta: 'Mehr über mich',
+    faqTitle: 'Häufige Fragen',
     faq: [
-      { question: 'Mit welchen Kosten muss ich rechnen?', answer: 'Eine kompakte Seite beginnt bei CHF 300. Mehrseitige Business-Websites liegen zwischen CHF 700 und CHF 1’999. Der genaue Preis richtet sich nach dem vereinbarten Umfang. Domain und Hosting kommen separat dazu.', link: { href: '/websites', label: 'Alle Pakete und Leistungen ansehen' } },
-      { question: 'Muss ich Texte und Bilder schon fertig haben?', answer: 'Nein. Wir klären zuerst, was vorhanden ist und was noch fehlt. In der Offerte halten wir fest, welche Inhalte Sie liefern und welche ich erstelle.' },
-      { question: 'Kann ich später selbst etwas ändern?', answer: 'Wenn Sie Inhalte selbst pflegen möchten, planen wir eine passende Bearbeitungslösung. Sie ist nicht automatisch in jedem Paket enthalten. Einrichtung, Einführung und laufende Kosten vereinbaren wir vorab.' },
-      { question: 'Ist die erste Anfrage verbindlich?', answer: 'Nein. Beschreiben Sie kurz Ihr Vorhaben. Wir klären gemeinsam, ob und wie ich Sie unterstützen kann. Bevor die Umsetzung beginnt, erhalten Sie eine schriftliche Offerte.' },
+      { question: 'Brauche ich technisches Wissen?', answer: 'Nein. Ich übernehme die Technik und erkläre Ihnen alles in einfachen Worten. Sie entscheiden, wie Ihr Betrieb gezeigt wird.' },
+      { question: 'Muss ich Texte und Bilder selbst liefern?', answer: 'Nicht unbedingt. Im Erstgespräch klären wir, was schon da ist und was noch fehlt. In der Offerte steht, welche Inhalte Sie liefern und welche ich erstelle.' },
+      { question: 'Wie lange dauert es?', answer: 'Eine kompakte Website ist in der Regel nach 2–4 Wochen online, sobald Texte und Bilder bereit sind. Grössere Projekte planen wir gemeinsam. Den Zeitplan halten wir in der Offerte fest.' },
+      { question: 'Kann ich später etwas ändern lassen?', answer: 'Ja. Änderungen und Betreuung nach dem Start vereinbaren wir nach Ihrem Bedarf. Wenn Sie Inhalte selbst bearbeiten möchten, planen wir das von Anfang an mit ein.' },
     ],
-    contactTitle: 'Bringen wir Ihren Auftritt weiter.',
-    contactIntro: 'Erzählen Sie mir von Ihrer Idee. Wir klären unverbindlich, welcher nächste Schritt zu Ihrem Betrieb passt.',
-    contactCta: 'Vorhaben kurz beschreiben',
+    contactTitle: 'Erzählen Sie mir von Ihrem Betrieb',
+    contactIntro: 'Erstgespräch kostenlos und unverbindlich. Antwort innert 24 Stunden.',
+    contactCta: 'Anfrage schreiben',
+    stickyCall: 'Anrufen',
+    stickyEnquiry: 'Anfrage schreiben',
   },
   en: {
-    headline: 'An online presence that fits your business.',
-    intro: 'Your website, Google presence and NFC & QR: I bring the right elements together for your business. Clear, personal and from one partner.',
-    primaryCta: 'Discuss your project', secondaryCta: 'Explore services',
-    byline: 'Silvan Hahn · Digital Studio in Boppelsen, Zurich',
-    featuredProof: 'Three divisions, one coherent site. The demo carries a selected property straight into the enquiry – in German and English.',
-    offerTitle: 'The website your business needs.',
-    offerIntro: 'A compact page to get started or a multi-page site for your business: we agree on the scope before development begins.',
-    offerPoints: ['Design that fits your business', 'Easy to use on phones and computers', 'Scope and price agreed in a written quote'],
-    priceNote: 'One-time build. Domain and hosting are separate.',
-    pricesCta: 'Compare packages and prices',
-    workTitle: 'More than a preview. Try it out.',
-    workIntro: 'These self-initiated concept projects demonstrate design and working user journeys. Fictional businesses, not client commissions.',
-    challenge: 'The task', outcome: 'Implemented in the demo',
-    projectCta: 'Explore the concept', demoCta: 'Try the demo',
-    processTitle: 'From our first conversation to launch.',
-    processIntro: 'You know your business. I handle design and development. We make decisions together.',
+    eyebrow: 'For small businesses across Switzerland',
+    headline: 'More customers. Less office work.',
+    intro: 'I build your website, make sure people find you on Google and take repetitive office work off your hands. Personal, clear and at a fixed price.',
+    heroServices: [
+      { name: 'Websites', text: 'clear, modern and made for phones' },
+      { name: 'Google Business Profile', text: 'get found on Google and Maps' },
+      { name: 'NFC and QR cards', text: 'Google reviews with a single tap' },
+      { name: 'Automations', text: 'less repetitive office work' },
+    ],
+    primaryCta: 'Free first consultation',
+    secondaryCta: 'View examples',
+    callLabel: 'Call',
+    facts: [{ value: 'from CHF 300', label: 'Website incl. VAT' }, { value: 'Fixed price', label: 'in a written quote' }],
+    demoLabel: 'Fictional example project',
+    exampleCta: 'View example',
+    byline: 'Silvan Hahn · Boppelsen, near Zurich',
+    bylineRole: 'Personally available, reply within 24 hours',
+    servicesTitle: 'What I do for your business',
+    servicesIntro: 'Book any service on its own or combine several.',
+    services: [
+      { href: '/websites', name: 'Websites', text: 'Your business clearly online, made for phones.', action: 'Packages and prices' },
+      { href: '/presence', name: 'Google Business Profile', text: 'Correct opening hours, address and photos on Google and Maps.', action: 'More about Google' },
+      { href: '/reviews', name: 'NFC and QR cards', text: 'Tap the card, leave a Google review. No website needed.', action: 'View the cards', price: 'Stickers from CHF 15 · cards from CHF 29' },
+      { href: '/automation', name: 'Automations', text: 'Repetitive office work runs on its own.', action: 'Automation examples' },
+    ],
+    processTitle: 'How we work together',
+    processIntro: 'You know your business, I take care of the technology. At every step you know what happens next.',
     steps: [
-      { title: 'Agree on goals and scope', description: 'We discuss your offer, existing content and required features. You receive a quote with the scope, price and schedule.' },
-      { title: 'Design and build', description: 'I develop the structure and visual design. Your feedback shapes the work through the agreed revision rounds.' },
-      { title: 'Review and launch together', description: 'We check the content, layout and contact journeys before launch. Maintenance and future changes are agreed around your needs.' },
+      { title: 'Free first consultation', description: 'By phone, by video or in person.' },
+      { title: 'Quote with a fixed price', description: 'Work only starts once you accept.' },
+      { title: 'Online in 2–4 weeks', description: 'Once text and images are ready.' },
     ],
-    servicesTitle: 'What does your presence need?',
-    servicesIntro: 'Explore each service for its scope, examples and prices.',
-    faqTitle: 'Before we talk.',
+    costTitle: 'What does a website cost?',
+    costIntro: 'One-off, as a fixed price in your quote. Web address and hosting cost extra each year, depending on size.',
+    costVat: 'All prices include VAT.',
+    runningTitle: 'What you pay each year',
+    runningText: 'Your web address (for example www.your-business.ch) and the hosting that keeps your website online come with a yearly fee. The amount depends on size and what you need. You see it in your quote before you agree.',
+    costCta: 'All packages in detail',
+    allWork: 'See all examples',
+    faqHint: 'Your question is not listed? Call me:',
+    workTitle: 'Examples you can try',
+    workIntro: 'I built these websites for fictional businesses. Click through them and see how your customers find a service and prepare an enquiry.',
+    projectCta: 'View example',
+    studioTitle: 'Your contact: Silvan Hahn',
+    studioCopy: 'From your first question until after launch, you always speak to me. Explained clearly, no technical knowledge needed.',
+    studioPoints: ['Boppelsen, near Zurich', 'Meetings in person possible', 'All of Switzerland'],
+    studioCta: 'More about me',
+    faqTitle: 'Frequently asked questions',
     faq: [
-      { question: 'How much should I budget?', answer: 'A compact page starts at CHF 300. Multi-page business websites range from CHF 700 to CHF 1,999. The final price depends on the agreed scope. Domain and hosting are separate.', link: { href: '/websites', label: 'Explore all packages and services' } },
-      { question: 'Do I need finished text and images?', answer: 'No. We first establish what you have and what is missing. The quote specifies which content you provide and which I create.' },
-      { question: 'Can I make updates myself?', answer: 'If you want to manage your content, we plan a suitable editing solution. It is not automatically included in every package. Setup, training and ongoing costs are agreed in advance.' },
-      { question: 'Does an enquiry commit me to anything?', answer: 'No. Briefly describe your project and we discuss whether and how I can help. You receive a written quote before any implementation begins.' },
+      { question: 'Do I need technical knowledge?', answer: 'No. I take care of the technology and explain everything in plain language. You decide how your business is presented.' },
+      { question: 'Do I have to provide text and images?', answer: 'Not necessarily. In our first conversation we look at what you already have and what is missing. The quote states which content you provide and which I create.' },
+      { question: 'How long does it take?', answer: 'A compact website is usually online within 2–4 weeks once text and images are ready. We plan larger projects together. The schedule is part of your quote.' },
+      { question: 'Can I have changes made later?', answer: 'Yes. We agree on changes and support after launch to suit your needs. If you want to edit content yourself, we plan for that from the start.' },
     ],
-    contactTitle: 'Let’s move your presence forward.',
-    contactIntro: 'Tell me about your idea. We will find a sensible next step for your business, without obligation.',
-    contactCta: 'Describe your project',
+    contactTitle: 'Tell me about your business',
+    contactIntro: 'Free first consultation, no obligation. Reply within 24 hours.',
+    contactCta: 'Send an enquiry',
+    stickyCall: 'Call',
+    stickyEnquiry: 'Send enquiry',
   },
 } as const satisfies Record<Locale, HomeCopy>;

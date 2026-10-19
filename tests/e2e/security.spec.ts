@@ -38,7 +38,7 @@ test("CSP blocks injected inline scripts while real pages hydrate", async ({ pag
 test("all bundled demo forms fail closed without JavaScript and still work with it", async ({ baseURL }, testInfo) => {
   test.skip(testInfo.project.name !== "chromium", "Standalone script uses Chromium; normal journeys cover other engines.");
   test.setTimeout(120_000);
-  const paths = ["falkenried/kontakt/", "falkenried/en/contact/", "falkenried/gartenbau/", "falkenried/en/gartenbau/", "falkenried/immobilien/", "falkenried/en/immobilien/", "cafe/kontakt/", "handwerk/", "salon/kontakt/"];
+  const paths = ["falkenried/kontakt/", "falkenried/en/contact/", "falkenried/gartenbau/", "falkenried/en/gartenbau/", "falkenried/immobilien/", "falkenried/en/immobilien/", "cafe/kontakt/", "salon/kontakt/"];
   const result = await promisify(execFile)(process.execPath, ["scripts/test-demo-form-safety.mjs", ...paths.map(path => `${baseURL}/demos/${path}`)], { timeout: 110_000 });
   expect(result.stderr).not.toContain("FAIL");
 });

@@ -64,19 +64,22 @@
 .display {
   font-size: var(--text-display);
   letter-spacing: var(--tracking-display);
-  line-height: 0.94;
+  line-height: 1.08;
+  font-weight: var(--weight-title);
 }
 
 .title {
   font-size: var(--text-title);
   letter-spacing: var(--tracking-title);
-  line-height: 0.96;
+  line-height: 1.08;
+  font-weight: var(--weight-title);
 }
 
 .heading {
   font-size: var(--text-heading);
   letter-spacing: var(--tracking-heading);
-  line-height: 1.02;
+  line-height: 1.08;
+  font-weight: var(--weight-heading);
 }
 
 .intro {

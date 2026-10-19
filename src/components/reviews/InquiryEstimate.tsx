@@ -9,12 +9,12 @@ export function InquiryEstimate({ product, quantity, locale }: { readonly produc
   const de = locale === 'de';
   return <div className={styles.estimate} data-testid="inquiry-total" role="status" aria-live="polite">
     <p className={styles.estimateAmount}>{total !== null
-      ? `${de ? 'Grundkosten ca.' : 'Estimated base cost'} CHF ${total}.–`
-      : product && validQuantity ? (de ? 'Grundkosten nach Absprache' : 'Base cost by agreement')
-        : (de ? 'Für die Grundkosten bitte Produkt und Menge wählen.' : 'Choose a product and quantity to estimate the base cost.')}</p>
+      ? `${de ? 'Voraussichtlicher Produktpreis:' : 'Estimated product price:'} CHF ${total}.–`
+      : product && validQuantity ? (de ? 'Produktpreis nach Absprache' : 'Product price to be agreed')
+        : (de ? 'Wählen Sie Produkt und Menge, um den voraussichtlichen Preis zu sehen.' : 'Choose a product and quantity to see the estimated price.')}</p>
     {total !== null || (product && validQuantity) ? <p className={styles.hint}>
-      {de ? 'Versand separat. Endgültiger Preis gemäss Offerte.' : 'Shipping separate. Final price confirmed in the quote.'}
-      {validQuantity && Number(quantity) > 10 ? ` ${de ? 'Über 10 Stück: zusätzlicher Mengenrabatt nach Absprache, hier noch nicht abgezogen.' : 'Over 10 items: additional volume discount by agreement, not yet deducted here.'}` : ''}
+      {de ? 'Versandkosten kommen hinzu. Den endgültigen Gesamtpreis erhalten Sie in der Offerte.' : 'Shipping costs are additional. Your quote confirms the final total.'}
+      {validQuantity && Number(quantity) > 10 ? ` ${de ? 'Bei mehr als 10 Stück ist ein zusätzlicher Mengenrabatt nach Absprache möglich. Er ist hier noch nicht abgezogen.' : 'For more than 10 items, an additional quantity discount can be agreed. It has not been deducted here.'}` : ''}
     </p> : null}
   </div>;
 }

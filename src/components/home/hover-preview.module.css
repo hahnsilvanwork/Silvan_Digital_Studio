@@ -1,0 +1,25 @@
+/* Floating service preview that follows the pointer over the service index. */
+.wrap { position: relative; }
+.card {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: var(--z-raised);
+  display: none;
+  inline-size: 17.5rem;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 18px 44px rgb(8 27 60 / .18);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 240ms var(--ease-out);
+}
+.card[data-active='true'] { opacity: 1; }
+.image { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; object-position: left top; opacity: 0; transition: opacity 240ms var(--ease-out); }
+.image[data-shown='true'] { opacity: 1; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .card { display: block; }
+}

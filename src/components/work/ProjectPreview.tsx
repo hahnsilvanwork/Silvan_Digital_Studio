@@ -68,6 +68,7 @@ export function ProjectPreview({
 
         <h3 className={styles.previewName}>{project.name}</h3>
         <p className={styles.previewTagline}>{copy.tagline}</p>
+        <span className={styles.previewAction}>{locale === "de" ? "Beispiel ansehen" : "View example"}</span>
       </Link>
       {showOutcome && (
         <div className={styles.previewOutcome}>

@@ -1,15 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import type { Project } from "../../content/projects";
 import { portfolioCopy } from "../../content/portfolio-copy";
 import type { Locale } from "../../content/types";
 import { getContent } from "../../lib/locales";
 import { localizePath } from "../../lib/routes";
-import { SplitText } from "../motion/SplitText";
+import { ContactCall, EditorialPage, Section, SectionHead, TextLink, editorialStyles } from "../editorial/Sections";
 import { ButtonLink } from "../ui/ButtonLink";
-import layoutStyles from "../../styles/layout.module.css";
-import pageStyles from "../../styles/pages.module.css";
 import styles from "./work.module.css";
 import { ProjectEvidence } from './ProjectEvidence';
 
@@ -19,11 +16,16 @@ interface ProjectDetailProps {
   readonly locale: Locale;
 }
 
+const detailCopy = {
+  de: { aboutTitle: 'Worum es geht', allExamples: 'Alle Beispiele', nextLabel: 'Nächstes Beispiel', contactTitle: 'Möchten Sie eine Website wie diese?', contactIntro: 'Rufen Sie an oder schreiben Sie mir. Im kostenlosen Erstgespräch klären wir, was Ihre Website braucht. Danach erhalten Sie eine Offerte mit Fixpreis.', contactLink: 'Anfrage schreiben' },
+  en: { aboutTitle: 'What it is about', allExamples: 'All examples', nextLabel: 'Next example', contactTitle: 'Would you like a website like this?', contactIntro: 'Call or write to me. In a free first consultation we work out what your website needs. You then receive a quote with a fixed price.', contactLink: 'Send an enquiry' },
+} as const;
+
 export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
   const content = getContent(locale);
   const copy = project.copy[locale];
-  const nextCopy = next.copy[locale];
   const caseStudy = portfolioCopy[locale];
+  const d = detailCopy[locale];
 
   const sections = [
     { label: content.work.challengeLabel, body: copy.challenge },
@@ -32,116 +34,49 @@ export function ProjectDetail({ project, next, locale }: ProjectDetailProps) {
   ];
 
   return (
-    <div className={pageStyles.page}>
-      <header className={`${layoutStyles.container} ${styles.detailHeader}`}>
-        <p className={styles.detailConcept} data-reveal="rise">
-          {content.work.conceptLabel}
-        </p>
-        <SplitText
-          as="h1"
-          className={styles.detailTitle}
-          text={project.name}
-        />
-        <p className={styles.detailTagline} data-reveal="rise">
-          {copy.tagline}
-        </p>
-        <div className={pageStyles.heroActions}>
-          <ButtonLink href={locale === "en" ? project.demoUrlEn ?? project.demoUrl : project.demoUrl} externalHint={locale === "de" ? " (neuer Tab)" : " (new tab)"}>
-            {locale === "de" ? "Demo-Website öffnen" : project.demoUrlEn ? "Open demo website" : "Open demo website (German)"}
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false" style={{ flexShrink: 0 }}><path d="M7 17 17 7M7 7h10v10" /></svg>
-          </ButtonLink>
+    <EditorialPage>
+      <header className={styles.detailHead}>
+        <div>
+          <p className={editorialStyles.eyebrow}>{content.work.conceptLabel} · {copy.category}</p>
+          <h1 className={editorialStyles.pageTitle}>{project.name}</h1>
+        </div>
+        <div className={styles.detailAside}>
+          <p className={editorialStyles.pageLead}>{copy.tagline}</p>
+          <div className={styles.detailActions}>
+            <ButtonLink href={locale === "en" ? project.demoUrlEn ?? project.demoUrl : project.demoUrl} externalHint={locale === "de" ? " (neuer Tab)" : " (new tab)"}>
+              {locale === "de" ? "Beispiel-Website öffnen" : project.demoUrlEn ? "Open example website" : "Open example website (German)"}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false" style={{ flexShrink: 0 }}><path d="M7 17 17 7M7 7h10v10" /></svg>
+            </ButtonLink>
+            <TextLink href={localizePath('/work', locale)}>{d.allExamples}</TextLink>
+          </div>
         </div>
       </header>
 
-      <div className={layoutStyles.container}>
-        <span
-          className={pageStyles.projectMedia}
-          data-project={project.slug}
-          data-reveal="scale"
-          data-reveal-priority=""
-        >
-          <Image
-            alt={copy.imageAlt}
-            height={1000}
-            priority
-            quality={90}
-            sizes="(min-width: 98rem) 1440px, 92vw"
-            src={project.image[locale]}
-            width={1440}
-          />
-        </span>
+      <div className={styles.detailMedia} data-project={project.slug}>
+        <Image alt={copy.imageAlt} height={1000} priority quality={90} sizes="(min-width: 98rem) 1376px, 92vw" src={project.image[locale]} width={1440} />
       </div>
 
-      <section className={`${layoutStyles.container} ${pageStyles.section}`}>
-        <ProjectEvidence project={project} locale={locale} />
-        <h2 className="visually-hidden">{content.work.projectInfoLabel}</h2>
-
-        {/* Each term now names what its value is. This read as
-            "Projektinformationen, Projektinformationen, Markenauftritt" and
-            then offered "2026" as a term whose definition was
-            "Konzeptprojekt" -- both pairs were the wrong way round. */}
-        <dl className={styles.detailFacts} data-reveal="rise">
-          <div className={styles.detailFact}>
-            <dt className={styles.detailFactLabel}>
-              {content.work.categoryLabel}
-            </dt>
-            <dd className={styles.detailFactValue}>{copy.category}</dd>
-          </div>
-          <div className={styles.detailFact}>
-            <dt className={styles.detailFactLabel}>{content.work.yearLabel}</dt>
-            <dd className={styles.detailFactValue}>{project.year}</dd>
-          </div>
-          <div className={styles.detailFact}>
-            <dt className={styles.detailFactLabel}>{content.work.typeLabel}</dt>
-            <dd className={styles.detailFactValue}>{content.work.conceptLabel}</dd>
-          </div>
+      <Section labelledBy="detail-about-title">
+        <SectionHead id="detail-about-title" title={d.aboutTitle} />
+        <dl className={styles.detailRows}>
+          {sections.map(section => <div key={section.label}>
+            <dt>{section.label}</dt>
+            <dd>{section.body}</dd>
+          </div>)}
         </dl>
-
-        <div className={styles.detailBody}>
-          {sections.map((section, index) => (
-            <section
-              className={styles.detailSection}
-              data-reveal="rise"
-              key={section.label}
-              style={{ "--reveal-index": index } as React.CSSProperties}
-            >
-              <h3 className={styles.detailSectionLabel}>{section.label}</h3>
-              <p className={styles.detailSectionBody}>{section.body}</p>
-            </section>
-          ))}
-        </div>
-        <aside className={styles.detailLimits} aria-label={caseStudy.limitsLabel}>
-          <h3 className={styles.detailSectionLabel}>{caseStudy.limitsLabel}</h3>
+        <div className={styles.evidence}><ProjectEvidence project={project} locale={locale} /></div>
+        <aside className={`${editorialStyles.running} ${styles.limits}`} aria-label={caseStudy.limitsLabel}>
+          <h3>{caseStudy.limitsLabel}</h3>
           <p>{caseStudy.limits}</p>
         </aside>
-      </section>
+      </Section>
 
-      {/* Someone who has read a whole case study is the most engaged visitor
-          here. Offering only "next project" sent them sideways. */}
-      <div className={`${layoutStyles.container} ${pageStyles.section}`}>
-        <div className={pageStyles.sectionBody} data-reveal="rise">
-          <ButtonLink href={localizePath("/contact", locale)}>
-            {content.work.ctaLabel}
-          </ButtonLink>
-        </div>
-      </div>
+      <ContactCall locale={locale} id="detail-contact" title={d.contactTitle} intro={d.contactIntro} link={{ href: localizePath('/contact?service=websites', locale), label: d.contactLink }} />
 
-      <nav
-        aria-label={content.a11y.nextProject}
-        className={`${layoutStyles.container} ${styles.detailNext}`}
-      >
-        <Link
-          className={`${styles.detailNextLink} rowLink`}
-          data-touch-target
-          href={localizePath(`/work/${next.slug}`, locale)}
-        >
-          <span className={styles.detailNextLabel}>
-            {content.a11y.nextProject}
-          </span>
-          <span className={styles.detailNextName}>{next.name}</span>
-          <span className={styles.detailNextTagline}>{nextCopy.tagline}</span>
-        </Link>
+      <nav aria-label={content.a11y.nextProject} className={styles.detailNav}>
+        <TextLink href={localizePath(`/work/${next.slug}`, locale)}>{d.nextLabel}: {next.name}</TextLink>
+        <TextLink href={localizePath('/work', locale)}>{d.allExamples}</TextLink>
       </nav>
-    </div>
+    </EditorialPage>
   );
 }

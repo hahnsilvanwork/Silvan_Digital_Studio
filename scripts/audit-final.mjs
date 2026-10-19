@@ -40,7 +40,7 @@ try {
     }
   } else {
     const axe = await readFile(require.resolve('axe-core/axe.min.js'), 'utf8');
-    const routes = ['', '/websites', '/reviews', '/presence', '/automation', '/work', '/about', '/contact', '/hello', '/privacy', '/imprint', ...['falkenried', 'cafe-vogel', 'steiner-handwerk', 'salon-lumiere'].map(id => '/work/' + id)];
+    const routes = ['', '/websites', '/reviews', '/presence', '/automation', '/work', '/about', '/contact', '/hello', '/privacy', '/imprint', ...['falkenried', 'cafe-vogel', 'spurwerk', 'salon-lumiere'].map(id => '/work/' + id)];
     for (const prefix of ['', '/en']) for (const route of routes) {
       const page = await browser.newPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
       await page.goto(base + prefix + route, { waitUntil: 'load' });

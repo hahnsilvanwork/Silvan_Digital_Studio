@@ -4,6 +4,7 @@ import path from 'node:path';
 import { demoProjects } from './demos.config.mjs';
 
 const demos = demoProjects.map(demo => demo.slug);
+const width = Number(process.env.DEMO_AUDIT_WIDTH ?? 390);
 const report = [];
 await mkdir('artifacts/demo-polish', { recursive: true });
 const browser = await chromium.launch();
@@ -13,7 +14,7 @@ try {
     const files = await readdir(path.resolve('.scratch/vercel-demos', slug), { recursive: true });
     const routes = files.filter(file => /(^|[\\/])index\.html$/.test(file) && !file.includes('404')).map(file => '/' + file.replaceAll('\\', '/').replace(/index\.html$/, ''));
     const checked = new Set();
-    const page = await browser.newPage({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
+    const page = await browser.newPage({ viewport: { width, height: 844 }, reducedMotion: 'reduce' });
     for (const route of routes) {
       const errors = [];
       const onError = error => errors.push(error.message);
@@ -37,13 +38,14 @@ try {
         const target = await page.request.get(url.href);
         expect(target.status(), `${slug}${route} link ${url.href}`).toBe(200);
       }
-      report.push({ slug, route, passed: true });
+      if (route === '/') await page.screenshot({ path: `artifacts/layout-audit-2026-09-30/demo-${slug}-${width}.png`, fullPage: true });
+      report.push({ slug, route, width, passed: true });
       page.off('pageerror', onError);
     }
     await page.close();
-    console.log(`${slug}: ${routes.length} mobile routes and ${checked.size} link destinations passed`);
+    console.log(`${slug}: ${routes.length} routes at ${width}px and ${checked.size} link destinations passed`);
   }
 } finally {
   await browser.close();
-  await writeFile('artifacts/demo-polish/standalone-verification.json', JSON.stringify(report, null, 2));
+  await writeFile(`artifacts/demo-polish/standalone-verification-${width}.json`, JSON.stringify(report, null, 2));
 }

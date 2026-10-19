@@ -56,19 +56,21 @@ describe("Navigation", () => {
 
     expect(links.map((link) => link.textContent)).toEqual([
       "Websites",
-      "NFC & QR",
-      "Arbeiten",
-      "Online-Präsenz",
-      "Automation",
+      "Google-Unternehmensprofil",
+      "NFC- und QR-Karten",
+      "Automationen",
+      "Beispiele",
+      "Preise",
       "Über mich",
       "Kontakt",
     ]);
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
       "/websites",
-      "/reviews",
-      "/work",
       "/presence",
+      "/reviews",
       "/automation",
+      "/work",
+      "/#prices",
       "/about",
       "/contact",
     ]);
@@ -92,10 +94,11 @@ describe("Navigation", () => {
         .map((link) => link.getAttribute("href")),
     ).toEqual([
       "/en/websites",
-      "/en/reviews",
-      "/en/work",
       "/en/presence",
+      "/en/reviews",
       "/en/automation",
+      "/en/work",
+      "/en#prices",
       "/en/about",
       "/en/contact",
     ]);
@@ -276,12 +279,15 @@ describe("MobileMenu", () => {
 
     expect(links.map((link) => link.getAttribute("href"))).toEqual([
       "/websites",
+      "/presence",
       "/reviews",
+      "/automation",
       "/work",
+      "/#prices",
+      "/about",
       "/contact",
       "/presence",
-      "/automation",
-      "/about",
+      "/en/presence",
     ]);
     expect(
       links.filter((link) => link.getAttribute("aria-current") === "page"),
@@ -430,10 +436,11 @@ describe("Footer", () => {
         .map((link) => link.getAttribute("href")),
     ).toEqual([
       "/en/websites",
-      "/en/reviews",
       "/en/presence",
+      "/en/reviews",
       "/en/automation",
       "/en/work",
+      "/en#prices",
       "/en/about",
       "/en/contact",
     ]);

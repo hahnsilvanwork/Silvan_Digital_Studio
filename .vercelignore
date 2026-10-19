@@ -27,3 +27,5 @@ coverage/
 
 # Local visual verification captures.
 .artifacts/
+.tmp/
+design-assets/

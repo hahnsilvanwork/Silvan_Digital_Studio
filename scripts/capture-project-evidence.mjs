@@ -1,15 +1,18 @@
 import { chromium, expect } from '@playwright/test';
 import sharp from 'sharp';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { demoProjects } from './demos.config.mjs';
 
 // Actual public demo pages, captured in an isolated browser. Never submits a form.
 const output = 'public/images/projects/evidence';
+const localBase = process.env.DEMO_BASE_URL;
+const revision = new Date().toISOString().slice(0, 10).replaceAll('-', '');
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch();
 const manifest = [];
 const projects = [
   ['falkenried', 'falkenried', 'de'], ['falkenried', 'falkenried', 'en'],
-  ['cafe-vogel', 'cafe-vogel', 'de'], ['steiner-handwerk', 'steiner', 'de'],
+  ['cafe-vogel', 'cafe-vogel', 'de'], ['spurwerk', 'spurwerk', 'de'],
   ['salon-lumiere', 'salon-lumiere', 'de'],
 ];
 async function ready(page) {
@@ -22,16 +25,22 @@ async function capture(page, slug, locale, kind, description) {
   const state = await page.evaluate(() => ({ overflow: document.documentElement.scrollWidth > innerWidth + 1, broken: [...document.images].filter(i => !i.complete || !i.naturalWidth).map(i => i.src) }));
   expect(state.overflow).toBe(false);
   expect(state.broken).toEqual([]);
-  const filename = `${slug}-${kind}-${locale}-20260924.webp`;
+  const filename = `${slug}-${kind}-${locale}-${revision}.webp`;
   const data = await sharp(await page.screenshot({ animations: 'disabled' })).webp({ quality: 84, effort: 6 }).toBuffer();
   const { width, height } = await sharp(data).metadata();
   await writeFile(`${output}/${filename}`, data);
-  manifest.push({ project: slug, kind, locale, src: `/images/projects/evidence/${filename}`, width, height, bytes: data.length, viewport: page.viewportSize(), sourceUrl: page.url(), description, status: 'demo-concept', capturedAt: new Date().toISOString(), submitted: false });
+  const demo = slug === 'spurwerk' ? { slug: 'spurwerk', project: 'silvan-demo-spurwerk' } : demoProjects.find(item => item.name === slug);
+  const capturedUrl = page.url();
+  const parsed = new URL(capturedUrl);
+  const publicPath = localBase ? parsed.pathname.replace(new RegExp(`^/demos/${demo.slug}`), '') : parsed.pathname;
+  const sourceUrl = `https://${demo.project}.vercel.app${publicPath}${parsed.search}${parsed.hash}`;
+  manifest.push({ project: slug, kind, locale, src: `/images/projects/evidence/${filename}`, width, height, bytes: data.length, viewport: page.viewportSize(), sourceUrl, capturedUrl, description, status: 'demo-concept', capturedAt: new Date().toISOString(), submitted: false });
   console.log(filename, width, height, data.length);
 }
 try {
   for (const [slug, host, locale] of projects) {
-    const base = `https://silvan-demo-${host}.vercel.app`;
+    const demo = slug === 'spurwerk' ? { slug: 'spurwerk', project: 'silvan-demo-spurwerk' } : demoProjects.find(item => item.name === slug);
+    const base = localBase && slug !== 'spurwerk' ? `${localBase}/demos/${demo.slug}` : `https://silvan-demo-${host}.vercel.app`;
     const prefix = locale === 'en' ? '/en' : '';
     const mobile = await browser.newPage({ viewport: { width: 390, height: 780 }, deviceScaleFactor: 2, reducedMotion: 'reduce' });
     await mobile.goto(`${base}${prefix}/`, { waitUntil: 'networkidle' });
@@ -55,11 +64,12 @@ try {
       await page.locator('#date').fill('2026-10-14');
       await page.locator('#time').selectOption('10:00');
       description = 'Reservation demo with two people, sample date and generated preferred time selected; no reservation submitted.';
-    } else if (slug === 'steiner-handwerk') {
-      await page.goto(`${base}/`, { waitUntil: 'networkidle' });
-      await page.getByRole('link', { name: 'Malerarbeiten anfragen', exact: true }).click();
-      await expect(page.locator('#inquiry-service')).toHaveValue(/maler/i);
-      description = 'Malerarbeiten service arrow clicked; chosen service carried into the enquiry form.';
+    } else if (slug === 'spurwerk') {
+      await page.goto(`${base}/velos/`, { waitUntil: 'networkidle' });
+      await page.locator('#gravel').getByRole('link', { name: 'Probefahrt anfragen', exact: true }).click();
+      await expect(page.locator('#kind')).toHaveValue('probefahrt');
+      await expect(page.locator('#category')).toHaveValue('gravel');
+      description = 'Gravel & Tour test-ride link clicked; enquiry type and category carried into the form. No personal data entered and no request submitted.';
     } else {
       await page.goto(`${base}/leistungen/`, { waitUntil: 'networkidle' });
       await page.getByRole('link', { name: 'Balayage / Ombré: Termin anfragen', exact: true }).click();

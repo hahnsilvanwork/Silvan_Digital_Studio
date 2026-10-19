@@ -623,3 +623,18 @@
 @media (prefers-reduced-motion: reduce) { .productSpecs summary svg { transition-duration: 0s; } }
 
 .catalogCardBody > .catalogDescription { align-self: start; }
+.showMoreModels { justify-self: start; min-block-size: 48px; padding: 0.75rem 1rem; border: 1px solid var(--color-line); border-radius: 4px; background: var(--color-paper); color: var(--color-ink); font: inherit; text-align: start; cursor: pointer; }
+.showMoreModels:hover { border-color: var(--color-ink); }
+.showMoreModels:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 3px; }
+
+/* 2026-10-19: catalogue in the shared editorial language. No caps labels, no pill shapes,
+   readable small text and the same chevron disclosure as the FAQ. */
+.categoryCount, .catalogPosition, .comingSoon, .dialogHint { text-transform: none; letter-spacing: 0; }
+.catalogPosition, .dialogHint { font-size: .9375rem; }
+.productSpecs { font-size: .9375rem; }
+.dialogError button { border-radius: 4px; }
+.deliveryFacts > summary { position: relative; list-style: none; min-block-size: 3rem; padding: .875rem 2rem .875rem 0; font-size: 1.0625rem; font-weight: 550; cursor: pointer; }
+.deliveryFacts > summary::-webkit-details-marker { display: none; }
+.deliveryFacts > summary::after { content: ''; position: absolute; inset-inline-end: .5rem; inset-block-start: 1.15rem; inline-size: .5rem; block-size: .5rem; border-inline-end: 1.5px solid currentColor; border-block-end: 1.5px solid currentColor; transform: rotate(45deg); }
+.deliveryFacts[open] > summary::after { transform: rotate(225deg); }
+.deliveryFacts > p { color: var(--color-ink-muted); font-size: 1.0625rem; line-height: 1.6; max-inline-size: 62ch; }

@@ -1,103 +1,72 @@
 import type { Locale } from "./types";
 
-
-
 export const inquiryCopy = {
-
   de: {
-
-    selectionRestored: "Auswahl wiederhergestellt. Persönliche Angaben, Links und Bemerkungen bitte erneut eingeben.",
-    restart: "Neu beginnen",
-    draftNotice: "Produktauswahl, Masse, Menge und Ziel-Status werden bei erlaubtem Browserspeicher in diesem Tab gespeichert und nach dem Neuladen bis zu acht Stunden nach der letzten Speicherung wiederhergestellt. Persönliche Angaben, Links und Bemerkungen werden dabei nicht wiederhergestellt. Beim Sprachwechsel wird die Anfrage für höchstens zwei Minuten zwischengespeichert und nach der Übernahme gelöscht. Ohne Ihre gewählte Übergabe wird nichts an uns gesendet.",
-
-    suggestions: "Passende Modelle", matches: "Modelle passen zu Ihrer Auswahl. Übernehmen Sie eines oder fahren Sie mit einer individuellen Anfrage fort.",
-
-    noMatches: "Für diese Kombination gibt es aktuell kein fertiges Katalogmodell. Sie können die Auswahl ändern oder Ihr Wunschprodukt individuell anfragen.",
-
-    chooseModel: "Dieses Modell übernehmen", allMatches: "Alle passenden Modelle zeigen",
-
-    review: "Angaben prüfen", email: "Per E-Mail anfragen", copy: "Anfrage kopieren",
-
-    copied: "Anfrage kopiert. Sie können sie jetzt in eine Nachricht einfügen.",
-
-    copyFailed: "Kopieren ist hier nicht möglich. Markieren und kopieren Sie den Text unten.",
-
-    text: "Text Ihrer Anfrage", model: "Gewähltes Modell", requestModel: "Dieses Modell anfragen",
-
-    selected: "Diese Angaben stammen aus dem gewählten Modell. Die verfügbaren Masse bestätigen wir in der Offerte.",
-
-    remaining: "Modell gewählt. Ergänzen Sie die noch offenen Angaben – danach prüfen Sie Ihre unverbindliche Anfrage.",
-
-    modelDetails: "Modelldetails ansehen",
-
-    adjustSelection: "Auswahl anpassen",
-
-    modelPriceHint: "Für 1 Stück. Versand separat; Gesamtpreis gemäss Offerte.",
-
-    chipPriceHint: "Für den ersten Chip. Den Mengenpreis sehen Sie bei der Menge; Versand separat.",
-
-    lengthError: "Bitte kürzen Sie die Eingabe auf die angezeigte Zeichenanzahl.",
-
-    characters: "Zeichen", optional: "optional",
-
-    quantityHint: "Anzahl Stück, kein Paket. Grundkosten werden unten berechnet.",
-
-    bundleHint: "Anzahl Zweierpakete: 1 Paket enthält 2 Karten. Der Paketpreis beträgt CHF 80.–.",
-
-    external3d: "Mit Ihrem Klick laden Spline und Google die 3D-Dateien und erhalten Ihre IP-Adresse (Bearbeitung in den USA möglich). Die Anfrage funktioniert auch ohne 3D. Details unter Datenschutz.",
-
-    transfer: "Beim Öffnen von WhatsApp wird der Anfragetext an WhatsApp übergeben. E-Mail öffnet Ihr Mailprogramm. Sie senden die Nachricht dort selbst ab.",
-
-    subject: "Unverbindliche NFC & QR Anfrage", details: "Anwendungen und Ablauf", packages: "Pakete vergleichen",
-
+    selectionRestored: "Ihre Produktauswahl wurde wiederhergestellt. Bitte geben Sie persönliche Angaben, Links und Nachrichten erneut ein.",
+    restart: "Neue Anfrage beginnen",
+    draftNotice: "Dieser Tab merkt sich Ihre Produktauswahl, Masse, Menge und die Angabe zum vorhandenen Link, sofern Ihr Browser das Speichern erlaubt. Beim Neuladen wird diese Auswahl bis zu acht Stunden nach dem letzten Speichern wiederhergestellt. Persönliche Angaben, Links und Nachrichten werden dabei nicht übernommen. Beim Sprachwechsel wird die vollständige Anfrage höchstens zwei Minuten zwischengespeichert und nach dem Übernahmeversuch gelöscht. An mich wird nichts gesendet, solange Sie die Nachricht nicht selbst abschicken.",
+    suggestions: "Passende Modelle",
+    matches: "Treffer. Wählen Sie ein Modell aus oder fragen Sie ein Produkt nach Ihren Wünschen an.",
+    noMatches: "Für diese Auswahl gibt es im Katalog noch kein fertiges Modell. Ändern Sie Ihre Auswahl oder fragen Sie ein Produkt nach Ihren Wünschen an.",
+    chooseModel: "Dieses Modell auswählen",
+    allMatches: "Alle passenden Modelle anzeigen",
+    review: "Anfrage prüfen",
+    email: "Per E-Mail anfragen",
+    copy: "Anfragetext kopieren",
+    copied: "Der Anfragetext wurde kopiert. Sie können ihn jetzt in eine Nachricht einfügen.",
+    copyFailed: "Der Text konnte nicht kopiert werden. Markieren Sie den Text unten und kopieren Sie ihn selbst.",
+    text: "Ihr Anfragetext",
+    model: "Ausgewähltes Modell",
+    requestModel: "Dieses Modell anfragen",
+    selected: "Diese Angaben wurden vom ausgewählten Modell übernommen. Die verfügbaren Masse bestätige ich Ihnen in der Offerte.",
+    remaining: "Ihr Modell ist ausgewählt. Ergänzen Sie die offenen Angaben und prüfen Sie anschliessend Ihre unverbindliche Anfrage.",
+    modelDetails: "Angaben zum Modell ansehen",
+    adjustSelection: "Auswahl ändern",
+    modelPriceHint: "Preis für 1 Stück. Versand separat. Den Gesamtpreis erhalten Sie in der Offerte.",
+    chipPriceHint: "Preis für den ersten Klebechip. Der Preis für Ihre Menge wird unten berechnet. Versand separat.",
+    lengthError: "Bitte kürzen Sie Ihre Eingabe auf die angezeigte Anzahl Zeichen.",
+    characters: "Zeichen",
+    optional: "optional",
+    quantityHint: "Geben Sie die Anzahl einzelner Stücke an. Der voraussichtliche Produktpreis erscheint unten.",
+    bundleHint: "Anzahl Zweierpakete: Ein Paket enthält 2 Karten und kostet CHF 80.–.",
+    external3d: "Wenn Sie die 3D-Ansicht öffnen, werden Dateien von Spline und Google geladen. Dabei erhalten diese Anbieter Ihre IP-Adresse; eine Verarbeitung in den USA ist möglich. Sie können auch ohne 3D-Ansicht anfragen. Weitere Informationen finden Sie im Datenschutz.",
+    transfer: "WhatsApp übernimmt den vorbereiteten Anfragetext. Bei E-Mail öffnet sich Ihr Mailprogramm. Prüfen Sie die Nachricht dort und senden Sie sie selbst ab.",
+    subject: "Unverbindliche Anfrage zu NFC- und QR-Karten",
+    details: "Anwendungen und Ablauf",
+    packages: "Varianten und Preise vergleichen",
   },
-
   en: {
-
-    selectionRestored: "Selection restored. Please re-enter personal details, links and notes.",
-    restart: "Start again",
-    draftNotice: "With browser storage available, product choices, dimensions, quantity and destination status are saved in this tab and restored after a reload for up to eight hours after the last save. Personal details, links and notes are not restored. When changing language, the enquiry is held for up to two minutes and deleted after transfer. Nothing is sent to us until you choose to pass it on.",
-
-    suggestions: "Matching models", matches: "models match your selection. Choose one or continue with an individual enquiry.",
-
-    noMatches: "There is no ready-made catalogue model for this combination. Change your selection or continue with an individual enquiry.",
-
-    chooseModel: "Choose this model", allMatches: "Show all matching models",
-
-    review: "Review details", email: "Enquire by email", copy: "Copy enquiry",
-
-    copied: "Enquiry copied. You can now paste it into a message.",
-
-    copyFailed: "Copying is unavailable here. Select and copy the text below.",
-
-    text: "Your enquiry text", model: "Selected model", requestModel: "Enquire about this model",
-
-    selected: "These details come from your selected model. We confirm available dimensions in the quote.",
-
-    remaining: "Model selected. Complete the remaining details, then review your non-binding enquiry.",
-
+    selectionRestored: "Your product selection has been restored. Please enter your personal details, links and notes again.",
+    restart: "Start a new enquiry",
+    draftNotice: "If your browser allows storage, this tab remembers your product choices, dimensions, quantity and whether you already have a link. Your selection is restored after a reload for up to eight hours after the last save. Personal details, links and notes are not restored. When you change language, the complete enquiry is saved for up to two minutes and deleted after the transfer attempt. Nothing is sent to me until you send the message yourself.",
+    suggestions: "Matching models",
+    matches: "found. Choose a model or enquire about a product made to your requirements.",
+    noMatches: "There is no ready-made model in the catalogue for this selection. Change your selection or enquire about a product made to your requirements.",
+    chooseModel: "Choose this model",
+    allMatches: "Show all matching models",
+    review: "Review your enquiry",
+    email: "Enquire by email",
+    copy: "Copy enquiry text",
+    copied: "Your enquiry text has been copied. You can now paste it into a message.",
+    copyFailed: "The text could not be copied. Select the text below and copy it yourself.",
+    text: "Your enquiry text",
+    model: "Selected model",
+    requestModel: "Enquire about this model",
+    selected: "These details come from your selected model. I will confirm the available dimensions in your quote.",
+    remaining: "Your model is selected. Complete the remaining details, then review your no-obligation enquiry.",
     modelDetails: "View model details",
-
-    adjustSelection: "Adjust selection",
-
-    modelPriceHint: "For 1 item. Shipping is separate; final total in the quote.",
-
-    chipPriceHint: "For the first chip. Quantity pricing appears beside the quantity; shipping is separate.",
-
-    lengthError: "Please shorten this entry to the displayed character limit.",
-
-    characters: "characters", optional: "optional",
-
-    quantityHint: "Number of individual items, not packs. Base cost is calculated below.",
-
-    bundleHint: "Number of two-card packs: 1 pack contains 2 cards. Each pack costs CHF 80.–.",
-
-    external3d: "Your click loads 3D files from Spline and Google and shares your IP address (processing in the USA is possible). Enquiries work without 3D. See Privacy for details.",
-
-    transfer: "Opening WhatsApp passes the enquiry text to WhatsApp. Email opens your mail app. You send the message yourself there.",
-
-    subject: "Non-binding NFC & QR enquiry", details: "Applications and process", packages: "Compare packages",
-
+    adjustSelection: "Change selection",
+    modelPriceHint: "Price for 1 item. Shipping is separate. Your quote confirms the total price.",
+    chipPriceHint: "Price for the first sticker. The price for your quantity is calculated below. Shipping is separate.",
+    lengthError: "Please shorten your entry to the number of characters shown.",
+    characters: "characters",
+    optional: "optional",
+    quantityHint: "Enter the number of individual items. The estimated product price appears below.",
+    bundleHint: "Number of two-card packs: each pack contains 2 cards and costs CHF 80.–.",
+    external3d: "Opening the 3D view loads files from Spline and Google. These providers receive your IP address, which may be processed in the USA. You can enquire without opening the 3D view. See the privacy policy for details.",
+    transfer: "WhatsApp opens with your enquiry text. Choosing email opens your mail app. Check the message there and send it yourself.",
+    subject: "No-obligation enquiry about NFC and QR cards",
+    details: "Uses and how it works",
+    packages: "Compare options and prices",
   },
-
 } satisfies Record<Locale, Record<string, string>>;

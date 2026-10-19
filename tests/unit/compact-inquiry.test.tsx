@@ -20,11 +20,11 @@ it.each(['de', 'en'] as const)('summarizes fixed model details and validates onl
   expect(container.querySelector('[name=shape]')).toBeNull();
   expect(container.querySelector('[name=size]')).toHaveValue('');
   await waitFor(() => expect(container.querySelector('[name=size]')).toHaveFocus());
-  await user.click(screen.getByRole('button', { name: locale === 'de' ? 'Angaben prüfen' : 'Review details' }));
+  await user.click(screen.getByRole('button', { name: locale === 'de' ? 'Anfrage prüfen' : 'Review your enquiry' }));
   expect(container.querySelector('[name=size]')).toHaveFocus();
   await user.selectOptions(container.querySelector<HTMLSelectElement>('[name=size]')!, '80');
   await user.selectOptions(container.querySelector<HTMLSelectElement>('[name=setup]')!, 'needs-setup');
-  await user.click(screen.getByRole('button', { name: locale === 'de' ? 'Angaben prüfen' : 'Review details' }));
+  await user.click(screen.getByRole('button', { name: locale === 'de' ? 'Anfrage prüfen' : 'Review your enquiry' }));
   const email = screen.getByRole('link', { name: locale === 'de' ? 'Per E-Mail anfragen' : 'Enquire by email' });
   expect(decodeURIComponent(email.getAttribute('href')!)).toContain(getContent(locale).reviews.catalog.find(p => p.id === 'review-round-black')!.title);
 });
@@ -35,14 +35,14 @@ it('allows changing a fixed choice without keeping a stale model or erasing cont
   const { container } = render(<ReviewInquiryConfigurator locale="en" />);
   await settle();
   await user.type(container.querySelector<HTMLInputElement>('[name=contactPerson]')!, 'Private Example');
-  await user.click(screen.getByRole('button', { name: 'Adjust selection' }));
+  await user.click(screen.getByRole('button', { name: 'Change selection' }));
   await waitFor(() => expect(container.querySelector('[name=destination]')).toHaveFocus());
   await user.selectOptions(screen.getByLabelText('Product'), 'personalized-card');
   await settle();
   expect(screen.queryByTestId('inquiry-model')).toBeNull();
   expect(window.location.search).not.toContain('model=');
   expect(container.querySelector('[name=contactPerson]')).toHaveValue('Private Example');
-  expect(screen.getByTestId('inquiry-total')).toHaveTextContent('Estimated base cost CHF 69');
+  expect(screen.getByTestId('inquiry-total')).toHaveTextContent('Estimated product price: CHF 69');
 });
 
 it('keeps the generic chip destination editable and resets compact mode on a new model', async () => {
@@ -53,8 +53,8 @@ it('keeps the generic chip destination editable and resets compact mode on a new
   expect(container.querySelector('[name=destination]')).toHaveValue('other');
   await user.selectOptions(container.querySelector<HTMLSelectElement>('[name=destination]')!, 'reviews');
   expect(window.location.search).toContain('model=nfc-030-chip');
-  expect(screen.getByTestId('inquiry-model')).toHaveTextContent('Stick-on NFC chip');
-  await user.click(screen.getByRole('button', { name: 'Adjust selection' }));
+  expect(screen.getByTestId('inquiry-model')).toHaveTextContent('NFC sticker');
+  await user.click(screen.getByRole('button', { name: 'Change selection' }));
   act(() => setCatalogueSelection('reviews', 'review-stand-white'));
   await settle();
   expect(container.querySelector('[name=product]')).toBeNull();

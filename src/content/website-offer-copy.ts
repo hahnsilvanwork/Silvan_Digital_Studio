@@ -3,40 +3,40 @@ import type { WebsiteTier } from '../lib/contact-inquiry';
 
 export const websiteExamples: Record<Locale, Record<WebsiteTier, string>> = {
   de: {
-    simple: 'Zum Beispiel: ein kleiner Betrieb mit Angebot, Öffnungszeiten und Kontakt auf einer Seite.',
-    standard: 'Zum Beispiel: ein Handwerksbetrieb mit eigenen Seiten für Leistungen, Arbeiten und Kontakt.',
-    premium: 'Zum Beispiel: ein Unternehmen mit mehreren Leistungsbereichen und umfangreichen Projektinhalten.',
-    custom: 'Zum Beispiel: eine Website mit besonderen Abläufen oder einer individuellen Anbindung an bestehende Systeme.',
+    simple: 'Zum Beispiel für ein kleines Café, einen Coiffeursalon oder eine selbstständige Fachperson.',
+    standard: 'Zum Beispiel für einen Handwerksbetrieb mit eigenen Seiten für Leistungen, ausgeführte Arbeiten und Kontakt.',
+    premium: 'Zum Beispiel für ein Unternehmen mit mehreren Abteilungen oder einem umfangreichen Projektarchiv.',
+    custom: 'Zum Beispiel für einen geschützten Kundenbereich oder eine Verbindung zu Ihrer bestehenden Verwaltungssoftware.',
   },
   en: {
-    simple: 'For example: a small business with its offer, opening hours and contact details on one page.',
-    standard: 'For example: a trades business with dedicated services, work and contact pages.',
-    premium: 'For example: a company with several service areas and an extensive project portfolio.',
-    custom: 'For example: a website with specific workflows or a tailored connection to existing systems.',
+    simple: 'For example, a small café, a hair salon or a self-employed professional.',
+    standard: 'For a trades business with separate pages for services, completed work and contact details.',
+    premium: 'For example, a company with several departments or a large archive of completed projects.',
+    custom: 'For example, a secure customer area or a connection to the software you use to manage your business.',
   },
 };
 
 export const websiteComparison = {
   de: {
-    title: 'Was Sie vor dem Start wissen sollten',
-    intro: 'Die Beispiele helfen bei der Einordnung. Verbindlich wird der Umfang erst mit Ihrer individuellen Offerte.',
+    title: 'Die Angebote im Vergleich',
+    intro: 'Hier sehen Sie die wichtigsten Unterschiede. Was Ihre Website genau enthält und kostet, halten wir in Ihrer schriftlichen Offerte fest.',
     rows: [
-      ['Inhalte', 'Eine Seite', 'Eigene Inhaltsseiten', 'Mehrere Themenbereiche', 'Individuelle Struktur'],
-      ['Gestaltung', 'Kompakter Auftritt', 'Individuelles Layout', 'Vertiefte Gestaltung und Interaktion', 'Eigenes Konzept'],
-      ['Texte und Bilder', 'Lieferumfang gemeinsam festlegen', 'Lieferumfang gemeinsam festlegen', 'Lieferumfang gemeinsam festlegen', 'Lieferumfang gemeinsam festlegen'],
-      ['Selbst bearbeiten', 'Auf Wunsch separat planen', 'Auf Wunsch separat planen', 'Auf Wunsch separat planen', 'Teil der Anforderungsplanung'],
+      ['Inhalte', 'Alles auf einer Seite', 'Eigene Seiten für Ihre Themen', 'Mehrere Inhaltsbereiche', 'Aufbau nach Ihren Anforderungen'],
+      ['Gestaltung', 'Kompakt und übersichtlich', 'Auf Ihren Betrieb abgestimmt', 'Mehr Planung für Gestaltung und Bedienung', 'Eigenes Konzept für Ihr Vorhaben'],
+      ['Texte und Bilder', 'Gemeinsam klären, wer was liefert', 'Gemeinsam klären, wer was liefert', 'Gemeinsam klären, wer was liefert', 'Gemeinsam klären, wer was liefert'],
+      ['Inhalte selbst ändern', 'Bei Bedarf separat vereinbaren', 'Bei Bedarf separat vereinbaren', 'Bei Bedarf separat vereinbaren', 'In der Planung gemeinsam festlegen'],
     ],
-    shared: 'Korrekturrunden, Termine, Einführung und Betreuung werden für Ihr Vorhaben vereinbart. Domain, Hosting und laufende Pflege sind separat. Kein Paket setzt automatisch ein CMS oder eine bestimmte Integration voraus.',
+    shared: 'Wir vereinbaren vorab, wie viele Korrekturrunden vorgesehen sind, wann die Website fertig sein soll und welche Einführung oder Betreuung Sie brauchen. Internetadresse, Hosting und laufende Pflege kosten separat. Wenn Sie Inhalte selbst ändern oder andere Software anbinden möchten, planen und vereinbaren wir das ausdrücklich.',
   },
   en: {
-    title: 'What to know before you start',
-    intro: 'These examples help you choose. Your individual quote defines the agreed scope.',
+    title: 'Compare the website options',
+    intro: 'See the main differences at a glance. Your written quote sets out exactly what your website will include and what it will cost.',
     rows: [
-      ['Content', 'One page', 'Dedicated content pages', 'Several subject areas', 'Individual structure'],
-      ['Design', 'Compact presence', 'Individual layout', 'More detailed design and interaction', 'Dedicated concept'],
-      ['Text and images', 'Scope agreed together', 'Scope agreed together', 'Scope agreed together', 'Scope agreed together'],
-      ['Editing yourself', 'Planned separately if needed', 'Planned separately if needed', 'Planned separately if needed', 'Part of requirements planning'],
+      ['Content', 'Everything on one page', 'Separate pages for your topics', 'Several content sections', 'Structure based on your requirements'],
+      ['Design', 'Compact and easy to follow', 'Designed around your business', 'More planning for design and usability', 'A concept tailored to your project'],
+      ['Text and images', 'We agree who provides what', 'We agree who provides what', 'We agree who provides what', 'We agree who provides what'],
+      ['Editing content yourself', 'Agreed separately if needed', 'Agreed separately if needed', 'Agreed separately if needed', 'Agreed during project planning'],
     ],
-    shared: 'Revision rounds, dates, training and support are agreed for your project. Domain, hosting and ongoing maintenance are separate. A CMS or a specific integration is not automatically included in any package.',
+    shared: 'Before work begins, we agree on revision rounds, the schedule, any training and support. Your web address, hosting and ongoing maintenance cost extra. If you want to edit content yourself or connect the website to other software, we plan and agree that separately.',
   },
 } as const;

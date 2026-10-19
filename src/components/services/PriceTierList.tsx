@@ -31,13 +31,13 @@ export function PriceTierList({
     recommendedLabel !== undefined && tiers.some((tier) => tier.recommended);
 
   return (
-    <ul className={`${styles.tiers}${websiteLocale ? ` ${styles.websiteTiers}` : ''}`}>
+    <ul className={`${styles.tiers}${websiteLocale ? ` ${styles.websiteTiers}` : ''}${tiers.length === 1 ? ` ${styles.singleTier}` : ''}`}>
       {tiers.map((tier, index) => (
         <li
           className={`${styles.tier} ${
             tier.recommended ? styles.tierRecommended : ""
           }`}
-          data-reveal="rise"
+          data-reveal={websiteLocale ? undefined : 'rise'}
           key={tier.id}
           style={{ "--reveal-index": index } as CSSProperties}
         >
@@ -50,7 +50,7 @@ export function PriceTierList({
           <PriceDisplay label={priceLabel} price={tier.price} />
           <p className={styles.tierDescription}>{tier.description}</p>
           {websiteLocale ? <details className={styles.tierDetails}>
-            <summary>{websiteLocale === 'de' ? 'Enthaltene Leistungen' : 'Included features'}</summary>
+            <summary>{websiteLocale === 'de' ? 'Enthaltene Leistungen' : 'What is included'}</summary>
             <ul className={styles.tierFeatures}>{tier.features.map(feature => <li className={styles.tierFeature} key={feature}>{feature}</li>)}</ul>
           </details> : <ul className={styles.tierFeatures}>
             {tier.features.map((feature) => (
@@ -62,7 +62,7 @@ export function PriceTierList({
           {websiteLocale && websiteTiers.some(id => id === tier.id) ? <>
             <p className={styles.tierExample}>{websiteExamples[websiteLocale][tier.id as WebsiteTier]}</p>
             <Link data-touch-target className={styles.tierAction} href={`${localizePath('/contact', websiteLocale)}?service=websites&tier=${tier.id}`}>
-              {websiteLocale === 'de' ? 'Diesen Umfang besprechen' : 'Discuss this scope'}<span className="visually-hidden">: {tier.name}</span><span className={styles.tierArrow} aria-hidden="true" />
+              {websiteLocale === 'de' ? 'Dieses Angebot besprechen' : 'Discuss this option'}<span className="visually-hidden">: {tier.name}</span><span className={styles.tierArrow} aria-hidden="true" />
             </Link>
           </> : null}
         </li>

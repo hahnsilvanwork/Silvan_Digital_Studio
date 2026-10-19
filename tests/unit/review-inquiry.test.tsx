@@ -59,7 +59,7 @@ describe("NFC inquiry validation", () => {
   it("offers the approved product packages including the adhesive chip in both languages", () => {
     for (const locale of ["de", "en"] as const) {
       expect(getContent(locale).reviews.inquiry.productOptions.map(({ value }) => value)).toEqual(
-        ["nfc-chip", "standard-card", "standard-stand", "personalized-card", "fully-custom-card"],
+        ["nfc-chip", "compact-card", "standard-card", "standard-stand", "personalized-card", "fully-custom-card"],
       );
     }
   });
@@ -113,8 +113,8 @@ describe("WhatsApp message", () => {
 
     expect(url.startsWith("https://wa.me/41789008500?text=")).toBe(true);
     expect(message).toContain(de.reviews.inquiry.messageIntro);
-    expect(message).toContain("Google Reviews");
-    expect(message).toContain("Personalized Card · CHF 69.–");
+    expect(message).toContain("Google-Bewertungen");
+    expect(message).toContain("Karte mit Ihrem Logo · CHF 69.–");
     expect(message).toContain("Rund");
     expect(message).toContain("Ø 100 mm");
     expect(message).toContain(de.reviews.quantityDiscount);
@@ -229,7 +229,7 @@ describe("ReviewInquiryConfigurator", () => {
 
     const link = screen.getByRole("link", { name: new RegExp(de.reviews.inquiry.submitLabel) });
     const message = decodeURIComponent(link.getAttribute("href")!);
-    expect(message).toContain("Digitales Menü");
+    expect(message).toContain("Digitale Speisekarte");
     expect(message).toContain("Ristorante Bellavista");
     expect(link).toHaveAttribute("target", "_blank");
     expect(link.getAttribute("rel")).toContain("noopener");

@@ -1,4 +1,5 @@
 import { PrivacySafeTelemetry } from "./PrivacySafeTelemetry";
+import { PrivacySafeSpeedInsights } from "./PrivacySafeSpeedInsights";
 import type { ReactNode } from "react";
 
 import type { Locale } from "../../content/types";
@@ -44,6 +45,7 @@ export function RootDocument({ locale, children, nonce }: RootDocumentProps) {
         <PersonSchema locale={locale} nonce={nonce} />
         {children}
         <PrivacySafeTelemetry />
+        <PrivacySafeSpeedInsights />
       </body>
     </html>
   );

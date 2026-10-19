@@ -4,7 +4,7 @@ import sharp from 'sharp';
 import { demoProjects } from './demos.config.mjs';
 
 const base = process.env.DEMO_BASE_URL ?? 'http://localhost:3110';
-const demos = Object.fromEntries(demoProjects.map(demo => [demo.name, demo.slug]));
+const demos = Object.fromEntries([...demoProjects.filter(demo => demo.name !== 'steiner-handwerk').map(demo => [demo.name, demo.slug]), ['spurwerk', 'spurwerk']]);
 const requested = process.argv.slice(2);
 for (const project of requested) {
   if (!Object.hasOwn(demos, project)) throw new Error(`Unknown demo project: ${project}`);
@@ -15,12 +15,12 @@ const browser = await chromium.launch();
 try {
   for (const [project, demo] of Object.entries(demos)) {
     if (requested.length && !requested.includes(project)) continue;
-    for (const locale of ['de', 'en']) {
+    for (const locale of project === 'spurwerk' ? ['de'] : ['de', 'en']) {
     for (const width of locale === 'de' ? [1440, 390] : [1440]) {
       const page = await browser.newPage({ viewport: { width, height: 1000 }, reducedMotion: 'reduce', deviceScaleFactor: width === 1440 ? 2 : 1 });
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));
-      const origin = process.env.DEMO_LIVE === "1" ? `https://${demoProjects.find(item => item.slug === demo).project}.vercel.app` : `${base}/demos/${demo}`;
+      const origin = project === 'spurwerk' ? 'https://silvan-demo-spurwerk.vercel.app' : process.env.DEMO_LIVE === "1" ? `https://${demoProjects.find(item => item.slug === demo).project}.vercel.app` : `${base}/demos/${demo}`;
       await page.goto(`${origin}${locale === 'en' && demo === 'falkenried' ? '/en/' : ''}`, { waitUntil: 'load' });
       // Capture the actual available demo. German-only demos stay German in
       // English portfolio screenshots, matching their labelled destination.

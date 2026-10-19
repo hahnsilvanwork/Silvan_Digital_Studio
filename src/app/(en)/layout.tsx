@@ -16,7 +16,7 @@ export const viewport: Viewport = {
   viewportFit: "cover",
   // The paper tone, so mobile browser chrome continues the page instead of
   // framing it in the platform's default grey.
-  themeColor: "#f9f8f6",
+  themeColor: "#ffffff",
 };
 
 export default function EnglishLayout({

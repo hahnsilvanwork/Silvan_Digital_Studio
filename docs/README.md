@@ -2,6 +2,7 @@
 
 ## Current guides
 
+- [Website-Leitfaden und Entscheidungen](WEBSITE-LEITFADEN-UND-ENTSCHEIDUNGEN.md): zusammengeführte Recherche, aktuelle und historische Entscheidungen sowie Übertragung auf Salon Lumière, Steiner Bau, Café Vogel und Falkenried.
 - [Umsetzung 01–17](UMSETZUNG-01-17-2026-09-09.md): aktueller Release-Kandidat, Prüfungen und echte offene Betriebsschritte.
 - [Betriebswerkzeuge](business/README.md): Kalkulation, Anfrageprozess, Messung, Übergabe und Nutzertest.
 - [Legal and business dossier](legal/README.md): detailed Swiss/EU applicability review, contract drafts, operating procedures and evidence register.
@@ -13,6 +14,8 @@
 
 ## Dated audit evidence
 
+- [Logo und Animation](audits/2026-09-30-logo-integration.md): Platzierung, Verhalten und lokale Prüfung vom 30. September 2026.
+- [Sprachliche Überarbeitung Hauptwebsite und Demos](audits/2026-09-30-copy-refresh.md): alle Seiten, lokale Vorschau und Prüfergebnisse vom 30. September 2026.
 - [Original website audit](WEBSITE-AUDIT-2026-09-07.md)
 - [Audit implementation](AUDIT-UMSETZUNG-2026-09-07.md)
 - `audits/`: compact recorded dependency/publication results; raw screenshots and logs stay in ignored `artifacts/`.

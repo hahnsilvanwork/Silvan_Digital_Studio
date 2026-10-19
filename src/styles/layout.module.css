@@ -5,10 +5,7 @@
 }
 
 .container {
-  inline-size: min(
-    calc(100% - (2 * var(--page-gutter))),
-    var(--container-max)
-  );
+  inline-size: var(--content-width);
   margin-inline: auto;
 }
 
@@ -66,11 +63,5 @@
 @media (min-width: 80rem) {
   .asymmetric {
     grid-template-columns: minmax(14rem, 3fr) minmax(0, 9fr);
-  }
-}
-
-@media (min-width: 96rem) {
-  .container {
-    inline-size: min(calc(100% - 8rem), var(--container-max));
   }
 }

@@ -1,37 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import type { Locale } from "../../content/types";
 import { contactCopy } from "../../content/contact-copy";
 import { getServiceReason, getWebsiteTier, serviceReasons } from "../../lib/contact-inquiry";
 import { useServiceReason, useWebsiteTier } from "./use-service-reason";
 import { getContent } from '../../lib/locales';
 import { ContactActions } from "./ContactActions";
+import { SaveContact } from './SaveContact';
 import styles from "./entry.module.css";
 import { buildContactMessage, CONTACT_BRIEF_LIMIT } from "../../lib/contact-message";
+
+const subscribe = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
 
 export function ContactInquiry({ locale }: { readonly locale: Locale }) {
   const reason = useServiceReason();
   const tier = useWebsiteTier();
   const copy = contactCopy[locale];
+  const hydrated = useSyncExternalStore(subscribe, clientSnapshot, serverSnapshot);
   const [brief, setBrief] = useState('');
-  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'fallback'>('idle');
+  const [copyResult, setCopyResult] = useState<{ message: string; state: 'copied' | 'fallback' } | null>(null);
   const message = buildContactMessage(locale, reason ?? undefined, tier ?? undefined, brief);
+  const copyState = copyResult?.message === message ? copyResult.state : 'idle';
+  const selectedTier = reason === 'websites' ? getContent(locale).websites.priceTiers.find(item => item.id === tier) : undefined;
   async function copyMessage() {
     try {
       if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
       await navigator.clipboard.writeText(message);
-      setCopyState('copied');
-    } catch { setCopyState('fallback'); }
+      setCopyResult({ message, state: 'copied' });
+    } catch { setCopyResult({ message, state: 'fallback' }); }
   }
   return <>
-    <ContactActions locale={locale} reason={reason ?? undefined} tier={tier ?? undefined} brief={brief} emphasize immediate compact />
-    <details className={styles.prepareDisclosure} open={Boolean(reason) || undefined}>
+    <div role="group" aria-label={locale === 'de' ? 'Direktkontakt' : 'Direct contact'}>
+    <ContactActions locale={locale} reason={reason ?? undefined} tier={tier ?? undefined} message={hydrated && (reason || brief.trim()) ? message : undefined} emphasize immediate compact />
+    </div>
+    <SaveContact locale={locale} />
+    <noscript><p className={styles.notice}>{copy.noScript}</p></noscript>
+    <details hidden={!hydrated} className={styles.prepareDisclosure} open>
       <summary>{locale === 'de' ? 'Anfrage vorbereiten (optional)' : 'Prepare an enquiry (optional)'}</summary>
     <div className={styles.reason}>
       <label htmlFor="contact-reason">{copy.reason}</label>
       <select id="contact-reason" value={reason ?? ""} onChange={(event) => {
-        setCopyState('idle');
+        setCopyResult(null);
         const next = getServiceReason(new URLSearchParams({ service: event.target.value }));
         window.history.replaceState(window.history.state, "", `${window.location.pathname}${next ? `?service=${next}` : ""}`);
         window.dispatchEvent(new PopStateEvent("popstate"));
@@ -42,7 +54,7 @@ export function ContactInquiry({ locale }: { readonly locale: Locale }) {
       {reason === 'websites' ? <>
         <label htmlFor="contact-tier">{locale === 'de' ? 'Website-Umfang' : 'Website scope'}</label>
         <select id="contact-tier" value={tier ?? ''} onChange={event => {
-          setCopyState('idle');
+          setCopyResult(null);
           const params = new URLSearchParams({service: 'websites', tier: event.target.value});
           const next = getWebsiteTier(params);
           window.history.replaceState(window.history.state, '', `${window.location.pathname}?service=websites${next ? `&tier=${next}` : ''}`);
@@ -55,14 +67,17 @@ export function ContactInquiry({ locale }: { readonly locale: Locale }) {
       {reason ? <p className={styles.prompt}>{copy.prompts[reason]}</p> : null}
       <div className={styles.briefDisclosure}>
       <label htmlFor="contact-brief">{copy.briefLabel}</label>
+      <p id="contact-brief-hint" className={styles.notice}>{copy.briefHint}</p>
       <textarea id="contact-brief" rows={4} value={brief} maxLength={CONTACT_BRIEF_LIMIT}
         placeholder={copy.briefPlaceholder} aria-describedby="contact-brief-hint"
-        onChange={event => { setBrief(event.target.value); setCopyState('idle'); }} />
-      <p id="contact-brief-hint" className={styles.notice}>{copy.briefHint}</p>
+        onChange={event => { setBrief(event.target.value.slice(0, CONTACT_BRIEF_LIMIT)); setCopyResult(null); }} />
+      <p className={styles.characterCount}>{brief.length} / {CONTACT_BRIEF_LIMIT} {copy.characters}</p>
       </div>
-      <p className={styles.notice}>{copy.notice}</p>
     </div>
-    <div className={styles.copyBlock}>
+    <div className={styles.copyBlock} role="group" aria-label={copy.handoffTitle}>
+      <p className={styles.selection}>{copy.selected}: {reason ? copy.reasons[reason] : copy.general}{selectedTier ? ` · ${selectedTier.name} · ${selectedTier.price}` : ''}</p>
+      <ContactActions locale={locale} reason={reason ?? undefined} message={message} draft compact emphasize immediate />
+      <p className={styles.notice}>{copy.handoffHint}</p>
       <button className={styles.copyButton} type="button" onClick={copyMessage}>{copy.copyAction}</button>
       {copyState !== 'idle' ? <p className={styles.notice} role="status">{copyState === 'copied' ? copy.copied : copy.copyFallback}</p> : null}
       {copyState === 'fallback' ? <>

@@ -4,6 +4,9 @@ import { resolve, extname, sep } from 'node:path';
 import { chromium } from '@playwright/test';
 import { photoProducts } from './nfc-photo-manifest.mjs';
 
+const selectedIds = process.argv.slice(2);
+if (selectedIds.some(id => !photoProducts.some(product => product.id === id))) throw new Error('Unknown product ID');
+const selectedProducts = selectedIds.length ? photoProducts.filter(product => selectedIds.includes(product.id)) : photoProducts;
 const root=resolve('public');
 const server=createServer(async(req,res)=> {
   try {
@@ -23,7 +26,7 @@ page.on('pageerror',error=>errors.push(error.message));
 await mkdir('public/images/products/nfc',{recursive:true});
 await mkdir('.scratch/photo-products',{recursive:true});
 try {
-  for(const product of photoProducts) {
+  for(const product of selectedProducts) {
     await page.goto(`${url}/3d/product.html?id=${product.id}#model=${product.id}`);
     await page.locator('body[data-ready=true]').waitFor({timeout:20000});
     await page.locator('canvas').screenshot({path:`public${product.imageUrl}`});

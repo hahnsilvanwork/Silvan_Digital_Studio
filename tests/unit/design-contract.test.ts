@@ -255,9 +255,9 @@ describe("SILVAN responsive design contract", () => {
   });
 
   it("defines the approved palette and fluid responsive foundations", () => {
-    expect(stylesheetSource).toContain("#f9f8f6");
-    expect(stylesheetSource).toContain("#1a1a1a");
-    expect(stylesheetSource).toContain("#1a1a1a");
+    expect(stylesheetSource).toContain("#ffffff");
+    expect(stylesheetSource).toContain("#081b3c");
+    expect(stylesheetSource).toContain("#081b3c");
     expect(stylesheetSource).toContain("clamp(");
     expect(stylesheetSource).toMatch(/100(?:dvh|svh)/);
     expect(stylesheetSource).toMatch(/env\(safe-area-inset-(?:top|right|bottom|left)\)/);
@@ -289,10 +289,10 @@ describe("SILVAN responsive design contract", () => {
     );
 
     expect([paper, ink, paperFocus, darkFocus]).toEqual([
-      "#f9f8f6",
-      "#1a1a1a",
-      "#1a1a1a",
-      "#f9f8f6",
+      "#ffffff",
+      "#081b3c",
+      "#081b3c",
+      "#ffffff",
     ]);
     expect(contrastRatio(paperFocus, paper)).toBeGreaterThanOrEqual(3);
     expect(contrastRatio(darkFocus, ink)).toBeGreaterThanOrEqual(3);
@@ -304,7 +304,7 @@ describe("SILVAN responsive design contract", () => {
     );
   });
 
-  it.each(["48rem", "64rem", "80rem", "96rem"])(
+  it.each(["48rem", "64rem", "80rem"])(
     "progressively enhances from the %s breakpoint",
     (breakpoint) => {
       const queries: string[] = [];
@@ -317,6 +317,11 @@ describe("SILVAN responsive design contract", () => {
       expect(queries).toContain(`(min-width: ${breakpoint})`);
     },
   );
+
+  it("shares one capped content width instead of changing edges on wide screens", () => {
+    expect(customProperty(globals.root, ":root", "--container-max")).toBe("86rem");
+    expect(exactDeclarationValues(layout.root, ".container", "inline-size")).toEqual(["var(--content-width)"]);
+  });
 
   it("keeps touch targets explicit, semantic, and at least 44 by 44", () => {
     expect(

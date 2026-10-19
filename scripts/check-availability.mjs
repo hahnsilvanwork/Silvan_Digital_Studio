@@ -4,7 +4,7 @@ const origin = 'https://silvandigital.ch';
 const urls = [origin, `${origin}/contact`, `${origin}/reviews`,
   'https://silvan-demo-falkenried.vercel.app',
   'https://silvan-demo-cafe-vogel.vercel.app',
-  'https://silvan-demo-steiner.vercel.app',
+  'https://silvan-demo-spurwerk.vercel.app',
   'https://silvan-demo-salon-lumiere.vercel.app'];
 const browser = await chromium.launch();
 const failures = [];
